@@ -13,12 +13,16 @@ All the rendering is done with OpenGL 3+ / OpenGLES 2.0.
 - Ninja *1.6*
 
 ##### For compiling/executing #####
+
+They are included in the dependencies repository.  
+To import them, just clone them in the "dependencies" folder.
+
+You can use the `clone_dependencies.sh` script.
+
 - SDL *2.0.3*
 - SDL_image *2.0.0*
 - Freetype *2.6*
 - Freetype-GL *git*
-
-These are included in the dependencies repository.
 
 ##### For testing #####
 - Google Test *1.7.0*
