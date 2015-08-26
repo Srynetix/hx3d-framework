@@ -69,7 +69,7 @@ void LogImpl::write(std::string text, Status status) {
 
     std::ostringstream oss;
     if (status == Status::Error) {
-        oss << "!! E> ";
+        oss << "E /!\\> ";
     }
 
     else if (status == Status::Shader) {

@@ -30,6 +30,11 @@ namespace hx3d {
 class OrthographicCamera: public Camera {
 public:
   /**
+  Create an orthographic camera with the screen size.
+  */
+  OrthographicCamera();
+
+  /**
   Create an orthographic camera with a viewport width and height.
 
   @param width  Viewport width

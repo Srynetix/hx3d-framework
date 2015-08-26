@@ -39,4 +39,16 @@ glm::mat4 Transform::compute() {
   return model;
 }
 
+Transform Transform::add(const Transform& transform) {
+  Transform t;
+  t.position = position;
+  t.rotation = rotation;
+  t.scale = scale;
+  t.size = size;
+
+  t.position += transform.position;
+  t.rotation += transform.rotation;
+  return t;
+}
+
 } /* hx3d */

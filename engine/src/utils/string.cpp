@@ -20,6 +20,8 @@
 
 #include "hx3d/utils/string.hpp"
 
+#include <sstream>
+
 namespace hx3d {
 
 std::string format(const std::string fmt, ...) {
@@ -63,6 +65,22 @@ std::string format(const std::string fmt, va_list args) {
   }
 
   return str;
+}
+
+std::vector<std::string>& split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
 }
 
 } /* hx3d */

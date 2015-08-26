@@ -198,16 +198,19 @@ set(
   "${ENGINE_SRC}/ecs/component.cpp"
   "${ENGINE_SRC}/ecs/entity.cpp"
   "${ENGINE_SRC}/ecs/system.cpp"
+  "${ENGINE_SRC}/ecs/game_object.cpp"
+  "${ENGINE_SRC}/ecs/scene_graph.cpp"
 )
 
 set(
   UNIT_TESTS
 
   "${TEST_SRC}/log_test.cpp"
+  "${TEST_SRC}/scene_graph_tests.cpp"
 
-  "${TEST_SRC}/screens/screen_one.cpp"
-  "${TEST_SRC}/screens/screen_two.cpp"
-  "${TEST_SRC}/screens/screen_three.cpp"
+#  "${TEST_SRC}/screens/screen_one.cpp"
+#  "${TEST_SRC}/screens/screen_two.cpp"
+#  "${TEST_SRC}/screens/screen_three.cpp"
 )
 
 set(

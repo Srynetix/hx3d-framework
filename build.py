@@ -45,12 +45,13 @@ Main
 '''
 def main():
     colorama.init(autoreset=True)
-    print()
 
     if Utils.direxists("game"):
         game_build = True
     else:
         game_build = False
+
+        print()
         Utils.gPrint("[Game building OFF.]", Fore.BLUE)
     print()
 

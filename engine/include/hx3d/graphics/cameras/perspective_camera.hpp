@@ -30,6 +30,12 @@ namespace hx3d {
 class PerspectiveCamera: public Camera {
 public:
   /**
+  Create a perspective camera with the screen size.
+  The default field of view is 70.
+  */
+  PerspectiveCamera();
+
+  /**
   Create a perspective camera with a viewport width and height.
   The default field of view is 70.
 

@@ -38,6 +38,7 @@ public:
   @return Matrix (mat4)
   */
   glm::mat4 compute();
+  Transform add(const Transform& transform);
 
   glm::vec3 position;
   glm::vec3 scale;

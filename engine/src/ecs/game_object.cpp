@@ -1,7 +1,5 @@
 /*
-    Perspective camera.
-    Inspired by LibGDX perspective camera.
-
+    Entity Component System: Game Object.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -20,31 +18,48 @@
     USA
 */
 
-#include "hx3d/graphics/cameras/perspective_camera.hpp"
-
-#include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include "hx3d/ecs/game_object.hpp"
 
 namespace hx3d {
 
-PerspectiveCamera::PerspectiveCamera():
-  PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight())
+GameObject::GameObject(std::string name):
+  GameObject(name, nullptr)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height):
-  PerspectiveCamera(width, height, 70)
+GameObject::GameObject(std::string name, unsigned int id):
+  GameObject(name, nullptr, id)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float fov):
-  Camera(width, height), fieldOfView(fov)
-{
-  update();
+GameObject::GameObject(std::string name, Ptr<GameObject> parent):
+  GameObject(name, parent, 0)
+{}
+
+GameObject::GameObject(std::string name, Ptr<GameObject> parent, unsigned int id):
+  _parent(parent), _id(id), _name(name)
+{}
+
+GameObject::~GameObject()
+{}
+
+void GameObject::setParent(Ptr<GameObject> parent) {
+  _parent = parent;
 }
 
-void PerspectiveCamera::update() {
-  float aspect = viewportWidth / viewportHeight;
-  projection = glm::perspective(fieldOfView, aspect, near, far);
-  view = glm::lookAt(position, position + direction, up);
+unsigned int GameObject::getId() {
+  return _id;
 }
+
+Transform GameObject::fullTransform() {
+  if (_parent == nullptr) {
+    return transform;
+  }
+
+  return transform.add(_parent->fullTransform());
+}
+
+std::string GameObject::getName() {
+  return _name;
+}
+
 
 } /* hx3d */

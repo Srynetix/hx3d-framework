@@ -1,7 +1,5 @@
 /*
-    Perspective camera.
-    Inspired by LibGDX perspective camera.
-
+    Entity Component System: Scene Graph.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -20,31 +18,36 @@
     USA
 */
 
-#include "hx3d/graphics/cameras/perspective_camera.hpp"
+#ifndef HX3D_ECS_SCENEGRAPH
+#define HX3D_ECS_SCENEGRAPH
 
-#include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include <map>
+
+#include "hx3d/ecs/game_object.hpp"
 
 namespace hx3d {
 
-PerspectiveCamera::PerspectiveCamera():
-  PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight())
-{}
+class SceneGraph {
 
-PerspectiveCamera::PerspectiveCamera(float width, float height):
-  PerspectiveCamera(width, height, 70)
-{}
+public:
+  SceneGraph();
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float fov):
-  Camera(width, height), fieldOfView(fov)
-{
-  update();
-}
+  void add(std::string path, Ptr<GameObject> object);
+  Ptr<GameObject> get(std::string path);
 
-void PerspectiveCamera::update() {
-  float aspect = viewportWidth / viewportHeight;
-  projection = glm::perspective(fieldOfView, aspect, near, far);
-  view = glm::lookAt(position, position + direction, up);
-}
+  void showEntries();
+
+private:
+
+  Ptr<GameObject> buildPath(std::string path);
+
+  bool testPath(std::string path);
+  bool isIndex(std::string index);
+
+  std::map<std::string, Ptr<GameObject>> _indexes;
+  Ptr<GameObject> _root;
+};
 
 } /* hx3d */
+
+#endif

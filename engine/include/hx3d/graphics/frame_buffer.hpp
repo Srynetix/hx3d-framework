@@ -32,6 +32,11 @@ class FrameBuffer {
 
 public:
   /**
+  Create a framebuffer at screen size.
+  */
+  FrameBuffer();
+
+  /**
   Create a framebuffer.
 
   @param width  Width

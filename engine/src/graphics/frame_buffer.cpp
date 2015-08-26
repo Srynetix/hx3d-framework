@@ -31,6 +31,10 @@ namespace hx3d {
 
 GLint FrameBuffer::_defaultID = 0;
 
+FrameBuffer::FrameBuffer():
+  FrameBuffer(Core::App()->getWidth(), Core::App()->getHeight())
+{}
+
 FrameBuffer::FrameBuffer(unsigned int width, unsigned int height):
   _width(width),
   _height(height)

@@ -22,7 +22,14 @@
 
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 
+#include "hx3d/core/core.hpp"
+#include "hx3d/core/application.hpp"
+
 namespace hx3d {
+
+OrthographicCamera::OrthographicCamera():
+  OrthographicCamera(Core::App()->getWidth(), Core::App()->getHeight())
+{}
 
 OrthographicCamera::OrthographicCamera(float width, float height):
   Camera(width, height), zoom(1.f)

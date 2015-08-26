@@ -1,7 +1,5 @@
 /*
-    Perspective camera.
-    Inspired by LibGDX perspective camera.
-
+    Scene graph tests.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -20,31 +18,32 @@
     USA
 */
 
-#include "hx3d/graphics/cameras/perspective_camera.hpp"
-
-#include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include "hx3d/ecs/scene_graph.hpp"
+#include <gtest/gtest.h>
 
 namespace hx3d {
 
-PerspectiveCamera::PerspectiveCamera():
-  PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight())
-{}
+class SceneGraphTest: public testing::Test {
 
-PerspectiveCamera::PerspectiveCamera(float width, float height):
-  PerspectiveCamera(width, height, 70)
-{}
+protected:
+  SceneGraphTest() {}
+  virtual ~SceneGraphTest() {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float fov):
-  Camera(width, height), fieldOfView(fov)
-{
-  update();
-}
+  virtual void SetUp() {}
+  virtual void TearDown() {}
+};
 
-void PerspectiveCamera::update() {
-  float aspect = viewportWidth / viewportHeight;
-  projection = glm::perspective(fieldOfView, aspect, near, far);
-  view = glm::lookAt(position, position + direction, up);
+TEST_F(SceneGraphTest, Test) {
+
+  SceneGraph graph;
+  graph.add("///", Make<GameObject>("object"));     // Should bug
+  graph.add("/coucou", Make<GameObject>(""));       // Should bug
+  graph.add("/", Make<GameObject>("object"));       // Should work
+  graph.add("/", Make<GameObject>("object"));       // Should work
+  graph.add("/", Make<GameObject>("coucou"));       // Should work
+  graph.add("/coucou", Make<GameObject>("i"));      // Should work
+
+  graph.showEntries();
 }
 
 } /* hx3d */
