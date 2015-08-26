@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Scene Graph.
+    Scene Graph.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/ecs/scene_graph.hpp"
+#include "hx3d/core/scene_graph.hpp"
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/string.hpp"
@@ -51,6 +51,11 @@ void SceneGraph::add(std::string path, Ptr<GameObject> object) {
   }
 
   _indexes[object_path] = object;
+
+  /* Children */
+  for (Ptr<GameObject> child: object->getChildren()) {
+    add(object_path, child);
+  }
 }
 
 Ptr<GameObject> SceneGraph::get(std::string path) {
@@ -67,6 +72,13 @@ void SceneGraph::showEntries() {
     Log.Info("Path: %s", pair.first.c_str());
   }
   Log.Info("-- END Scene Graph Entries");
+}
+
+void SceneGraph::update() {
+}
+
+void SceneGraph::draw(Batch& batch) {
+  
 }
 
 /////////////////////////

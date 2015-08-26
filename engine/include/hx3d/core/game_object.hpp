@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object.
+    Game Object.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,13 +18,16 @@
     USA
 */
 
-#ifndef HX3D_ECS_GAMEOBJECT
-#define HX3D_ECS_GAMEOBJECT
+#ifndef HX3D_CORE_GAMEOBJECT
+#define HX3D_CORE_GAMEOBJECT
 
+#include "hx3d/graphics/batch.hpp"
 #include "hx3d/graphics/utils/transform.hpp"
+
 #include "hx3d/utils/ptr.hpp"
 
 #include <string>
+#include <vector>
 
 namespace hx3d {
 
@@ -42,6 +45,11 @@ public:
   @param parent GameObject (Ptr)
   */
   void setParent(Ptr<GameObject> parent);
+  /**
+  Set the game object parent.
+  @param parent GameObject
+  */
+  void setParent(GameObject* parent);
 
   /**
   Get the game object ID.
@@ -61,12 +69,31 @@ public:
   */
   Transform fullTransform();
 
+  /**
+  Add a child.
+  @param object GameObject (Ptr)
+  */
+  void addChild(Ptr<GameObject> object);
+
+  /**
+  Get the children.
+  @return Children
+  */
+  std::vector<Ptr<GameObject>>& getChildren();
+
+  virtual void update();
+  virtual void draw(Batch& batch);
+
+  ///////////////////////////
+
   Transform transform;
 
 private:
-  Ptr<GameObject> _parent;
+  GameObject* _parent;
   unsigned int _id;
   std::string _name;
+
+  std::vector<Ptr<GameObject>> _children;
 };
 
 } /* hx3d */

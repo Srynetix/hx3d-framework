@@ -146,6 +146,8 @@ set(
   "${ENGINE_SRC}/core/events.cpp"
   "${ENGINE_SRC}/core/screen.cpp"
   "${ENGINE_SRC}/core/screen_adapter.cpp"
+  "${ENGINE_SRC}/core/game_object.cpp"
+  "${ENGINE_SRC}/core/scene_graph.cpp"
 
   "${ENGINE_SRC}/utils/bitset.cpp"
   "${ENGINE_SRC}/utils/log.cpp"
@@ -198,8 +200,6 @@ set(
   "${ENGINE_SRC}/ecs/component.cpp"
   "${ENGINE_SRC}/ecs/entity.cpp"
   "${ENGINE_SRC}/ecs/system.cpp"
-  "${ENGINE_SRC}/ecs/game_object.cpp"
-  "${ENGINE_SRC}/ecs/scene_graph.cpp"
 )
 
 set(

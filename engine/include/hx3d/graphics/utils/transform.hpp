@@ -32,6 +32,7 @@ class Transform {
 
 public:
   Transform();
+  Transform& operator=(const Transform& transform);
 
   /**
   Build the model matrix using the position, scale, size and rotation.

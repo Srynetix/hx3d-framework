@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Scene Graph.
+    Scene Graph.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,12 +18,12 @@
     USA
 */
 
-#ifndef HX3D_ECS_SCENEGRAPH
-#define HX3D_ECS_SCENEGRAPH
+#ifndef HX3D_CORE_SCENEGRAPH
+#define HX3D_CORE_SCENEGRAPH
 
 #include <map>
 
-#include "hx3d/ecs/game_object.hpp"
+#include "hx3d/core/game_object.hpp"
 
 namespace hx3d {
 
@@ -34,6 +34,9 @@ public:
 
   void add(std::string path, Ptr<GameObject> object);
   Ptr<GameObject> get(std::string path);
+
+  void update();
+  void draw(Batch& batch);
 
   void showEntries();
 

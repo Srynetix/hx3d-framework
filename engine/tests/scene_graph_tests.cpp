@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/ecs/scene_graph.hpp"
+#include "hx3d/core/scene_graph.hpp"
 #include <gtest/gtest.h>
 
 namespace hx3d {

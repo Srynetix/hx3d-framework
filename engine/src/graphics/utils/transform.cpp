@@ -28,6 +28,16 @@ Transform::Transform():
   size(0, 0, 0),
   rotation(0, 0, 0) {}
 
+Transform& Transform::operator=(const Transform& transform) {
+  position = transform.position;
+  scale = transform.scale;
+  size = transform.size;
+  rotation = transform.rotation;
+
+  return *this;
+}
+
+
 glm::mat4 Transform::compute() {
   glm::mat4 model = glm::mat4(1.f);
   model = glm::translate(model, glm::vec3(position.x, position.y, position.z));
@@ -46,8 +56,19 @@ Transform Transform::add(const Transform& transform) {
   t.scale = scale;
   t.size = size;
 
-  t.position += transform.position;
   t.rotation += transform.rotation;
+
+  if (transform.rotation.z != glm::degrees(0.f)) {
+    float s = std::sin(transform.rotation.z);
+    float c = std::cos(transform.rotation.z);
+
+    float nx = c * position.x - s * position.y + transform.position.x;
+    float ny = s * position.x + c * position.y + transform.position.y;
+
+    t.position.x = nx;
+    t.position.y = ny;
+  }
+
   return t;
 }
 

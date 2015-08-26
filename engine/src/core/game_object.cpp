@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object.
+    Game Object.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,7 +18,9 @@
     USA
 */
 
-#include "hx3d/ecs/game_object.hpp"
+#include "hx3d/core/game_object.hpp"
+
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
@@ -35,13 +37,17 @@ GameObject::GameObject(std::string name, Ptr<GameObject> parent):
 {}
 
 GameObject::GameObject(std::string name, Ptr<GameObject> parent, unsigned int id):
-  _parent(parent), _id(id), _name(name)
+  _parent(parent.get()), _id(id), _name(name)
 {}
 
 GameObject::~GameObject()
 {}
 
 void GameObject::setParent(Ptr<GameObject> parent) {
+  _parent = parent.get();
+}
+
+void GameObject::setParent(GameObject* parent) {
   _parent = parent;
 }
 
@@ -61,5 +67,24 @@ std::string GameObject::getName() {
   return _name;
 }
 
+void GameObject::addChild(Ptr<GameObject> object) {
+  if (object->getName() == "") {
+    Log.Error("GameObject: you can't add a unnamed game object.");
+    return;
+  }
+
+  object->setParent(this);
+  _children.push_back(object);
+}
+
+std::vector<Ptr<GameObject>>& GameObject::getChildren() {
+  return _children;
+}
+
+void GameObject::update()
+{}
+
+void GameObject::draw(Batch& batch)
+{}
 
 } /* hx3d */
