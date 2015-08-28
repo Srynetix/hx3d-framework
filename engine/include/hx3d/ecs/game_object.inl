@@ -1,5 +1,5 @@
 /*
-    Entity Component System: System.
+    Entity Component System: Game Object.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,23 +18,38 @@
     USA
 */
 
-#include "hx3d/ecs/system.hpp"
-
-#include "hx3d/ecs/engine.hpp"
-
-#include "hx3d/utils/log.hpp"
+#include "hx3d/ecs/scene_graph.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-System::System(): _requiredFamily(0) {}
+template <class T, class... Args>
+Ptr<T> GameObject::createChild(std::string name, Args... args) {
+  if (childNameExists(name)) {
+    Log.Error("GameObject: a child of `%s` is already named `%s`.", _name.c_str(), name.c_str());
+    return nullptr;
+  }
 
-bool System::canProcess(unsigned int bits) {
-  return (_requiredFamily & bits) == _requiredFamily;
+  Ptr<T> object = Make<T>(name, args...);
+  object->_parent = shared_from_this();
+  object->_graph = _graph;
+  _children.push_back(object);
+
+  _graph->addIndex(object);
+
+  return object;
 }
 
-Engine* System::getEngine() {
-  return _engine;
+template <class T>
+Ptr<T> GameObject::getChild(std::string name) {
+  for (Ptr<GameObject> obj: _children) {
+    if (obj->_name == name) {
+      return std::dynamic_pointer_cast<T>(obj);
+    }
+  }
+
+  Log.Error("GameObject: child `%s` does not exists.", name.c_str());
+  return nullptr;
 }
 
 } /* ecs */

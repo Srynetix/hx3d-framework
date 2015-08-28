@@ -1,5 +1,5 @@
 /*
-    Scene Graph.
+    Entity Component System: Game Object Engine.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,39 +18,19 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCENEGRAPH
-#define HX3D_CORE_SCENEGRAPH
+#ifndef HX3D_ECS_OBJECTENGINE
+#define HX3D_ECS_OBJECTENGINE
 
-#include <map>
-
-#include "hx3d/core/game_object.hpp"
+#include "hx3d/ecs/engine.hpp"
+#include "hx3d/ecs/game_object.hpp"
 
 namespace hx3d {
+namespace ecs {
 
-class SceneGraph {
-
-public:
-  SceneGraph();
-
-  void add(std::string path, Ptr<GameObject> object);
-  Ptr<GameObject> get(std::string path);
-
-  void update();
-  void draw(Batch& batch);
-
-  void showEntries();
-
-private:
-
-  Ptr<GameObject> buildPath(std::string path);
-
-  bool testPath(std::string path);
-  bool isIndex(std::string index);
-
-  std::map<std::string, Ptr<GameObject>> _indexes;
-  Ptr<GameObject> _root;
+class ObjectEngine: public Engine<GameObject> {
 };
 
+} /* ecs */
 } /* hx3d */
 
 #endif

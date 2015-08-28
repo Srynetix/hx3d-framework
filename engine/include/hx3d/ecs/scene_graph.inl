@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity.
+    Entity Component System: Scene Graph.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,12 +18,25 @@
     USA
 */
 
-#include "hx3d/ecs/entity.hpp"
+#include "hx3d/ecs/game_object.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-Entity::Entity(const unsigned int id): EntityBase(id) {}
+template <class T, class... Args>
+Ptr<T> SceneGraph::createAtRoot(std::string name, Args... args) {
+  return _root->createChild<T>(name, args...);
+}
+
+template <class T, class... Args>
+Ptr<T> SceneGraph::create(std::string path, std::string name, Args... args) {
+  //
+}
+
+template <class T>
+Ptr<T> SceneGraph::fetch(std::string path) {
+  return std::dynamic_pointer_cast<T>(_indices[path]);
+}
 
 } /* ecs */
 } /* hx3d */

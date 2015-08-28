@@ -29,7 +29,10 @@
 namespace hx3d {
 namespace ecs {
 
+template <class E>
 class Engine;
+
+template <class E>
 class System {
 public:
   System();
@@ -50,7 +53,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  virtual void process(Ptr<Entity> entity) = 0;
+  virtual void process(Ptr<E> entity) = 0;
 
   /**
   Check if an entity can be processed (using the required family).
@@ -62,14 +65,16 @@ public:
   Get the engine instance.
   @return Engine instance
   */
-  Engine* getEngine();
+  Engine<E>* getEngine();
 
-  friend class Engine;
+  friend class Engine<E>;
 
 private:
-  Engine* _engine;
+  Engine<E>* _engine;
   unsigned int _requiredFamily;
 };
+
+#include "hx3d/ecs/system.inl"
 
 } /* ecs */
 } /* hx3d */

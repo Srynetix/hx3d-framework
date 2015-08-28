@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity.
+    Entity Component System: Game Object System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,12 +18,19 @@
     USA
 */
 
-#include "hx3d/ecs/entity.hpp"
+#ifndef HX3D_ECS_OBJECTSYSTEM
+#define HX3D_ECS_OBJECTSYSTEM
+
+#include "hx3d/ecs/system.hpp"
+#include "hx3d/ecs/game_object.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-Entity::Entity(const unsigned int id): EntityBase(id) {}
+class ObjectSystem: public System<GameObject> {
+};
 
 } /* ecs */
 } /* hx3d */
+
+#endif

@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity.
+    Entity Component System: Entity Engine.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,12 +18,19 @@
     USA
 */
 
+#ifndef HX3D_ECS_ENTITYENGINE
+#define HX3D_ECS_ENTITYENGINE
+
+#include "hx3d/ecs/engine.hpp"
 #include "hx3d/ecs/entity.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-Entity::Entity(const unsigned int id): EntityBase(id) {}
+class EntityEngine: public Engine<Entity> {
+};
 
 } /* ecs */
 } /* hx3d */
+
+#endif

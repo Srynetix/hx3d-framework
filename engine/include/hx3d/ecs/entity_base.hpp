@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity.
+    Entity Component System: Base Entity.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,12 +18,26 @@
     USA
 */
 
-#include "hx3d/ecs/entity.hpp"
+#ifndef HX3D_ECS_ENTITYBASE
+#define HX3D_ECS_ENTITYBASE
 
 namespace hx3d {
 namespace ecs {
 
-Entity::Entity(const unsigned int id): EntityBase(id) {}
+class EntityBase {
+public:
+  EntityBase(const unsigned int id);
+  virtual ~EntityBase();
+
+  void setId(unsigned int id);
+
+  unsigned int getId() const;
+
+protected:
+  unsigned int _id;
+};
 
 } /* ecs */
 } /* hx3d */
+
+#endif
