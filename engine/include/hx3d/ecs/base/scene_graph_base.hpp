@@ -90,6 +90,12 @@ public:
   */
   void showIndices();
 
+  /**
+  Draw the node.
+  @param batch Batch
+  */
+  void draw(Batch& batch);
+
   friend class NodeBase<EntityEnabled>;
 
 protected:

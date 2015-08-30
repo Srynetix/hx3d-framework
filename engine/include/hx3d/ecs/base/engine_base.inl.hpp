@@ -80,7 +80,7 @@ void EngineBase<EntityType>::update() {
     for (auto& pair: _systems) {
       Ptr<SystemBase<EntityType>> sys = pair.second;
       if (sys->canProcess(_bits[id.first].getBits())) {
-        sys->process(Make<EntityType>(id.first));
+        sys->process(id.second);
       }
     }
   }

@@ -22,6 +22,8 @@
 
 #include "hx3d/ecs/base/node_base.hpp"
 
+#include <stack>
+
 namespace hx3d {
 namespace ecs {
 
@@ -63,6 +65,23 @@ void SceneGraphBase<EntityEnabled>::showIndices() {
   Log.Info("-- Graph indices");
   for (auto& pair: _indices) {
     Log.Info("\t%s: %s", pair.first.c_str(), pair.second->_name.c_str());
+  }
+}
+
+template <bool EntityEnabled>
+void SceneGraphBase<EntityEnabled>::draw(Batch& batch) {
+  std::stack<Ptr<NodeBase<EntityEnabled>>> stack;
+  stack.push(_root);
+
+  while (!stack.empty()) {
+    Ptr<NodeBase<EntityEnabled>> node = stack.top();
+    stack.pop();
+
+    node->draw(batch);
+
+    for (Ptr<NodeBase<EntityEnabled>> child: node->_children) {
+      stack.push(child);
+    }
   }
 }
 
@@ -138,7 +157,7 @@ inline void SceneGraphBase<true>::remove(std::string path) {
       parent->_children.erase(parent->_children.begin() + i);
     }
   }
-  
+
   // ...
   _engine->removeEntity(std::dynamic_pointer_cast<ENode>(obj));
 

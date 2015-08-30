@@ -68,6 +68,10 @@ std::string NodeBase<EntityEnabled>::getPath() {
   return path;
 }
 
+template <bool EntityEnabled>
+void NodeBase<EntityEnabled>::draw(Batch& batch) {
+}
+
 /////////////////////
 
 template <bool EntityEnabled>

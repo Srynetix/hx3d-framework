@@ -23,7 +23,9 @@
 
 #include "hx3d/ecs/base/id_base.hpp"
 
+#include "hx3d/graphics/batch.hpp"
 #include "hx3d/graphics/utils/transform.hpp"
+
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/log.hpp"
 
@@ -86,6 +88,12 @@ public:
   @return Path
   */
   std::string getPath();
+
+  /**
+  Draw the node.
+  @param batch Batch
+  */
+  virtual void draw(Batch& batch);
 
   ///////////
 

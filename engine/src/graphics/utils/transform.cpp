@@ -20,6 +20,8 @@
 
 #include "hx3d/graphics/utils/transform.hpp"
 
+#include "hx3d/utils/log.hpp"
+
 namespace hx3d {
 
 Transform::Transform():
@@ -44,6 +46,7 @@ glm::mat4 Transform::compute() {
   model = glm::rotate(model, rotation.x, glm::vec3(1, 0, 0));
   model = glm::rotate(model, rotation.y, glm::vec3(0, 1, 0));
   model = glm::rotate(model, rotation.z, glm::vec3(0, 0, 1));
+  model = glm::scale(model, glm::vec3(size.x, size.y, size.z));
   model = glm::scale(model, glm::vec3(scale.x, scale.y, scale.z));
 
   return model;
@@ -58,18 +61,25 @@ Transform Transform::add(const Transform& transform) {
 
   t.rotation += transform.rotation;
 
-  if (transform.rotation.z != glm::degrees(0.f)) {
-    float s = std::sin(transform.rotation.z);
-    float c = std::cos(transform.rotation.z);
+  float s = std::sin(transform.rotation.z);
+  float c = std::cos(transform.rotation.z);
 
-    float nx = c * position.x - s * position.y + transform.position.x;
-    float ny = s * position.x + c * position.y + transform.position.y;
+  float nx = c * position.x - s * position.y + transform.position.x;
+  float ny = s * position.x + c * position.y + transform.position.y;
 
-    t.position.x = nx;
-    t.position.y = ny;
-  }
+  t.position.x = nx;
+  t.position.y = ny;
 
   return t;
+}
+
+void Transform::show() {
+  Log.Info("-- Transform");
+  Log.Info("\t Pos: [%f, %f, %f]", position.x, position.y, position.z);
+  Log.Info("\t Sca: [%f, %f, %f]", scale.x, scale.y, scale.z);
+  Log.Info("\t Siz: [%f, %f, %f]", size.x, size.y, size.z);
+  Log.Info("\t Rot: [%f, %f, %f]", rotation.x, rotation.y, rotation.z);
+  Log.Info("-- END Transform");
 }
 
 } /* hx3d */

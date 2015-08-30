@@ -41,6 +41,8 @@ public:
   glm::mat4 compute();
   Transform add(const Transform& transform);
 
+  void show();
+
   glm::vec3 position;
   glm::vec3 scale;
   glm::vec3 size;
