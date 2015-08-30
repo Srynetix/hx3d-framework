@@ -54,7 +54,7 @@ public:
   virtual void end(Ptr<Shader> shader) = 0;
 };
 
-#include "hx3d/graphics/utils/array_buffer.inl"
+#include "hx3d/graphics/utils/array_buffer.inl.hpp"
 
 } /* hx3d */
 

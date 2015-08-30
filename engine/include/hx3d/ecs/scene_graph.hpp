@@ -101,6 +101,6 @@ private:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/scene_graph.inl"
+#include "hx3d/ecs/scene_graph.inl.hpp"
 
 #endif

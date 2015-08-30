@@ -107,6 +107,6 @@ protected:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/game_object.inl"
+#include "hx3d/ecs/game_object.inl.hpp"
 
 #endif

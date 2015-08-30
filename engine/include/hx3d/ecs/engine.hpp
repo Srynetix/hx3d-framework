@@ -21,8 +21,6 @@
 #ifndef HX3D_ECS_ENGINE
 #define HX3D_ECS_ENGINE
 
-#include "hx3d/ecs/entity_base.hpp"
-
 #include "hx3d/ecs/component.hpp"
 #include "hx3d/ecs/system.hpp"
 
@@ -36,7 +34,7 @@
 namespace hx3d {
 namespace ecs {
 
-template <class E>
+template <class EntityType>
 class Engine {
 
 public:
@@ -46,13 +44,13 @@ public:
   Create a new entity with the last entity id available.
   @return Entity (Ptr)
   */
-  Ptr<E> createEntity();
+  Ptr<EntityType> createEntity();
 
   /**
   Affect an ID to a uninitialized entity.
   @param entity Entity (Ptr)
   */
-  void registerEntity(Ptr<E> entity);
+  void registerEntity(Ptr<EntityType> entity);
 
   /**
   Mark the entity for deletion from the engine.
@@ -60,7 +58,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  void removeEntity(Ptr<E> entity);
+  void removeEntity(Ptr<EntityType> entity);
 
   /**
   Get the component for an entity.
@@ -69,7 +67,7 @@ public:
   @param entity Entity (Ptr)
   */
   template <class T>
-  Ptr<T> getComponent(Ptr<E> entity);
+  Ptr<T> getComponent(Ptr<EntityType> entity);
 
   /**
   Add a component for an entity.
@@ -79,7 +77,7 @@ public:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addComponent(Ptr<E> entity, Ptr<Component> component);
+  void addComponent(Ptr<EntityType> entity, Ptr<Component> component);
 
   /**
   Create a component for an entity with variable args.
@@ -89,7 +87,7 @@ public:
   @param args   Arguments
   */
   template <class T, class... Args>
-  void createComponent(Ptr<E> entity, Args... args);
+  void createComponent(Ptr<EntityType> entity, Args... args);
 
   /**
   Add a system to the engine.
@@ -98,7 +96,7 @@ public:
   @param sys  System (Ptr)
   */
   template <class T>
-  void addSystem(Ptr<System<E>> sys);
+  void addSystem(Ptr<System<EntityType>> sys);
 
   /**
   Create a system into the engine.
@@ -115,7 +113,7 @@ public:
   @param entity Entity (Ptr)
   @return Number of components
   */
-  unsigned int getComponentSize(Ptr<E> entity);
+  unsigned int getComponentSize(Ptr<EntityType> entity);
 
   /**
   Get the bits corresponding to the entity components.
@@ -123,7 +121,7 @@ public:
   @param entity Entity (Ptr)
   @return Entity components bits
   */
-  unsigned int getBits(Ptr<E> entity);
+  unsigned int getBits(Ptr<EntityType> entity);
 
   /**
   Register a callback for a certain component type when it's added.
@@ -132,7 +130,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentAdded(std::function<void(Ptr<Component>, Ptr<E>)> callback);
+  void registerComponentAdded(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback);
 
   /**
   Register a callback for a certain component type when it's removed.
@@ -141,7 +139,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<E>)> callback);
+  void registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback);
 
   /**
   Update the engine.
@@ -154,13 +152,13 @@ public:
   void clear();
 
 private:
-  std::map<unsigned int, Ptr<E>> _entities;
+  std::map<unsigned int, Ptr<EntityType>> _entities;
   std::map<unsigned int, std::map<std::type_index, Ptr<Component>>> _components;
   std::map<unsigned int, Bitset> _bits;
 
-  std::map<std::type_index, Ptr<System<E>>> _systems;
-  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<E>)>> _onComponentAdded;
-  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<E>)>> _onComponentRemoved;
+  std::map<std::type_index, Ptr<System<EntityType>>> _systems;
+  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<EntityType>)>> _onComponentAdded;
+  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<EntityType>)>> _onComponentRemoved;
 
   std::vector<unsigned int> _toRemove;
 
@@ -192,7 +190,7 @@ private:
   void removeComponents(unsigned int entityId);
 };
 
-#include "hx3d/ecs/engine.inl"
+#include "hx3d/ecs/engine.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

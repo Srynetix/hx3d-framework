@@ -73,7 +73,7 @@ private:
   void addOneMask(std::string name, std::string category);
 };
 
-#include "hx3d/physics/2d/collision_matrix.inl"
+#include "hx3d/physics/2d/collision_matrix.inl.hpp"
 
 } /* physics2d */
 } /* hx3d */

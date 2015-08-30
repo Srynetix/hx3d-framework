@@ -66,7 +66,7 @@ protected:
   GLuint _buf;
 };
 
-#include "hx3d/graphics/utils/buffer.inl"
+#include "hx3d/graphics/utils/buffer.inl.hpp"
 
 } /* hx3d */
 

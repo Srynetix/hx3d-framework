@@ -18,13 +18,13 @@
     USA
 */
 
-template <class E>
-Engine<E>::Engine()
+template <class EntityType>
+Engine<EntityType>::Engine()
 {}
 
-template <class E>
-Ptr<E> Engine<E>::createEntity() {
-  Ptr<E> entity(Make<E>(lastEntityAvailable()));
+template <class EntityType>
+Ptr<EntityType> Engine<EntityType>::createEntity() {
+  Ptr<EntityType> entity(Make<EntityType>(lastEntityAvailable()));
   _entities[entity->getId()] = entity;
   _components[entity->getId()] = std::map<std::type_index, Ptr<Component>>();
   _bits[entity->getId()] = Bitset();
@@ -32,8 +32,8 @@ Ptr<E> Engine<E>::createEntity() {
   return entity;
 }
 
-template <class E>
-void Engine<E>::registerEntity(Ptr<E> entity) {
+template <class EntityType>
+void Engine<EntityType>::registerEntity(Ptr<EntityType> entity) {
   if (entity->getId() != 0) {
     Log.Error("Engine: entity `%d` already registered.", entity->getId());
     return;
@@ -45,13 +45,13 @@ void Engine<E>::registerEntity(Ptr<E> entity) {
   _bits[entity->getId()] = Bitset();
 }
 
-template <class E>
-void Engine<E>::removeEntity(Ptr<E> entity) {
+template <class EntityType>
+void Engine<EntityType>::removeEntity(Ptr<EntityType> entity) {
   _toRemove.push_back(entity->getId());
 }
 
-template <class E>
-unsigned int Engine<E>::getComponentSize(Ptr<E> entity) {
+template <class EntityType>
+unsigned int Engine<EntityType>::getComponentSize(Ptr<EntityType> entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return 0;
@@ -61,19 +61,19 @@ unsigned int Engine<E>::getComponentSize(Ptr<E> entity) {
   return compMap.size();
 }
 
-template <class E>
-unsigned int Engine<E>::getBits(Ptr<E> entity) {
+template <class EntityType>
+unsigned int Engine<EntityType>::getBits(Ptr<EntityType> entity) {
   unsigned int id = entity->getId();
   return _bits[id].getBits();
 }
 
-template <class E>
-void Engine<E>::update() {
+template <class EntityType>
+void Engine<EntityType>::update() {
   for (auto& id: _entities) {
     for (auto& pair: _systems) {
-      Ptr<System<E>> sys = pair.second;
+      Ptr<System<EntityType>> sys = pair.second;
       if (sys->canProcess(_bits[id.first].getBits())) {
-        sys->process(Make<E>(id.first));
+        sys->process(Make<EntityType>(id.first));
       }
     }
   }
@@ -81,8 +81,8 @@ void Engine<E>::update() {
   cleanEntities();
 }
 
-template <class E>
-void Engine<E>::cleanEntities() {
+template <class EntityType>
+void Engine<EntityType>::cleanEntities() {
 
   for (unsigned int i: _toRemove) {
     removeComponents(i);
@@ -94,8 +94,8 @@ void Engine<E>::cleanEntities() {
   _toRemove.clear();
 }
 
-template <class E>
-unsigned int Engine<E>::lastEntityAvailable() {
+template <class EntityType>
+unsigned int Engine<EntityType>::lastEntityAvailable() {
   unsigned int first = 1;
   for (auto& pair: _entities) {
     if (pair.first != first)
@@ -107,8 +107,8 @@ unsigned int Engine<E>::lastEntityAvailable() {
   return first;
 }
 
-template <class E>
-void Engine<E>::removeComponents(unsigned int entityId) {
+template <class EntityType>
+void Engine<EntityType>::removeComponents(unsigned int entityId) {
 
   if (_components.find(entityId) != _components.end()) {
     while (_components[entityId].size() > 0) {
@@ -123,8 +123,8 @@ void Engine<E>::removeComponents(unsigned int entityId) {
   }
 }
 
-template <class E>
-void Engine<E>::clear() {
+template <class EntityType>
+void Engine<EntityType>::clear() {
   for (auto& entity: _entities) {
     removeComponents(entity.first);
   }
@@ -140,9 +140,9 @@ void Engine<E>::clear() {
   _onComponentRemoved.clear();
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-Ptr<T> Engine<E>::getComponent(Ptr<E> entity) {
+Ptr<T> Engine<EntityType>::getComponent(Ptr<EntityType> entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return nullptr;
@@ -158,21 +158,21 @@ Ptr<T> Engine<E>::getComponent(Ptr<E> entity) {
   return std::dynamic_pointer_cast<T>(component);
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-void Engine<E>::addComponent(Ptr<E> entity, Ptr<Component> component) {
+void Engine<EntityType>::addComponent(Ptr<EntityType> entity, Ptr<Component> component) {
   addInternalComponent<T>(entity->getId(), component);
 }
 
-template <class E>
+template <class EntityType>
 template <class T, class... Args>
-void Engine<E>::createComponent(Ptr<E> entity, Args... args) {
+void Engine<EntityType>::createComponent(Ptr<EntityType> entity, Args... args) {
   addInternalComponent<T>(entity->getId(), Make<T>(args...));
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-void Engine<E>::addInternalComponent(unsigned int entityId, Ptr<Component> component) {
+void Engine<EntityType>::addInternalComponent(unsigned int entityId, Ptr<Component> component) {
 
   auto& type = typeid(T);
 
@@ -200,32 +200,32 @@ void Engine<E>::addInternalComponent(unsigned int entityId, Ptr<Component> compo
   }
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-void Engine<E>::addSystem(Ptr<System<E>> sys) {
+void Engine<EntityType>::addSystem(Ptr<System<EntityType>> sys) {
   auto& type = typeid(T);
 
   _systems[type] = sys;
   _systems[type]->_engine = this;
 }
 
-template <class E>
+template <class EntityType>
 template <class T, class... Args>
-void Engine<E>::createSystem(Args... args) {
+void Engine<EntityType>::createSystem(Args... args) {
   auto& type = typeid(T);
 
   _systems[type] = Make<T>(args...);
   _systems[type]->_engine = this;
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-void Engine<E>::registerComponentAdded(std::function<void(Ptr<Component>, Ptr<E>)> callback) {
+void Engine<EntityType>::registerComponentAdded(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback) {
   _onComponentAdded[typeid(T)] = callback;
 }
 
-template <class E>
+template <class EntityType>
 template <class T>
-void Engine<E>::registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<E>)> callback) {
+void Engine<EntityType>::registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback) {
   _onComponentRemoved[typeid(T)] = callback;
 }
