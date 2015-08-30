@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity System.
+    Entity Component System: Node without entity information.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,16 +18,15 @@
     USA
 */
 
-#ifndef HX3D_ECS_ENTITYSYSTEM
-#define HX3D_ECS_ENTITYSYSTEM
+#ifndef HX3D_ECS_NODE
+#define HX3D_ECS_NODE
 
-#include "hx3d/ecs/system.hpp"
-#include "hx3d/ecs/entity.hpp"
+#include "hx3d/ecs/base/node_base.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class EntitySystem: public System<Entity> {
+class Node: public NodeBase<false> {
 };
 
 } /* ecs */

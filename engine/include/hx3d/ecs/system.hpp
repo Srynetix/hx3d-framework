@@ -1,5 +1,5 @@
 /*
-    Entity Component System: System.
+    Entity Component System: Entity System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,63 +18,18 @@
     USA
 */
 
-#ifndef HX3D_ECS_SYSTEM
-#define HX3D_ECS_SYSTEM
+#ifndef HX3D_ECS_ENTITYSYSTEM
+#define HX3D_ECS_ENTITYSYSTEM
 
-#include "hx3d/ecs/component.hpp"
+#include "hx3d/ecs/base/system_base.hpp"
+
 #include "hx3d/ecs/entity.hpp"
-
-#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-template <class E>
-class Engine;
-
-template <class E>
-class System {
-public:
-  System();
-
-  /**
-  Set the required component types for the system.
-  @param Types Suite of Component types
-  */
-  template <class... Types>
-  void setRequiredFamily() {
-    _requiredFamily = ComponentBits::getFamily<Types...>();
-  }
-
-  /**
-  Process an entity.
-  Does not check if the entity can be processed.
-  See @link#canProcess.
-
-  @param entity Entity (Ptr)
-  */
-  virtual void process(Ptr<E> entity) = 0;
-
-  /**
-  Check if an entity can be processed (using the required family).
-  @param bits Entity bits
-  */
-  bool canProcess(unsigned int bits);
-
-  /**
-  Get the engine instance.
-  @return Engine instance
-  */
-  Engine<E>* getEngine();
-
-  friend class Engine<E>;
-
-private:
-  Engine<E>* _engine;
-  unsigned int _requiredFamily;
+class System: public SystemBase<Entity> {
 };
-
-#include "hx3d/ecs/system.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

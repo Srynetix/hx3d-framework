@@ -1,5 +1,5 @@
 /*
-    Entity Component System: System.
+    Entity Component System: Base ID.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,15 +18,25 @@
     USA
 */
 
-template <class E>
-System<E>::System(): _requiredFamily(0) {}
+#ifndef HX3D_ECS_IDBASE
+#define HX3D_ECS_IDBASE
 
-template <class E>
-bool System<E>::canProcess(unsigned int bits) {
-  return (_requiredFamily & bits) == _requiredFamily;
-}
+namespace hx3d {
+namespace ecs {
 
-template <class E>
-Engine<E>* System<E>::getEngine() {
-  return _engine;
-}
+class IDBase {
+public:
+  IDBase(const unsigned int id);
+  virtual ~IDBase();
+
+  void setId(unsigned int id);
+  unsigned int getId() const;
+
+protected:
+  unsigned int _id;
+};
+
+} /* ecs */
+} /* hx3d */
+
+#endif

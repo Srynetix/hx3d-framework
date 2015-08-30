@@ -21,12 +21,12 @@
 #ifndef HX3D_ECS_ENTITY
 #define HX3D_ECS_ENTITY
 
-#include "hx3d/ecs/entity_base.hpp"
+#include "hx3d/ecs/base/id_base.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class Entity: public EntityBase {
+class Entity: public IDBase {
 public:
   /**
   Construct an entity with a unique id.

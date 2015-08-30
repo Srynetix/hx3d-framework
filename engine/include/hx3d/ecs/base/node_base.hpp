@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object.
+    Entity Component System: Base Node.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,10 +18,10 @@
     USA
 */
 
-#ifndef HX3D_ECS_GAMEOBJECT
-#define HX3D_ECS_GAMEOBJECT
+#ifndef HX3D_ECS_NODEBASE
+#define HX3D_ECS_NODEBASE
 
-#include "hx3d/ecs/entity_base.hpp"
+#include "hx3d/ecs/base/id_base.hpp"
 
 #include "hx3d/graphics/utils/transform.hpp"
 #include "hx3d/utils/ptr.hpp"
@@ -33,24 +33,27 @@
 namespace hx3d {
 namespace ecs {
 
-class SceneGraph;
-class GameObject: public EntityBase, public EnableSharedThis<GameObject> {
+template <bool EntityEnabled>
+class SceneGraphBase;
+
+template <bool EntityEnabled>
+class NodeBase: public IDBase, public EnableSharedThis<NodeBase<EntityEnabled>> {
 
 public:
   /**
-  Create a named GameObject.
+  Create a named Node.
   Should not be used directly.
-  To create a GameObject, use a SceneGraph.
-  See @link#SceneGraph::create or @link#SceneGraph::createAtRoot.
+  To create a Node, use a SceneGraph.
+  See @link#SceneGraphBase::create or @link#SceneGraphBase::createAtRoot.
 
   @param name Name
   */
-  GameObject(std::string name);
+  NodeBase(std::string name);
 
   /**
-  Create a new child GameObject.
+  Create a new child Node, using the SceneGraph.
 
-  @param T    GameObject type
+  @param T    Node type
   @param name Name
   @param args Arguments
   */
@@ -60,14 +63,14 @@ public:
   /**
   Get one child.
 
-  @param T    GameObject type
+  @param T    Node type
   @param name Name
   */
   template <class T>
   Ptr<T> getChild(std::string name);
 
   /**
-  Remove a child.
+  Remove a child, using the SceneGraph.
   @param name Name
   */
   void removeChild(std::string name);
@@ -88,14 +91,14 @@ public:
 
   Transform transform;
 
-  friend class SceneGraph;
+  friend class SceneGraphBase<EntityEnabled>;
 
 protected:
   std::string _name;
-  SceneGraph* _graph;
-  Ptr<GameObject> _parent;
+  SceneGraphBase<EntityEnabled>* _graph;
+  Ptr<NodeBase<EntityEnabled>> _parent;
 
-  std::vector<Ptr<GameObject>> _children;
+  std::vector<Ptr<NodeBase<EntityEnabled>>> _children;
 
   /**
   Test if the object have a child.
@@ -107,6 +110,6 @@ protected:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/game_object.inl.hpp"
+#include "hx3d/ecs/base/node_base.inl.hpp"
 
 #endif

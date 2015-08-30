@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Scene Graph.
+    Entity Component System: Scene Graph for Node without entity information.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -21,86 +21,15 @@
 #ifndef HX3D_ECS_SCENEGRAPH
 #define HX3D_ECS_SCENEGRAPH
 
-#include "hx3d/utils/ptr.hpp"
-
-#include <string>
-#include <map>
+#include "hx3d/ecs/base/scene_graph_base.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class GameObject;
-class SceneGraph {
-public:
-  SceneGraph();
-  ~SceneGraph();
-
-  /**
-  Create a game object at the root.
-
-  @param T    GameObject type
-  @param name Name
-  @param args Arguments
-  @return T (Ptr)
-  */
-  template <class T, class... Args>
-  Ptr<T> createAtRoot(std::string name, Args... args);
-
-  /**
-  Create a game object at a path.
-
-  @param T    GameObject type
-  @param path Path
-  @param name Name
-  @param args Arguments
-  @return T (Ptr)
-  */
-  template <class T, class... Args>
-  Ptr<T> create(std::string path, std::string name, Args... args);
-
-  /**
-  Remove a game object from a path.
-  @param path Path
-  */
-  void remove(std::string path);
-
-  /**
-  Fetch a game object from a path.
-
-  @param T    GameObject type
-  @param path Path
-  @return T (Ptr)
-  */
-  template <class T>
-  Ptr<T> fetch(std::string path);
-
-  /**
-  Get the root.
-  @return GameObject (Ptr)
-  */
-  Ptr<GameObject> getRoot();
-
-  /**
-  Show the graph indices.
-  */
-  void showIndices();
-
-  friend class GameObject;
-
-private:
-  Ptr<GameObject> _root;
-  std::map<std::string, Ptr<GameObject>> _indices;
-
-  /**
-  Add an index to the graph.
-  @param object GameObject (Ptr)
-  */
-  void addIndex(Ptr<GameObject> object);
+class SceneGraph: public SceneGraphBase<false> {
 };
 
 } /* ecs */
 } /* hx3d */
-
-#include "hx3d/ecs/scene_graph.inl.hpp"
 
 #endif

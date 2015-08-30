@@ -1,0 +1,120 @@
+/*
+    Entity Component System: Base Scene Graph.
+    Copyright (C) 2015 Denis BOURGE
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
+#ifndef HX3D_ECS_SCENEGRAPHBASE
+#define HX3D_ECS_SCENEGRAPHBASE
+
+#include "hx3d/utils/ptr.hpp"
+
+#include <string>
+#include <map>
+
+namespace hx3d {
+namespace ecs {
+
+template <bool EntityEnabled>
+class NodeBase;
+class NodeEngine;
+
+template <bool EntityEnabled>
+class SceneGraphBase {
+public:
+  SceneGraphBase();
+  ~SceneGraphBase();
+
+  /**
+  Create a game object at the root.
+
+  @param T    Node type
+  @param name Name
+  @param args Arguments
+  @return T (Ptr)
+  */
+  template <class T, class... Args>
+  Ptr<T> createAtRoot(std::string name, Args... args);
+
+  /**
+  Create a game object at a path.
+
+  @param T    Node type
+  @param path Path
+  @param name Name
+  @param args Arguments
+  @return T (Ptr)
+  */
+  template <class T, class... Args>
+  Ptr<T> create(std::string path, std::string name, Args... args);
+
+  /**
+  Remove a game object from a path.
+  @param path Path
+  */
+  virtual void remove(std::string path);
+
+  /**
+  Fetch a game object from a path.
+
+  @param T    Node type
+  @param path Path
+  @return T (Ptr)
+  */
+  template <class T>
+  Ptr<T> fetch(std::string path);
+
+  /**
+  Get the root.
+  @return Node (Ptr)
+  */
+  Ptr<NodeBase<EntityEnabled>> getRoot();
+
+  /**
+  Show the graph indices.
+  */
+  void showIndices();
+
+  friend class NodeBase<EntityEnabled>;
+
+protected:
+  Ptr<NodeBase<EntityEnabled>> _root;
+  std::map<std::string, Ptr<NodeBase<EntityEnabled>>> _indices;
+  Ptr<NodeEngine> _engine;
+
+  /**
+  Add an index to the graph.
+  @param object Node (Ptr)
+  */
+  void addIndex(Ptr<NodeBase<EntityEnabled>> object);
+
+  /**
+  Test if the path exists and returns the node.
+  @return Node (Ptr)
+  */
+  Ptr<NodeBase<EntityEnabled>> pathExists(std::string path);
+
+  template <class T, class... Args>
+  Ptr<T> createNodeChild(Ptr<NodeBase<EntityEnabled>> container, std::string name, Args... args);
+};
+
+} /* ecs */
+} /* hx3d */
+
+#include "hx3d/ecs/base/scene_graph_base.inl.hpp"
+
+#endif

@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object.
+    Entity Component System: Entity Node System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,39 +18,20 @@
     USA
 */
 
-#include "hx3d/ecs/scene_graph.hpp"
+#ifndef HX3D_ECS_NODESYSTEM
+#define HX3D_ECS_NODESYSTEM
+
+#include "hx3d/ecs/base/system_base.hpp"
+
+#include "hx3d/ecs/e_node.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-template <class T, class... Args>
-Ptr<T> GameObject::createChild(std::string name, Args... args) {
-  if (childNameExists(name)) {
-    Log.Error("GameObject: a child of `%s` is already named `%s`.", _name.c_str(), name.c_str());
-    return nullptr;
-  }
-
-  Ptr<T> object = Make<T>(name, args...);
-  object->_parent = shared_from_this();
-  object->_graph = _graph;
-  _children.push_back(object);
-
-  _graph->addIndex(object);
-
-  return object;
-}
-
-template <class T>
-Ptr<T> GameObject::getChild(std::string name) {
-  for (Ptr<GameObject> obj: _children) {
-    if (obj->_name == name) {
-      return std::dynamic_pointer_cast<T>(obj);
-    }
-  }
-
-  Log.Error("GameObject: child `%s` does not exists.", name.c_str());
-  return nullptr;
-}
+class NodeSystem: public SystemBase<ENode> {
+};
 
 } /* ecs */
 } /* hx3d */
+
+#endif

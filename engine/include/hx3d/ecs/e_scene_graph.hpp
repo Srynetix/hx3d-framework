@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object System.
+    Entity Component System: Scene Graph for Node with entity information.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,16 +18,23 @@
     USA
 */
 
-#ifndef HX3D_ECS_OBJECTSYSTEM
-#define HX3D_ECS_OBJECTSYSTEM
+#ifndef HX3D_ECS_ESCENEGRAPH
+#define HX3D_ECS_ESCENEGRAPH
 
-#include "hx3d/ecs/system.hpp"
-#include "hx3d/ecs/game_object.hpp"
+#include "hx3d/ecs/base/scene_graph_base.hpp"
+
+// Helpers
+#include "hx3d/ecs/e_node.hpp"
+#include "hx3d/ecs/node_system.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class ObjectSystem: public System<GameObject> {
+class ESceneGraph: public SceneGraphBase<true> {
+public:
+  Ptr<NodeEngine> getEngine() {
+    return _engine;
+  }
 };
 
 } /* ecs */

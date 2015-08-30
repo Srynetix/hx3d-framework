@@ -194,11 +194,9 @@ set(
   "${ENGINE_SRC}/physics/2d/body_def.cpp"
   "${ENGINE_SRC}/physics/2d/debug_draw.cpp"
 
+  "${ENGINE_SRC}/ecs/base/id_base.cpp"
   "${ENGINE_SRC}/ecs/component.cpp"
-  "${ENGINE_SRC}/ecs/entity_base.cpp"
   "${ENGINE_SRC}/ecs/entity.cpp"
-  "${ENGINE_SRC}/ecs/game_object.cpp"
-  "${ENGINE_SRC}/ecs/scene_graph.cpp"
 )
 
 set(

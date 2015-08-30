@@ -23,7 +23,7 @@
 namespace hx3d {
 namespace ecs {
 
-Entity::Entity(const unsigned int id): EntityBase(id) {}
+Entity::Entity(const unsigned int id): IDBase(id) {}
 
 } /* ecs */
 } /* hx3d */

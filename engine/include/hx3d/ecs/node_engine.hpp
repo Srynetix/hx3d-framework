@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Game Object Engine.
+    Entity Component System: Entity Node Engine.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,16 +18,16 @@
     USA
 */
 
-#ifndef HX3D_ECS_OBJECTENGINE
-#define HX3D_ECS_OBJECTENGINE
+#ifndef HX3D_ECS_NODEENGINE
+#define HX3D_ECS_NODEENGINE
 
-#include "hx3d/ecs/engine.hpp"
-#include "hx3d/ecs/game_object.hpp"
+#include "hx3d/ecs/base/engine_base.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class ObjectEngine: public Engine<GameObject> {
+class ENode;
+class NodeEngine: public EngineBase<ENode> {
 };
 
 } /* ecs */
