@@ -41,6 +41,8 @@ class EngineBase {
 public:
   EngineBase();
 
+  // ENTITY ///////////////////////
+
   /**
   Create a new entity with the last entity id available.
   @return Entity (Ptr)
@@ -60,6 +62,8 @@ public:
   @param entity Entity (Ptr)
   */
   void removeEntity(Ptr<EntityType> entity);
+
+  // COMPONENTS /////////////////////
 
   /**
   Get the component for an entity.
@@ -90,6 +94,8 @@ public:
   template <class T, class... Args>
   void createComponent(Ptr<EntityType> entity, Args... args);
 
+  // SYSTEM /////////////////////////
+
   /**
   Add a system to the engine.
 
@@ -108,6 +114,8 @@ public:
   template <class T, class... Args>
   void createSystem(Args... args);
 
+  // UTILS //////////////////////////
+
   /**
   Get the number of components for an entity.
 
@@ -115,6 +123,11 @@ public:
   @return Number of components
   */
   unsigned int getComponentSize(Ptr<EntityType> entity);
+
+  /**
+  Get the number of entities.
+  */
+  unsigned int getEntityCount();
 
   /**
   Get the bits corresponding to the entity components.

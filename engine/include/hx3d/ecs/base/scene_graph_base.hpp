@@ -31,6 +31,7 @@ namespace ecs {
 
 template <bool EntityEnabled>
 class NodeBase;
+
 class NodeEngine;
 
 template <bool EntityEnabled>
@@ -66,7 +67,7 @@ public:
   Remove a game object from a path.
   @param path Path
   */
-  virtual void remove(std::string path);
+  void remove(std::string path);
 
   /**
   Fetch a game object from a path.
@@ -108,6 +109,13 @@ protected:
   */
   Ptr<NodeBase<EntityEnabled>> pathExists(std::string path);
 
+  /**
+  Create a child for a container Node.
+  @param T          Node type
+  @param container  Container node
+  @param name       Child name
+  @param args       Arguments
+  */
   template <class T, class... Args>
   Ptr<T> createNodeChild(Ptr<NodeBase<EntityEnabled>> container, std::string name, Args... args);
 };

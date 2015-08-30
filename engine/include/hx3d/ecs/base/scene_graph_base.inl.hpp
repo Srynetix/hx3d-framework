@@ -20,6 +20,8 @@
 
 #include "hx3d/ecs/node_engine.hpp"
 
+#include "hx3d/ecs/base/node_base.hpp"
+
 namespace hx3d {
 namespace ecs {
 
@@ -41,33 +43,6 @@ SceneGraphBase<EntityEnabled>::~SceneGraphBase() {
 template <bool EntityEnabled>
 Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::getRoot() {
   return _root;
-}
-
-template <bool EntityEnabled>
-void SceneGraphBase<EntityEnabled>::remove(std::string path) {
-  if (_indices.find(path) == _indices.end()) {
-    Log.Error("SceneGraphBase: Index `%s` does not exists.", path.c_str());
-    return;
-  }
-
-  if (path == "/") {
-    Log.Error("SceneGraphBase: Root object can not be removed.");
-    return;
-  }
-
-  Ptr<NodeBase<EntityEnabled>> obj = _indices[path];
-  Ptr<NodeBase<EntityEnabled>> parent = obj->_parent;
-  for (Ptr<NodeBase<EntityEnabled>> child: obj->_children) {
-    remove(child->getPath());
-  }
-
-  for (unsigned int i = 0; i < parent->_children.size(); ++i) {
-    if (parent->_children[i] == obj) {
-      parent->_children.erase(parent->_children.begin() + i);
-    }
-  }
-
-  _indices.erase(path);
 }
 
 template <bool EntityEnabled>
@@ -93,25 +68,17 @@ void SceneGraphBase<EntityEnabled>::showIndices() {
 
   /////////////////
 
-template <>
+template <bool EntityEnabled>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<false>::createAtRoot(std::string name, Args... args) {
+Ptr<T> SceneGraphBase<EntityEnabled>::createAtRoot(std::string name, Args... args) {
   Ptr<T> ptr = createNodeChild<T>(_root, name, args...);
   return ptr;
 }
 
-template <>
+template <bool EntityEnabled>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<true>::createAtRoot(std::string name, Args... args) {
-  Ptr<T> ptr = createNodeChild<T>(_root, name, args...);
-  _engine->registerEntity(ptr);
-  return ptr;
-}
-
-template <>
-template <class T, class... Args>
-Ptr<T> SceneGraphBase<false>::create(std::string path, std::string name, Args... args) {
-  Ptr<NodeBase<false>> container = pathExists(path);
+Ptr<T> SceneGraphBase<EntityEnabled>::create(std::string path, std::string name, Args... args) {
+  Ptr<NodeBase<EntityEnabled>> container = pathExists(path);
   if (container == nullptr) {
     Log.Error("SceneGraph: could not create at `%s`.", path.c_str());
     return nullptr;
@@ -122,17 +89,60 @@ Ptr<T> SceneGraphBase<false>::create(std::string path, std::string name, Args...
 }
 
 template <>
-template <class T, class... Args>
-Ptr<T> SceneGraphBase<true>::create(std::string path, std::string name, Args... args) {
-  Ptr<NodeBase<true>> container = pathExists(path);
-  if (container == nullptr) {
-    Log.Error("SceneGraph: could not create at `%s`.", path.c_str());
-    return nullptr;
+inline void SceneGraphBase<false>::remove(std::string path) {
+  if (_indices.find(path) == _indices.end()) {
+    Log.Error("SceneGraph: Index `%s` does not exists.", path.c_str());
+    return;
   }
 
-  Ptr<T> ptr = createNodeChild<T>(container, name, args...);
-  _engine->registerEntity(ptr);
-  return ptr;
+  if (path == "/") {
+    Log.Error("SceneGraph: Root object can not be removed.");
+    return;
+  }
+
+  Ptr<NodeBase<false>> obj = _indices[path];
+  Ptr<NodeBase<false>> parent = obj->_parent;
+  for (Ptr<NodeBase<false>> child: obj->_children) {
+    this->remove(child->getPath());
+  }
+
+  for (unsigned int i = 0; i < parent->_children.size(); ++i) {
+    if (parent->_children[i] == obj) {
+      parent->_children.erase(parent->_children.begin() + i);
+    }
+  }
+
+  _indices.erase(path);
+}
+
+template <>
+inline void SceneGraphBase<true>::remove(std::string path) {
+  if (_indices.find(path) == _indices.end()) {
+    Log.Error("SceneGraphBase: Index `%s` does not exists.", path.c_str());
+    return;
+  }
+
+  if (path == "/") {
+    Log.Error("SceneGraphBase: Root object can not be removed.");
+    return;
+  }
+
+  Ptr<NodeBase<true>> obj = _indices[path];
+  Ptr<NodeBase<true>> parent = obj->_parent;
+  for (Ptr<NodeBase<true>> child: obj->_children) {
+    remove(child->getPath());
+  }
+
+  for (unsigned int i = 0; i < parent->_children.size(); ++i) {
+    if (parent->_children[i] == obj) {
+      parent->_children.erase(parent->_children.begin() + i);
+    }
+  }
+  
+  // ...
+  _engine->removeEntity(std::dynamic_pointer_cast<ENode>(obj));
+
+  _indices.erase(path);
 }
 
 template <bool EntityEnabled>
@@ -166,9 +176,9 @@ Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::pathExists(std::stri
   return node;
 }
 
-template <bool EntityEnabled>
+template <>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<EntityEnabled>::createNodeChild(Ptr<NodeBase<EntityEnabled>> container, std::string name, Args... args) {
+Ptr<T> SceneGraphBase<false>::createNodeChild(Ptr<NodeBase<false>> container, std::string name, Args... args) {
 
   if (container->childNameExists(name)) {
     Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), name.c_str());
@@ -181,6 +191,25 @@ Ptr<T> SceneGraphBase<EntityEnabled>::createNodeChild(Ptr<NodeBase<EntityEnabled
   container->_children.push_back(object);
 
   addIndex(object);
+  return object;
+}
+
+template <>
+template <class T, class... Args>
+Ptr<T> SceneGraphBase<true>::createNodeChild(Ptr<NodeBase<true>> container, std::string name, Args... args) {
+
+  if (container->childNameExists(name)) {
+    Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), name.c_str());
+    return nullptr;
+  }
+
+  Ptr<T> object = Make<T>(name, args...);
+  object->_parent = container;
+  object->_graph = this;
+  container->_children.push_back(object);
+
+  addIndex(object);
+  _engine->registerEntity(object);
   return object;
 }
 

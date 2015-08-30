@@ -64,6 +64,11 @@ unsigned int EngineBase<EntityType>::getComponentSize(Ptr<EntityType> entity) {
 }
 
 template <class EntityType>
+unsigned int EngineBase<EntityType>::getEntityCount() {
+  return _entities.size();
+}
+
+template <class EntityType>
 unsigned int EngineBase<EntityType>::getBits(Ptr<EntityType> entity) {
   unsigned int id = entity->getId();
   return _bits[id].getBits();

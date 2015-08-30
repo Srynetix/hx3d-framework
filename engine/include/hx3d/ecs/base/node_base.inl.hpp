@@ -34,7 +34,7 @@ Transform NodeBase<EntityEnabled>::getFullTransform() {
     return transform;
   }
 
-return transform.add(_parent->getFullTransform());
+  return transform.add(_parent->getFullTransform());
 }
 
 template <bool EntityEnabled>
