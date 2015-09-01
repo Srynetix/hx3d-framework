@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/ecs/node_engine.hpp"
+#include "hx3d/ecs/z_engine.hpp"
 
 #include "hx3d/ecs/base/node_base.hpp"
 
@@ -30,7 +30,7 @@ namespace ecs {
 template <bool EntityEnabled>
 SceneGraphBase<EntityEnabled>::SceneGraphBase():
   _root(Make<NodeBase<EntityEnabled>>("/")),
-  _engine(Make<NodeEngine>())
+  _engine(Make<ZEngine>())
 {
   _root->_graph = this;
   _root->_parent = nullptr;
@@ -83,6 +83,42 @@ void SceneGraphBase<EntityEnabled>::draw(Batch& batch) {
       stack.push(child);
     }
   }
+}
+
+template <>
+inline void SceneGraphBase<false>::update() {
+  std::stack<Ptr<NodeBase<false>>> stack;
+  stack.push(_root);
+
+  while (!stack.empty()) {
+    Ptr<NodeBase<false>> node = stack.top();
+    stack.pop();
+
+    node->update();
+
+    for (Ptr<NodeBase<false>> child: node->_children) {
+      stack.push(child);
+    }
+  }
+}
+
+template <>
+inline void SceneGraphBase<true>::update() {
+  std::stack<Ptr<NodeBase<true>>> stack;
+  stack.push(_root);
+
+  while (!stack.empty()) {
+    Ptr<NodeBase<true>> node = stack.top();
+    stack.pop();
+
+    node->update();
+
+    for (Ptr<NodeBase<true>> child: node->_children) {
+      stack.push(child);
+    }
+  }
+
+  _engine->update();
 }
 
   /////////////////
@@ -159,7 +195,7 @@ inline void SceneGraphBase<true>::remove(std::string path) {
   }
 
   // ...
-  _engine->removeEntity(std::dynamic_pointer_cast<ENode>(obj));
+  _engine->removeEntity(std::dynamic_pointer_cast<ZNode>(obj));
 
   _indices.erase(path);
 }

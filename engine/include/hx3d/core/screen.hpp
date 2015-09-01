@@ -32,40 +32,40 @@ public:
   /**
   On screen show.
   */
-  virtual void show() = 0;
+  virtual void show();
   /**
   On screen hide.
   */
-  virtual void hide() = 0;
+  virtual void hide();
 
   /**
   On screen pause.
   */
-  virtual void pause() = 0;
+  virtual void pause();
   /**
   On screen resume.
   */
-  virtual void resume() = 0;
+  virtual void resume();
 
   /**
   On screen update.
   */
-  virtual void update() = 0;
+  virtual void update();
   /**
   On screen render.
   */
-  virtual void render() = 0;
+  virtual void render();
   /**
   On screen resize.
   @param width  New width
   @param height New height
   */
-  virtual void resize(int width, int height) = 0;
+  virtual void resize(int width, int height);
 
   /**
   On screen disposal.
   */
-  virtual void dispose() = 0;
+  virtual void dispose();
 };
 
 } /* hx3d */

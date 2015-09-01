@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity Node Engine.
+    Entity Component System: Scene Graph for Node with entity information.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,16 +18,23 @@
     USA
 */
 
-#ifndef HX3D_ECS_NODEENGINE
-#define HX3D_ECS_NODEENGINE
+#ifndef HX3D_ECS_ZGRAPH
+#define HX3D_ECS_ZGRAPH
 
-#include "hx3d/ecs/base/engine_base.hpp"
+#include "hx3d/ecs/base/scene_graph_base.hpp"
+
+// Helpers
+#include "hx3d/ecs/z_node.hpp"
+#include "hx3d/ecs/z_system.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class ENode;
-class NodeEngine: public EngineBase<ENode> {
+class ZGraph: public SceneGraphBase<true> {
+public:
+  Ptr<ZEngine> getEngine() {
+    return _engine;
+  }
 };
 
 } /* ecs */

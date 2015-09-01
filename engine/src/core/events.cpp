@@ -19,6 +19,7 @@
 */
 
 #include "hx3d/core/events.hpp"
+#include "hx3d/core/input_handler.hpp"
 
 namespace hx3d {
 
@@ -37,6 +38,7 @@ EventManager::EventManager() {
   _touchPressure = 0.f;
 
   _touchSimulation = false;
+  _currentHandler = nullptr;
 }
 
 EventManager::~EventManager() {
@@ -196,6 +198,9 @@ void EventManager::poll() {
       }
 
       _windowEvents[static_cast<unsigned int>(type)] = true;
+      if (_currentHandler) {
+        _currentHandler->onWindowEvent(type);
+      }
     }
 
     else if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) {
@@ -226,9 +231,18 @@ void EventManager::poll() {
       if (type == MouseButtonEvent::Type::Released) {
         _mouseButtonReleased[position] = true;
         _mouseButtonClicked[position] = false;
+
+        if (_currentHandler) {
+          _currentHandler->onMouseReleased(key, _mousePosition);
+        }
+
       } else {
         _mouseButtonClicked[position] = true;
         _mouseButtonReleased[position] = false;
+
+        if (_currentHandler) {
+          _currentHandler->onMouseClicked(key, _mousePosition);
+        }
       }
 
       if (_touchSimulation) {
@@ -239,9 +253,18 @@ void EventManager::poll() {
         if (type == MouseButtonEvent::Type::Released) {
           _screenTouched = false;
           _screenReleased = true;
+
+          if (_currentHandler) {
+            _currentHandler->onTouchUp(_touchPosition, _touchPressure);
+          }
+
         } else {
           _screenReleased = false;
           _screenTouched = true;
+
+          if (_currentHandler) {
+            _currentHandler->onTouchDown(_touchPosition, _touchPressure);
+          }
         }
       }
     }
@@ -250,9 +273,17 @@ void EventManager::poll() {
       _mousePosition = glm::vec2(event.motion.x, event.motion.y);
       _mouseMovement = glm::vec2(event.motion.xrel, event.motion.yrel);
 
+      if (_currentHandler) {
+        _currentHandler->onMouseMotion(_mousePosition, _mouseMovement);
+      }
+
       if (_touchSimulation) {
         _touchPosition = _mousePosition;
         _touchMovement = _mouseMovement;
+
+        if (_currentHandler) {
+          _currentHandler->onTouchMotion(_touchPosition, _touchMovement, _touchPressure);
+        }
       }
     }
 
@@ -272,6 +303,10 @@ void EventManager::poll() {
       _mouseWheelTurned[position] = true;
 
       _mouseWheelMovement = glm::vec2(event.wheel.x, event.wheel.y);
+
+      if (_currentHandler) {
+        _currentHandler->onMouseWheel(direction, _mouseWheelMovement);
+      }
     }
 
     else if (event.type == SDL_FINGERUP || event.type == SDL_FINGERDOWN) {
@@ -284,15 +319,29 @@ void EventManager::poll() {
       if (type == TouchEvent::Type::Released) {
         _screenTouched = false;
         _screenReleased = true;
+
+        if (_currentHandler) {
+          _currentHandler->onTouchUp(_touchPosition, _touchPressure);
+        }
+
       } else {
         _screenReleased = false;
         _screenTouched = true;
+
+        if (_currentHandler) {
+          _currentHandler->onTouchDown(_touchPosition, _touchPressure);
+        }
       }
     }
 
     else if (event.type == SDL_FINGERMOTION) {
       _touchPosition = glm::vec2(event.tfinger.x, event.tfinger.y);
       _touchMovement = glm::vec2(event.tfinger.dx, event.tfinger.dy);
+      _touchPressure = event.tfinger.pressure;
+
+      if (_currentHandler) {
+        _currentHandler->onTouchMotion(_touchPosition, _touchMovement, _touchPressure);
+      }
     }
 
     else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
@@ -352,12 +401,29 @@ void EventManager::poll() {
       if (type == KeyEvent::Type::Released) {
         _keysReleased[position] = true;
         _keysPressed[position] = false;
+
+        if (_currentHandler) {
+          _currentHandler->onKeyReleased(key);
+        }
+
       } else {
         _keysPressed[position] = true;
         _keysReleased[position] = false;
+
+        if (_currentHandler) {
+          _currentHandler->onKeyPressed(key);
+        }
       }
     }
   }
+}
+
+void EventManager::setInputHandler(Ptr<InputHandler> handler) {
+  _currentHandler = handler.get();
+}
+
+void EventManager::setInputHandler(InputHandler* handler) {
+  _currentHandler = handler;
 }
 
 } /* hx3d */

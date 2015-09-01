@@ -32,7 +32,7 @@ namespace ecs {
 template <bool EntityEnabled>
 class NodeBase;
 
-class NodeEngine;
+class ZEngine;
 
 template <bool EntityEnabled>
 class SceneGraphBase {
@@ -91,17 +91,22 @@ public:
   void showIndices();
 
   /**
-  Draw the node.
+  Draw the nodes.
   @param batch Batch
   */
   void draw(Batch& batch);
+
+  /**
+  Update the nodes.
+  */
+  void update();
 
   friend class NodeBase<EntityEnabled>;
 
 protected:
   Ptr<NodeBase<EntityEnabled>> _root;
   std::map<std::string, Ptr<NodeBase<EntityEnabled>>> _indices;
-  Ptr<NodeEngine> _engine;
+  Ptr<ZEngine> _engine;
 
   /**
   Add an index to the graph.

@@ -30,8 +30,11 @@
 #include <glm/vec2.hpp>
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+
+class InputHandler;
 
 class KeyEvent {
 public:
@@ -226,6 +229,9 @@ public:
   */
   void poll();
 
+  void setInputHandler(InputHandler* handler);
+  void setInputHandler(Ptr<InputHandler> handler);
+
 private:
   bool* _keysReleased;
   bool* _keysPressed;
@@ -249,6 +255,8 @@ private:
   float _touchPressure;
 
   bool _touchSimulation;
+
+  InputHandler* _currentHandler;
 };
 
 } /* hx3d */

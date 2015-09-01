@@ -1,5 +1,5 @@
 /*
-    Default implemented screen.
+    Entity Component System: Node with entity information.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,35 +18,28 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREENADAPTER
-#define HX3D_CORE_SCREENADAPTER
+#ifndef HX3D_ECS_ZNODE
+#define HX3D_ECS_ZNODE
 
-#include "hx3d/core/screen.hpp"
+#include "hx3d/ecs/base/node_base.hpp"
 
 namespace hx3d {
+namespace ecs {
 
-/**
-Default implemented screen.
-*/
-class ScreenAdapter: public Screen {
-
+class ZNode: public NodeBase<true> {
 public:
-  ScreenAdapter();
-  virtual ~ScreenAdapter();
+  /**
+  Create a named Node.
+  Should not be used directly.
+  To create a Node, use a SceneGraph.
+  See @link#SceneGraphBase::create or @link#SceneGraphBase::createAtRoot.
 
-  virtual void show() override;
-  virtual void hide() override;
-
-  virtual void pause() override;
-  virtual void resume() override;
-
-  virtual void update() override;
-  virtual void render() override;
-  virtual void resize(int width, int height) override;
-
-  virtual void dispose() override;
+  @param name Name
+  */
+  ZNode(std::string name): NodeBase(name) {}
 };
 
+} /* ecs */
 } /* hx3d */
 
 #endif

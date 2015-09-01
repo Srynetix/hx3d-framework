@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity Node System.
+    Entity Component System: Entity Node Engine.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,16 @@
     USA
 */
 
-#ifndef HX3D_ECS_NODESYSTEM
-#define HX3D_ECS_NODESYSTEM
+#ifndef HX3D_ECS_ZENGINE
+#define HX3D_ECS_ZENGINE
 
-#include "hx3d/ecs/base/system_base.hpp"
-
-#include "hx3d/ecs/e_node.hpp"
+#include "hx3d/ecs/base/engine_base.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class NodeSystem: public SystemBase<ENode> {
+class ZNode;
+class ZEngine: public EngineBase<ZNode> {
 };
 
 } /* ecs */

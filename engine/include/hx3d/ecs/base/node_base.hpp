@@ -95,6 +95,11 @@ public:
   */
   virtual void draw(Batch& batch);
 
+  /**
+  Update the node.
+  */
+  virtual void update();
+
   ///////////
 
   Transform transform;

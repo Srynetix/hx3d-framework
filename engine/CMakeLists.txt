@@ -145,7 +145,6 @@ set(
   "${ENGINE_SRC}/core/core.cpp"
   "${ENGINE_SRC}/core/events.cpp"
   "${ENGINE_SRC}/core/screen.cpp"
-  "${ENGINE_SRC}/core/screen_adapter.cpp"
 
   "${ENGINE_SRC}/utils/bitset.cpp"
   "${ENGINE_SRC}/utils/log.cpp"

@@ -1,5 +1,5 @@
 /*
-    Default implemented screen.
+    Entity Component System: Entity Node System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,23 +18,20 @@
     USA
 */
 
-#include "hx3d/core/screen_adapter.hpp"
+#ifndef HX3D_ECS_ZSYSTEM
+#define HX3D_ECS_ZSYSTEM
+
+#include "hx3d/ecs/base/system_base.hpp"
+
+#include "hx3d/ecs/z_node.hpp"
 
 namespace hx3d {
+namespace ecs {
 
-ScreenAdapter::ScreenAdapter(): Screen() {}
-ScreenAdapter::~ScreenAdapter() {}
+class ZSystem: public SystemBase<ZNode> {
+};
 
-void ScreenAdapter::show() {}
-void ScreenAdapter::hide() {}
-
-void ScreenAdapter::pause() {}
-void ScreenAdapter::resume() {}
-
-void ScreenAdapter::update() {}
-void ScreenAdapter::render() {}
-void ScreenAdapter::resize(int width, int height) {}
-
-void ScreenAdapter::dispose() {}
-
+} /* ecs */
 } /* hx3d */
+
+#endif

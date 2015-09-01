@@ -25,4 +25,16 @@ namespace hx3d {
 Screen::Screen() {}
 Screen::~Screen() {}
 
+void Screen::show() {}
+void Screen::hide() {}
+
+void Screen::pause() {}
+void Screen::resume() {}
+
+void Screen::update() {}
+void Screen::render() {}
+void Screen::resize(int width, int height) {}
+
+void Screen::dispose() {}
+
 } /* hx3d */

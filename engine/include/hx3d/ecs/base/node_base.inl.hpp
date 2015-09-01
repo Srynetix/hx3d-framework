@@ -72,6 +72,10 @@ template <bool EntityEnabled>
 void NodeBase<EntityEnabled>::draw(Batch& batch) {
 }
 
+template <bool EntityEnabled>
+void NodeBase<EntityEnabled>::update() {
+}
+
 /////////////////////
 
 template <bool EntityEnabled>
