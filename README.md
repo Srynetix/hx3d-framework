@@ -24,7 +24,7 @@ All the rendering is done with OpenGL 3+ / OpenGLES 2.0.
 
 ##### For compiling/executing #####
 
-They are included in the dependencies repository.  
+They are included in the [**dependencies repository**](https://github.com/Srynetix/hx3d-dependencies).  
 To import them, just clone them in the "dependencies" folder.
 
 You can use the `clone_dependencies.sh` script.
@@ -102,7 +102,7 @@ You can use the `clone_dependencies.sh` script.
 
 ## <a name="building"></a> Building ##
 
-hx3d has it's own build system made in Python.  
+**hx3d** has it's own build system made in Python.  
 It uses CMake and Ninja internally.
 
 It's simple enough to add new targets easily.
