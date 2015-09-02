@@ -32,11 +32,8 @@ OrthographicCamera::OrthographicCamera():
 {}
 
 OrthographicCamera::OrthographicCamera(float width, float height):
-  Camera(width, height), zoom(1.f)
+  Camera(width, height, -1, 1), zoom(1.f)
   {
-    near = -1.f;
-    far = 1.f;
-
     position = glm::vec3(zoom * viewportWidth / 2.f, zoom * viewportHeight / 2.f, 0);
 
     update();

@@ -27,16 +27,16 @@
 
 namespace hx3d {
 
-PerspectiveCamera::PerspectiveCamera():
-  PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight())
+PerspectiveCamera::PerspectiveCamera(float near, float far):
+  PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight(), near, far)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height):
-  PerspectiveCamera(width, height, 70)
+PerspectiveCamera::PerspectiveCamera(float width, float height, float near, float far):
+  PerspectiveCamera(width, height, near, far, 70)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float fov):
-  Camera(width, height), fieldOfView(fov)
+PerspectiveCamera::PerspectiveCamera(float width, float height, float near, float far, float fov):
+  Camera(width, height, near, far), fieldOfView(fov)
 {
   update();
 }

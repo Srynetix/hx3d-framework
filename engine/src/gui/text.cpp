@@ -41,6 +41,7 @@ Text::Text(Ptr<Widget> parent, Ptr<Font> font):
 
 void Text::init() {
   setTint(Color(255, 255, 255));
+  transform.size = glm::vec3(1);
 }
 
 void Text::setContent(std::string content) {
@@ -64,11 +65,11 @@ void Text::draw(Ptr<Shader> shader) {
         kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
       }
 
-      pen.x += kerning;
-      float x0 = pen.x + glyph->offset_x;
-      float y0 = pen.y + glyph->offset_y;
-      float x1 = x0 + glyph->width;
-      float y1 = y0 - glyph->height;
+      pen.x += transform.size.x * kerning;
+      float x0 = pen.x + transform.size.x * glyph->offset_x;
+      float y0 = pen.y + transform.size.y * glyph->offset_y;
+      float x1 = x0 + transform.size.x * glyph->width;
+      float y1 = y0 - transform.size.y * glyph->height;
       float s0 = glyph->s0;
       float t0 = glyph->t0;
       float s1 = glyph->s1;
@@ -93,7 +94,7 @@ void Text::draw(Ptr<Shader> shader) {
 
       Mesh::draw(shader);
 
-      pen.x += glyph->advance_x;
+      pen.x += transform.size.x * glyph->advance_x;
     }
   }
 }

@@ -38,8 +38,10 @@ public:
 
   @param width  Viewport width
   @param height Viewport height
+  @param near   Near
+  @param far    Far
   */
-  Camera(float width, float height);
+  Camera(float width, float height, float near, float far);
 
   /**
   Look at target.
@@ -63,7 +65,7 @@ public:
 
   /**
   Rotate the camera around one point, on one/multiple axes.
-  
+
   @param center Point
   @param angle  Angle in degrees
   @param axis   Direction(s)

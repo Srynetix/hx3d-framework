@@ -30,10 +30,13 @@ namespace hx3d {
 class PerspectiveCamera: public Camera {
 public:
   /**
-  Create a perspective camera with the screen size.
+  Create a perspective camera with the screen size and the near and far.
   The default field of view is 70.
+
+  @param near Near
+  @param far Far
   */
-  PerspectiveCamera();
+  PerspectiveCamera(float near, float far);
 
   /**
   Create a perspective camera with a viewport width and height.
@@ -41,8 +44,10 @@ public:
 
   @param width  Viewport width
   @param height Viewport height
+  @paran near   Near
+  @param far    Far
   */
-  PerspectiveCamera(float width, float height);
+  PerspectiveCamera(float width, float height, float near, float far);
 
   /**
   Create a perspective camera with a viewport width and height,
@@ -50,9 +55,11 @@ public:
 
   @param width  Viewport width
   @param height Viewport height
+  @param near   Near
+  @param far    Far
   @param fov    Field of view
   */
-  PerspectiveCamera(float width, float height, float fov);
+  PerspectiveCamera(float width, float height, float near, float far, float fov);
 
   virtual void update() override;
 

@@ -28,12 +28,12 @@
 
 namespace hx3d {
 
-Camera::Camera(float width, float height):
+Camera::Camera(float width, float height, float near, float far):
   position(0.f),
   direction(0.f, 0.f, -1.f),
   up(0.f, 1.f, 0.f),
-  near(0.1f),
-  far(100.f),
+  near(near),
+  far(far),
   viewportWidth(width),
   viewportHeight(height)
 {}
