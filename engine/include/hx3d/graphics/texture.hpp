@@ -24,13 +24,13 @@
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/resource.hpp"
 
+#include "hx3d/graphics/font.hpp"
 #include "hx3d/graphics/gl.hpp"
 
 #include <string>
 
 namespace hx3d {
 
-class Font;
 class Texture: public Resource {
 public:
 

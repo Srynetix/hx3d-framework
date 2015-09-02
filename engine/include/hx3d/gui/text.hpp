@@ -72,7 +72,7 @@ public:
 
   virtual void draw(Ptr<Shader> shader) override;
 
-private:
+protected:
 
   /**
   Initialize the text.

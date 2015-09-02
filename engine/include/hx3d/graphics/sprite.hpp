@@ -30,6 +30,13 @@ namespace hx3d {
 class Sprite: public Mesh {
 
 public:
+
+  /**
+  Create a sprite without texture.
+  You must set it after with @link#setTexture.
+  */
+  Sprite();
+
   /**
   Create a sprite from a texture.
   @param texture Texture (Ptr)

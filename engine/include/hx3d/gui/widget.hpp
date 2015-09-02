@@ -26,7 +26,7 @@
 namespace hx3d {
 namespace gui {
 
-class Widget: public Mesh {
+class Widget: public Mesh, public EnableSharedThis<Widget> {
 public:
   /**
   Construct a widget from a parent widget.
@@ -39,7 +39,7 @@ public:
   @param widget Widget (Ptr)
   */
   void add(Ptr<Widget> widget);
-  
+
   virtual void draw(Ptr<Shader> shader) override;
 
 private:

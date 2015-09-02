@@ -1,5 +1,5 @@
 /*
-    Base test screen.
+    Screens test.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,55 +18,45 @@
     USA
 */
 
-#ifndef HX3D_TEST_BASESCREEN
-#define HX3D_TEST_BASESCREEN
+#ifndef HX3D_TEST_SCREENSTEST
+#define HX3D_TEST_SCREENSTEST
 
 #include "hx3d/core/application.hpp"
 #include "hx3d/core/game.hpp"
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/screen_adapter.hpp"
-#include "hx3d/core/events.hpp"
-
-#include "hx3d/graphics/shader.hpp"
-#include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/batch.hpp"
-
-#include "hx3d/graphics/cameras/perspective_camera.hpp"
-#include "hx3d/graphics/cameras/orthographic_camera.hpp"
-
-#include "hx3d/graphics/viewports/fit_viewport.hpp"
 
 #include "hx3d/utils/log.hpp"
-#include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/assets.hpp"
+
+#include "./menu_screen.hpp"
 
 #include <gtest/gtest.h>
 
-template <class ScreenT>
 class TestGame: public hx3d::Game {
 public:
   virtual void create() override {
-
     hx3d::Core::Assets()->create<hx3d::Texture>("box", "textures/box.jpg");
+    hx3d::Core::Events()->emulateTouchWithMouse(true);
 
-    setScreen(Make<ScreenT>());
+    setScreen(Make<MenuScreen>());
   }
 };
 
-template <class ScreenT>
-void LaunchGame() {
-  hx3d::Application app(Make<TestGame<ScreenT>>(), 1280, 720, "Test", 60);
-}
-
-class ScreenTest: public testing::Test {
+class ScreensTest: public testing::Test {
 
 protected:
-  ScreenTest() {}
-  virtual ~ScreenTest() {}
+  ScreensTest() {}
+  virtual ~ScreensTest() {}
 
   virtual void SetUp() {}
   virtual void TearDown() {}
 };
+
+TEST_F(ScreensTest, Screens) {
+  hx3d::ApplicationConfig config;
+  config.title = "Tests";
+
+  hx3d::Application app(Make<TestGame>(), config);
+}
 
 #endif

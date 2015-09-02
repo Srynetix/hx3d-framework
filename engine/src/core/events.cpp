@@ -19,6 +19,9 @@
 */
 
 #include "hx3d/core/events.hpp"
+
+#include "hx3d/core/core.hpp"
+#include "hx3d/core/application.hpp"
 #include "hx3d/core/input_handler.hpp"
 
 namespace hx3d {
@@ -246,7 +249,8 @@ void EventManager::poll() {
       }
 
       if (_touchSimulation) {
-        _touchPosition = _mousePosition;
+        _touchPosition = glm::vec2(_mousePosition.x / Core::App()->getWidth(),
+        _mousePosition.y / Core::App()->getHeight());
         _touchMovement = glm::vec2(0);
         _touchPressure = 1.f;
 

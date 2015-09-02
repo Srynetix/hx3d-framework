@@ -1,5 +1,5 @@
 /*
-    Main test file.
+    GUI button.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -16,30 +16,29 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Make tests compatible for Android.
 */
 
-#include <iostream>
+#ifndef HX3D_GUI_BUTTON
+#define HX3D_GUI_BUTTON
 
-#ifdef __ANDROID__
+#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/text.hpp"
 
-  #include "./screens/menu_screen.hpp"
+namespace hx3d {
+namespace gui {
 
-  int main(int argc, char** argv) {
-    hx3d::Application app(Make<TestGame>(), hx3d::ApplicationConfig());
-    return 0;
-  }
+class Button: public Text {
+public:
+  Button(Ptr<Widget> parent, Ptr<Font> font);
 
-#else
+  virtual void draw(Ptr<Shader> shader);
 
-  #include <gtest/gtest.h>
+  void functionDraw(Ptr<Shader> shader, math::Function function) = delete;
 
-  int main(int argc, char** argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-  }
+private:
+};
+
+} /* gui */
+} /* hx3d */
 
 #endif

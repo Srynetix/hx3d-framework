@@ -22,6 +22,9 @@
 
 namespace hx3d {
 
+Sprite::Sprite():
+  Sprite(Ptr<Texture>(nullptr)) {}
+
 Sprite::Sprite(Ptr<Texture> texture):
   Mesh(), _texture(texture) {
 

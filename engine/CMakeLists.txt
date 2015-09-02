@@ -186,6 +186,7 @@ set(
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"
   "${ENGINE_SRC}/gui/text.cpp"
+  "${ENGINE_SRC}/gui/button.cpp"
 
   "${ENGINE_SRC}/physics/2d/world.cpp"
   "${ENGINE_SRC}/physics/2d/collision_matrix.cpp"
@@ -202,11 +203,10 @@ set(
   UNIT_TESTS
 
   "${TEST_SRC}/log_test.cpp"
-  "${TEST_SRC}/scene_graph_tests.cpp"
-
-#  "${TEST_SRC}/screens/screen_one.cpp"
-#  "${TEST_SRC}/screens/screen_two.cpp"
-#  "${TEST_SRC}/screens/screen_three.cpp"
+  # "${TEST_SRC}/scene_graph_tests.cpp"
+  
+  "${TEST_SRC}/screens_tests/screens_test.cpp"
+  "${TEST_SRC}/screens_tests/menu_screen.cpp"
 )
 
 set(
