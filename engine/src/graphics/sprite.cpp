@@ -57,15 +57,15 @@ Sprite::Sprite(Ptr<Texture> texture):
     uploadAll();
   }
 
-Sprite::Sprite(Ptr<FrameBuffer> buffer):
-  Sprite(buffer->getColorBuffer()) {}
+Sprite::Sprite(Framebuffer& buffer):
+  Sprite(buffer.getColorBuffer()) {}
 
 void Sprite::setTexture(Ptr<Texture> texture) {
   _texture = texture;
 }
 
-void Sprite::setTexture(Ptr<FrameBuffer> buffer) {
-  _texture = buffer->getColorBuffer();
+void Sprite::setTexture(Framebuffer& buffer) {
+  _texture = buffer.getColorBuffer();
 }
 
 void Sprite::draw(Ptr<Shader> shader) {

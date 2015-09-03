@@ -31,10 +31,12 @@ from builds.windows import WindowsBuilder
 from builds.macos   import MacOSBuilder
 from builds.ios     import iOSBuilder
 
-def create_cmakelists(game_build):
+def create_cmakelists(game_build, args):
     content = "cmake_minimum_required(VERSION 2.8)\nproject(hx3d)\n\nadd_subdirectory(engine)\n"
 
-    if game_build:
+    if args.test:
+        content += "add_subdirectory(tests)"
+    elif game_build:
         content += "add_subdirectory(game)"
 
     with open("CMakeLists.txt", "w+") as text_file:
@@ -46,17 +48,6 @@ Main
 def main():
     colorama.init(autoreset=True)
 
-    if Utils.direxists("game"):
-        game_build = True
-    else:
-        game_build = False
-
-        print()
-        Utils.gPrint("[Game building OFF.]", Fore.BLUE)
-    print()
-
-    create_cmakelists(game_build)
-
     available_systems = ["linux", "windows", "android", "macos", "ios"]
 
     parser = argparse.ArgumentParser(description='Build the project')
@@ -67,6 +58,17 @@ def main():
     parser.add_argument('-t', '--test', action="store_true", help='Test')
     parser.add_argument('-e','--execute', action="store_true", help="Execute")
     args = parser.parse_args()
+
+    if Utils.direxists("game"):
+        game_build = True
+    else:
+        game_build = False
+
+        print()
+        Utils.gPrint("[Game building OFF.]", Fore.BLUE)
+    print()
+
+    create_cmakelists(game_build, args)
 
     if args.system == "linux":
         LinuxBuilder(args, game_build).run()

@@ -27,6 +27,16 @@ namespace hx3d {
 namespace ecs {
 
 class Node: public NodeBase<false> {
+public:
+  /**
+  Create a named Node.
+  Should not be used directly.
+  To create a Node, use a SceneGraph.
+  See @link#SceneGraphBase::create or @link#SceneGraphBase::createAtRoot.
+
+  @param name Name
+  */
+  Node(std::string name): NodeBase(name) {}
 };
 
 } /* ecs */

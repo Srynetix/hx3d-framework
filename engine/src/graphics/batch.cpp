@@ -56,8 +56,8 @@ void Batch::end() {
   Shader::disable();
 }
 
-void Batch::setCamera(Ptr<Camera> camera) {
-  _camera = camera;
+void Batch::setCamera(Camera& camera) {
+  _camera = &camera;
 }
 
 void Batch::draw(Mesh& mesh) {

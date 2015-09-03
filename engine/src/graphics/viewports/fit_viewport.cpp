@@ -29,10 +29,10 @@
 
 namespace hx3d {
 
-FitViewport::FitViewport(float worldWidth, float worldHeight, Ptr<Camera> camera) {
+FitViewport::FitViewport(float worldWidth, float worldHeight, Camera& camera) {
   _worldWidth = worldWidth;
   _worldHeight = worldHeight;
-  _camera = camera;
+  _camera = &camera;
 }
 
 void FitViewport::internalUpdate(bool centerCamera) {

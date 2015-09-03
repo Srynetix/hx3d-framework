@@ -117,13 +117,6 @@ else()
   set(DESKTOP_LIBRARIES ${LINUX_LIBRARIES})
 endif()
 
-set(
-  TEST_LIBRARIES
-
-  ${DESKTOP_LIBRARIES}
-  "-lgtest"
-)
-
 ###################
 ## Include directories
 
@@ -157,6 +150,7 @@ set(
 
   "${ENGINE_SRC}/math/function.cpp"
   "${ENGINE_SRC}/math/vector_utils.cpp"
+  "${ENGINE_SRC}/math/number_utils.cpp"
   "${ENGINE_SRC}/math/random.cpp"
 
   "${ENGINE_SRC}/graphics/color.cpp"
@@ -167,7 +161,7 @@ set(
   "${ENGINE_SRC}/graphics/texture.cpp"
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/batch.cpp"
-  "${ENGINE_SRC}/graphics/frame_buffer.cpp"
+  "${ENGINE_SRC}/graphics/framebuffer.cpp"
   "${ENGINE_SRC}/graphics/viewport.cpp"
   "${ENGINE_SRC}/graphics/camera.cpp"
 
@@ -199,25 +193,6 @@ set(
   "${ENGINE_SRC}/ecs/entity.cpp"
 )
 
-set(
-  UNIT_TESTS
-
-  "${TEST_SRC}/log_test.cpp"
-  # "${TEST_SRC}/scene_graph_tests.cpp"
-  
-  "${TEST_SRC}/screens_tests/screens_test.cpp"
-  "${TEST_SRC}/screens_tests/menu_screen.cpp"
-)
-
-set(
-  TEST_FILES
-
-  ${COMMON_FILES}
-  ${UNIT_TESTS}
-
-  "${TEST_SRC}/main.cpp"
-)
-
 #################
 ## Compilation
 
@@ -230,12 +205,6 @@ if (ANDROID)
   target_link_libraries(${LIBRARY_NAME} ${ANDROID_LIBRARIES})
 else()
   target_link_libraries(${LIBRARY_NAME} ${DESKTOP_LIBRARIES})
-endif()
-
-if (BUILD_TESTS)
-  # Tests
-  add_executable(tests ${TEST_FILES})
-  target_link_libraries(tests ${TEST_LIBRARIES})
 endif()
 
 # directories

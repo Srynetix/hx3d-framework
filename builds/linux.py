@@ -29,12 +29,7 @@ class LinuxBuilder(Builder):
         pass
 
     def prepare(self):
-        if self._test:
-            test_command = "-DBUILD_TESTS:BOOL=true"
-        else:
-            test_command = ""
-
-        self.prepare_internal("cmake -GNinja {} ..".format(test_command))
+        self.prepare_internal("cmake -GNinja ..")
 
     def build(self):
         self.build_internal()
@@ -48,11 +43,15 @@ class LinuxBuilder(Builder):
         Utils.rmdir(self.path)
 
     def test(self):
-        game_name = config["game_name"]
-        Utils.copydir("engine/assets", "{}/engine/assets".format(self.path))
-        Utils.copydir("{}/assets".format(game_name), "{}/engine/assets".format(self.path))
+        self.prepare();
+        self.build_internal();
 
-        Utils.execCommand("cd {}/engine && ./tests".format(self.path))
+        game_name = config["game_name"]
+
+        Utils.copydir("engine/assets", "{}/tests/assets".format(self.path))
+        Utils.copydir("tests/assets".format(game_name), "{}/tests/assets".format(self.path))
+
+        Utils.execCommand("cd {}/tests && ./tests".format(self.path))
 
     def debug(self):
         game_name = config["game_name"]

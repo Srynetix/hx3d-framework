@@ -36,9 +36,9 @@ public:
 
   @param worldWidth   World width
   @param worldHeight  World height
-  @param camera       Camera (Ptr)
+  @param camera       Camera
   */
-  FitViewport(float worldWidth, float worldHeight, Ptr<Camera> camera);
+  FitViewport(float worldWidth, float worldHeight, Camera& camera);
 
   virtual void internalUpdate(bool centerCamera) override;
 

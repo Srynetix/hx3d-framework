@@ -50,14 +50,14 @@ public:
 
   /**
   Set the viewport camera.
-  @param camera Camera (Ptr)
+  @param camera Camera
   */
-  void setCamera(Ptr<Camera> camera);
+  void setCamera(Camera& camera);
   /**
   Get the viewport camera.
   @return Camera (Ptr)
   */
-  Ptr<Camera> getCamera();
+  Camera* getCamera();
 
   /**
   Apply the viewport on the screen without centering the camera.
@@ -93,7 +93,7 @@ public:
   glm::vec2 getWorldSize();
 
 protected:
-  Ptr<Camera> _camera;
+  Camera* _camera;
   float _worldWidth;
   float _worldHeight;
 

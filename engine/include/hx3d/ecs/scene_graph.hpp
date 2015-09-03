@@ -21,7 +21,11 @@
 #ifndef HX3D_ECS_SCENEGRAPH
 #define HX3D_ECS_SCENEGRAPH
 
+#include "hx3d/graphics/batch.hpp"
 #include "hx3d/ecs/base/scene_graph_base.hpp"
+
+#include "hx3d/ecs/node.hpp"
+#include "hx3d/ecs/z_node.hpp"
 
 namespace hx3d {
 namespace ecs {

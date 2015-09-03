@@ -65,6 +65,10 @@ class Builder:
             Utils.gPrint("> Cleaning...")
             self.clean()
 
+        elif self._test:
+            Utils.gPrint("> Test mode...")
+            self.test()
+
         else:
             self.prepare()
             self.build()
@@ -93,11 +97,6 @@ class Builder:
                 else:
                     print()
                     Utils.gPrint("> Can not debug: building game OFF.", Fore.RED)
-
-            elif self._test:
-                print()
-                Utils.gPrint("> Testing...")
-                self.test()
 
         Utils.gPrint("> Done.")
 

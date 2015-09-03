@@ -37,11 +37,11 @@ void Viewport::setScreenPosition(float x, float y) {
   _screenY = y;
 }
 
-void Viewport::setCamera(Ptr<Camera> camera) {
-  _camera = camera;
+void Viewport::setCamera(Camera& camera) {
+  _camera = &camera;
 }
 
-Ptr<Camera> Viewport::getCamera() {
+Camera* Viewport::getCamera() {
   return _camera;
 }
 

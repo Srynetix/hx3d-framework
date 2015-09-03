@@ -24,7 +24,7 @@
 #include "hx3d/utils/assets.hpp"
 
 #include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/frame_buffer.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/font.hpp"
 
@@ -121,7 +121,7 @@ void Application::create(int width, int height, std::string title) {
   /** Initializations **/
 
   Core::setApplication(this);
-  FrameBuffer::fetchDefaultFrameBuffer();
+  Framebuffer::fetchDefaultFramebuffer();
   Texture::generateBlankTexture();
 
   Core::Assets()->create<Shader>("base", "shaders/base");

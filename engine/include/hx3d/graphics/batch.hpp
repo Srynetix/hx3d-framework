@@ -91,12 +91,12 @@ public:
 
   /**
   Set the camera for the next batching.
-  @param camera Camera (Ptr)
+  @param camera Camera
   */
-  void setCamera(Ptr<Camera> camera);
+  void setCamera(Camera& camera);
 
 private:
-  Ptr<Camera> _camera;
+  Camera* _camera;
   Ptr<Shader> _shader;
 };
 

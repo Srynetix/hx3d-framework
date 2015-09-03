@@ -85,11 +85,4 @@ void Camera::rotateAround(glm::vec3 center, float angle, glm::vec3 axis) {
 
 ////////////////////
 
-void Camera::clear(Color color) {
-  glm::vec4 colorFloat = color.toFloat();
-
-  glClearColor(colorFloat.r, colorFloat.g, colorFloat.b, colorFloat.a);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
 } /* hx3d */

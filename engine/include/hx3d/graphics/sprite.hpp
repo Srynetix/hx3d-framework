@@ -23,7 +23,7 @@
 
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/frame_buffer.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 
 namespace hx3d {
 
@@ -45,9 +45,9 @@ public:
 
   /**
   Create a sprite from a framebuffer color buffer.
-  @param buffer Framebuffer (Ptr)
+  @param buffer Framebuffer
   */
-  Sprite(Ptr<FrameBuffer> buffer);
+  Sprite(Framebuffer& buffer);
 
   /**
   Set the sprite texture.
@@ -57,9 +57,9 @@ public:
 
   /**
   Set the sprite texture from a framebuffer color buffer.
-  @param buffer Framebuffer (Ptr)
+  @param buffer Framebuffer
   */
-  void setTexture(Ptr<FrameBuffer> buffer);
+  void setTexture(Framebuffer& buffer);
 
   virtual void draw(Ptr<Shader> shader) override;
 
