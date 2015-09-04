@@ -33,28 +33,37 @@ class Builder:
         self._debug = options.debug
         self._test = options.test
 
-    def prepare(self):
-        print("/!\ no preparing.")
+    # Engine
+    def prepare_engine(self):
+        pass
+    def build_engine(self):
+        pass
 
-    def build(self):
-        print("/!\ no building.")
+    # Game
+    def prepare_game(self):
+        pass
+    def build_game(self):
+        pass
+    def install_game(self):
+        pass
+    def debug_game(self):
+        pass
+    def execute_game(self):
+        pass
 
-    def install(self):
-        print("/!\ no installing.")
+    # Tests
+    def prepare_tests(self):
+        pass
+    def build_tests(self):
+        pass
+    def install_tests(self):
+        pass
+    def debug_tests(self):
+        pass
+    def execute_tests(self):
+        pass
 
     def clean(self):
-        print("/!\ no cleaning.")
-
-    def execute(self):
-        print("/!\ no executing.")
-
-    def debug(self):
-        print("/!\ no debugging.")
-
-    def test(self):
-        print("/!\ no testing.")
-
-    def post_build(self):
         pass
 
     def run(self):
@@ -65,50 +74,59 @@ class Builder:
             Utils.gPrint("> Cleaning...")
             self.clean()
 
-        elif self._test:
-            Utils.gPrint("> Test mode...")
-            self.test()
-
         else:
-            self.prepare()
-            self.build()
+            Utils.gPrint("> Preparing engine...")
+            self.prepare_engine()
+            Utils.gPrint("> Building engine...")
+            self.build_engine()
 
-            self.post_build()
+            if self._test:
+                Utils.gPrint("> Preparing tests...")
+                self.prepare_tests()
+                Utils.gPrint("> Building tests...")
+                self.build_tests()
 
-            if self._install:
-                print()
-                Utils.gPrint("> Installing...")
-                self.install()
+                if self._install:
+                    print()
+                    Utils.gPrint("> Installing tests...")
+                    self.install_tests()
 
-            if self._execute:
-                if self.game_build:
+                if self._debug:
                     print()
-                    Utils.gPrint("> Running...")
-                    self.execute()
-                else:
-                    print()
-                    Utils.gPrint("> Can not execute: building game OFF.", Fore.RED)
+                    Utils.gPrint("> Debugging tests...")
+                    self.debug_tests()
 
-            elif self._debug:
-                if self.game_build:
+                elif self._execute:
                     print()
-                    Utils.gPrint("> Debugging...")
-                    self.debug()
-                else:
+                    Utils.gPrint("> Executing tests...")
+                    self.execute_tests()
+
+            elif self.game_build:
+                Utils.gPrint("> Preparing game...")
+                self.prepare_game()
+                Utils.gPrint("> Building game...")
+                self.build_game()
+
+                if self._install:
                     print()
-                    Utils.gPrint("> Can not debug: building game OFF.", Fore.RED)
+                    Utils.gPrint("> Installing game...")
+                    self.install_game()
+
+                if self._debug:
+                    print()
+                    Utils.gPrint("> Debugging game...")
+                    self.debug_game()
+
+                elif self._execute:
+                    print()
+                    Utils.gPrint("> Executing game...")
+                    self.execute_game()
 
         Utils.gPrint("> Done.")
 
     def prepare_internal(self, command):
-        Utils.gPrint("> Preparing...")
-
         Utils.mkdir(self.path)
         Utils.execCommand("cd {} && {} > /dev/null".format(self.path, command))
 
     def build_internal(self):
-        if not Utils.direxists(self.path):
-            self.prepare()
-
-        Utils.gPrint("> Building...")
         Utils.execCommand("cd {} && ninja".format(self.path))
