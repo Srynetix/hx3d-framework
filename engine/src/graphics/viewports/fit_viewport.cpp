@@ -38,7 +38,7 @@ FitViewport::FitViewport(float worldWidth, float worldHeight, Camera& camera) {
 void FitViewport::internalUpdate(bool centerCamera) {
   float tgtRatio = _screenHeight / _screenWidth;
   float srcRatio = _worldHeight / _worldWidth;
-  float scale = tgtRatio > srcRatio ? _screenWidth / _worldWidth : _screenHeight / _worldHeight;
+  float scale = tgtRatio < srcRatio ? _screenWidth / _worldWidth : _screenHeight / _worldHeight;
 
   int nx = std::floor(_worldWidth * scale);
   int ny = std::floor(_worldHeight * scale);
@@ -47,6 +47,8 @@ void FitViewport::internalUpdate(bool centerCamera) {
   _screenY = (_screenHeight - ny) / 2.f;
   _screenWidth = nx;
   _screenHeight = ny;
+
+  Log.Info("VP <X: %d / Y: %d / W: %d / H: %d>", _screenX, _screenY, _screenWidth, _screenHeight);
 
   apply(centerCamera);
 }

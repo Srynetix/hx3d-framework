@@ -19,19 +19,34 @@ Screens list.
 using namespace hx3d;
 
 MenuScreen::MenuScreen():
-  text(Core::Assets()->get<Font>("default")),
-  instructions(Core::Assets()->get<Font>("default"))
+  font(Core::Assets()->get<Font>("default")),
+  defaultShader(Core::Assets()->get<Shader>("base")),
+
+  viewport(700, 350, camera),
+  text(font),
+  instructions(font),
+  textLogo(font),
+
+  buttonWidth(64),
+  buttonHeight(32)
 {
   sprite.setTexture(Core::Assets()->get<Texture>("box"));
   sprite.setTint(Color(0, 0, 50));
 
-  batch.setShader(Core::Assets()->get<Shader>("base"));
+  batch.setShader(defaultShader);
   batch.setCamera(camera);
 
-  sprite.transform.size = glm::vec3(128, 64, 0);
+  glm::vec2 worldSize = viewport.getWorldSize();
+
+  sprite.transform.size = glm::vec3(buttonWidth, buttonHeight, 0);
+  text.transform.scale = glm::vec3(0.5f);
 
   instructions.setContent("touch test to launch. then ESC or Back to go back. ESC or Back here to quit.");
-  instructions.transform.position = glm::vec3(Core::App()->getWidth() - 550, 20, 0);
+  instructions.transform.scale = glm::vec3(0.5f);
+  instructions.transform.position = glm::vec3(worldSize.x - 300, 20, 0);
+
+  textLogo.setContent("hx3d");
+  textLogo.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
@@ -44,11 +59,22 @@ MenuScreen::MenuScreen():
   Core::Events()->setInputHandler(this);
 }
 
+void MenuScreen::resize(int width, int height) {
+  viewport.update(width, height, true);
+}
+
 void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
   float screen_x = touchPosition.x * Core::App()->getWidth();
   float screen_y = touchPosition.y * Core::App()->getHeight();
-  unsigned int column = screen_x / 128;
-  unsigned int target = screen_y / 64;
+
+  glm::vec2 vpc = viewport.screenToWorld(glm::vec2(screen_x, screen_y));
+  if (vpc.x < 0 || vpc.y < 0)
+    return;
+
+  unsigned int column = vpc.x / buttonWidth;
+  unsigned int target = vpc.y / buttonHeight;
+
+  Log.Info("C: %ld / T: %ld", column, target);
 
   if (column == 0 && target < screens.size()) {
     screens[target].func();
@@ -72,12 +98,12 @@ void MenuScreen::update() {
 void MenuScreen::render() {
 
   Framebuffer::clear(Color(0, 0, 0));
+  glm::vec2 worldSize = viewport.getWorldSize();
 
   batch.begin();
-
   for (unsigned int i = 0; i < screens.size(); ++i) {
-    sprite.transform.position = glm::vec3((128 / 2), Core::App()->getHeight() - i * 64 - (64 / 2), 0);
-    text.transform.position = glm::vec3(sprite.transform.position.x - 32, sprite.transform.position.y, 0.5f);
+    sprite.transform.position = glm::vec3((buttonWidth / 2), worldSize.y - i * buttonHeight - (buttonHeight / 2), 0);
+    text.transform.position = glm::vec3(sprite.transform.position.x - buttonWidth / 4, sprite.transform.position.y, 0.5f);
 
     text.setContent(screens[i].name);
 
@@ -89,6 +115,8 @@ void MenuScreen::render() {
     y = std::sin(t) * 2.f;
     x = std::cos(t / 2.f);
   }));
-
+  batch.draw(textLogo, math::Function(Core::App()->getElapsedTime()/20.f, 0.25f, [](float& x, float& y, float t) {
+    x = std::cos(t / 2.f);
+  }));
   batch.end();
 }

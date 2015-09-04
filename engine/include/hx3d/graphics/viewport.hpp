@@ -88,6 +88,14 @@ public:
   void update(int screenWidth, int screenHeight, bool centerCamera);
 
   /**
+  Convert a screen point to a world point.
+
+  @param screenPoint Screen point
+  @return World point
+  */
+  glm::vec2 screenToWorld(glm::vec2 screenPoint);
+
+  /**
   Get the world size.
   */
   glm::vec2 getWorldSize();

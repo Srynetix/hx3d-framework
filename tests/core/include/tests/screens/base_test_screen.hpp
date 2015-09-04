@@ -6,13 +6,16 @@
 #include "hx3d/core/input_handler.hpp"
 #include "hx3d/core/screen.hpp"
 
+#include "hx3d/graphics/viewports/fit_viewport.hpp"
+
 #include "./menu_screen.hpp"
 
 using namespace hx3d;
 
 class BaseTestScreen: public Screen, public InputHandler {
 public:
-  BaseTestScreen() {
+  BaseTestScreen()
+  {
     Core::Events()->setInputHandler(this);
   }
 

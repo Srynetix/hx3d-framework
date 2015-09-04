@@ -19,7 +19,7 @@ vec4 pixelate(vec2 size) {
 }
 
 void main() {
-    float time_value = abs(sin(time));
+    float time_value = abs(sin(time) + 0.1f);
     vec4 pixelated = pixelate(pixel_size * time_value);
     gl_FragColor = pixelated * v_color;
 }

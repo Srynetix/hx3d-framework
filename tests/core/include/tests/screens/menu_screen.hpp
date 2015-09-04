@@ -31,6 +31,8 @@
 #include "hx3d/graphics/cameras/perspective_camera.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 
+#include "hx3d/graphics/viewports/fit_viewport.hpp"
+
 #include <functional>
 #include <vector>
 
@@ -46,19 +48,28 @@ public:
 
   virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure);
 
+  virtual void resize(int width, int height) override;
   virtual void update() override;
   virtual void render() override;
 
 private:
+  Ptr<hx3d::Font> font;
+  Ptr<hx3d::Shader> defaultShader;
+
   hx3d::OrthographicCamera camera;
+  hx3d::FitViewport viewport;
 
   hx3d::Sprite sprite;
   hx3d::Batch batch;
 
   hx3d::gui::Text text;
   hx3d::gui::Text instructions;
+  hx3d::gui::Text textLogo;
 
   std::vector<ScreenInfo> screens;
+
+  float buttonWidth;
+  float buttonHeight;
 };
 
 #endif

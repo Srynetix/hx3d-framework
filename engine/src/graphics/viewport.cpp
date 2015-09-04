@@ -72,6 +72,16 @@ void Viewport::update(int screenWidth, int screenHeight, bool centerCamera) {
   internalUpdate(centerCamera);
 }
 
+glm::vec2 Viewport::screenToWorld(glm::vec2 screenPoint) {
+  glm::vec2 worldPoint = glm::vec2(0);
+  float ratioX = (_screenWidth / _worldWidth);
+  float ratioY = (_screenHeight / _worldHeight);
+
+  worldPoint.x = screenPoint.x / ratioX - _screenX / ratioX;
+  worldPoint.y = screenPoint.y / ratioY - _screenY / ratioY;
+  return worldPoint;
+}
+
 glm::vec2 Viewport::getWorldSize() {
   return glm::vec2(_worldWidth, _worldHeight);
 }
