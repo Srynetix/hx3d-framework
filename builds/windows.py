@@ -25,32 +25,34 @@ class WindowsBuilder(Builder):
     def __init__(self, options, game):
         super().__init__("windows", options, game)
 
-    def install(self):
-        game_name = config["game_name"]
-
-        Utils.copydir("engine/assets", "{}/{}/assets".format(self.path, game_name))
-        Utils.copydir("{}/assets".format(game_name), "{}/{}/assets".format(self.path,game_name))
-
-        Utils.copy("{}/engine/libhx3d.dll".format(self.path), "{}/{}/libhx3d.dll".format(self.path, game_name))
-
-        Utils.copy("dependencies/lib/windows/dlls/glew32.dll", "{}/{}/glew32.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/libjpeg-9.dll", "{}/{}/libjpeg-9.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/libpng16-16.dll", "{}/{}/libpng16-16.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/libtiff-5.dll", "{}/{}/libtiff-5.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/libwebp-4.dll", "{}/{}/libwebp-4.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/SDL2.dll", "{}/{}/SDL2.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/SDL2_image.dll", "{}/{}/SDL2_image.dll".format(self.path, game_name))
-        Utils.copy("dependencies/lib/windows/dlls/zlib1.dll", "{}/{}/zlib1.dll".format(self.path, game_name))
-
-    def prepare(self):
-        self.prepare_internal("cmake -GNinja ..")
-
-    def build(self):
-        self.build_internal()
-
     def clean(self):
         Utils.rmdir(self.path)
 
-    def execute(self):
+    # Engine
+    def prepare_engine(self):
+        self.prepare_internal("cmake -GNinja ..")
+    def build_engine(self):
+        self.build_internal()
+
+    # Game
+    def build_game(self):
+        game_name = config["game_name"]
+        Utils.copydir("engine/assets", "{}/{}/assets".format(self.path, game_name))
+        Utils.copydir("{}/assets".format(game_name), "{}/{}/assets".format(self.path,game_name))
+    def install_game(self):
+        game_name = config["game_name"]
+        Utils.copy("{}/engine/libhx3d.dll".format(self.path), "{}/{}/libhx3d.dll".format(self.path, game_name))
+        Utils.copydir("dependencies/lib/windows/dlls", "{}/{}".format(self.path, game_name))
+    def execute_game(self):
         game_name = config["game_name"]
         Utils.execCommand("cd {}/{} && ./{}".format(self.path, game_name, game_name))
+
+    # Tests
+    def build_tests(self):
+        Utils.copydir("engine/assets", "{}/tests/assets".format(self.path))
+        Utils.copydir("tests/assets", "{}/tests/assets".format(self.path))
+    def install_tests(self):
+        Utils.copy("{}/engine/libhx3d.dll".format(self.path), "{}/tests/libhx3d.dll".format(self.path))
+        Utils.copydir("dependencies/lib/windows/dlls", "{}/tests".format(self.path))
+    def execute_tests(self):
+        Utils.execCommand("cd {}/tests && ./tests".format(self.path))

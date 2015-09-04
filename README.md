@@ -13,7 +13,6 @@ All the rendering is done with OpenGL 3+ / OpenGLES 2.0.
 - [Compatible systems](#systems)
 - [Building](#building)
 - [Testing](#testing)
-
 - [How to create a project](#new_project)
 
 ## <a name="dependencies"></a> Dependencies ##
@@ -89,10 +88,10 @@ You can use the `clone_dependencies.sh` script.
 
 - Linux
 - Android
+- Windows
 
 #### In process ####
 
-- Windows
 - Mac OS X
 
 #### Will be available later ####
@@ -137,11 +136,27 @@ So the options as `--install`, `--execute`, or `--debug` will not work (you will
 
 ## <a name="testing"></a> Testing ##
 
-For now, you can run the tests on Linux.
+#### On Android ####
+
+Testing is different on desktop platforms and on Android.  
+On Android, you can only play with the test screens.  
 Just do:
 
 ```
-  ./build.py linux --test
+  ./build.py android --test --install
+# Or ./build.py android -ti
+```
+
+It will install the application "hx3d tests".
+
+#### On desktop ####
+
+Desktop testing works on Linux and Windows.  
+Just do:
+
+```
+  ./build.py linux --test --install --execute
+# Or ./build.py linux -tie
 ```
 
 # <a name="new_project"></a> How to create a project #

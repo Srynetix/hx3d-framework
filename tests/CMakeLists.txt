@@ -50,7 +50,7 @@ set(
   WINDOWS_LIBRARIES
 
   ${COMMON_LIBRARIES}
-  "-lmingw32 -lSDL2main -lSDL2 -mwindows"
+  "-lmingw32 -lSDL2main -lSDL2 -lgtest -mwindows"
 )
 
 set(
