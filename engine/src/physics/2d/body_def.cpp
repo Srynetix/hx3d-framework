@@ -20,10 +20,18 @@
 
 #include "hx3d/physics/2d/body_def.hpp"
 
+#include "hx3d/math/vector_utils.hpp"
+
 namespace hx3d {
 namespace physics2d {
 
-BodyDef::BodyDef() {}
+b2BodyDef BodyDef::create(b2BodyType type, glm::vec2 position, float unitScale) {
+  b2BodyDef def;
+  def.type = type;
+  def.position = math::convert(position / unitScale);
+
+  return def;
+}
 
 } /* physics2d */
 } /* hx3d */

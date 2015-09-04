@@ -22,19 +22,14 @@
 #define HX3D_PHYSICS_2D_BODYDEF
 
 #include <Box2D/Box2D.h>
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace physics2d {
 
-class World;
 class BodyDef {
 public:
-  BodyDef();
-
-  friend class World;
-
-private:
-  b2BodyDef _def;
+  static b2BodyDef create(b2BodyType type, glm::vec2 position, float unitScale);
 };
 
 } /* physics2d */

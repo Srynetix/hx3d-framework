@@ -25,6 +25,7 @@ namespace hx3d {
 namespace math {
 
 float randfloat();
+int random(int min, int max);
 
 } /* math */
 } /* hx3d */

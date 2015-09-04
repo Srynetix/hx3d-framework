@@ -15,6 +15,7 @@ Screens list.
 #include "tests/screens/test3_simple2d.hpp"
 #include "tests/screens/test4_simpleecs.hpp"
 #include "tests/screens/test5_framebuffer.hpp"
+#include "tests/screens/test6_physics2d.hpp"
 
 using namespace hx3d;
 
@@ -22,7 +23,7 @@ MenuScreen::MenuScreen():
   font(Core::Assets()->get<Font>("default")),
   defaultShader(Core::Assets()->get<Shader>("base")),
 
-  viewport(700, 350, camera),
+  viewport(640, 360, camera),
   text(font),
   instructions(font),
   textLogo(font),
@@ -53,7 +54,8 @@ MenuScreen::MenuScreen():
     {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
     {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
     {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
-    {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}}
+    {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
+    {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}}
   };
 
   Core::Events()->setInputHandler(this);
@@ -73,8 +75,6 @@ void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
 
   unsigned int column = vpc.x / buttonWidth;
   unsigned int target = vpc.y / buttonHeight;
-
-  Log.Info("C: %ld / T: %ld", column, target);
 
   if (column == 0 && target < screens.size()) {
     screens[target].func();

@@ -48,8 +48,6 @@ void FitViewport::internalUpdate(bool centerCamera) {
   _screenWidth = nx;
   _screenHeight = ny;
 
-  Log.Info("VP <X: %d / Y: %d / W: %d / H: %d>", _screenX, _screenY, _screenWidth, _screenHeight);
-
   apply(centerCamera);
 }
 

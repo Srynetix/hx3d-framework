@@ -182,9 +182,7 @@ set(
   "${ENGINE_SRC}/gui/text.cpp"
   "${ENGINE_SRC}/gui/button.cpp"
 
-  "${ENGINE_SRC}/physics/2d/world.cpp"
   "${ENGINE_SRC}/physics/2d/collision_matrix.cpp"
-  "${ENGINE_SRC}/physics/2d/body.cpp"
   "${ENGINE_SRC}/physics/2d/body_def.cpp"
   "${ENGINE_SRC}/physics/2d/debug_draw.cpp"
 

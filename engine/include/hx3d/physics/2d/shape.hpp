@@ -1,5 +1,5 @@
 /*
-    2D physics world.
+    2D physics shapes.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,26 +18,22 @@
     USA
 */
 
-#include "hx3d/physics/2d/world.hpp"
+#ifndef HX3D_PHYSICS_2D_SHAPE
+#define HX3D_PHYSICS_2D_SHAPE
 
 namespace hx3d {
 namespace physics2d {
 
-World::World(float gravityX, float gravityY) {
-  _world = Make<b2World>(b2Vec2(gravityX, gravityY));
-}
+class Shape {
+public:
+  static b2PolygonShape buildBox(float width, float height, float unitScale) {
+    b2PolygonShape shape;
+    shape.SetAsBox(width / 2 / unitScale, height / 2 / unitScale);
+    return shape;
+  }
+};
 
-Ptr<Body> World::createBody(BodyDef def) {
-  return Make<Body>(_world->CreateBody(&def._def));
-}
-
-void World::enableDebugDraw() {
-  _world->SetDebugDraw(&_debugDraw);
-}
-
-void World::disableDebugDraw() {
-  _world->SetDebugDraw(nullptr);
-}
-
-} /* physics2d*/
+} /* physics2d */
 } /* hx3d */
+
+#endif

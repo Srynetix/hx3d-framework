@@ -78,10 +78,9 @@ namespace hx3d {
 
     _screen = screen;
     if (_screen) {
-      Log.Info("--> New screen loaded.");
       _screen->show();
       _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
     }
   }
-  
+
 } /* hx3d */
