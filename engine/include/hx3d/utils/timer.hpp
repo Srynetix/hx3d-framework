@@ -53,6 +53,8 @@ public:
 private:
     long _delay;
     std::chrono::system_clock::time_point _begin;
+
+    bool _alreadyEnded;
 };
 
 } /* hx3d */

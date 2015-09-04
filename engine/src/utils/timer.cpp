@@ -24,11 +24,12 @@
 
 namespace hx3d {
 
-Timer::Timer(long delay): _delay(delay), _begin(std::chrono::system_clock::now())
+Timer::Timer(long delay): _delay(delay), _begin(std::chrono::system_clock::now()), _alreadyEnded(false)
 {}
 
 void Timer::reset() {
   _begin = std::chrono::system_clock::now();
+  _alreadyEnded = false;
 }
 
 long Timer::remaining() {
@@ -39,7 +40,15 @@ long Timer::remaining() {
 }
 
 bool Timer::isEnded() {
-  return (remaining() == 0);
+  if (_alreadyEnded)
+    return false;
+
+  if (remaining() == 0) {
+    _alreadyEnded = true;
+    return true;
+  }
+
+  return false;
 }
 
 } /* hx3d */

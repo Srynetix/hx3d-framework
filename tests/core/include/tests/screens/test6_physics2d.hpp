@@ -6,6 +6,7 @@
 #include "hx3d/ecs/z_graph.hpp"
 
 #include "hx3d/math/random.hpp"
+#include "hx3d/utils/timer.hpp"
 
 using namespace hx3d;
 
@@ -65,6 +66,7 @@ public:
     groundSprite(Core::Assets()->get<Texture>("box")),
     world(b2Vec2(0, -9.81f)),
     text(Core::Assets()->get<Font>("default")),
+    timer(50),
     angle(0.f)
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
@@ -73,7 +75,9 @@ public:
     groundSprite.setTint(Color(255, 127, 65));
     groundSprite.transform.size = glm::vec3(Core::App()->getWidth(), 50.f, 0);
 
-    text.transform.position = glm::vec3(20, Core::App()->getHeight() - 100, 0);
+    text.transform.position = glm::vec3(20, Core::App()->getHeight() - 100, 0.5);
+
+    entities = 0;
 
     ////////////////////////////
 
@@ -94,13 +98,6 @@ public:
     groundBody = world.CreateBody(&groundDef);
     groundFixture.shape = &shape;
     groundBody->CreateFixture(&groundFixture);
-
-    /////////////////////////
-
-    for (unsigned int i = 0; i < 10; ++i) {
-      Ptr<Box> box = graph.createAtRoot<Box>(format("box%ld", i));
-      box->create(world, math::random(0.f, Core::App()->getWidth()), 600.f, 25.f, 25.f);
-    }
   }
 
   void update() {
@@ -112,7 +109,18 @@ public:
     b2Vec2 groundPos = groundBody->GetPosition();
     groundSprite.transform.position = glm::vec3(groundPos.x * 100.f, groundPos.y * 100.f, 0);
 
-    text.setContent("Entities: 0");
+    text.setContent(format("Entities: %d", entities));
+
+    if (timer.isEnded()) {
+      ++entities;
+
+      Ptr<Box> box = graph.createAtRoot<Box>(format("box%d", entities));
+      box->create(world, math::random(0.f, Core::App()->getWidth()), 600.f, 50.f, 50.f);
+
+      if (entities < 500) {
+        timer.reset();
+      }
+    }
   }
 
   void render() {
@@ -121,9 +129,9 @@ public:
     batch.begin();
 
     batch.draw(groundSprite);
-    batch.draw(text);
-
     graph.draw(batch);
+
+    batch.draw(text);
 
     batch.end();
 
@@ -146,6 +154,8 @@ private:
   gui::Text text;
 
   ecs::ZGraph graph;
+  Timer timer;
 
+  int entities;
   float angle;
 };
