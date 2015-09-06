@@ -29,9 +29,7 @@ namespace hx3d {
 
   Game::Game():
   _running(true), _screen(nullptr)
-  {
-    Core::setGame(this);
-  }
+  {}
 
   void Game::dispose() {
     if (_screen)

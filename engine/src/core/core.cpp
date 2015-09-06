@@ -19,8 +19,10 @@
 */
 
 #include "hx3d/core/core.hpp"
-
 #include "hx3d/core/events.hpp"
+
+#include "hx3d/net/net.hpp"
+#include "hx3d/audio/audio.hpp"
 
 #include "hx3d/utils/assets.hpp"
 
@@ -48,8 +50,10 @@ namespace hx3d {
 Core* Core::_instance(nullptr);
 Application* Core::_application(nullptr);
 Game* Core::_game(nullptr);
-AssetManager* Core::_assets(new AssetManager());
-EventManager* Core::_events(new EventManager());
+AssetManager* Core::_assets(nullptr);
+EventManager* Core::_events(nullptr);
+Net* Core::_net(nullptr);
+Audio* Core::_audio(nullptr);
 
 Core::Core() {}
 Core::~Core() {}
@@ -70,19 +74,44 @@ EventManager* Core::Events() {
   return get()->_events;
 }
 
-void Core::setApplication(Application* app) {
-  _application = app;
+Net* Core::Network() {
+  return get()->_net;
 }
 
-void Core::setGame(Game* game) {
-  _game = game;
+Audio* Core::AudioDevice() {
+  return get()->_audio;
 }
 
 /////////////////////////
 
+void Core::initialize(Application* app, Game* game) {
+  _application = app;
+  _game = game;
+
+  _assets = new AssetManager();
+  _events = new EventManager();
+  _net = new Net();
+  _audio = new Audio();
+
+  _instance = new Core();
+}
+
+void Core::shutdown() {
+  if (_assets)
+    delete _assets;
+  if (_events)
+    delete _events;
+  if (_net)
+    delete _net;
+  if (_audio)
+    delete _audio;
+}
+
 Core* Core::get() {
-  if (_instance == nullptr)
-    _instance = new Core();
+  if (!_instance) {
+    Log.Error("Attempt to use the Core without initializing it.");
+    exit(1);
+  }
 
   return _instance;
 }

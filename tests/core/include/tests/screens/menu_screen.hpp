@@ -55,16 +55,17 @@ public:
 private:
   Ptr<hx3d::Font> font;
   Ptr<hx3d::Shader> defaultShader;
+  Ptr<hx3d::Shader> pixShader;
 
   hx3d::OrthographicCamera camera;
   hx3d::FitViewport viewport;
 
+  hx3d::Sprite logoSprite;
   hx3d::Sprite sprite;
   hx3d::Batch batch;
 
   hx3d::gui::Text text;
   hx3d::gui::Text instructions;
-  hx3d::gui::Text textLogo;
 
   std::vector<ScreenInfo> screens;
 

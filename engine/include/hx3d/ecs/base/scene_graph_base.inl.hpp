@@ -48,6 +48,11 @@ Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::getRoot() {
 }
 
 template <bool EntityEnabled>
+unsigned int SceneGraphBase<EntityEnabled>::getNodeCount() {
+  return _root->getChildCount();
+}
+
+template <bool EntityEnabled>
 void SceneGraphBase<EntityEnabled>::addIndex(Ptr<NodeBase<EntityEnabled>> object) {
   std::string path = object->getPath();
   for (auto& pair: _indices) {

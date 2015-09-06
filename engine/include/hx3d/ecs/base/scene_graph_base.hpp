@@ -86,6 +86,12 @@ public:
   Ptr<NodeBase<EntityEnabled>> getRoot();
 
   /**
+  Get the number of nodes.
+  @return Number of nodes
+  */
+  unsigned int getNodeCount();
+
+  /**
   Show the graph indices.
   */
   void showIndices();

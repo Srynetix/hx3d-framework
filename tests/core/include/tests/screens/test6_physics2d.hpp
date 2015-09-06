@@ -6,6 +6,8 @@
 #include "hx3d/ecs/z_graph.hpp"
 
 #include "hx3d/math/random.hpp"
+#include "hx3d/math/vector_utils.hpp"
+
 #include "hx3d/utils/timer.hpp"
 
 using namespace hx3d;
@@ -23,30 +25,35 @@ public:
     b2PolygonShape shape;
     b2FixtureDef fixture;
 
-    def = physics2d::BodyDef::create(
-      b2_dynamicBody,
-      glm::vec2(x, y),
-      100.f
-    );
-
-    shape = physics2d::Shape::buildBox(
-      w,
-      h,
-      100.f
-    );
+    def = physics2d::BodyDef::create(b2_dynamicBody, glm::vec2(x, y), 100.f);
+    shape = physics2d::Shape::buildBox(w, h, 100.f);
 
     body = world.CreateBody(&def);
     fixture.shape = &shape;
+    fixture.density = 1.f;
     body->CreateFixture(&fixture);
 
     transform.size = glm::vec3(w, h, 0);
+
+    this->world = &world;
   }
 
   void update() {
     if (body) {
       b2Vec2 bodyPosition = body->GetPosition();
-      transform.position.x = bodyPosition.x * 100.f;
-      transform.position.y = bodyPosition.y * 100.f;
+      float bodyAngle = body->GetAngle();
+
+      glm::vec2 pixelPosition = math::convert(bodyPosition) * 100.f;
+
+      transform.position.x = pixelPosition.x;
+      transform.position.y = pixelPosition.y;
+      transform.rotation.z = bodyAngle;
+
+      if ((pixelPosition.x < 0 || pixelPosition.x > Core::App()->getWidth()) || (pixelPosition.y < 0 || pixelPosition.y > Core::App()->getHeight())) {
+        world->DestroyBody(body);
+
+        destroy();
+      }
 
       sprite.transform = transform;
     }
@@ -57,7 +64,9 @@ public:
   }
 
   Sprite sprite;
+
   b2Body* body;
+  b2World* world;
 };
 
 class Test6: public BaseTestScreen {
@@ -76,8 +85,6 @@ public:
     groundSprite.transform.size = glm::vec3(Core::App()->getWidth(), 50.f, 0);
 
     text.transform.position = glm::vec3(20, Core::App()->getHeight() - 100, 0.5);
-
-    entities = 0;
 
     ////////////////////////////
 
@@ -109,12 +116,12 @@ public:
     b2Vec2 groundPos = groundBody->GetPosition();
     groundSprite.transform.position = glm::vec3(groundPos.x * 100.f, groundPos.y * 100.f, 0);
 
+    unsigned int entities = graph.getNodeCount();
     text.setContent(format("Entities: %d", entities));
 
     if (timer.isEnded()) {
-      ++entities;
-
-      Ptr<Box> box = graph.createAtRoot<Box>(format("box%d", entities));
+      static unsigned int count = 0;
+      Ptr<Box> box = graph.createAtRoot<Box>(format("box%d", count++));
       box->create(world, math::random(0.f, Core::App()->getWidth()), 600.f, 50.f, 50.f);
 
       if (entities < 500) {
@@ -156,6 +163,5 @@ private:
   ecs::ZGraph graph;
   Timer timer;
 
-  int entities;
   float angle;
 };

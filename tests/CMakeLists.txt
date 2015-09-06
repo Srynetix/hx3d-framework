@@ -1,29 +1,6 @@
 set(GAME_NAME "tests")
 
-##################
-## Dependencies
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  set(MACOSX true)
-ENDIF()
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  set(LINUX true)
-ENDIF()
-
-set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies)
-include_directories(SYSTEM ../dependencies/include)
-
-if (ANDROID)
-  link_directories(${DEPENDENCIES_DIR}/lib/android)
-elseif(WIN32)
-  link_directories(${DEPENDENCIES_DIR}/lib/windows)
-elseif(MACOSX)
-  set(CMAKE_MACOSX_RPATH ON)
-  link_directories(${DEPENDENCIES_DIR}/lib/macos)
-elseif(LINUX)
-  link_directories(${DEPENDENCIES_DIR}/lib/linux)
-endif()
+include(../cmake/system_check.cmake)
 
 ##################
 ## Arguments

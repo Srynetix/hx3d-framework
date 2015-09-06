@@ -81,6 +81,7 @@ class Builder:
             self.build_engine()
 
             if self._test:
+                print()
                 Utils.gPrint("> Preparing tests...")
                 self.prepare_tests()
                 Utils.gPrint("> Building tests...")
@@ -102,6 +103,7 @@ class Builder:
                     self.execute_tests()
 
             elif self.game_build:
+                print()
                 Utils.gPrint("> Preparing game...")
                 self.prepare_game()
                 Utils.gPrint("> Building game...")

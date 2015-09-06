@@ -27,6 +27,8 @@ class Application;
 class Game;
 class AssetManager;
 class EventManager;
+class Audio;
+class Net;
 
 /**
 Centralized framework management.
@@ -69,19 +71,21 @@ public:
   static EventManager* Events();
 
   /**
-  Set the current application.
-  @param application Application (Ptr)
+  Get the net instance.
+  @return Net
   */
-  static void setApplication(Application* app);
+  static Net* Network();
 
   /**
-  Set the current game.
-  @param game Game (Ptr)
+  Get the audio instance.
+  @return Audio
   */
-  static void setGame(Game* game);
+  static Audio* AudioDevice();
 
   /// Current system type
   static SystemType CurrentSystem;
+
+  friend class Application;
 
 private:
   Core();
@@ -99,6 +103,11 @@ private:
   static Game* _game;
   static AssetManager* _assets;
   static EventManager* _events;
+  static Net* _net;
+  static Audio* _audio;
+
+  static void initialize(Application* app, Game* game);
+  static void shutdown();
 };
 
 } /* hx3d */

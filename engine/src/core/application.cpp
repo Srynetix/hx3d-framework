@@ -32,6 +32,10 @@
 #include "hx3d/core/core.hpp"
 #include "hx3d/core/events.hpp"
 
+#include "hx3d/audio/audio.hpp"
+
+#include "hx3d/net/net.hpp"
+
 #include <ctime>
 
 namespace hx3d {
@@ -45,29 +49,41 @@ Application::Application(Ptr<Game> game, ApplicationConfig config):
 Application::~Application() {
 
   SDL_GL_DeleteContext(_context);
-  Log.Info("OpenGL context deleted.");
 
   if (_window) {
     SDL_DestroyWindow(_window);
-    Log.Info("Window destroyed");
   }
 
+  Core::shutdown();
+
   SDL_Quit();
-  Log.Info("SDL shutdown.");
+
+  /* Stop the static classes */
+  //.........
 }
 
 void Application::create(int width, int height, std::string title) {
 
   srand(time(0));
 
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+  if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
     Log.Error("SDL Init Error: %s", SDL_GetError());
     SDL_Quit();
 
     exit(1);
   }
 
-  Log.Info("SDL initialized.");
+  std::string hello =
+  "\n\
+                            *++++++!           +\n\
+  ++|                      */      +           +\n\
+    *            *    *            +          /+\n\
+    * *****    *+/++++/+*    /++++*    +++++++!*\n\
+    **/   !*       ++              +  /        |\n\
+   +/+    +/+   +/++++/+   */      +  *        +\n\
+   +/+    +/+  +/+    +/+   *+++++/    *++++++/\n";
+
+  Log.Info(hello);
 
 #ifdef DESKTOP_OPENGL
   _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
@@ -103,10 +119,6 @@ void Application::create(int width, int height, std::string title) {
       Log.Error("GLEW error: %s", glewGetErrorString(init));
       exit(1);
   }
-
-  else {
-    Log.Info("GLEW initialized.");
-  }
 #endif
 
   glViewport(0, 0, _width, _height);
@@ -116,11 +128,9 @@ void Application::create(int width, int height, std::string title) {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  Log.Info("OpenGL context created.");
-
   /** Initializations **/
 
-  Core::setApplication(this);
+  Core::initialize(this, _game.get());
   Framebuffer::fetchDefaultFramebuffer();
   Texture::generateBlankTexture();
 

@@ -76,6 +76,22 @@ template <bool EntityEnabled>
 void NodeBase<EntityEnabled>::update() {
 }
 
+template <bool EntityEnabled>
+void NodeBase<EntityEnabled>::destroy() {
+  _graph->remove(getPath());
+}
+
+template <bool EntityEnabled>
+unsigned int NodeBase<EntityEnabled>::getChildCount() {
+  
+  unsigned int totalChildren = 0;
+  for (auto child: _children) {
+    totalChildren += child->getChildCount();
+  }
+
+  return totalChildren + _children.size();
+}
+
 /////////////////////
 
 template <bool EntityEnabled>

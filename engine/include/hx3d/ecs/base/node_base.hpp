@@ -90,6 +90,17 @@ public:
   std::string getPath();
 
   /**
+  Destroy the node.
+  */
+  void destroy();
+
+  /**
+  Get the recursive child count.
+  @param Child count
+  */
+  unsigned int getChildCount();
+
+  /**
   Draw the node.
   @param batch Batch
   */

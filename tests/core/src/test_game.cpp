@@ -16,8 +16,10 @@ void TestGame::create() {
     */
 
   Core::Assets()->create<Texture>("box", "textures/box.jpg");
+  Core::Assets()->create<Texture>("logo", "textures/logo.png");
+
   Core::Assets()->create<Shader>("pix2D", "shaders/pix2D");
-  
+
   Core::Events()->emulateTouchWithMouse(true);
 
   this->setScreen(Make<MenuScreen>());

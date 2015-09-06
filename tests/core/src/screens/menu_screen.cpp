@@ -16,23 +16,26 @@ Screens list.
 #include "tests/screens/test4_simpleecs.hpp"
 #include "tests/screens/test5_framebuffer.hpp"
 #include "tests/screens/test6_physics2d.hpp"
+#include "tests/screens/test7_sound.hpp"
 
 using namespace hx3d;
 
 MenuScreen::MenuScreen():
   font(Core::Assets()->get<Font>("default")),
   defaultShader(Core::Assets()->get<Shader>("base")),
+  pixShader(Core::Assets()->get<Shader>("pix2D")),
 
   viewport(640, 360, camera),
   text(font),
   instructions(font),
-  textLogo(font),
 
   buttonWidth(64),
   buttonHeight(32)
 {
   sprite.setTexture(Core::Assets()->get<Texture>("box"));
   sprite.setTint(Color(0, 0, 50));
+
+  logoSprite.setTexture(Core::Assets()->get<Texture>("logo"));
 
   batch.setShader(defaultShader);
   batch.setCamera(camera);
@@ -46,8 +49,10 @@ MenuScreen::MenuScreen():
   instructions.transform.scale = glm::vec3(0.5f);
   instructions.transform.position = glm::vec3(worldSize.x - 300, 20, 0);
 
-  textLogo.setContent("hx3d");
-  textLogo.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
+  logoSprite.transform.size = glm::vec3(710, 797, 0);
+  logoSprite.transform.scale = glm::vec3(0.25, 0.25, 0);
+  logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 100, 0);
+  logoSprite.transform.rotation.z = glm::radians(90.f);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
@@ -55,7 +60,8 @@ MenuScreen::MenuScreen():
     {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
     {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
     {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
-    {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}}
+    {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
+    {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}}
   };
 
   Core::Events()->setInputHandler(this);
@@ -100,6 +106,7 @@ void MenuScreen::render() {
   Framebuffer::clear(Color(0, 0, 0));
   glm::vec2 worldSize = viewport.getWorldSize();
 
+  batch.setShader(defaultShader);
   batch.begin();
   for (unsigned int i = 0; i < screens.size(); ++i) {
     sprite.transform.position = glm::vec3((buttonWidth / 2), worldSize.y - i * buttonHeight - (buttonHeight / 2), 0);
@@ -115,8 +122,18 @@ void MenuScreen::render() {
     y = std::sin(t) * 2.f;
     x = std::cos(t / 2.f);
   }));
-  batch.draw(textLogo, math::Function(Core::App()->getElapsedTime()/20.f, 0.25f, [](float& x, float& y, float t) {
-    x = std::cos(t / 2.f);
-  }));
   batch.end();
+
+  /** PIX */
+  Shader::use(pixShader);
+  pixShader->setUniform1f("time", Core::App()->getElapsedTime() / 100.f);
+  pixShader->setUniform2f("resolution", glm::vec2(250, 250));
+  pixShader->setUniform2f("pixel_size", glm::vec2(5, 5));
+  Shader::disable();
+
+  batch.setShader(pixShader);
+  batch.begin();
+  batch.draw(logoSprite);
+  batch.end();
+
 }
