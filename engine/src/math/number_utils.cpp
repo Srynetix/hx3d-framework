@@ -33,7 +33,7 @@ float clamp(float value, float min, float max) {
 
 float mclamp(float value, float min, float max) {
   if (value < min) return max - modulo(value, min);
-  if (value > max) return min + modulo(value, max);
+  if (value >= max) return min + modulo(value, max);
   return value;
 }
 

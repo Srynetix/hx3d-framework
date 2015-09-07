@@ -31,12 +31,12 @@ Sprite::Sprite(Ptr<Texture> texture):
     setAttribute("Position", std::vector<float> {
       -0.5f, 0.5f, 0.f,
       0.5, 0.5f, 0.f,
-      -0.5f, -0.5f, 0.f,
-      0.5f, -0.5f, 0.f
+      0.5f, -0.5f, 0.f,
+      -0.5f, -0.5f, 0.f
     });
 
     setIndices(std::vector<GLushort> {
-      0, 1, 3,
+      0, 1, 2,
       0, 3, 2
     });
 
@@ -49,9 +49,9 @@ Sprite::Sprite(Ptr<Texture> texture):
 
     setAttribute("Texture", std::vector<float> {
       0, 0,
-      0, 1,
       1, 0,
-      1, 1
+      1, 1,
+      0, 1
     });
 
     uploadAll();
@@ -62,14 +62,61 @@ Sprite::Sprite(Framebuffer& buffer):
 
 void Sprite::setTexture(Ptr<Texture> texture) {
   _texture = texture;
+
+  transform.size.x = _texture->getWidth();
+  transform.size.y = _texture->getHeight();
+
+  /* Set the correct texture coordinates, in case of previous framebuffer. */
+
+  setAttribute("Texture", std::vector<float> {
+    0, 0,
+    1, 0,
+    1, 1,
+    0, 1
+  });
+
+  uploadAttribute("Texture");
 }
 
 void Sprite::setTexture(Framebuffer& buffer) {
   _texture = buffer.getColorBuffer();
+
+  transform.size.x = _texture->getWidth();
+  transform.size.y = _texture->getHeight();
+
+  /* Reverse the framebuffer ! */
+
+  setAttribute("Texture", std::vector<float> {
+    1, 0,
+    0, 0,
+    0, 1,
+    1, 1
+  });
+
+  uploadAttribute("Texture");
+}
+
+Ptr<Texture> Sprite::getTexture() {
+  return _texture;
+}
+
+void Sprite::scaleTexture() {
+  float ratioW = transform.size.x / _texture->getWidth();
+  float ratioH = transform.size.y / _texture->getHeight();
+
+  auto& uv = getAttribute("Texture").getVector();
+  for (unsigned int i = 0; i < uv.size(); i+=2) {
+    if (uv[i] != 0)
+      uv[i] = ratioW;
+
+    if (uv[i+1] != 0)
+      uv[i+1] = ratioH;
+  }
+
+  uploadAttribute("Texture");
 }
 
 void Sprite::draw(Ptr<Shader> shader) {
-
   Texture::use(_texture);
 
   Mesh::draw(shader);

@@ -1,5 +1,5 @@
 /*
-    Base buffer.
+    Callback Timer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,40 +18,32 @@
     USA
 */
 
-template <class T>
-Buffer<T>::Buffer() {
-  glGenBuffers(1, &_buf);
-}
+#ifndef HX3D_UTILS_CALLBACKTIMER
+#define HX3D_UTILS_CALLBACKTIMER
 
-template <class T>
-Buffer<T>::~Buffer() {
-  glDeleteBuffers(1, &_buf);
-}
+#include "hx3d/utils/timer.hpp"
 
-template <class T>
-GLuint Buffer<T>::getId() {
-  return _buf;
-}
+#include <functional>
 
-template <class T>
-void Buffer<T>::set(std::vector<T> values) {
-  _vector.clear();
-  _vector.resize(values.size());
+namespace hx3d {
 
-  std::copy(values.begin(), values.end(), _vector.begin());
-}
+class CallbackTimer {
+public:
+  CallbackTimer();
+  CallbackTimer(float delay, std::function<void()> function);
 
-template <class T>
-T* Buffer<T>::data() {
-  return _vector.data();
-}
+  void initialize(float delay, std::function<void()> function);
 
-template <class T>
-unsigned int Buffer<T>::size() {
-  return _vector.size();
-}
+  long remaining();
+  void reset();
 
-template <class T>
-std::vector<T>& Buffer<T>::getVector() {
-  return _vector;
-}
+  void update();
+
+private:
+  Timer _timer;
+  std::function<void()> _function;
+};
+
+} /* hx3d */
+
+#endif

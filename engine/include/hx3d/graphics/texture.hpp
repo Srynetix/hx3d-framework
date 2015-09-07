@@ -25,6 +25,7 @@
 #include "hx3d/utils/resource.hpp"
 
 #include "hx3d/graphics/font.hpp"
+#include "hx3d/graphics/image.hpp"
 #include "hx3d/graphics/gl.hpp"
 
 #include <string>
@@ -35,13 +36,33 @@ class Texture: public Resource {
 public:
 
   enum class FilterType {
+
     Min,
-    Max
+    Max,
+
+    WrapX,
+    WrapY
   };
 
   enum class FilterValue {
+
+    /* Min and Max */
+
     Linear,
-    Nearest
+    Nearest,
+
+    /* Min only */
+
+    LinearMipmapLinear,
+    NearestMipmapLinear,
+    LinearMipmapNearest,
+    NearestMipmapNearest,
+
+    /* WrapX and WrapY */
+
+    ClampToEdge,
+    MirroredRepeat,
+    Repeat
   };
 
   static Ptr<Texture> Blank;
@@ -57,6 +78,12 @@ public:
   @param pathToImage Path to image
   */
   Texture(std::string pathToImage);
+
+  /**
+  Construct a texture from an memory image.
+  @param image Image
+  */
+  Texture(Image& image);
   ~Texture();
 
   /**
@@ -67,11 +94,32 @@ public:
 
   /**
   Set the texture filters.
-
   @param type   Filter type
   @param value  Filter value
   */
   void setFilter(FilterType type, FilterValue value);
+
+  /**
+  Update a zone in the texture.
+  @param x    X coordinate
+  @param y    Y coordinate
+  @param w    Width
+  @param h    Height
+  @param data Data
+  */
+  void updateZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Uint8* data);
+
+  /**
+  Get the texture width.
+  @return Width
+  */
+  unsigned int getWidth();
+
+  /**
+  Get the texture height.
+  @return Height
+  */
+  unsigned int getHeight();
 
   /**
   Get the texture ID.
@@ -83,7 +131,6 @@ public:
 
   /**
   Create a color buffer (used in framebuffers).
-
   @param width  Texture width
   @param height Texture height
   @return Texture (Ptr)
@@ -113,15 +160,6 @@ private:
   GLuint _id;
   unsigned int _width;
   unsigned int _height;
-
-  /**
-  Invert the texture pixels after they have been loaded.
-  If you don't, the texture is in the wrong direction.
-
-  @param src Source surface
-  @return Inverted surface
-  */
-  SDL_Surface* invertPixels(SDL_Surface* src) const;
 
   //////////////////////
 

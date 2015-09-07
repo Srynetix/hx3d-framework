@@ -163,12 +163,14 @@ void Application::display() {
     frameEnd = SDL_GetTicks();
     frameTime = frameEnd - frameStart;
 
-    if (fpsMilli > frameTime) {
-      SDL_Delay(fpsMilli - frameTime);
-    }
-
     _currentFPS = 1.f / (frameTime / 1000.f);
     _elapsedTime += 1;
+
+    //
+    // if (fpsMilli > frameTime) {
+    //   SDL_Delay(fpsMilli - frameTime);
+    // }
+
   }
 
 }

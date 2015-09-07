@@ -61,6 +61,12 @@ public:
   */
   unsigned int size();
 
+  /**
+  Get the vector.
+  @return Vector
+  */
+  std::vector<T>& getVector();
+
 protected:
   std::vector<T> _vector;
   GLuint _buf;

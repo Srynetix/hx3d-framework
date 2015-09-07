@@ -61,6 +61,17 @@ public:
   */
   void setTexture(Framebuffer& buffer);
 
+  /**
+  Get the sprite texture.
+  @return Texture (Ptr)
+  */
+  Ptr<Texture> getTexture();
+
+  /**
+  Scale the texture coordinates following the texture size.
+  */
+  void scaleTexture();
+
   virtual void draw(Ptr<Shader> shader) override;
 
 private:

@@ -12,6 +12,8 @@ TEST_F(Tests, NumberUtils) {
 
   ASSERT_EQ(-9, math::mclamp(11, -10, 10));
   ASSERT_EQ(9, math::mclamp(-11, -10, 10));
+
+  ASSERT_EQ(0, math::mclamp(2 + 1, 0, 3));
 }
 
 } /* hx3d */

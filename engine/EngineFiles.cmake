@@ -19,6 +19,7 @@ set(
   "${ENGINE_SRC}/utils/file.cpp"
   "${ENGINE_SRC}/utils/matrix_queue.cpp"
   "${ENGINE_SRC}/utils/resource.cpp"
+  "${ENGINE_SRC}/utils/callback_timer.cpp"
 
   "${ENGINE_SRC}/math/function.cpp"
   "${ENGINE_SRC}/math/vector_utils.cpp"
@@ -26,6 +27,7 @@ set(
   "${ENGINE_SRC}/math/random.cpp"
 
   "${ENGINE_SRC}/graphics/color.cpp"
+  "${ENGINE_SRC}/graphics/image.cpp"
   "${ENGINE_SRC}/graphics/sprite.cpp"
   "${ENGINE_SRC}/graphics/shader.cpp"
   "${ENGINE_SRC}/graphics/mesh.cpp"

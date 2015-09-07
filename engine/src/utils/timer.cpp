@@ -24,8 +24,17 @@
 
 namespace hx3d {
 
-Timer::Timer(long delay): _delay(delay), _begin(std::chrono::system_clock::now()), _alreadyEnded(false)
+Timer::Timer():
+  Timer(-1) {}
+
+Timer::Timer(long delay):
+  _delay(delay), _begin(std::chrono::system_clock::now()), _alreadyEnded(false)
 {}
+
+void Timer::initialize(long delay) {
+  _delay = delay;
+  reset();
+}
 
 void Timer::reset() {
   _begin = std::chrono::system_clock::now();
@@ -33,6 +42,9 @@ void Timer::reset() {
 }
 
 long Timer::remaining() {
+  if (_delay == -1)
+    return 0xFF;
+
   std::chrono::system_clock::time_point point = std::chrono::system_clock::now();
   long elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(point - _begin).count();
 

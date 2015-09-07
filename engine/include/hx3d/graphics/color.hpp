@@ -69,6 +69,15 @@ public:
   unsigned char g;
   unsigned char b;
   unsigned char a;
+
+  //////////////////
+
+  static Color White;
+  static Color Black;
+
+  static Color Red;
+  static Color Green;
+  static Color Blue;
 };
 
 } /* hx3d */

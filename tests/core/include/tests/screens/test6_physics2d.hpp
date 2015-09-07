@@ -34,6 +34,9 @@ public:
     body->CreateFixture(&fixture);
 
     transform.size = glm::vec3(w, h, 0);
+    transform.position = glm::vec3(0, 0, -10);
+
+    sprite.transform = transform;
 
     this->world = &world;
   }
@@ -47,6 +50,7 @@ public:
 
       transform.position.x = pixelPosition.x;
       transform.position.y = pixelPosition.y;
+      transform.position.z = 0;
       transform.rotation.z = bodyAngle;
 
       if ((pixelPosition.x < 0 || pixelPosition.x > Core::App()->getWidth()) || (pixelPosition.y < 0 || pixelPosition.y > Core::App()->getHeight())) {
@@ -82,7 +86,8 @@ public:
     batch.setCamera(camera);
 
     groundSprite.setTint(Color(255, 127, 65));
-    groundSprite.transform.size = glm::vec3(Core::App()->getWidth(), 50.f, 0);
+    groundSprite.transform.size = glm::vec3(Core::App()->getWidth(), 100.f, 0);
+    groundSprite.scaleTexture();
 
     text.transform.position = glm::vec3(20, Core::App()->getHeight() - 100, 0.5);
 
@@ -99,7 +104,7 @@ public:
     );
     shape = physics2d::Shape::buildBox(
       Core::App()->getWidth(),
-      50.f,
+      100.f,
       100.f
     );
     groundBody = world.CreateBody(&groundDef);

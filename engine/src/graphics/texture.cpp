@@ -35,6 +35,22 @@ namespace hx3d {
     load(pathToImage);
   }
 
+  Texture::Texture(Image& image): Texture() {
+    _width = image._width;
+    _height = image._height;
+
+    glGenTextures(1, &_id);
+    glBindTexture(GL_TEXTURE_2D, _id);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image._buffer);
+
+    // Base filter = Nearest
+    setFilter(FilterType::Min, FilterValue::Nearest);
+    setFilter(FilterType::Max, FilterValue::Nearest);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
+
   Texture::Texture():
     _id(0),
     _width(0),
@@ -64,17 +80,13 @@ namespace hx3d {
     SDL_Surface* formatted = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_ABGR8888, 0);
     SDL_FreeSurface(image);
 
-    SDL_Surface* inverted = invertPixels(formatted);
-    SDL_FreeSurface(formatted);
-
-    _width = inverted->w;
-    _height = inverted->h;
+    _width = formatted->w;
+    _height = formatted->h;
 
     glGenTextures(1, &_id);
-
     glBindTexture(GL_TEXTURE_2D, _id);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, inverted->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, formatted->pixels);
 
     // Base filter = Nearest
     setFilter(FilterType::Min, FilterValue::Nearest);
@@ -84,7 +96,7 @@ namespace hx3d {
 
     Log.Info("Texture %s loaded.", pathToImage.c_str());
 
-    SDL_FreeSurface(inverted);
+    SDL_FreeSurface(formatted);
     return true;
   }
 
@@ -92,20 +104,28 @@ namespace hx3d {
     GLenum filterType;
     GLenum filterValue;
 
-    if (type == FilterType::Min)
-      filterType = GL_TEXTURE_MIN_FILTER;
-    else
-      filterType = GL_TEXTURE_MAG_FILTER;
+    filterType =
+      type == FilterType::Min ? GL_TEXTURE_MIN_FILTER :
+      type == FilterType::Max ? GL_TEXTURE_MAG_FILTER :
 
-    if (value == FilterValue::Linear)
-      filterValue = GL_LINEAR;
-    else
-      filterValue = GL_NEAREST;
+      type == FilterType::WrapX ? GL_TEXTURE_WRAP_S :
+      type == FilterType::WrapY ? GL_TEXTURE_WRAP_S : GL_INVALID_ENUM;
+
+    filterValue =
+      value == FilterValue::Linear ? GL_LINEAR :
+      value == FilterValue::Nearest ? GL_NEAREST :
+
+      value == FilterValue::LinearMipmapLinear ? GL_LINEAR_MIPMAP_LINEAR :
+      value == FilterValue::NearestMipmapLinear ? GL_NEAREST_MIPMAP_LINEAR :
+      value == FilterValue::LinearMipmapNearest ? GL_LINEAR_MIPMAP_NEAREST :
+      value == FilterValue::NearestMipmapNearest ? GL_NEAREST_MIPMAP_NEAREST :
+
+      value == FilterValue::ClampToEdge ? GL_CLAMP_TO_EDGE :
+      value == FilterValue::MirroredRepeat ? GL_MIRRORED_REPEAT :
+      value == FilterValue::Repeat ? GL_REPEAT : GL_INVALID_ENUM;
 
     glBindTexture(GL_TEXTURE_2D, _id);
-
     glTexParameteri(GL_TEXTURE_2D, filterType, filterValue);
-
     glBindTexture(GL_TEXTURE_2D, 0);
   }
 
@@ -144,19 +164,18 @@ namespace hx3d {
     return _id;
   }
 
-  SDL_Surface* Texture::invertPixels(SDL_Surface* src) const {
-    SDL_Surface* inverted = SDL_CreateRGBSurface(0, src->w, src->h, src->format->BitsPerPixel, src->format->Rmask, src->format->Gmask, src->format->Bmask, src->format->Amask);
+  unsigned int Texture::getWidth() {
+    return _width;
+  }
 
-    unsigned char* srcPixels = (unsigned char*) src->pixels;
-    unsigned char* invertedPixels = (unsigned char*) inverted->pixels;
+  unsigned int Texture::getHeight() {
+    return _height;
+  }
 
-    for (int i = 0; i < src->h; ++i) {
-      for (int j = 0; j < src->w * 4; ++j) {
-        invertedPixels[(src->w * 4 * (src->h - 1 - i)) + j] = srcPixels[(src->w * 4 * i) + j];
-      }
-    }
-
-    return inverted;
+  void Texture::updateZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Uint8* data) {
+    glBindTexture(GL_TEXTURE_2D, _id);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glBindTexture(GL_TEXTURE_2D, 0);
   }
 
   void Texture::generateBlankTexture() {

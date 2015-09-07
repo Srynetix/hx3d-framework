@@ -1,5 +1,5 @@
 /*
-    Base buffer.
+    Callback Timer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,40 +18,34 @@
     USA
 */
 
-template <class T>
-Buffer<T>::Buffer() {
-  glGenBuffers(1, &_buf);
+#include "hx3d/utils/callback_timer.hpp"
+
+namespace hx3d {
+
+CallbackTimer::CallbackTimer():
+  _timer(-1) {}
+
+CallbackTimer::CallbackTimer(float delay, std::function<void()> function):
+  _timer(delay), _function(function) {}
+
+void CallbackTimer::initialize(float delay, std::function<void()> function) {
+  _timer.initialize(delay);
+  _function = function;
 }
 
-template <class T>
-Buffer<T>::~Buffer() {
-  glDeleteBuffers(1, &_buf);
+long CallbackTimer::remaining() {
+  return _timer.remaining();
 }
 
-template <class T>
-GLuint Buffer<T>::getId() {
-  return _buf;
+void CallbackTimer::update() {
+  if (_timer.isEnded()) {
+    if (_function)
+      _function();
+  }
 }
 
-template <class T>
-void Buffer<T>::set(std::vector<T> values) {
-  _vector.clear();
-  _vector.resize(values.size());
-
-  std::copy(values.begin(), values.end(), _vector.begin());
+void CallbackTimer::reset() {
+  _timer.reset();
 }
 
-template <class T>
-T* Buffer<T>::data() {
-  return _vector.data();
-}
-
-template <class T>
-unsigned int Buffer<T>::size() {
-  return _vector.size();
-}
-
-template <class T>
-std::vector<T>& Buffer<T>::getVector() {
-  return _vector;
-}
+} /* hx3d */

@@ -17,6 +17,7 @@ Screens list.
 #include "tests/screens/test5_framebuffer.hpp"
 #include "tests/screens/test6_physics2d.hpp"
 #include "tests/screens/test7_sound.hpp"
+#include "tests/screens/test8_image.hpp"
 
 using namespace hx3d;
 
@@ -49,10 +50,10 @@ MenuScreen::MenuScreen():
   instructions.transform.scale = glm::vec3(0.5f);
   instructions.transform.position = glm::vec3(worldSize.x - 300, 20, 0);
 
-  logoSprite.transform.size = glm::vec3(710, 797, 0);
+  // logoSprite.transform.size = glm::vec3(710, 797, 0);
   logoSprite.transform.scale = glm::vec3(0.25, 0.25, 0);
   logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 100, 0);
-  logoSprite.transform.rotation.z = glm::radians(90.f);
+  // logoSprite.transform.rotation.z = glm::radians(90.f);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
@@ -61,7 +62,8 @@ MenuScreen::MenuScreen():
     {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
     {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
     {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
-    {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}}
+    {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
+    {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}}
   };
 
   Core::Events()->setInputHandler(this);

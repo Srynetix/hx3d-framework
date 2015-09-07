@@ -28,11 +28,24 @@ namespace hx3d {
 class Timer {
 
 public:
+
+  /**
+  Create an uninitialized timer.
+  See @link#initialize.
+  */
+  Timer();
+
   /**
   Create a timer with a delay as milliseconds.
   @param delay Delay
   */
   Timer(long delay);
+
+  /**
+  Initialize the timer with a delay.
+  @param delay Delay
+  */
+  void initialize(long delay);
 
   /**
   Reset the timer.
@@ -53,7 +66,6 @@ public:
 private:
     long _delay;
     std::chrono::system_clock::time_point _begin;
-
     bool _alreadyEnded;
 };
 

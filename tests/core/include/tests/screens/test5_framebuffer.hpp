@@ -33,12 +33,14 @@ public:
       screenSize.y / 2,
       0
     );
+    /*
     framebufferSprite.transform.size = glm::vec3(
       screenSize.y,
       screenSize.x,
       1
     );
-    framebufferSprite.transform.rotation.z = glm::radians(90.f);
+    */
+    // framebufferSprite.transform.rotation.z = glm::radians(90.f);
 
     text.setContent("WOOOOOOOOOHOOOOOOOOO !!");
     text.transform.scale = glm::vec3(2);
