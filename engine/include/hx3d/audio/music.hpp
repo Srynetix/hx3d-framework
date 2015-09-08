@@ -26,6 +26,7 @@
 #include "hx3d/utils/file.hpp"
 
 namespace hx3d {
+namespace audio {
 
 class Music {
 
@@ -43,6 +44,7 @@ private:
   Ptr<File> _file;
 };
 
+} /* audio */
 } /* hx3d */
 
 #endif

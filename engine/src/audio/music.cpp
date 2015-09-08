@@ -23,6 +23,7 @@
 #include "hx3d/utils/file.hpp"
 
 namespace hx3d {
+namespace audio {
 
 Music::Music(): _music(nullptr), _file(nullptr) {}
 
@@ -53,4 +54,5 @@ bool Music::isPlaying() {
   return Mix_PlayingMusic() != 0;
 }
 
+} /* audio */
 } /* hx3d */

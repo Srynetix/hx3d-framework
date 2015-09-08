@@ -1,5 +1,5 @@
 /*
-    Random functions.
+    Math constants.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,14 +18,17 @@
     USA
 */
 
-#ifndef HX3D_MATH_RANDOM
-#define HX3D_MATH_RANDOM
+#ifndef HX3D_MATH_CONSTANTS
+#define HX3D_MATH_CONSTANTS
+
+#include <complex>
+
+typedef std::complex<double> Complex;
 
 namespace hx3d {
 namespace math {
 
-float randfloat();
-int random(int min, int max);
+const double PI = 3.141592653589793238460;
 
 } /* math */
 } /* hx3d */

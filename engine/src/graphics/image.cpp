@@ -87,8 +87,7 @@ void Image::updateTextureZone(unsigned int x, unsigned int y, unsigned int w, un
     return;
   }
 
-  Uint8* subBuffer = new Uint8[w * h * 4] {0};
-
+  Uint8* subBuffer = new Uint8[w * h * 4];
   for (unsigned int j = y, count = 0; j < y + h; ++j) {
     for (unsigned int i = x; i < x + w; ++i, count += 4) {
 

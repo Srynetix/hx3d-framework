@@ -23,6 +23,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace audio {
 
 Audio::Audio() {
   int flags = Mix_Init(~0);
@@ -42,13 +43,13 @@ Audio::Audio() {
   Log.Info("Supported audio types: \n%s", types.c_str());
 
   /** Open device */
-  _bufferSize = 1024;
+  _bufferSize = 4096;
 
-  Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, _bufferSize);
+  Mix_OpenAudio(44100, AUDIO_S16SYS, 1, _bufferSize);
   Mix_QuerySpec(&_audioRate, &_audioFormat, &_audioChannels);
 
   _bits = _audioFormat & 0xFF;
-  _sampleSize = _bits / 8 + _audioChannels;
+  _sampleSize = (_bits / 8.f) + _audioChannels;
 
   Log.Info(
     "Audio device information: \n\
@@ -70,4 +71,5 @@ unsigned int Audio::getSampleSize() {
   return _sampleSize;
 }
 
+} /* audio */
 } /* hx3d */

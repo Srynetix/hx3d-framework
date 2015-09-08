@@ -24,6 +24,7 @@
 #include <SDL2/SDL_mixer.h>
 
 namespace hx3d {
+namespace audio {
 
 class Audio {
 public:
@@ -42,6 +43,7 @@ private:
   int _bufferSize;
 };
 
+} /* audio */
 } /* hx3d */
 
 #endif

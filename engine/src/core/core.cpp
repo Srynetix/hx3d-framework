@@ -53,7 +53,7 @@ Game* Core::_game(nullptr);
 AssetManager* Core::_assets(nullptr);
 EventManager* Core::_events(nullptr);
 Net* Core::_net(nullptr);
-Audio* Core::_audio(nullptr);
+audio::Audio* Core::_audio(nullptr);
 
 Core::Core() {}
 Core::~Core() {}
@@ -78,7 +78,7 @@ Net* Core::Network() {
   return get()->_net;
 }
 
-Audio* Core::AudioDevice() {
+audio::Audio* Core::AudioDevice() {
   return get()->_audio;
 }
 
@@ -91,7 +91,7 @@ void Core::initialize(Application* app, Game* game) {
   _assets = new AssetManager();
   _events = new EventManager();
   _net = new Net();
-  _audio = new Audio();
+  _audio = new audio::Audio();
 
   _instance = new Core();
 }

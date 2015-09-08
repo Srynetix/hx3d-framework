@@ -9,6 +9,8 @@
 
 #include "hx3d/audio/audio.hpp"
 #include "hx3d/audio/music.hpp"
+#include "hx3d/audio/display/waveform.hpp"
+#include "hx3d/audio/display/spectrum.hpp"
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
@@ -19,7 +21,7 @@ using namespace hx3d;
 class Test7: public BaseTestScreen {
 public:
   Test7():
-    music("sounds/test.ogg"),
+    music("sounds/music.mp3"),
     text(Core::Assets()->get<Font>("default")),
     fps(Core::Assets()->get<Font>("default")),
     stream(nullptr),
@@ -28,13 +30,13 @@ public:
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
 
-    musicToggle = false;
+    waveform.create(256, 256);
+    waveform.setRefreshDelay(16);
+    spectrum.create(256, 256);
+    spectrum.setRefreshDelay(16);
 
-    Mix_SetPostMix([](void* udata, Uint8* stream, int len) {
-      Test7* me = (Test7*)udata;
-      me->stream = stream;
-      me->len = len;
-    }, this);
+    musicToggle = false;
+    process = false;
 
     text.transform.position.x = 20;
     text.transform.position.y = 20;
@@ -43,47 +45,43 @@ public:
     fps.transform.position.x = 20;
     fps.transform.position.y = Core::App()->getHeight() - 20;
 
-    /* Image */
-    image.create(Core::App()->getWidth(), Core::App()->getHeight() / 2);
-    image.buildTexture();
+    waveformSprite.setTexture(waveform.getTexture());
+    waveformSprite.transform.position.x = Core::App()->getWidth() / 4;
+    waveformSprite.transform.position.y = Core::App()->getHeight() / 2;
 
-    sprite.setTexture(image.getTexture());
-    sprite.transform.position.x = Core::App()->getWidth() / 2;
-    sprite.transform.position.y = Core::App()->getHeight() / 2;
+    spectrumSprite.setTexture(spectrum.getTexture());
+    spectrumSprite.transform.position.x = Core::App()->getWidth() / 1.5f;
+    spectrumSprite.transform.position.y = Core::App()->getHeight() / 2;
 
-    timer.initialize(2);
+    Mix_RegisterEffect(MIX_CHANNEL_POST, effect, nullptr, this);
   }
 
-  void drawImage() {
+  static void effect(int channel, void* stream, int len, void *udata) {
+    Test7* me = (Test7*)udata;
 
-    int w = Core::App()->getWidth();
-    int h = Core::App()->getHeight() / 2;
+    if (!me->stream)
+      me->stream = new Sint16[len/2];
+    me->len = len/2;
 
-    if (timer.isEnded()) {
+    Sint8* str = (Sint8*)stream;
+    for (int i = 0; i < len; i += 2) {
+      Sint8 a = str[i+1];
+      Sint8 b = str[i];
+      Uint8 ua = a < 0 ? 127 - a : a;
+      Uint8 ub = b < 0 ? 127 - b : b;
+      Uint16 us = (ua << 8 | ub);
+      Sint16 s = us > 32767 ? -(us - 32767) : us;
 
-      image.setRect(0, 0, w, h, Color::Black);
-
-      if (len > 0) {
-        int step = len / w;
-        for (int i = 0; i < w; ++i) {
-          int amp = stream[i * step];
-          float norm_amp_f = amp * (h / 255.f);
-          int norm_amp = norm_amp_f;
-
-          image.setRect(i, h - norm_amp, 1, h - (h - norm_amp), Color::Red);
-        }
-      }
-
-      image.updateTextureZone(0, 0, w, h);
-
-      timer.reset();
+      me->stream[i/2] = s;
     }
+
+    me->process = true;
   }
 
   void update() {
     camera.update();
 
-    text.setContent(format("Music played: %s", musicToggle ? "On" : "Off"));
+    text.setContent(format("Music played: %s", music.isPlaying() ? "On" : "Off"));
     fps.setContent(format("FPS: %2.2f", Core::App()->getFPS()));
 
     if (Core::Events()->isScreenJustTouched()) {
@@ -95,7 +93,11 @@ public:
       musicToggle = !musicToggle;
     }
 
-    drawImage();
+    if (process) {
+      waveform.update(stream, len);
+      spectrum.update(stream, len);
+      process = false;
+    }
   }
 
   void render() {
@@ -103,7 +105,8 @@ public:
 
     batch.begin();
 
-    batch.draw(sprite);
+    batch.draw(waveformSprite);
+    batch.draw(spectrumSprite);
 
     batch.draw(text);
     batch.draw(fps);
@@ -112,25 +115,29 @@ public:
   }
 
   void hide() {
-    Mix_SetPostMix(nullptr, nullptr);
+    Mix_UnregisterEffect(MIX_CHANNEL_POST, effect);
   }
 
 private:
   Ptr<Texture> texture;
 
   OrthographicCamera camera;
-  Music music;
-  Image image;
+  audio::Music music;
+  audio::Waveform waveform;
+  audio::Spectrum spectrum;
 
-  Sprite sprite;
+  Sprite spectrumSprite;
+  Sprite waveformSprite;
   gui::Text text;
   gui::Text fps;
 
   bool musicToggle;
+  bool process;
 
-  Uint8* stream;
-  int len;
   Timer timer;
+
+  Sint16* stream;
+  int len;
 
   Batch batch;
 };

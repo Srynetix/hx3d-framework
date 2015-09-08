@@ -3,6 +3,8 @@ set(
 
   "${ENGINE_SRC}/audio/audio.cpp"
   "${ENGINE_SRC}/audio/music.cpp"
+  "${ENGINE_SRC}/audio/display/waveform.cpp"
+  "${ENGINE_SRC}/audio/display/spectrum.cpp"
 
   "${ENGINE_SRC}/core/application.cpp"
   "${ENGINE_SRC}/core/application_config.cpp"

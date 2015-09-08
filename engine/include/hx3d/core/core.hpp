@@ -27,8 +27,11 @@ class Application;
 class Game;
 class AssetManager;
 class EventManager;
-class Audio;
 class Net;
+
+namespace audio {
+  class Audio;
+}
 
 /**
 Centralized framework management.
@@ -80,7 +83,7 @@ public:
   Get the audio instance.
   @return Audio
   */
-  static Audio* AudioDevice();
+  static audio::Audio* AudioDevice();
 
   /// Current system type
   static SystemType CurrentSystem;
@@ -104,7 +107,7 @@ private:
   static AssetManager* _assets;
   static EventManager* _events;
   static Net* _net;
-  static Audio* _audio;
+  static audio::Audio* _audio;
 
   static void initialize(Application* app, Game* game);
   static void shutdown();
