@@ -1,5 +1,5 @@
 /*
-    Audio management.
+    Audio effect display.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,42 +18,34 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_AUDIO
-#define HX3D_AUDIO_AUDIO
-
-#include <SDL2/SDL_mixer.h>
-
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/audio/display.hpp"
 
 namespace hx3d {
 namespace audio {
 
-class Effect;
-class Audio {
-public:
-  Audio();
-  ~Audio();
+Display::Display(): Display(50) {}
+Display::Display(int refreshDelay): _refreshDelay(refreshDelay), _initialized(false) {}
+Display::~Display() {}
 
-  ///////////////////////////////
+void Display::initialize(unsigned int width, unsigned int height) {
+  _image.create(width, height);
+  _image.buildTexture();
+  _timer.initialize(_refreshDelay);
 
-  void registerEffect(int channel, Effect& effect);
-  void clearEffects(int channel);
+  Sprite::setTexture(_image.getTexture());
 
-  unsigned int getFrequencyRate();
-  unsigned int getSampleSize();
+  onInitialization();
 
-  static int PostChannel;
+  _initialized = true;
+}
 
-private:
-  int _audioRate;
-  int _audioChannels;
-  Uint16 _audioFormat;
-  int _bits;
-  int _sampleSize;
-  int _bufferSize;
-};
+void Display::setRefreshDelay(int refreshDelay) {
+  _refreshDelay = refreshDelay;
+  _timer.initialize(_refreshDelay);
+}
+
+void Display::onInitialization() {}
+
 
 } /* audio */
 } /* hx3d */
-
-#endif

@@ -11,6 +11,7 @@
 #include "hx3d/audio/music.hpp"
 #include "hx3d/audio/display/waveform.hpp"
 #include "hx3d/audio/display/spectrum.hpp"
+#include "hx3d/audio/converters/s16_converter.hpp"
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
@@ -21,61 +22,38 @@ using namespace hx3d;
 class Test7: public BaseTestScreen {
 public:
   Test7():
-    music("sounds/music.mp3"),
+    music("sounds/test.ogg"),
+    spectrum(200, 20000, 16),
     text(Core::Assets()->get<Font>("default")),
-    fps(Core::Assets()->get<Font>("default")),
-    stream(nullptr),
-    len(0)
+    fps(Core::Assets()->get<Font>("default"))
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
 
-    waveform.create(256, 256);
+    waveform.initialize(256, 256);
     waveform.setRefreshDelay(16);
-    spectrum.create(256, 256);
+    spectrum.initialize(256, 256);
     spectrum.setRefreshDelay(16);
 
+    box.setTexture(Core::Assets()->get<Texture>("box"));
+    box.transform.scale = glm::vec3(0.25f);
+    box.transform.position.x = Core::App()->getWidth() / 2;
+    box.transform.position.y = Core::App()->getHeight() / 2;
+
     musicToggle = false;
-    process = false;
 
     text.transform.position.x = 20;
     text.transform.position.y = 20;
-
-    fps.setContent("FPS:");
     fps.transform.position.x = 20;
     fps.transform.position.y = Core::App()->getHeight() - 20;
 
-    waveformSprite.setTexture(waveform.getTexture());
-    waveformSprite.transform.position.x = Core::App()->getWidth() / 4;
-    waveformSprite.transform.position.y = Core::App()->getHeight() / 2;
+    waveform.transform.position.x = Core::App()->getWidth() / 4;
+    waveform.transform.position.y = Core::App()->getHeight() / 2;
 
-    spectrumSprite.setTexture(spectrum.getTexture());
-    spectrumSprite.transform.position.x = Core::App()->getWidth() / 1.5f;
-    spectrumSprite.transform.position.y = Core::App()->getHeight() / 2;
+    spectrum.transform.position.x = Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4;
+    spectrum.transform.position.y = Core::App()->getHeight() / 2;
 
-    Mix_RegisterEffect(MIX_CHANNEL_POST, effect, nullptr, this);
-  }
-
-  static void effect(int channel, void* stream, int len, void *udata) {
-    Test7* me = (Test7*)udata;
-
-    if (!me->stream)
-      me->stream = new Sint16[len/2];
-    me->len = len/2;
-
-    Sint8* str = (Sint8*)stream;
-    for (int i = 0; i < len; i += 2) {
-      Sint8 a = str[i+1];
-      Sint8 b = str[i];
-      Uint8 ua = a < 0 ? 127 - a : a;
-      Uint8 ub = b < 0 ? 127 - b : b;
-      Uint16 us = (ua << 8 | ub);
-      Sint16 s = us > 32767 ? -(us - 32767) : us;
-
-      me->stream[i/2] = s;
-    }
-
-    me->process = true;
+    Core::AudioDevice()->registerEffect(audio::Audio::PostChannel, converter);
   }
 
   void update() {
@@ -93,10 +71,12 @@ public:
       musicToggle = !musicToggle;
     }
 
-    if (process) {
-      waveform.update(stream, len);
-      spectrum.update(stream, len);
-      process = false;
+    float bass = spectrum.getNormalizedBarValue(4);
+    box.transform.scale = glm::vec3(0.5f + (bass > 0.5f ? 1.f : 0.f));
+
+    if (converter.hasProcessed()) {
+      waveform.update(converter.getS16Stream(), converter.getSampleSize());
+      spectrum.update(converter.getS16Stream(), converter.getSampleSize());
     }
   }
 
@@ -105,8 +85,9 @@ public:
 
     batch.begin();
 
-    batch.draw(waveformSprite);
-    batch.draw(spectrumSprite);
+    batch.draw(waveform);
+    batch.draw(spectrum);
+    batch.draw(box);
 
     batch.draw(text);
     batch.draw(fps);
@@ -115,7 +96,7 @@ public:
   }
 
   void hide() {
-    Mix_UnregisterEffect(MIX_CHANNEL_POST, effect);
+    Core::AudioDevice()->clearEffects(audio::Audio::PostChannel);
   }
 
 private:
@@ -125,19 +106,14 @@ private:
   audio::Music music;
   audio::Waveform waveform;
   audio::Spectrum spectrum;
+  audio::S16Converter converter;
 
-  Sprite spectrumSprite;
-  Sprite waveformSprite;
   gui::Text text;
   gui::Text fps;
 
+  Sprite box;
+
   bool musicToggle;
-  bool process;
-
-  Timer timer;
-
-  Sint16* stream;
-  int len;
 
   Batch batch;
 };

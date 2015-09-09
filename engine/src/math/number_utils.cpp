@@ -45,5 +45,9 @@ int modulo(int a, int b) {
   return a >= 0 ? a % b : (b - static_cast<unsigned int>(std::abs(a%b))) % b;
 }
 
+float log2(int a) {
+  return (std::log(a) / std::log(2));
+}
+
 } /* math */
 } /* hx3d */

@@ -21,69 +21,62 @@
 #ifndef HX3D_AUDIO_DISPLAY_SPECTRUM
 #define HX3D_AUDIO_DISPLAY_SPECTRUM
 
-#include <SDL2/SDL_types.h>
-
-#include "hx3d/graphics/image.hpp"
-#include "hx3d/utils/timer.hpp"
+#include "hx3d/audio/display.hpp"
+#include "hx3d/math/constants.hpp"
 
 namespace hx3d {
 namespace audio {
 
-class Spectrum {
+class Spectrum: public Display {
 public:
-
   /**
   Create an empty spectrum with a refresh delay of 50.
   See @link#create to construct the texture.
+
+  @param minFreq    Min. frequency
+  @param maxFreq    Max. frequency
+  @param barsCount  Bars count
   */
-  Spectrum();
+  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount);
 
   /**
   Create an empty spectrum with a custom refresh delay.
   See @link#create to construct the texture.
+
+  @param minFreq      Min. frequency
+  @param maxFreq      Max. frequency
+  @param barsCount    Bars count
   @param refreshDelay Refresh delay
   */
-  Spectrum(int refreshDelay);
+  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount, int refreshDelay);
   ~Spectrum();
 
-  /**
-  Create the spectrum texture.
-  @param width Width
-  @param height Height
-  */
-  void create(unsigned int width, unsigned int height);
+  virtual void update(Sint16* stream, int length) override;
+  virtual void onInitialization() override;
 
-  /**
-  Set the refresh delay.
-  @param refreshDelay Refresh delay
-  */
-  void setRefreshDelay(float refreshDelay);
+  float getNormalizedBarValue(unsigned int bar);
+  std::vector<float>& getNormalizedBarValues();
 
-  /**
-  Update the spectrum.
-  @param stream Stream of amplitudes (between 0 and 255)
-  @param length Length of the stream
-  */
-  void update(Sint16* stream, int length);
-
-  /**
-  Get the texture (for displaying)
-  @return Texture (Ptr)
-  */
-  Ptr<Texture> getTexture();
+  unsigned int getBarCount();
 
 private:
-  Image _image;
-  Timer _timer;
-  int _refreshDelay;
-  bool _initialized;
+  unsigned int _minFreq;
+  unsigned int _maxFreq;
+  unsigned int _barsCount;
 
-  int _barsCount;
+  Complex* _rawValues;
+  std::vector<float> _fftValues;
+  std::vector<float> _barsValues;
+  std::vector<float> _normalizedBarValues;
 
-  /**
-  Draw a white box.
-  */
-  void drawBox();
+  int nextCenterFreq(int centerFreq, float octaves);
+  int prevCenterFreq(int centerFreq, float octaves);
+  int lowerLimit(int centerFreq, float octaves);
+  int lowerLimitSample(int centerFreq, float octaves, int samplesLength);
+  int upperLimit(int centerFreq, float octaves);
+  int upperLimitSample(int centerFreq, float octaves, int samplesLength);
+  float averageFreq(std::vector<float>& values, int low, int hi);
+  float calculateOctave(unsigned int lowFreq, unsigned int hiFreq, unsigned int bars);
 };
 
 } /* audio */

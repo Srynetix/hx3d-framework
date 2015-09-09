@@ -65,6 +65,44 @@ public:
   */
   glm::vec4 toFloat();
 
+  /////////////////
+
+  static Color interp(Color a, Color b, float t)
+  {
+    // 0.0 <= t <= 1.0
+    Color ca = Color::rgbToHsv(a);
+    Color cb = Color::rgbToHsv(b);
+    Color final;
+
+    final.r = Color::linear(ca.r, cb.r, t);
+    final.g = Color::linear(ca.g, cb.g, t);
+    final.b = Color::linear(ca.b, cb.b, t);
+
+    return Color::hsvToRgb(final);
+  }
+
+  static int linear(int a, int b, float t)
+  {
+      return a * (1 - t) + b * t;
+  }
+
+
+  /**
+  Convert HSV color to RGB format.
+
+  @param hsv HSV color
+  @return RGB color
+  */
+  static Color hsvToRgb(Color hsv);
+
+  /**
+  Convert RGB color to HSV format.
+
+  @param rgb RGB color
+  @return HSV color
+  */
+  static Color rgbToHsv(Color rgb);
+
   unsigned char r;
   unsigned char g;
   unsigned char b;

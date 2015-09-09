@@ -58,6 +58,14 @@ Handles negative values !
 */
 int modulo(int a, int b);
 
+/**
+Calculate the log2.
+
+@param a Value
+@return Log2
+*/
+float log2(int a);
+
 } /* math */
 } /* hx3d */
 

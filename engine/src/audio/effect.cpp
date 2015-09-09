@@ -1,5 +1,5 @@
 /*
-    Audio management.
+    Audio effect.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,42 +18,30 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_AUDIO
-#define HX3D_AUDIO_AUDIO
-
-#include <SDL2/SDL_mixer.h>
-
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/audio/effect.hpp"
 
 namespace hx3d {
 namespace audio {
 
-class Effect;
-class Audio {
-public:
-  Audio();
-  ~Audio();
+Effect::Effect(): _processed(false), _channel(-1), _stream(nullptr), _length(0) {}
+Effect::~Effect() {}
 
-  ///////////////////////////////
+void Effect::onFunction(int channel, void* stream, int length) {}
+void Effect::onDone(int channel) {}
 
-  void registerEffect(int channel, Effect& effect);
-  void clearEffects(int channel);
+int Effect::getChannel() {
+  return _channel;
+}
+void* Effect::getStream() {
+  return _stream;
+}
+int Effect::getSampleSize() {
+  return _length;
+}
+bool Effect::hasProcessed() {
+  return _processed;
+}
 
-  unsigned int getFrequencyRate();
-  unsigned int getSampleSize();
-
-  static int PostChannel;
-
-private:
-  int _audioRate;
-  int _audioChannels;
-  Uint16 _audioFormat;
-  int _bits;
-  int _sampleSize;
-  int _bufferSize;
-};
 
 } /* audio */
 } /* hx3d */
-
-#endif

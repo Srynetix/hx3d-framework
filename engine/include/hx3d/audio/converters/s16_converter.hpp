@@ -1,5 +1,5 @@
 /*
-    Audio management.
+    Audio Converter: Signed Short.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,39 +18,23 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_AUDIO
-#define HX3D_AUDIO_AUDIO
+#ifndef HX3D_AUDIO_CONVERTERS_S16CONVERTER
+#define HX3D_AUDIO_CONVERTERS_S16CONVERTER
 
-#include <SDL2/SDL_mixer.h>
-
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/audio/effect.hpp"
 
 namespace hx3d {
 namespace audio {
 
-class Effect;
-class Audio {
+class S16Converter: public Effect {
 public:
-  Audio();
-  ~Audio();
+  S16Converter();
+  ~S16Converter();
 
-  ///////////////////////////////
+  virtual void onFunction(int channel, void* stream, int length) override;
+  virtual void onDone(int channel) override;
 
-  void registerEffect(int channel, Effect& effect);
-  void clearEffects(int channel);
-
-  unsigned int getFrequencyRate();
-  unsigned int getSampleSize();
-
-  static int PostChannel;
-
-private:
-  int _audioRate;
-  int _audioChannels;
-  Uint16 _audioFormat;
-  int _bits;
-  int _sampleSize;
-  int _bufferSize;
+  Sint16* getS16Stream();
 };
 
 } /* audio */

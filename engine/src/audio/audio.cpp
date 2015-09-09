@@ -19,11 +19,14 @@
 */
 
 #include "hx3d/audio/audio.hpp"
+#include "hx3d/audio/effect.hpp"
 
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace audio {
+
+int Audio::PostChannel = MIX_CHANNEL_POST;
 
 Audio::Audio() {
   int flags = Mix_Init(~0);
@@ -62,6 +65,24 @@ Audio::Audio() {
 Audio::~Audio() {
   Mix_Quit();
 }
+
+void Audio::registerEffect(int channel, Effect& effect) {
+  Mix_RegisterEffect(
+    channel,
+    [](int channel, void* stream, int len, void* udata){
+      Effect* effect = (Effect*)udata;
+      effect->onFunction(channel, stream, len);
+    },
+    [](int channel, void* udata){
+      Effect* effect = (Effect*)udata;
+      effect->onDone(channel);
+    }, &effect);
+}
+
+void Audio::clearEffects(int channel) {
+  Mix_UnregisterAllEffects(channel);
+}
+
 
 unsigned int Audio::getFrequencyRate() {
   return _audioRate;

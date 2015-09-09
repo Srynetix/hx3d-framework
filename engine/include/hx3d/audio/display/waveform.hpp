@@ -21,15 +21,12 @@
 #ifndef HX3D_AUDIO_DISPLAY_WAVEFORM
 #define HX3D_AUDIO_DISPLAY_WAVEFORM
 
-#include <SDL2/SDL_types.h>
-
-#include "hx3d/graphics/image.hpp"
-#include "hx3d/utils/timer.hpp"
+#include "hx3d/audio/display.hpp"
 
 namespace hx3d {
 namespace audio {
 
-class Waveform {
+class Waveform: public Display {
 public:
 
   /**
@@ -47,41 +44,11 @@ public:
   ~Waveform();
 
   /**
-  Create the waveform texture.
-  @param width Width
-  @param height Height
-  */
-  void create(unsigned int width, unsigned int height);
-
-  /**
-  Set the refresh delay.
-  @param refreshDelay Refresh delay
-  */
-  void setRefreshDelay(float refreshDelay);
-
-  /**
   Update the waveform.
   @param stream Stream of amplitudes (between 0 and 255)
   @param length Length of the stream
   */
-  void update(Sint16* stream, int length);
-
-  /**
-  Get the texture (for displaying)
-  @return Texture (Ptr)
-  */
-  Ptr<Texture> getTexture();
-
-private:
-  Image _image;
-  Timer _timer;
-  int _refreshDelay;
-  bool _initialized;
-
-  /**
-  Draw a white box.
-  */
-  void drawBox();
+  virtual void update(Sint16* stream, int length) override;
 };
 
 } /* audio */

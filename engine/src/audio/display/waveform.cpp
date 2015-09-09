@@ -20,30 +20,12 @@
 
 #include "hx3d/audio/display/waveform.hpp"
 
-#include "hx3d/utils/log.hpp"
-
 namespace hx3d {
 namespace audio {
 
 Waveform::Waveform(): Waveform(50) {}
-Waveform::Waveform(int refreshDelay): _refreshDelay(refreshDelay) {
-  _initialized = false;
-}
-
+Waveform::Waveform(int refreshDelay): Display(refreshDelay) {}
 Waveform::~Waveform() {}
-
-void Waveform::create(unsigned int width, unsigned int height) {
-  _image.create(width, height);
-  _image.buildTexture();
-  _timer.initialize(_refreshDelay);
-
-  _initialized = true;
-}
-
-void Waveform::setRefreshDelay(float refreshDelay) {
-  _refreshDelay = refreshDelay;
-  _timer.initialize(refreshDelay);
-}
 
 void Waveform::update(Sint16* stream, int length) {
 
@@ -56,7 +38,7 @@ void Waveform::update(Sint16* stream, int length) {
   if (_timer.isEnded()) {
 
     _image.setRect(0, 0, w, h, Color::Black);
-    drawBox();
+    drawBorders();
 
     if (length > 0) {
       int step = length / w;
@@ -69,32 +51,22 @@ void Waveform::update(Sint16* stream, int length) {
         float normalized_amp = (1.f/32767.f) * amp;
         normalized_amp = 0.5f + normalized_amp / 2;
 
+        Color color = Color::interp(Color(255, 64, 0), Color::Red, normalized_amp);
+
         int y_pos = 0;
         int bar_h = 0;
 
         y_pos = (h/2.f) - (normalized_amp * (h/2.f));
         bar_h = (normalized_amp * (h/2.f)) * 2;
 
-        _image.setRect(i, y_pos, 1, bar_h, Color::Red);
+
+        _image.setRect(i, y_pos, 1, bar_h, color);
       }
     }
 
     _image.updateTextureZone(0, 0, w, h);
     _timer.reset();
   }
-}
-
-Ptr<Texture> Waveform::getTexture() {
-  return _image.getTexture();
-}
-
-///////////////////////////////////////
-
-void Waveform::drawBox() {
-  _image.setRect(0, 0, _image.getWidth(), 1, Color::White);
-  _image.setRect(0, 0, 1, _image.getHeight(), Color::White);
-  _image.setRect(_image.getWidth() - 1, 0, 1, _image.getHeight(), Color::White);
-  _image.setRect(0, _image.getHeight() - 1, _image.getWidth(), 1, Color::White);
 }
 
 } /* audio */
