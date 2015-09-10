@@ -51,7 +51,7 @@ void Waveform::update(Sint16* stream, int length) {
         float normalized_amp = (1.f/32767.f) * amp;
         normalized_amp = 0.5f + normalized_amp / 2;
 
-        Color color = Color::interp(Color(255, 64, 0), Color::Red, normalized_amp);
+        Color color = Color::interp(Color(255, 64, 0), Color::Red, normalized_amp, math::Interpolation::Linear);
 
         int y_pos = 0;
         int bar_h = 0;

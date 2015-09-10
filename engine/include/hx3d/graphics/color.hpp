@@ -22,6 +22,7 @@
 #define HX3D_GRAPHICS_COLOR
 
 #include <glm/vec4.hpp>
+#include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {
 
@@ -54,7 +55,7 @@ public:
 
   /**
   Affect a color into another.
-  
+
   @param color Anothe color
   @return Color
   */
@@ -69,23 +70,18 @@ public:
 
   /////////////////
 
-  static Color interp(Color a, Color b, float t)
+  static Color interp(Color a, Color b, float t, math::Interpolation type)
   {
     // 0.0 <= t <= 1.0
     Color ca = Color::rgbToHsv(a);
     Color cb = Color::rgbToHsv(b);
     Color final;
 
-    final.r = Color::linear(ca.r, cb.r, t);
-    final.g = Color::linear(ca.g, cb.g, t);
-    final.b = Color::linear(ca.b, cb.b, t);
+    final.r = math::interpolate(ca.r, cb.r, t, type);
+    final.g = math::interpolate(ca.g, cb.g, t, type);
+    final.b = math::interpolate(ca.b, cb.b, t, type);
 
     return Color::hsvToRgb(final);
-  }
-
-  static int linear(int a, int b, float t)
-  {
-      return a * (1 - t) + b * t;
   }
 
 

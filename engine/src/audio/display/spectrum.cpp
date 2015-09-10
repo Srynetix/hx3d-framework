@@ -129,7 +129,7 @@ void Spectrum::update(Sint16* stream, int length) {
 
       _normalizedBarValues[i] = norm_val;
 
-      Color color = Color::interp(Color(255, 64, 0), Color::Red, norm_val);
+      Color color = Color::interp(Color(255, 64, 0), Color::Red, norm_val, math::Interpolation::Linear);
 
       // Values
       // Log.Info("Bar %d: %f", i, val);

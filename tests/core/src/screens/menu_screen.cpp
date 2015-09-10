@@ -18,6 +18,7 @@ Screens list.
 #include "tests/screens/test6_physics2d.hpp"
 #include "tests/screens/test7_sound.hpp"
 #include "tests/screens/test8_image.hpp"
+#include "tests/screens/test9_interpolation.hpp"
 
 using namespace hx3d;
 
@@ -63,7 +64,8 @@ MenuScreen::MenuScreen():
     {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
     {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
     {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
-    {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}}
+    {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
+    {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}}
   };
 
   Core::Events()->setInputHandler(this);
