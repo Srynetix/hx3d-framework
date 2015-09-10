@@ -45,6 +45,7 @@ class ComponentBits {
 public:
   /**
     Get the bits for the current component type T.
+
     @param T Component type (must be a Component child type)
   */
   template <class T>
@@ -52,6 +53,7 @@ public:
 
   /**
     Get the bits corresponding to the suite of Types.
+
     @param Types Suite of Component types
     */
   template <class... Types>
@@ -63,6 +65,7 @@ private:
 
   /**
     Build a bitset corresponding to the suite of Types.
+    
     @param Types Suite of Component types
     */
   template <class T, class... Types>

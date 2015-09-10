@@ -36,12 +36,14 @@ public:
 
   /**
   Draw the mesh using a shader.
+
   @param shader Shader (Ptr)
   */
   virtual void draw(Ptr<Shader> shader);
 
   /**
   Set the mesh tint.
+  
   @param tint Color
   */
   void setTint(Color tint);

@@ -38,12 +38,14 @@ public:
 
   /**
   Get the first matrix.
+
   @return Matrix (mat4)
   */
   glm::mat4 get();
 
   /**
   Set the first matrix.
+
   @param mat Matrix (mat4)
   */
   void set(glm::mat4 mat);
@@ -55,12 +57,13 @@ public:
 
   /**
   Get the first matrix.
+
   @return Matrix (mat4)
   */
   operator glm::mat4();
 
   /**
-  Set the first matrix
+  Set the first matrix.
 
   @param mat Matrix (mat4)
   @return Matrix (mat4)

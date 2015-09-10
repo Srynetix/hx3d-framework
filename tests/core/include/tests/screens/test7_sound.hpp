@@ -71,8 +71,11 @@ public:
       musicToggle = !musicToggle;
     }
 
-    float bass = spectrum.getNormalizedBarValue(4);
-    box.transform.scale = glm::vec3(0.5f + (bass > 0.5f ? 1.f : 0.f));
+    // 1000 Hz with a 500 Hz range => [500Hz, 1500Hz]
+    float bass = spectrum.getNormalizedFrequencyAmplitude(1000, 500);
+    box.transform.scale = glm::vec3(0.5f + (bass > 0.25f ? 1.f : 0.f));
+
+    Log.Info("Bass: %f", bass);
 
     if (converter.hasProcessed()) {
       waveform.update(converter.getS16Stream(), converter.getSampleSize());

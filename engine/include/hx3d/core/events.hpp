@@ -114,33 +114,39 @@ public:
 
   /**
   Test the window state.
+
   @param type Type
   */
   bool isWindowState(WindowEvent::Type type);
 
   /**
   Test if a mouse button have been clicked.
+
   @param button Button
   */
   bool isMouseButtonClicked(MouseButtonEvent::Button button);
   /**
   Test if a mouse button have been relased.
+
   @param button Button
   */
   bool isMouseButtonReleased(MouseButtonEvent::Button button);
   /**
   Test if a mouse button have just been clicked.
+
   @param button Button
   */
   bool isMouseButtonJustClicked(MouseButtonEvent::Button button);
   /**
   Test if a mouse button have just been released.
+
   @param button Button
   */
   bool isMouseButtonJustReleased(MouseButtonEvent::Button button);
 
   /**
   Test if the mouse wheel have been turned in a direction.
+
   @param direction Direction
   */
   bool isMouseWheelTurned(MouseWheelEvent::Direction direction);
@@ -164,53 +170,63 @@ public:
 
   /**
   Test if the key have been pressed.
+
   @param key Key
   */
   bool isKeyPressed(KeyEvent::Key key);
   /**
   Test if the key have been released.
+
   @param key Key
   */
   bool isKeyReleased(KeyEvent::Key key);
   /**
   Test if the key have just been pressed.
+
   @param key Key
   */
   bool isKeyJustPressed(KeyEvent::Key key);
   /**
   Test if the key have just been released.
+
   @param key Key
   */
   bool isKeyJustReleased(KeyEvent::Key key);
 
   /**
   Get the current mouse position.
+
   @return Mouse position
   */
   glm::vec2 getMousePosition();
   /**
   Get the current mouse movement.
+
   @return Mouse movement
   */
   glm::vec2 getMouseMovement();
   /**
   Get the current mouse wheel movement.
+
   @return Mouse wheel movement
   */
   glm::vec2 getMouseWheelMovement();
 
   /**
   Get the current touch position.
+
   @return Touch position
   */
   glm::vec2 getTouchPosition();
   /**
   Get the current touch movement.
+
   @return Touch movement
   */
   glm::vec2 getTouchMovement();
   /**
   Get the current touch pressure.
+
   @return Touch pressure
   */
   float getTouchPressure();
@@ -229,7 +245,18 @@ public:
   */
   void poll();
 
+  /**
+  Define an input handler.
+
+  @param handler Input handler (Raw ptr)
+  */
   void setInputHandler(InputHandler* handler);
+
+  /**
+  Define an input handler.
+
+  @param handler Input handler (Ptr)
+  */
   void setInputHandler(Ptr<InputHandler> handler);
 
 private:

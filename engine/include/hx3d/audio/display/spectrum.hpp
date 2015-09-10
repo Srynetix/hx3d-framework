@@ -37,7 +37,7 @@ public:
   @param maxFreq    Max. frequency
   @param barsCount  Bars count
   */
-  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount);
+  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount);
 
   /**
   Create an empty spectrum with a custom refresh delay.
@@ -48,14 +48,21 @@ public:
   @param barsCount    Bars count
   @param refreshDelay Refresh delay
   */
-  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount, int refreshDelay);
+  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount, int refreshDelay);
   ~Spectrum();
 
   virtual void update(Sint16* stream, int length) override;
   virtual void onInitialization() override;
 
-  float getNormalizedBarValue(unsigned int bar);
-  std::vector<float>& getNormalizedBarValues();
+  /**
+  Get the average normalized amplitude for a center frequency and a range.
+  Use this to detect a "beat" into a frequency range.
+
+  @param frequency  Center frequency
+  @param range      Range
+  @return Normalized amplitude
+  */
+  float getNormalizedFrequencyAmplitude(unsigned int frequency, unsigned int range);
 
   /*
   Get the bar count.
@@ -67,12 +74,13 @@ public:
 private:
   unsigned int _minFreq;
   unsigned int _maxFreq;
-  unsigned int _barsCount;
+  unsigned int _barCount;
 
   Complex* _rawValues;
   std::vector<float> _fftValues;
-  std::vector<float> _barsValues;
+  std::vector<float> _barValues;
   std::vector<float> _normalizedBarValues;
+  std::vector<unsigned int> _barFrequencies;
 
   /**
   Get the center frequency for the next bar, using an octave value.
@@ -120,7 +128,6 @@ private:
   @return Upper frequency limit
   */
   int upperLimit(int centerFreq, float octaves);
-
 
   /**
   Get the upper frequency limit sample index for the current bar,

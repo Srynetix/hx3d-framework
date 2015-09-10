@@ -39,30 +39,35 @@ public:
 
   /**
   Create a sprite from a texture.
+
   @param texture Texture (Ptr)
   */
   Sprite(Ptr<Texture> texture);
 
   /**
   Create a sprite from a framebuffer color buffer.
+
   @param buffer Framebuffer
   */
   Sprite(Framebuffer& buffer);
 
   /**
   Set the sprite texture.
+
   @param texture Texture (Ptr)
   */
   void setTexture(Ptr<Texture> texture);
 
   /**
   Set the sprite texture from a framebuffer color buffer.
+
   @param buffer Framebuffer
   */
   void setTexture(Framebuffer& buffer);
 
   /**
   Get the sprite texture.
+  
   @return Texture (Ptr)
   */
   Ptr<Texture> getTexture();

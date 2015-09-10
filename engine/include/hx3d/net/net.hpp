@@ -28,6 +28,9 @@ namespace hx3d {
 class Net {
 
 public:
+  /**
+  Initialize the network.
+  */
   Net();
   ~Net();
 };

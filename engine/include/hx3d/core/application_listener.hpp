@@ -56,6 +56,7 @@ public:
 
   /**
   On application resize.
+  
   @param width  New width
   @param height New height
   */

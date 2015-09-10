@@ -31,12 +31,48 @@ public:
   Effect();
   virtual ~Effect();
 
+  /**
+  Effect function.
+  See @link#Audio::registerEffect.
+
+  @param channel Audio channel
+  @param stream  Audio stream
+  @param length  Sample length
+  */
   virtual void onFunction(int channel, void* stream, int length);
+
+  /**
+  Effect done function.
+  See @link#Audio::registerEffect.
+
+  @param channel Audio channel
+  */
   virtual void onDone(int channel);
 
+  /**
+  Get the audio channel related to the effect.
+
+  @return Audio channel
+  */
   int getChannel();
+
+  /**
+  Get the audio stream.
+
+  @return Audio stream
+  */
   void* getStream();
+
+  /**
+  Get the sample size.
+
+  @return Sample size
+  */
   int getSampleSize();
+
+  /**
+  Test if the effect has started.
+  */
   bool hasProcessed();
 
 protected:

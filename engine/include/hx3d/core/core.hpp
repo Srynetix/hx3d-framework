@@ -51,36 +51,42 @@ public:
 
   /**
   Get the application instance
+
   @return Application
   */
   static Application* App();
 
   /**
   Get the game instance
+
   @return Game
   */
   static Game* CurrentGame();
 
   /**
   Get the asset manager.
+
   @return Asset manager
   */
   static AssetManager* Assets();
 
   /**
   Get the event manager.
+
   @return Event manager
   */
   static EventManager* Events();
 
   /**
   Get the net instance.
+
   @return Net
   */
   static Net* Network();
 
   /**
   Get the audio instance.
+
   @return Audio
   */
   static audio::Audio* AudioDevice();
@@ -96,6 +102,7 @@ private:
 
   /**
   Get the current core instance.
+
   @return Core instance.
   */
   static Core* get();
@@ -109,7 +116,17 @@ private:
   static Net* _net;
   static audio::Audio* _audio;
 
+  /**
+  Initialize the core system.
+
+  @param app  Application (Ptr)
+  @param game Game (Ptr)
+  */
   static void initialize(Application* app, Game* game);
+
+  /**
+  Shutdown the core system.
+  */
   static void shutdown();
 };
 

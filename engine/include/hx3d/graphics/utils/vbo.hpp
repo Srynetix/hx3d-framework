@@ -48,12 +48,14 @@ public:
 
   /**
   Upload the wanted attribute buffer.
+
   @param name Attribute name
   */
   void uploadAttribute(std::string name);
 
   /**
   Draw the VBO.
+
   @param shader Shader (Ptr)
   */
   void draw(Ptr<Shader> shader);
@@ -77,6 +79,7 @@ public:
 
   /**
   Get the wanted attribute array buffer.
+
   @param name Attribute name
   @return Attribute array buffer
   */
@@ -84,12 +87,14 @@ public:
 
   /**
   Set the index buffer values.
+
   @param data Values
   */
   void setIndices(std::vector<GLushort> data);
 
   /**
   Get the index buffer.
+  
   @return Index buffer.
   */
   IndexArrayBuffer& getIndices();

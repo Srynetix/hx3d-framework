@@ -32,6 +32,11 @@ namespace ecs {
 
 class ZGraph: public SceneGraphBase<true> {
 public:
+  /**
+  Get the z-engine.
+
+  @return ZEngine (Ptr)
+  */
   Ptr<ZEngine> getEngine() {
     return _engine;
   }

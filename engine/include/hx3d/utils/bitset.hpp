@@ -32,12 +32,14 @@ public:
 
   /**
   Set a bit to true.
+
   @param bit Bit
   */
   void set(unsigned int bit);
 
   /**
   Get the bits.
+  
   @return Bits
   */
   unsigned int getBits();

@@ -44,6 +44,7 @@ public:
   /**
   Create an empty display with a custom refresh delay.
   See @link#initialize to construct the texture.
+
   @param refreshDelay Refresh delay
   */
   Display(int refreshDelay);
@@ -51,6 +52,7 @@ public:
 
   /**
   Initialize the display.
+
   @param width  Width
   @param height Height
   */
@@ -58,16 +60,23 @@ public:
 
   /**
   Set the refresh delay.
+
   @param refreshDelay Refresh delay
   */
   void setRefreshDelay(int refreshDelay);
 
   /**
   Update the display.
+
   @param stream Stream of amplitudes (between -32767 and 32767)
   @param length Length of the stream
   */
   virtual void update(Sint16* stream, int length) = 0;
+
+  /**
+  Use this to execute code after initialization.
+  See @link#Spectrum::onInitialization.
+  */
   virtual void onInitialization();
 
   /* Not needed */
@@ -83,12 +92,7 @@ protected:
   /**
   Draw white borders.
   */
-  void drawBorders() {
-    _image.setRect(0, 0, _image.getWidth(), 1, Color::White);
-    _image.setRect(0, 0, 1, _image.getHeight(), Color::White);
-    _image.setRect(_image.getWidth() - 1, 0, 1, _image.getHeight(), Color::White);
-    _image.setRect(0, _image.getHeight() - 1, _image.getWidth(), 1, Color::White);
-  }
+  void drawBorders();
 };
 
 } /* audio */

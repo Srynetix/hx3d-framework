@@ -73,18 +73,21 @@ public:
 
   /**
   Remove a child, using the SceneGraph.
+
   @param name Name
   */
   void removeChild(std::string name);
 
   /**
   Get the game object full transform.
+
   @return Full transform;
   */
   Transform getFullTransform();
 
   /**
   Get the game object full path from the root.
+
   @return Path
   */
   std::string getPath();
@@ -96,12 +99,14 @@ public:
 
   /**
   Get the recursive child count.
+
   @param Child count
   */
   unsigned int getChildCount();
 
   /**
   Draw the node.
+
   @param batch Batch
   */
   virtual void draw(Batch& batch);
@@ -126,6 +131,7 @@ protected:
 
   /**
   Test if the object have a child.
+  
   @param name Name
   */
   bool childNameExists(std::string name);

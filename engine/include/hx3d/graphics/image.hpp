@@ -39,6 +39,7 @@ public:
 
   /**
   Construct an image with a width and height.
+
   @param width Width
   @param height Height
   */
@@ -47,6 +48,7 @@ public:
 
   /**
   Initialize an image.
+
   @param width Width
   @param height Height
   */
@@ -54,6 +56,7 @@ public:
 
   /**
   Set a pixel with a color.
+
   @param x      X coordinate
   @param y      Y coordinate
   @param color  Color
@@ -62,6 +65,7 @@ public:
 
   /**
   Set a rectangle with a color.
+
   @param x      X coordinate
   @param y      Y coordinate
   @param w      Width
@@ -72,6 +76,7 @@ public:
 
   /**
   Get a pixel color.
+
   @param x X coordinate
   @param y Y coordinate
   @return Color
@@ -80,18 +85,21 @@ public:
 
   /**
   Get the texture.
+
   @return Texture (Ptr)
   */
   Ptr<Texture> getTexture();
 
   /**
   Get the image width.
+
   @return Width
   */
   unsigned int getWidth();
 
   /**
   Get the image height.
+
   @return Height
   */
   unsigned int getHeight();
@@ -103,6 +111,7 @@ public:
 
   /**
   Update an existing texture zone.
+  
   @param x X coordinate
   @param y Y coordinate
   @param w Width

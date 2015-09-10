@@ -39,6 +39,7 @@ public:
 
   /**
   Set the required component types for the system.
+
   @param Types Suite of Component types
   */
   template <class... Types>
@@ -57,12 +58,14 @@ public:
 
   /**
   Check if an entity can be processed (using the required family).
+
   @param bits Entity bits
   */
   bool canProcess(unsigned int bits);
 
   /**
   Get the engine instance.
+  
   @return Engine instance
   */
   EngineBase<EntityType>* getEngine();

@@ -30,12 +30,14 @@ class Widget: public Mesh, public EnableSharedThis<Widget> {
 public:
   /**
   Construct a widget from a parent widget.
+
   @param parent Widget (Ptr)
   */
   Widget(Ptr<Widget> parent);
 
   /**
   Add a widget to the list.
+  
   @param widget Widget (Ptr)
   */
   void add(Ptr<Widget> widget);

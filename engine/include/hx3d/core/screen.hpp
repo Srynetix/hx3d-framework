@@ -57,6 +57,7 @@ public:
   virtual void render();
   /**
   On screen resize.
+  
   @param width  New width
   @param height New height
   */

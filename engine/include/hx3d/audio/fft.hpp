@@ -31,12 +31,20 @@ namespace audio {
 class FFT {
 public:
 
-  // Cooley–Tukey FFT (in-place, divide-and-conquer)
-  // Higher memory requirements and redundancy although more intuitive
+  /**
+  Cooley–Tukey FFT (in-place, divide-and-conquer)
+  Higher memory requirements and redundancy although more intuitive
+
+  @param vector Complex valarray
+  */
   static void fft(std::valarray<Complex>& vector);
 
-  // Cooley-Tukey FFT (in-place, breadth-first, decimation-in-frequency)
-  // Better optimized but less intuitive
+  /**
+  Cooley-Tukey FFT (in-place, breadth-first, decimation-in-frequency)
+  Better optimized but less intuitive
+
+  @param vector Complex valarray
+  */
   static void bfft(std::valarray<Complex>& vector);
 };
 

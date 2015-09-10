@@ -26,10 +26,26 @@ namespace ecs {
 
 class IDBase {
 public:
+  /**
+  Create an IDBase with an id.
+
+  @param id ID
+  */
   IDBase(const unsigned int id);
   virtual ~IDBase();
 
+  /**
+  Set the ID.
+
+  @param id New id
+  */
   void setId(unsigned int id);
+
+  /**
+  Get the ID
+
+  @return ID
+  */
   unsigned int getId() const;
 
 protected:

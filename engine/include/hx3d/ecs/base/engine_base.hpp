@@ -45,12 +45,14 @@ public:
 
   /**
   Create a new entity with the last entity id available.
+
   @return Entity (Ptr)
   */
   Ptr<EntityType> createEntity();
 
   /**
   Affect an ID to a uninitialized entity.
+
   @param entity Entity (Ptr)
   */
   void registerEntity(Ptr<EntityType> entity);
@@ -183,6 +185,7 @@ private:
 
   /**
   Get the last entity id available.
+
   @return Last id available
   */
   unsigned int lastEntityAvailable();
@@ -199,6 +202,7 @@ private:
 
   /**
   Remove all components for an entity.
+  
   @param entityId   Entity id
   */
   void removeComponents(unsigned int entityId);

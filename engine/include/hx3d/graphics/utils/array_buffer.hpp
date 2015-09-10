@@ -43,12 +43,14 @@ public:
 
   /**
   Begin the use with a shader.
+
   @param shader Shader (Ptr)
   */
   virtual void begin(Ptr<Shader> shader) = 0;
 
   /**
   End the use with a shader.
+  
   @parm shader Shader (Ptr)
   */
   virtual void end(Ptr<Shader> shader) = 0;

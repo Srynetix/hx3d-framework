@@ -42,42 +42,44 @@ class Application {
 public:
   /**
   Create a window.
+
   @param game   Game instance (Ptr)
   @param config Configuration
   */
   Application(Ptr<Game> game, ApplicationConfig config);
-
-  /**
-  Destroy the window.
-  */
   virtual ~Application();
 
   /**
   Get the window width
+
   @return Window width
   */
   int getWidth();
 
   /**
   Get the window height
+
   @return Window height
   */
   int getHeight();
 
   /**
   Get the window size (ivec2)
+
   @return Window size
   */
   glm::ivec2 getSize();
 
   /**
   Get the current frames per second (FPS)
+
   @return Current FPS
   */
   float getFPS();
 
   /*
   Get the elapsed time since the application start.
+  
   @return Elapsed time
   */
   unsigned int getElapsedTime();

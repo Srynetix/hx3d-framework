@@ -54,6 +54,7 @@ public:
 
   /**
   Affect a color into another.
+  
   @param color Anothe color
   @return Color
   */

@@ -35,6 +35,7 @@ public:
 
   /**
   Return the main system content.
+  
   @return Widget (Ptr)
   */
   Ptr<Widget> getContent();

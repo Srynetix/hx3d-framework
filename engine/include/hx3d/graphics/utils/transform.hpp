@@ -36,11 +36,23 @@ public:
 
   /**
   Build the model matrix using the position, scale, size and rotation.
+
   @return Matrix (mat4)
   */
   glm::mat4 compute();
+
+  /**
+  Add a transform to another.
+  In use for parent/child transform calculation.
+
+  @param transform Other transform
+  @return Current transform
+  */
   Transform add(const Transform& transform);
 
+  /**
+  Show the transform information. (Debug)
+  */
   void show();
 
   glm::vec3 position;

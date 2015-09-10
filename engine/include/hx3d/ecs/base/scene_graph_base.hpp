@@ -65,6 +65,7 @@ public:
 
   /**
   Remove a game object from a path.
+
   @param path Path
   */
   void remove(std::string path);
@@ -81,12 +82,14 @@ public:
 
   /**
   Get the root.
+
   @return Node (Ptr)
   */
   Ptr<NodeBase<EntityEnabled>> getRoot();
 
   /**
   Get the number of nodes.
+
   @return Number of nodes
   */
   unsigned int getNodeCount();
@@ -98,6 +101,7 @@ public:
 
   /**
   Draw the nodes.
+
   @param batch Batch
   */
   void draw(Batch& batch);
@@ -116,18 +120,21 @@ protected:
 
   /**
   Add an index to the graph.
+
   @param object Node (Ptr)
   */
   void addIndex(Ptr<NodeBase<EntityEnabled>> object);
 
   /**
   Test if the path exists and returns the node.
+
   @return Node (Ptr)
   */
   Ptr<NodeBase<EntityEnabled>> pathExists(std::string path);
 
   /**
   Create a child for a container Node.
+  
   @param T          Node type
   @param container  Container node
   @param name       Child name

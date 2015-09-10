@@ -30,6 +30,7 @@ class Entity: public IDBase {
 public:
   /**
   Construct an entity with a unique id.
+  
   @param id ID
   */
   Entity(const unsigned int id);

@@ -38,6 +38,7 @@ public:
   /**
   Create an empty waveform with a custom refresh delay.
   See @link#create to construct the texture.
+
   @param refreshDelay Refresh delay
   */
   Waveform(int refreshDelay);
@@ -45,6 +46,7 @@ public:
 
   /**
   Update the waveform.
+  
   @param stream Stream of amplitudes (between 0 and 255)
   @param length Length of the stream
   */

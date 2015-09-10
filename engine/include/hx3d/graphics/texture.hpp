@@ -75,12 +75,14 @@ public:
 
   /**
   Construct a texture from an image path.
+
   @param pathToImage Path to image
   */
   Texture(std::string pathToImage);
 
   /**
   Construct a texture from an memory image.
+
   @param image Image
   */
   Texture(Image& image);
@@ -88,12 +90,14 @@ public:
 
   /**
   Build the texture from an image.
+
   @param pathToImage Path to image
   */
   bool load(std::string pathToImage);
 
   /**
   Set the texture filters.
+
   @param type   Filter type
   @param value  Filter value
   */
@@ -101,6 +105,7 @@ public:
 
   /**
   Update a zone in the texture.
+
   @param x    X coordinate
   @param y    Y coordinate
   @param w    Width
@@ -111,18 +116,21 @@ public:
 
   /**
   Get the texture width.
+
   @return Width
   */
   unsigned int getWidth();
 
   /**
   Get the texture height.
+
   @return Height
   */
   unsigned int getHeight();
 
   /**
   Get the texture ID.
+
   @return Texture ID
   */
   GLuint getID();
@@ -131,6 +139,7 @@ public:
 
   /**
   Create a color buffer (used in framebuffers).
+
   @param width  Texture width
   @param height Texture height
   @return Texture (Ptr)
@@ -139,12 +148,14 @@ public:
 
   /**
   Use the current texture for drawing.
+
   @param texture Texture (Ptr)
   */
   static void use(Ptr<Texture> texture);
 
   /**
   Use the current font atlas for drawing.
+  
   @param font Font (Ptr)
   */
   static void use(Ptr<Font> font);

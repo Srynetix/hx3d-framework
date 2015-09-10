@@ -36,6 +36,7 @@ public:
 
   /**
   Return the file content as a string.
+
   @return String
   */
   std::string toString();
@@ -47,12 +48,14 @@ public:
 
   /**
   Load an ascii file from a path.
+
   @param path Path to file
   */
   static Ptr<File> loadAsciiFile(std::string path);
 
   /**
   Load a binary file from a path.
+
   @param path Path to file
   */
   static Ptr<File> loadBinaryFile(std::string path);
@@ -61,16 +64,19 @@ private:
   #ifdef __ANDROID__
     /**
     Load an ascii file from an Android APK.
+
     @param path Path to file
     */
     static Ptr<File> loadAsciiFileAndroid(std::string path);
     /**
     Load a binary file from an Android APK.
+
     @param path Path to file
     */
     static Ptr<File> loadBinaryFileAndroid(std::string path);
     /**
     Read the file content as string.
+
     @param path Path to file
     */
     static std::string readAsString(std::string path);
@@ -78,11 +84,13 @@ private:
 
   /**
   Load an ascii file from a path on a desktop system.
+
   @param path Path to file
   */
   static Ptr<File> loadAsciiFileDesktop(std::string path);
   /**
   Load a binary file from a path on a desktop system.
+  
   @param path Path to file
   */
   static Ptr<File> loadBinaryFileDesktop(std::string path);

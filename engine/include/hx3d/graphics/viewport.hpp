@@ -50,11 +50,13 @@ public:
 
   /**
   Set the viewport camera.
+
   @param camera Camera
   */
   void setCamera(Camera& camera);
   /**
   Get the viewport camera.
+
   @return Camera (Ptr)
   */
   Camera* getCamera();
@@ -65,6 +67,7 @@ public:
   void apply();
   /**
   Apply the viewport on the screen with or without centering the camera.
+
   @param centerCamera Center camera ?
   */
   void apply(bool centerCamera);
@@ -112,6 +115,7 @@ protected:
 
   /**
   Update the viewport with or without centering the camera (internal).
+  
   @param centerCamera Center camera ?
   */
   virtual void internalUpdate(bool centerCamera) = 0;

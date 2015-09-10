@@ -41,6 +41,7 @@ public:
 
   /**
   Display the log on the console.
+  
   @param value True/False
   */
   void DisplayOnConsole(bool value);

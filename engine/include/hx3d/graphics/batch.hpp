@@ -79,18 +79,21 @@ public:
 
   /**
   Set the shader for the next batching.
+
   @param shader Shader (Ptr)
   */
   void setShader(Ptr<Shader> shader);
 
   /**
   Get the current batching shader.
+
   @return Shader (Ptr)
   */
   Ptr<Shader> getShader();
 
   /**
   Set the camera for the next batching.
+  
   @param camera Camera
   */
   void setCamera(Camera& camera);

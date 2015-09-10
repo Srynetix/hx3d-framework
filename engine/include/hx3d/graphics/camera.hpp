@@ -45,12 +45,14 @@ public:
 
   /**
   Look at target.
+
   @param target Target
   */
   void lookAt(glm::vec3 target);
 
   /**
   Translate the camera.
+  
   @param vec Quantity
   */
   void translate(glm::vec3 vec);

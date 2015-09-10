@@ -39,30 +39,35 @@ public:
 
   /**
   Set the buffer values.
+
   @param values Values
   */
   void set(std::vector<T> values);
 
   /**
   Get the buffer values.
+
   @return Values
   */
   T* data();
 
   /**
   Get the buffer ID.
+
   @return ID
   */
   GLuint getId();
 
   /**
   Get the buffer size.
+
   @return Buffer size
   */
   unsigned int size();
 
   /**
   Get the vector.
+  
   @return Vector
   */
   std::vector<T>& getVector();

@@ -31,15 +31,15 @@
 namespace hx3d {
 namespace audio {
 
-Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount):
-  Spectrum(minFreq, maxFreq, barsCount, 50)
+Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount):
+  Spectrum(minFreq, maxFreq, barCount, 50)
   {}
 
-Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barsCount, int refreshDelay):
+Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount, int refreshDelay):
   Display(refreshDelay),
   _minFreq(minFreq),
   _maxFreq(maxFreq),
-  _barsCount(barsCount)
+  _barCount(barCount)
   {}
 
 Spectrum::~Spectrum() {}
@@ -57,14 +57,19 @@ void Spectrum::onInitialization() {
     _fftValues[i] = 0.f;
   }
 
-  _barsValues.resize(_barsCount);
-  for (unsigned int i = 0; i < _barsValues.size(); ++i) {
-    _barsValues[i] = 0.f;
+  _barValues.resize(_barCount);
+  for (unsigned int i = 0; i < _barValues.size(); ++i) {
+    _barValues[i] = 0.f;
   }
 
-  _normalizedBarValues.resize(_barsCount);
+  _normalizedBarValues.resize(_barCount);
   for (unsigned int i = 0; i < _normalizedBarValues.size(); ++i) {
     _normalizedBarValues[i] = 0.f;
+  }
+
+  _barFrequencies.resize(_barCount);
+  for (unsigned int i = 0; i < _barFrequencies.size(); ++i) {
+    _barFrequencies[i] = 0;
   }
 }
 
@@ -93,9 +98,9 @@ void Spectrum::update(Sint16* stream, int length) {
       _fftValues[i] = std::log10(std::abs(fftArray[i])) * 20;
     }
 
-    float octaves = calculateOctave(_minFreq, _maxFreq, _barsCount);
+    float octaves = calculateOctave(_minFreq, _maxFreq, _barCount);
     unsigned int currentFreq = _minFreq;
-    for (unsigned int i = 0; i < _barsCount; ++i) {
+    for (unsigned int i = 0; i < _barCount; ++i) {
 
       int low = lowerLimitSample(currentFreq, octaves, w/2);
       int hi = upperLimitSample(currentFreq, octaves, w/2);
@@ -105,7 +110,9 @@ void Spectrum::update(Sint16* stream, int length) {
 
       // Log.Info("C: %d [L: %d / H: %d]", currentFreq, low, hi);
 
-      _barsValues[i] = averageFreq(_fftValues, low, hi);
+      _barFrequencies[i] = currentFreq;
+
+      _barValues[i] = averageFreq(_fftValues, low, hi);
       currentFreq = nextCenterFreq(currentFreq, octaves);
     }
 
@@ -114,11 +121,11 @@ void Spectrum::update(Sint16* stream, int length) {
     _image.setRect(0, 0, w, h, Color::Black);
     drawBorders();
 
-    int bar_size = w / (float)_barsCount;
-    for (unsigned int i = 0; i < _barsCount; ++i) {
+    int bar_size = w / (float)_barCount;
+    for (unsigned int i = 0; i < _barCount; ++i) {
 
-      float scale_val = std::max(0.f, _barsValues[i]);
-      float norm_val = scale_val / 40.f;
+      float scale_val = std::max(0.f, _barValues[i]);
+      float norm_val = scale_val / 30.f;
 
       _normalizedBarValues[i] = norm_val;
 
@@ -136,21 +143,39 @@ void Spectrum::update(Sint16* stream, int length) {
   }
 }
 
-std::vector<float>& Spectrum::getNormalizedBarValues() {
-  return _normalizedBarValues;
-}
+float Spectrum::getNormalizedFrequencyAmplitude(unsigned int frequency, unsigned int range) {
+  unsigned int maxFrequency = _barFrequencies[_barCount - 1];
 
-float Spectrum::getNormalizedBarValue(unsigned int bar) {
-  if (bar > _barsCount) {
-    Log.Info("Spectrum: bar `%d` off-limits (max: %d)", bar, _barsCount);
+  if (frequency > maxFrequency) {
+    Log.Info("Spectrum: frequency `%d` off-limits (max: %d)", frequency, maxFrequency);
     return 0.f;
   }
 
-  return _normalizedBarValues[bar];
+  unsigned int lowFreq = frequency - range;
+  unsigned int hiFreq = frequency + range;
+  unsigned int lowBar = 0;
+  unsigned int hiBar = _barCount;
+
+  for (unsigned int i = 0; i < _barCount; ++i) {
+    unsigned int currentFreq = _barFrequencies[i];
+    if (lowFreq >= currentFreq) {
+      lowBar = i;
+    }
+
+    if (hiFreq >= currentFreq) {
+      hiBar = i;
+    }
+
+    Log.Info("Freq[%d]: %d", i, currentFreq);
+  }
+
+  Log.Info("Freq: %d range %d [Min: %d / Max: %d] [I: %d / %d]", frequency, range, lowFreq, hiFreq, lowBar, hiBar);
+
+  return averageFreq(_normalizedBarValues, lowBar, hiBar);
 }
 
 unsigned int Spectrum::getBarCount() {
-  return _barsCount;
+  return _barCount;
 }
 
 ////////////////////////////////
@@ -181,12 +206,17 @@ float Spectrum::averageFreq(std::vector<float>& values, int low, int hi) {
     return 0;
 
   float sum = 0;
+  int count = 1;
+
   for (int i = low; i < hi; ++i) {
     float val = values[i];
-    sum += val;
+    if (val != 0.f) {
+      sum += val;
+      ++count;
+    }
   }
 
-  return sum/(hi-low);
+  return sum/count;
 }
 
 float Spectrum::calculateOctave(unsigned int lowFreq, unsigned int hiFreq, unsigned int bars) {

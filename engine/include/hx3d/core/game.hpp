@@ -47,6 +47,7 @@ public:
 
   /**
   Set the current screen.
+  
   @param screen Screen (Ptr)
   */
   void setScreen(Ptr<Screen> screen);

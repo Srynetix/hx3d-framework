@@ -47,6 +47,7 @@ public:
 
   /**
   Get the framebuffer color buffer.
+
   @return Texture (Ptr)
   */
   Ptr<Texture> getColorBuffer();
@@ -60,6 +61,7 @@ public:
 
   /**
   Use the framebuffer as current framebuffer.
+  
   @param buf Framebuffer
   */
   static void use(Framebuffer& buf);

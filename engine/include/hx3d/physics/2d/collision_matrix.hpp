@@ -33,12 +33,14 @@ public:
 
   /**
   Add a category.
+
   @param name Name
   */
   void addCategory(std::string name);
 
   /**
   Add a mask for a category from multiple categories.
+
   @param name   Category
   @param name   First category
   @param others Other categories
@@ -50,11 +52,13 @@ public:
 
   /**
   Get a category bit from a name.
+
   @param category Category name
   */
   unsigned int getCategory(std::string category);
   /**
   Get a mask bit from a name.
+
   @param category Category name
   */
   unsigned int getMask(std::string category);
@@ -67,6 +71,7 @@ private:
 
   /**
   Add one mask for a category.
+  
   @param name     Category
   @param category Other category
   */

@@ -58,6 +58,7 @@ public:
 
   /**
   Get the program ID.
+
   @return Program ID.
   */
   GLuint getProgramID() const;
@@ -100,11 +101,13 @@ public:
 
   /**
   Get the wanted attribute id.
+
   @param name Name
   */
   GLint getAttribute(std::string name);
   /**
   Get the wanted uniform id.
+
   @param name Name
   */
   GLint getUniform(std::string name);
@@ -113,6 +116,7 @@ public:
 
   /**
   Use the shader as the current shader.
+
   @param shader Shader (Ptr)
   */
   static void use(Ptr<Shader> shader);
@@ -124,6 +128,7 @@ public:
 
   /**
   Analyse the shaders (debug mode).
+
   @param value True/False
   */
   static void setProgramAnalyzing(bool value);
@@ -155,6 +160,7 @@ protected:
 
   /**
   Create the shader program.
+
   @return All good / Error
   */
   bool createProgram();
@@ -169,6 +175,8 @@ protected:
   void analyzeUniforms();
   /**
   Get the parameter type (debug mode).
+
+  @return Parameter type
   */
   std::string getParameterType(GLenum type);
 

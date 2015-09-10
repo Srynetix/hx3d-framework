@@ -29,12 +29,40 @@ namespace hx3d {
 
 class CallbackTimer {
 public:
+  /**
+  Create an uninitialized callback timer.
+  See @link#initialize.
+  */
   CallbackTimer();
+
+  /**
+  Create a callback timer using a delay and a function.
+  The delay is in milliseconds.
+
+  @param delay    Timer delay
+  @param function Callback
+  */
   CallbackTimer(float delay, std::function<void()> function);
 
+  /**
+  Initialize the timer.
+  The delay is in milliseconds.
+
+  @param delay    Timer delay
+  @param function Callback
+  */
   void initialize(float delay, std::function<void()> function);
 
+  /**
+  Get the remaining time in milliseconds.
+
+  @return Remaining time
+  */
   long remaining();
+
+  /**
+  Reset the timer.
+  */
   void reset();
 
   void update();

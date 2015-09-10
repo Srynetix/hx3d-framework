@@ -46,6 +46,12 @@ void Display::setRefreshDelay(int refreshDelay) {
 
 void Display::onInitialization() {}
 
+void Display::drawBorders() {
+  _image.setRect(0, 0, _image.getWidth(), 1, Color::White);
+  _image.setRect(0, 0, 1, _image.getHeight(), Color::White);
+  _image.setRect(_image.getWidth() - 1, 0, 1, _image.getHeight(), Color::White);
+  _image.setRect(0, _image.getHeight() - 1, _image.getWidth(), 1, Color::White);
+}
 
 } /* audio */
 } /* hx3d */

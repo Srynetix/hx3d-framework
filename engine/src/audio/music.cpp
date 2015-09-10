@@ -28,14 +28,18 @@ namespace audio {
 Music::Music(): _music(nullptr), _file(nullptr) {}
 
 Music::Music(std::string pathToFile) {
-  _file = File::loadBinaryFile(pathToFile);
-
-  SDL_RWops* musicOps = SDL_RWFromConstMem(_file->data, _file->size);
-  _music = Mix_LoadMUS_RW(musicOps, 1);
+  create(pathToFile);
 }
 
 Music::~Music() {
   Mix_FreeMusic(_music);
+}
+
+void Music::create(std::string pathToFile) {
+  _file = File::loadBinaryFile(pathToFile);
+
+  SDL_RWops* musicOps = SDL_RWFromConstMem(_file->data, _file->size);
+  _music = Mix_LoadMUS_RW(musicOps, 1);
 }
 
 void Music::play() {

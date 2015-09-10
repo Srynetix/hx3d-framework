@@ -36,6 +36,7 @@ public:
 
   /**
   Build an index buffer with values.
+  
   @param values Values
   */
   IndexArrayBuffer(std::vector<GLushort> values);

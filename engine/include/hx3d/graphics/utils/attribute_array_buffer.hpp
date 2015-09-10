@@ -30,6 +30,7 @@ class AttributeArrayBuffer: public ArrayBuffer<float> {
 public:
   /**
   Construct an empty attribute array buffer.
+  
   See @link#create to initialize it.
   */
   AttributeArrayBuffer();

@@ -31,7 +31,7 @@ public:
     Chronometer();
 
     /**
-    Reset the timer.
+    Reset the chronometer.
     */
     void reset();
 
@@ -40,7 +40,6 @@ public:
     @return Nanoseconds
     */
     long tick();
-
     /**
     Get the elapsed time as milliseconds.
     @return Milliseconds

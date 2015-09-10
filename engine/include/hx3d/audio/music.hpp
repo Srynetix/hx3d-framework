@@ -31,12 +31,40 @@ namespace audio {
 class Music {
 
 public:
+  /**
+  Create an uninitialized music.
+  See @link#create.
+  */
   Music();
+
+  /**
+  Create an initialized music using a path.
+
+  @param pathToFile Path to audio file.
+  */
   explicit Music(std::string pathToFile);
   ~Music();
 
+  /**
+  initialize a music with a path.
+
+  @param pathToFile Path to audio file
+  */
+  void initialize(std::string pathToFile);
+
+  /**
+  Play the music.
+  */
   void play();
+
+  /**
+  Stop the music.
+  */
   void stop();
+
+  /**
+  Test if the music is playing.
+  */
   bool isPlaying();
 
 private:

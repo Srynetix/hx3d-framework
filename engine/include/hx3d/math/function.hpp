@@ -55,6 +55,7 @@ public:
 
   /**
   Sample the current coordinates from the math function.
+  
   @return Coordinates (vec2)
   */
   glm::vec2 sample();

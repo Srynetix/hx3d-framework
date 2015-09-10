@@ -38,6 +38,7 @@ class Text: public Widget {
 public:
   /**
   Create a text from a font.
+
   @param font Font (Ptr)
   */
   Text(Ptr<Font> font);
@@ -52,6 +53,7 @@ public:
 
   /**
   Set the text content.
+
   @param content Content
   */
   void setContent(std::string content);
@@ -66,6 +68,7 @@ public:
 
   /**
   Get the text font.
+  
   @return Font (Ptr)
   */
   Ptr<Font> getFont();

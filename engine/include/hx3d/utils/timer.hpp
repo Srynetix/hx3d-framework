@@ -37,12 +37,14 @@ public:
 
   /**
   Create a timer with a delay as milliseconds.
+
   @param delay Delay
   */
   Timer(long delay);
 
   /**
   Initialize the timer with a delay.
+
   @param delay Delay
   */
   void initialize(long delay);
@@ -54,6 +56,7 @@ public:
 
   /**
   Get the remaining time as milliseconds.
+  
   @return milliseconds
   */
   long remaining();

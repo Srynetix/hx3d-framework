@@ -31,15 +31,44 @@ namespace audio {
 class Effect;
 class Audio {
 public:
+  /**
+  Initialize the audio system.
+  */
   Audio();
   ~Audio();
 
   ///////////////////////////////
 
+  /**
+  Register an effect on a channel.
+  Use Audio::PostChannel to put on the post channel.
+
+  @param channel  Channel
+  @param effect   Effect
+  */
   void registerEffect(int channel, Effect& effect);
+
+  /**
+  Clear all the effects for a channel.
+  Use Audio::PostChannel to put on the post channel.
+
+  @param channel Channel
+  */
   void clearEffects(int channel);
 
+  /**
+  Get the audio device frequency rate.
+
+  @return Frequency rate
+  */
   unsigned int getFrequencyRate();
+
+  /**
+  Get the audio device sample size.
+  It is used for WAV chunk loading.
+
+  @return Sample size
+  */
   unsigned int getSampleSize();
 
   static int PostChannel;
