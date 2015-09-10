@@ -34,6 +34,11 @@ public:
   virtual void onFunction(int channel, void* stream, int length) override;
   virtual void onDone(int channel) override;
 
+  /**
+  Get the stream in signed short format.
+
+  @return Signed short stream
+  */
   Sint16* getS16Stream();
 };
 

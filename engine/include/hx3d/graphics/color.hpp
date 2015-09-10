@@ -61,6 +61,7 @@ public:
 
   /**
   Convert the color to a float format (between 0 and 1).
+
   @return Color (vec4)
   */
   glm::vec4 toFloat();

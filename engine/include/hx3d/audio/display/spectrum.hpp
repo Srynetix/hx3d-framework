@@ -57,6 +57,11 @@ public:
   float getNormalizedBarValue(unsigned int bar);
   std::vector<float>& getNormalizedBarValues();
 
+  /*
+  Get the bar count.
+
+  @return Bar count
+  */
   unsigned int getBarCount();
 
 private:
@@ -69,13 +74,84 @@ private:
   std::vector<float> _barsValues;
   std::vector<float> _normalizedBarValues;
 
+  /**
+  Get the center frequency for the next bar, using an octave value.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Next center frequency
+  */
   int nextCenterFreq(int centerFreq, float octaves);
+
+  /**
+  Get the center frequency for the previous bar, using an octave value.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Previous center frequency
+  */
   int prevCenterFreq(int centerFreq, float octaves);
+
+  /**
+  Get the lower frequency limit for the current bar, using an octave value.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Lower frequency limit
+  */
   int lowerLimit(int centerFreq, float octaves);
+
+  /**
+  Get the lower frequency limit sample index for the current bar,
+  e.g. the sample index into the stream, for an octave value and a
+  sample length.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Lower frequency limit sample index
+  */
   int lowerLimitSample(int centerFreq, float octaves, int samplesLength);
+
+  /**
+  Get the upper frequency limit for the current bar, using an octave value.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Upper frequency limit
+  */
   int upperLimit(int centerFreq, float octaves);
+
+
+  /**
+  Get the upper frequency limit sample index for the current bar,
+  e.g. the sample index into the stream, for an octave value and a
+  sample length.
+
+  @param centerFreq Current center frequency
+  @param octaves    Octave value
+  @return Upper frequency limit sample index
+  */
   int upperLimitSample(int centerFreq, float octaves, int samplesLength);
+
+  /**
+  Calculate the average frequency between a low and hi index interval.
+
+  @param values Bar values
+  @param low    Low frequency index
+  @param hi     High frequency index
+  @return Average frequency
+  */
   float averageFreq(std::vector<float>& values, int low, int hi);
+
+  /**
+  Calculate the octave value, using a low frequency limit and a
+  hi frequency limit, for a number of bars.
+
+  @param lowFreq  Low frequency limit
+  @param hiFreq   Hi frequency limit
+  @param bars     Bar count
+  @return Octave value
+  */
   float calculateOctave(unsigned int lowFreq, unsigned int hiFreq, unsigned int bars);
 };
 

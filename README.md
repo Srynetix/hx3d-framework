@@ -28,8 +28,10 @@ To import them, just clone them in the "dependencies" folder.
 
 You can use the `clone_dependencies.sh` script.
 
-- SDL *2.0.3*
-- SDL_image *2.0.0*
+- SDL2 *2.0.3*
+- SDL2_image *2.0.0*
+- SDL2_mixer *2.0.0*
+- SDL2_net *2.0.0*
 - Freetype *2.6*
 - Freetype-GL *git*
 - Box2D *2.3.1*
@@ -75,11 +77,12 @@ You can use the `clone_dependencies.sh` script.
   - [x] Scene Graph and Nodes
   - [x] Hybrid Engine (ZGraph)
 - **Audio**
-  - [ ] Base audio
+  - [x] Base audio
+  - [ ] *Frequency amplitude detection (in progress)*
 - **GUI**
   - [ ] Base GUI
 - **Network**
-  - [ ] Base network (SDL_net ?)
+  - [ ] Base network
 - **Scripting**
   - [ ] Base scripting (Lua ?)
   - [ ] Console (because it's cool !)
@@ -88,11 +91,11 @@ You can use the `clone_dependencies.sh` script.
 
 - Linux
 - Android
-- Windows
 
 #### In process ####
 
 - Mac OS X
+- Windows
 
 #### Will be available later ####
 
@@ -133,6 +136,15 @@ So, here are some examples:
 
 When the `game` folder isn't here, the build script only build the framework.
 So the options as `--install`, `--execute`, or `--debug` will not work (you will be warned.)
+
+### Windows building ###
+
+Currently, Windows build are supported using MinGW.
+
+The recommended way is to use MSYS2.
+Then, you install the required packages into MSYS2: MinGW-w64, CMake and Ninja.
+
+MSVC *may be* supported later.
 
 ## <a name="testing"></a> Testing ##
 
