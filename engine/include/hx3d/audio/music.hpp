@@ -33,7 +33,7 @@ class Music {
 public:
   /**
   Create an uninitialized music.
-  See @link#create.
+  See @link#initialize.
   */
   Music();
 
