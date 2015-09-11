@@ -20,26 +20,22 @@ public:
     unsigned int count = 31;
     images.resize(count);
     sprites.resize(count);
+    baseXs.resize(count);
     texts.reserve(count);
-
-    moving.setTexture(Core::Assets()->get<Texture>("box"));
-    moving.transform.position.x = Core::App()->getWidth() / 4;
-    moving.transform.position.y = Core::App()->getHeight() / 2;
-    moving.transform.position.z = 0.5f;
-    moving.transform.scale = glm::vec3(0.25f);
 
     unsigned int appW = Core::App()->getWidth();
     unsigned int appH = Core::App()->getHeight();
 
-    unsigned int caseW = appW / 9.f;
-    unsigned int caseH = appH / 8.f;
+    caseW = appW / 9.f;
+    caseH = appH / 8.f;
+    duration = 2.5f;
 
     for (unsigned int i = 0; i < count; ++i) {
       texts.emplace_back(Core::Assets()->get<Font>("default"));
 
       if (i == count - 1) {
         math::Interpolation interp = math::Interpolation::Linear;
-        buildBox(count-1, appW / 2, appH / 2, caseW, caseH, interp);
+        buildBox(count-1, appW / 2.f, appH / 2.f, caseW, caseH, interp);
       }
 
       else {
@@ -103,32 +99,17 @@ public:
   }
 
   void buildBox(unsigned int i, unsigned int x, unsigned int y, unsigned int w, unsigned int h, math::Interpolation interp) {
-    Image& image = images[i];
     Sprite& sprite = sprites[i];
     gui::Text& text = texts[i];
 
+    baseXs[i] = x;
+
     text.setContent(getInterpName(interp));
 
-    image.create(w, h);
-    image.setRect(0, 0, w, 1, Color::White);
-    image.setRect(0, h - 1, w, 1, Color::White);
-    image.setRect(0, 0, 1, h, Color::White);
-    image.setRect(w - 1, 0, 1, h, Color::White);
+    sprite.setTexture(Core::Assets()->get<Texture>("box"));
+    sprite.transform.size.x = w / 4;
+    sprite.transform.size.y = h / 2;
 
-    for (unsigned int i = 0; i < image.getWidth() - 2; ++i) {
-      float t = i/(float)image.getWidth();
-      Color color = Color::interp(
-        Color(255, 255, 0),
-        Color::Red,
-        t,
-        interp
-      );
-
-      image.setRect(i+1, 1, 1, h - 2, color);
-    }
-    image.buildTexture();
-
-    sprite.setTexture(image.getTexture());
     sprite.transform.position.x = x;
     sprite.transform.position.y = y;
 
@@ -136,24 +117,32 @@ public:
     text.transform.position.y = y - h/2 - 20;
   }
 
-  void moveBox() {
-    count += 1.f/60.f;
+  void moveBox(unsigned int i, unsigned int baseX, unsigned int endX, math::Interpolation inter) {
+    Sprite& sprite = sprites[i];
 
-    if (count < 5.f) {
-      float pos = math::interpolate(Core::App()->getWidth() / 4, Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4, count/5.f, math::Interpolation::InElastic);
-
-      moving.transform.position.x = pos;
+    if (currentTime < duration) {
+      float pos = math::interpolate(baseX, endX, currentTime/duration, inter);
+      sprite.transform.position.x = pos;
     } else {
-      moving.transform.position.x = Core::App()->getWidth() / 4;
-
-      count = 0.f;
+      sprite.transform.position.x = baseX;
     }
   }
 
   void update() {
     camera.update();
 
-    moveBox();
+    for (unsigned int i = 0; i < sprites.size(); ++i) {
+      math::Interpolation interp = math::Interpolation::Linear;
+      if (i != sprites.size() - 1) {
+        interp = static_cast<math::Interpolation>(i + 1);
+      }
+
+      moveBox(i, baseXs[i] - 50, baseXs[i] + 50, interp);
+    }
+
+    currentTime += 1.f/60.f;
+    if (currentTime > duration)
+      currentTime = 0.f;
   }
 
   void render() {
@@ -167,8 +156,6 @@ public:
       batch.draw(text);
     }
 
-    batch.draw(moving);
-
     batch.end();
   }
 
@@ -177,13 +164,14 @@ private:
 
   std::vector<Image> images;
   std::vector<Sprite> sprites;
+  std::vector<float> baseXs;
   std::vector<gui::Text> texts;
-
-  Sprite moving;
-
-  float count;
 
   Batch batch;
 
+  float currentTime;
   float angle;
+  float caseW;
+  float caseH;
+  float duration;
 };

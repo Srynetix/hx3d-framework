@@ -81,6 +81,23 @@ static float outBounce(float t) {
     7.5625 * (t - 0.9545) * (t - 0.9545) + 0.984375;
 }
 
+static float inExpo(float t) {
+  return std::pow(2, 10 * (t-1));
+}
+
+static float inCirc(float t) {
+  return -(std::sqrt(1 - t*t) - 1);
+}
+
+static float inBack(float t) {
+  return t*t * (3*t - 2);
+}
+
+static float inElastic(float t) {
+  return (t == 0 || t == 1) ? t :
+    -std::pow(2, 8 * (t-1)) * std::sin(((t-1) * 80 - 7.5) * math::PI / 15);
+}
+
 template <class T>
 T interpolate(T a, T b, float t, Interpolation type) {
   switch (type) {
@@ -136,50 +153,39 @@ T interpolate(T a, T b, float t, Interpolation type) {
       break;
 
     case Interpolation::InExpo:
-      t = std::pow(2, 10 * (t-1));
+      t = inExpo(t);
       break;
     case Interpolation::OutExpo:
-      t = -std::pow(2, -10 * t) + 1;
+      t = 1 - inExpo(1 - t);
       break;
     case Interpolation::InOutExpo:
-      /* BROKEN */
-      t = t/2;
-      t = (std::pow(2, 10 * (t-1))) / 2;
+      t = (t < 0.5f) ?
+        inExpo(t * 2) / 2 :
+        1 - inExpo(t * -2 + 2) / 2;
       break;
 
     case Interpolation::InCirc:
-      t = -1 * (std::sqrt(1 - t*t) - 1);
+      t = inCirc(t);
       break;
     case Interpolation::OutCirc:
-      t = std::sqrt(1 - (t - 1) * (t - 1));
+      t = 1 - inCirc(1 - t);
       break;
     case Interpolation::InOutCirc:
-      /* BROKEN */
-      t = t/2;
-      t = (std::sqrt(1 - t*t) - 1) / -2;
+      t = (t < 0.5f) ?
+        inCirc(t * 2) / 2 :
+        1 - inCirc(t * -2 + 2) / 2;
       break;
 
     case Interpolation::InBack:
-      {
-        float overshoot = 1.70158;
-        t = 1 * t*t*((overshoot + 1) * t - overshoot);
-      }
+      t = inBack(t);
       break;
     case Interpolation::OutBack:
-      {
-        float overshoot = 1.70158;
-        t = t - 1;
-        t = t * t * ((overshoot + 1) * t + overshoot) + 1;
-      }
+      t = 1 - inBack(1 - t);
       break;
     case Interpolation::InOutBack:
-      /* BROKEN */
-      {
-        float overshoot = 1.70158;
-        t = t/2;
-        overshoot = overshoot * 1.525;
-        t = (t * t * ((overshoot + 1) * t - overshoot)) / 2;
-      }
+      t = (t < 0.5f) ?
+        inBack(t * 2) / 2 :
+        1 - inBack(t * -2 + 2) / 2;
       break;
 
     case Interpolation::InBounce:
@@ -190,47 +196,21 @@ T interpolate(T a, T b, float t, Interpolation type) {
       break;
     case Interpolation::InOutBounce:
       t =
-        (t < 0.5f) ? (1 - outBounce(1 - t*2)) * 0.5:
+        (t < 0.5f) ?
+        (1 - outBounce(1 - t*2)) * 0.5:
         outBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
       break;
 
     case Interpolation::InElastic:
-      {
-        float amplitude = 1.f;
-        float period = 0.3f;
-        float offset = period / 4;
-
-        if (t == 0 || t == 1)
-          break;
-
-        t = t - 1;
-        t = -(amplitude * std::pow(2, 10 * t) * std::sin(((t - offset) * (math::PI * 2)) / period));
-      }
+      t = inElastic(t);
       break;
     case Interpolation::OutElastic:
-      {
-        float amplitude = 1.f;
-        float period = 0.3f;
-        float offset = period / 4;
-
-        if (t == 0 || t == 1)
-          break;
-
-        t = amplitude * std::pow(2, -10 * t) * std::sin((t - offset) * (math::PI * 2) / period) + 1;
-      }
+      t = 1 - inElastic(1 - t);
       break;
     case Interpolation::InOutElastic:
-      /* BROKEN */
-      {
-        float amplitude = 1.f;
-        float period = 0.4499f;
-        float offset = period / 4;
-
-        if (t == 0 || t == 1)
-          break;
-
-        t = (amplitude * std::pow(2, 10*t) * std::sin((t - offset) * (math::PI * 2) / period)) / -2;
-      }
+      t = (t < 0.5f) ?
+        inElastic(t * 2) / 2 :
+        1 - inElastic(t * -2 + 2) / 2;
       break;
 
     case Interpolation::Linear:
