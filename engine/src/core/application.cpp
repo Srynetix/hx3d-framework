@@ -85,6 +85,10 @@ void Application::create(int width, int height, std::string title) {
 
   Log.Info(hello);
 
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
 #ifdef DESKTOP_OPENGL
   _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
@@ -102,9 +106,6 @@ void Application::create(int width, int height, std::string title) {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #endif
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
   _context = SDL_GL_CreateContext(_window);
   if (_context == 0) {
