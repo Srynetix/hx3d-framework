@@ -61,11 +61,15 @@ You can use the `clone_dependencies.sh` script.
   - [x] Framebuffers
   - [x] Cameras
   - [x] Viewports
+  - [ ] Animations
   - [ ] Lights
   - [ ] Particle system
   - [ ] SVG handling or preprocessing
   - [ ] Mesh loading
-  - [ ] Animation and tweening
+- **Tweening**
+  - [x] Base tweening
+  - [x] Parallel tweens
+  - [x] Tween sequences
 - **Fonts**
   - [x] Basic font drawing
   - [x] Individual glyph drawing
@@ -78,7 +82,7 @@ You can use the `clone_dependencies.sh` script.
   - [x] Hybrid Engine (ZGraph)
 - **Audio**
   - [x] Base audio
-  - [ ] *Frequency amplitude detection (in progress)*
+  - [x] Frequency amplitude detection
 - **GUI**
   - [ ] Base GUI
 - **Network**
