@@ -6,6 +6,8 @@
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"
 
+#include "hx3d/math/interpolation.hpp"
+
 #include "hx3d/utils/chronometer.hpp"
 
 using namespace hx3d;
@@ -128,7 +130,7 @@ public:
     }
   }
 
-  void update() {
+  virtual void update(float delta) override {
     camera.update();
 
     for (unsigned int i = 0; i < sprites.size(); ++i) {
@@ -140,12 +142,12 @@ public:
       moveBox(i, baseXs[i] - 50, baseXs[i] + 50, interp);
     }
 
-    currentTime += 1.f/60.f;
+    currentTime += delta;
     if (currentTime > duration)
       currentTime = 0.f;
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

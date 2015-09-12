@@ -91,7 +91,7 @@ void SceneGraphBase<EntityEnabled>::draw(Batch& batch) {
 }
 
 template <>
-inline void SceneGraphBase<false>::update() {
+inline void SceneGraphBase<false>::update(float delta) {
   std::stack<Ptr<NodeBase<false>>> stack;
   stack.push(_root);
 
@@ -99,7 +99,7 @@ inline void SceneGraphBase<false>::update() {
     Ptr<NodeBase<false>> node = stack.top();
     stack.pop();
 
-    node->update();
+    node->update(delta);
 
     for (Ptr<NodeBase<false>> child: node->_children) {
       stack.push(child);
@@ -108,7 +108,7 @@ inline void SceneGraphBase<false>::update() {
 }
 
 template <>
-inline void SceneGraphBase<true>::update() {
+inline void SceneGraphBase<true>::update(float delta) {
   std::stack<Ptr<NodeBase<true>>> stack;
   stack.push(_root);
 
@@ -116,14 +116,14 @@ inline void SceneGraphBase<true>::update() {
     Ptr<NodeBase<true>> node = stack.top();
     stack.pop();
 
-    node->update();
+    node->update(delta);
 
     for (Ptr<NodeBase<true>> child: node->_children) {
       stack.push(child);
     }
   }
 
-  _engine->update();
+  _engine->update(delta);
 }
 
   /////////////////

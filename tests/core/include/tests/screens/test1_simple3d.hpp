@@ -20,7 +20,7 @@ public:
     angle = 0.f;
   }
 
-  virtual void update() override {
+  virtual void update(float delta) override {
     camera.rotateAround(glm::vec3(0.f, 0.f, 0.f), 1.f, glm::vec3(0, 1, 0));
     camera.update();
   }

@@ -76,4 +76,8 @@ void Mesh::updateColor() {
   colors.upload();
 }
 
+Color& Mesh::getTint() {
+  return _tint;
+}
+
 } /* hx3d */

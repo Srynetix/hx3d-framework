@@ -53,8 +53,9 @@ public:
   See @link#canProcess.
 
   @param entity Entity (Ptr)
+  @param delta Delta time
   */
-  virtual void process(Ptr<EntityType> entity) = 0;
+  virtual void process(Ptr<EntityType> entity, float delta) = 0;
 
   /**
   Check if an entity can be processed (using the required family).
@@ -65,7 +66,7 @@ public:
 
   /**
   Get the engine instance.
-  
+
   @return Engine instance
   */
   EngineBase<EntityType>* getEngine();

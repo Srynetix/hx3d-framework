@@ -108,8 +108,10 @@ public:
 
   /**
   Update the nodes.
+
+  @param delta Delta time
   */
-  void update();
+  void update(float delta);
 
   friend class NodeBase<EntityEnabled>;
 
@@ -134,7 +136,7 @@ protected:
 
   /**
   Create a child for a container Node.
-  
+
   @param T          Node type
   @param container  Container node
   @param name       Child name

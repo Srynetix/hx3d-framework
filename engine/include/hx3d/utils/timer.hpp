@@ -56,15 +56,15 @@ public:
 
   /**
   Get the remaining time as milliseconds.
-  
+
   @return milliseconds
   */
   long remaining();
 
   /**
-  Test if the timer is ended.
+  Test if the timer has ended.
   */
-  bool isEnded();
+  bool hasEnded();
 
 private:
     long _delay;

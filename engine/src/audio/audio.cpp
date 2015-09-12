@@ -26,9 +26,9 @@
 namespace hx3d {
 namespace audio {
 
-int Audio::PostChannel = MIX_CHANNEL_POST;
+int AudioDevice::PostChannel = MIX_CHANNEL_POST;
 
-Audio::Audio() {
+AudioDevice::AudioDevice() {
   int flags = Mix_Init(~0);
   std::string types;
 
@@ -62,11 +62,11 @@ Audio::Audio() {
   _sampleSize);
 }
 
-Audio::~Audio() {
+AudioDevice::~AudioDevice() {
   Mix_Quit();
 }
 
-void Audio::registerEffect(int channel, Effect& effect) {
+void AudioDevice::registerEffect(int channel, Effect& effect) {
   Mix_RegisterEffect(
     channel,
     [](int channel, void* stream, int len, void* udata){
@@ -79,16 +79,16 @@ void Audio::registerEffect(int channel, Effect& effect) {
     }, &effect);
 }
 
-void Audio::clearEffects(int channel) {
+void AudioDevice::clearEffects(int channel) {
   Mix_UnregisterAllEffects(channel);
 }
 
 
-unsigned int Audio::getFrequencyRate() {
+unsigned int AudioDevice::getFrequencyRate() {
   return _audioRate;
 }
 
-unsigned int Audio::getSampleSize() {
+unsigned int AudioDevice::getSampleSize() {
   return _sampleSize;
 }
 

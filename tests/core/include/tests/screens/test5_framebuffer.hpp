@@ -33,14 +33,6 @@ public:
       screenSize.y / 2,
       0
     );
-    /*
-    framebufferSprite.transform.size = glm::vec3(
-      screenSize.y,
-      screenSize.x,
-      1
-    );
-    */
-    // framebufferSprite.transform.rotation.z = glm::radians(90.f);
 
     text.setContent("WOOOOOOOOOHOOOOOOOOO !!");
     text.transform.scale = glm::vec3(2);
@@ -51,7 +43,7 @@ public:
     );
   }
 
-  void update() {
+  virtual void update(float delta) override {
     camera.update();
 
     float angle = framebufferSprite.transform.rotation.z;
@@ -61,7 +53,7 @@ public:
     framebufferSprite.transform.rotation.z = angle;
   }
 
-  void render() {
+  virtual void render() override {
 
     Framebuffer::use(framebuffer);
     Framebuffer::clear(Color(0, 0, 0));

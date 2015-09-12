@@ -41,8 +41,10 @@ public:
 
   /**
   On application update.
+
+  @param delta Delta time
   */
-  virtual void update() = 0;
+  virtual void update(float delta) = 0;
 
   /**
   On application pause.
@@ -56,7 +58,7 @@ public:
 
   /**
   On application resize.
-  
+
   @param width  New width
   @param height New height
   */

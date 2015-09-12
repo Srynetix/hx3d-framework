@@ -18,6 +18,7 @@
 #include "hx3d/graphics/image.hpp"
 
 using namespace hx3d;
+using namespace audio;
 
 class Test7: public BaseTestScreen {
 public:
@@ -53,10 +54,10 @@ public:
     spectrum.transform.position.x = Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4;
     spectrum.transform.position.y = Core::App()->getHeight() / 2;
 
-    Core::AudioDevice()->registerEffect(audio::Audio::PostChannel, converter);
+    Core::Audio()->registerEffect(AudioDevice::PostChannel, converter);
   }
 
-  void update() {
+  virtual void update(float delta) override {
     camera.update();
 
     text.setContent(format("Music played: %s", music.isPlaying() ? "On" : "Off"));
@@ -83,7 +84,7 @@ public:
     }
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();
@@ -98,18 +99,19 @@ public:
     batch.end();
   }
 
-  void hide() {
-    Core::AudioDevice()->clearEffects(audio::Audio::PostChannel);
+  virtual void hide() override {
+    Core::Audio()->clearEffects(AudioDevice::PostChannel);
   }
 
 private:
   Ptr<Texture> texture;
 
   OrthographicCamera camera;
-  audio::Music music;
-  audio::Waveform waveform;
-  audio::Spectrum spectrum;
-  audio::S16Converter converter;
+
+  Music music;
+  Waveform waveform;
+  Spectrum spectrum;
+  S16Converter converter;
 
   gui::Text text;
   gui::Text fps;

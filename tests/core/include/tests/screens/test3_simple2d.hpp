@@ -12,7 +12,7 @@ public:
     batch.setCamera(camera);
   }
 
-  void update() {
+  virtual void update(float delta) override {
     if (Core::Events()->isKeyPressed(KeyEvent::Key::Z)) {
       camera.translate(glm::vec3(0, 2.f, 0));
     }
@@ -29,7 +29,7 @@ public:
     camera.update();
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

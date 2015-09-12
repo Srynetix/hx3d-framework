@@ -55,6 +55,8 @@ Sprite::Sprite(Ptr<Texture> texture):
     });
 
     uploadAll();
+
+    setTint(Color::White);
   }
 
 Sprite::Sprite(Framebuffer& buffer):

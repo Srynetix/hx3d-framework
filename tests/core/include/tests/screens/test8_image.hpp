@@ -56,7 +56,7 @@ public:
     });
   }
 
-  void update() {
+  virtual void update(float delta) override {
     camera.update();
     timer.update();
 

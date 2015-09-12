@@ -51,9 +51,9 @@ namespace hx3d {
       _screen->render();
   }
 
-  void Game::update() {
+  void Game::update(float delta) {
     if (_screen)
-      _screen->update();
+      _screen->update(delta);
   }
 
   void Game::resize(int width, int height) {

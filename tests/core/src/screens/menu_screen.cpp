@@ -19,6 +19,8 @@ Screens list.
 #include "tests/screens/test7_sound.hpp"
 #include "tests/screens/test8_image.hpp"
 #include "tests/screens/test9_interpolation.hpp"
+#include "tests/screens/test10_stencil.hpp"
+#include "tests/screens/test11_tweening.hpp"
 
 using namespace hx3d;
 
@@ -51,10 +53,8 @@ MenuScreen::MenuScreen():
   instructions.transform.scale = glm::vec3(0.5f);
   instructions.transform.position = glm::vec3(worldSize.x - 300, 20, 0);
 
-  // logoSprite.transform.size = glm::vec3(710, 797, 0);
   logoSprite.transform.scale = glm::vec3(0.25, 0.25, 0);
   logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 100, 0);
-  // logoSprite.transform.rotation.z = glm::radians(90.f);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
@@ -65,8 +65,12 @@ MenuScreen::MenuScreen():
     {"Physics 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
     {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
     {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
-    {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}}
+    {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}},
+    {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
+    {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}}
   };
+
+  buttonCount = worldSize.y / buttonHeight;
 
   Core::Events()->setInputHandler(this);
 }
@@ -86,12 +90,16 @@ void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
   unsigned int column = vpc.x / buttonWidth;
   unsigned int target = vpc.y / buttonHeight;
 
-  if (column == 0 && target < screens.size()) {
-    screens[target].func();
+  if (target > buttonCount - 1)
+    return;
+
+  unsigned int index = target + column * buttonCount;
+  if (index < screens.size()) {
+    screens[index].func();
   }
 }
 
-void MenuScreen::update() {
+void MenuScreen::update(float delta) {
   if (Core::CurrentSystem == Core::SystemType::Android) {
     if (Core::Events()->isKeyPressed(KeyEvent::Key::AndroidBack)) {
       Core::CurrentGame()->stop();
@@ -113,7 +121,14 @@ void MenuScreen::render() {
   batch.setShader(defaultShader);
   batch.begin();
   for (unsigned int i = 0; i < screens.size(); ++i) {
-    sprite.transform.position = glm::vec3((buttonWidth / 2), worldSize.y - i * buttonHeight - (buttonHeight / 2), 0);
+
+    int column = i / buttonCount;
+    int index = i % buttonCount;
+
+    int posX = (buttonWidth / 2) + column * buttonWidth;
+    int posY = worldSize.y - index * buttonHeight - (buttonHeight / 2);
+
+    sprite.transform.position = glm::vec3(posX, posY, 0);
     text.transform.position = glm::vec3(sprite.transform.position.x - buttonWidth / 4, sprite.transform.position.y, 0.5f);
 
     text.setContent(screens[i].name);

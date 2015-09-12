@@ -101,9 +101,10 @@ void Application::create(int width, int height, std::string title) {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
- #endif
+#endif
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
   _context = SDL_GL_CreateContext(_window);
   if (_context == 0) {
@@ -124,9 +125,16 @@ void Application::create(int width, int height, std::string title) {
   glViewport(0, 0, _width, _height);
 
   glEnable(GL_TEXTURE_2D);
+  // glEnable(GL_CULL_FACE);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  // Stencil bitplanes
+  int bitplanes = 0;
+  glGetIntegerv(GL_STENCIL_BITS, &bitplanes);
+
+  Log.Info("Stencil bitplanes: %d", bitplanes);
 
   /** Initializations **/
 
@@ -150,38 +158,32 @@ void Application::display() {
   Uint32 frameTime = 0;
   Uint32 frameStart;
   Uint32 frameEnd;
-
-  unsigned int fpsMilli = 1000/_fpsLimit;
+  float deltaTime = 0.f;
 
   while (_running) {
 
     frameStart = SDL_GetTicks();
 
-    update();
+    update(deltaTime);
     render();
 
     frameEnd = SDL_GetTicks();
     frameTime = frameEnd - frameStart;
+    deltaTime = frameTime / 1000.f;
 
     _currentFPS = 1.f / (frameTime / 1000.f);
     _elapsedTime += 1;
-
-    //
-    // if (fpsMilli > frameTime) {
-    //   SDL_Delay(fpsMilli - frameTime);
-    // }
-
   }
 
 }
-void Application::update() {
+void Application::update(float delta) {
 
   Core::Events()->poll();
 
   if (Core::Events()->isWindowState(WindowEvent::Type::Closed)) {
     _game->stop();
   } else {
-    _game->update();
+    _game->update(delta);
   }
 
   if (!_game->isRunning())

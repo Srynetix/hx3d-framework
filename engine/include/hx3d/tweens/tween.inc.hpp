@@ -1,5 +1,5 @@
 /*
-    Screen management.
+    Regular tween.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +18,34 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREEN
-#define HX3D_CORE_SCREEN
-
 namespace hx3d {
+namespace tweens {
 
-class Screen {
+template <class T>
+Tween<T>::Tween(T& mod, T end, float duration, math::Interpolation interp):
+  BaseTween(), mod(&mod), end(end), duration(duration), interp(interp) {
+    currentTime = 0.f;
+    _firstUpdate = false;
+}
 
-public:
-  Screen();
-  virtual ~Screen();
+template <class T>
+void Tween<T>::update(float delta) {
+  if (_ended)
+    return;
 
-  /**
-  On screen show.
-  */
-  virtual void show();
-  /**
-  On screen hide.
-  */
-  virtual void hide();
+  if (!_firstUpdate) {
+    base = *mod;
+    _firstUpdate = true;
+  }
 
-  /**
-  On screen pause.
-  */
-  virtual void pause();
-  /**
-  On screen resume.
-  */
-  virtual void resume();
+  currentTime += delta;
+  if (currentTime < duration) {
+    float normTime = currentTime / duration;
+    *mod = math::interpolate(base, end, normTime, interp);
+  } else {
+    _ended = true;
+  }
+}
 
-  /**
-  On screen update.
-
-  @param delta Delta time
-  */
-  virtual void update(float delta);
-  /**
-  On screen render.
-  */
-  virtual void render();
-  /**
-  On screen resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height);
-
-  /**
-  On screen disposal.
-  */
-  virtual void dispose();
-};
-
+} /* tween */
 } /* hx3d */
-
-#endif

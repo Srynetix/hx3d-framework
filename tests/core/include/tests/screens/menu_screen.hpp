@@ -49,7 +49,7 @@ public:
   virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure);
 
   virtual void resize(int width, int height) override;
-  virtual void update() override;
+  virtual void update(float delta) override;
   virtual void render() override;
 
 private:
@@ -71,6 +71,7 @@ private:
 
   float buttonWidth;
   float buttonHeight;
+  unsigned int buttonCount;
 };
 
 #endif

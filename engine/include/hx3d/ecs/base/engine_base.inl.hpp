@@ -75,12 +75,12 @@ unsigned int EngineBase<EntityType>::getBits(Ptr<EntityType> entity) {
 }
 
 template <class EntityType>
-void EngineBase<EntityType>::update() {
+void EngineBase<EntityType>::update(float delta) {
   for (auto& id: _entities) {
     for (auto& pair: _systems) {
       Ptr<SystemBase<EntityType>> sys = pair.second;
       if (sys->canProcess(_bits[id.first].getBits())) {
-        sys->process(id.second);
+        sys->process(id.second, delta);
       }
     }
   }

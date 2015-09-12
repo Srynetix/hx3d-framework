@@ -159,8 +159,10 @@ public:
 
   /**
   Update the engine.
+
+  @param delta Delta time
   */
-  void update();
+  void update(float delta);
 
   /**
   Remove everything from the engine.
@@ -202,7 +204,7 @@ private:
 
   /**
   Remove all components for an entity.
-  
+
   @param entityId   Entity id
   */
   void removeComponents(unsigned int entityId);

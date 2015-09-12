@@ -37,7 +37,7 @@ public:
   Game();
 
   virtual void render() override;
-  virtual void update() override;
+  virtual void update(float delta) override;
   virtual void resize(int width, int height) override;
 
   virtual void pause() override;
@@ -47,7 +47,7 @@ public:
 
   /**
   Set the current screen.
-  
+
   @param screen Screen (Ptr)
   */
   void setScreen(Ptr<Screen> screen);

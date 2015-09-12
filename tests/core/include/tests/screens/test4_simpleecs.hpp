@@ -5,6 +5,8 @@
 #include "hx3d/ecs/system.hpp"
 #include "hx3d/ecs/entity.hpp"
 
+#include "hx3d/math/number_utils.hpp"
+
 #include "hx3d/graphics/font.hpp"
 #include "hx3d/gui/text.hpp"
 
@@ -24,13 +26,9 @@ public:
     setRequiredFamily<RotationComponent>();
   }
 
-  virtual void process(Ptr<ecs::Entity> entity) override {
+  virtual void process(Ptr<ecs::Entity> entity, float delta) override {
     auto rotComp = getEngine()->getComponent<RotationComponent>(entity);
-    rotComp->angle += rotComp->speed;
-
-    if (rotComp->angle > 360.f) {
-      rotComp->angle -= 360.f;
-    }
+    rotComp->angle = math::mclamp(rotComp->angle + rotComp->speed, 0.f, 360.f);
   }
 };
 
@@ -63,8 +61,8 @@ public:
     rotText.transform.position = glm::vec3(20, Core::App()->getHeight() - 20, 0);
   }
 
-  void update() {
-    engine.update();
+  virtual void update(float delta) override {
+    engine.update(delta);
 
     auto rotComp = engine.getComponent<RotationComponent>(entity);
     sprite.transform.rotation.z = glm::radians(rotComp->angle);
@@ -74,7 +72,7 @@ public:
     camera.update();
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

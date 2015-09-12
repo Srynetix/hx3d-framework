@@ -71,4 +71,11 @@ set(
   "${ENGINE_SRC}/ecs/base/id_base.cpp"
   "${ENGINE_SRC}/ecs/component.cpp"
   "${ENGINE_SRC}/ecs/entity.cpp"
+
+  "${ENGINE_SRC}/tweens/base_tween.cpp"
+  "${ENGINE_SRC}/tweens/callback.cpp"
+  "${ENGINE_SRC}/tweens/delay.cpp"
+  "${ENGINE_SRC}/tweens/parallel.cpp"
+  "${ENGINE_SRC}/tweens/sequence.cpp"
+  "${ENGINE_SRC}/tweens/tween_manager.cpp"
 )

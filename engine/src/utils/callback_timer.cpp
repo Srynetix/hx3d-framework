@@ -38,7 +38,7 @@ long CallbackTimer::remaining() {
 }
 
 void CallbackTimer::update() {
-  if (_timer.isEnded()) {
+  if (_timer.hasEnded()) {
     if (_function)
       _function();
   }

@@ -22,7 +22,6 @@
 #define HX3D_GRAPHICS_COLOR
 
 #include <glm/vec4.hpp>
-#include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {
 
@@ -69,21 +68,6 @@ public:
   glm::vec4 toFloat();
 
   /////////////////
-
-  static Color interp(Color a, Color b, float t, math::Interpolation type)
-  {
-    // 0.0 <= t <= 1.0
-    Color ca = Color::rgbToHsv(a);
-    Color cb = Color::rgbToHsv(b);
-    Color final;
-
-    final.r = math::interpolate(ca.r, cb.r, t, type);
-    final.g = math::interpolate(ca.g, cb.g, t, type);
-    final.b = math::interpolate(ca.b, cb.b, t, type);
-
-    return Color::hsvToRgb(final);
-  }
-
 
   /**
   Convert HSV color to RGB format.

@@ -51,7 +51,7 @@ long Timer::remaining() {
   return std::max(0L, _delay - elapsed);
 }
 
-bool Timer::isEnded() {
+bool Timer::hasEnded() {
   if (_alreadyEnded)
     return false;
 

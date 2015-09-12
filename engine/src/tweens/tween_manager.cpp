@@ -1,5 +1,6 @@
+
 /*
-    Screen management.
+    Tween management.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +19,33 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREEN
-#define HX3D_CORE_SCREEN
+#include "hx3d/tweens/tween_manager.hpp"
 
 namespace hx3d {
+namespace tweens {
 
-class Screen {
+TweenManager::TweenManager() {}
 
-public:
-  Screen();
-  virtual ~Screen();
+void TweenManager::add(Ptr<BaseTween> tween) {
+  tweens.push_back(tween);
+}
 
-  /**
-  On screen show.
-  */
-  virtual void show();
-  /**
-  On screen hide.
-  */
-  virtual void hide();
+void TweenManager::update(float delta) {
+  for (auto i = tweens.begin(); i != tweens.end();) {
+    Ptr<BaseTween> tween = *i;
+    if (tween->hasEnded()) {
+      tweens.erase(i);
+    } else {
+      tween->update(delta);
+      ++i;
+    }
+  }
+}
 
-  /**
-  On screen pause.
-  */
-  virtual void pause();
-  /**
-  On screen resume.
-  */
-  virtual void resume();
+unsigned int TweenManager::getTweenCount() {
+  return tweens.size();
+}
 
-  /**
-  On screen update.
 
-  @param delta Delta time
-  */
-  virtual void update(float delta);
-  /**
-  On screen render.
-  */
-  virtual void render();
-  /**
-  On screen resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height);
-
-  /**
-  On screen disposal.
-  */
-  virtual void dispose();
-};
-
+} /* tween */
 } /* hx3d */
-
-#endif

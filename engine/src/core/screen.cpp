@@ -31,7 +31,7 @@ void Screen::hide() {}
 void Screen::pause() {}
 void Screen::resume() {}
 
-void Screen::update() {}
+void Screen::update(float delta) {}
 void Screen::render() {}
 void Screen::resize(int width, int height) {}
 

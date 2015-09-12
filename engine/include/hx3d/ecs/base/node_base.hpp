@@ -113,8 +113,10 @@ public:
 
   /**
   Update the node.
+
+  @param delta Delta time
   */
-  virtual void update();
+  virtual void update(float delta);
 
   ///////////
 
@@ -131,7 +133,7 @@ protected:
 
   /**
   Test if the object have a child.
-  
+
   @param name Name
   */
   bool childNameExists(std::string name);

@@ -43,19 +43,28 @@ public:
 
   /**
   Set the mesh tint.
-  
+  Automatically update the color.
+  See @link#updateColor.
+
   @param tint Color
   */
   void setTint(Color tint);
 
-  Transform transform;
+  /**
+  Get the mesh tint.
 
-protected:
+  @return Tint
+  */
+  Color& getTint();
 
   /**
   Update the mesh color from the tint.
   */
   void updateColor();
+
+  Transform transform;
+
+protected:
 
   Color _tint;
 };

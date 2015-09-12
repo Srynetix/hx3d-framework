@@ -79,7 +79,7 @@ public:
 
   /*
   Get the elapsed time since the application start.
-  
+
   @return Elapsed time
   */
   unsigned int getElapsedTime();
@@ -119,8 +119,10 @@ private:
 
   /**
   Update the window content
+
+  @param delta Delta time
   */
-  void update();
+  void update(float delta);
 };
 
 } /* hx3d */

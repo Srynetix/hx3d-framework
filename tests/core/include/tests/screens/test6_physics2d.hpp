@@ -41,7 +41,7 @@ public:
     this->world = &world;
   }
 
-  void update() {
+  virtual void update(float delta) override {
     if (body) {
       b2Vec2 bodyPosition = body->GetPosition();
       float bodyAngle = body->GetAngle();
@@ -63,7 +63,7 @@ public:
     }
   }
 
-  void draw(Batch& batch) {
+  virtual void draw(Batch& batch) override {
     batch.draw(sprite);
   }
 
@@ -112,10 +112,10 @@ public:
     groundBody->CreateFixture(&groundFixture);
   }
 
-  void update() {
-    camera.update();
-    graph.update();
+  virtual void update(float delta) override {
+    graph.update(delta);
 
+    camera.update();
     world.Step(1.f/60.f, 5, 7);
 
     b2Vec2 groundPos = groundBody->GetPosition();
@@ -124,7 +124,7 @@ public:
     unsigned int entities = graph.getNodeCount();
     text.setContent(format("Entities: %d", entities));
 
-    if (timer.isEnded()) {
+    if (timer.hasEnded()) {
       static unsigned int count = 0;
       Ptr<Box> box = graph.createAtRoot<Box>(format("box%d", count++));
       box->create(world, math::random(0.f, Core::App()->getWidth()), 600.f, 50.f, 50.f);
@@ -135,7 +135,7 @@ public:
     }
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

@@ -1,5 +1,5 @@
 /*
-    Screen management.
+    Callback tween.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +18,22 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREEN
-#define HX3D_CORE_SCREEN
+#include "hx3d/tweens/callback.hpp"
 
 namespace hx3d {
+namespace tweens {
 
-class Screen {
+Callback::Callback(std::function<void()> func):
+  _func(func)
+{}
 
-public:
-  Screen();
-  virtual ~Screen();
+void Callback::update(float delta) {
+  if (_ended)
+    return;
 
-  /**
-  On screen show.
-  */
-  virtual void show();
-  /**
-  On screen hide.
-  */
-  virtual void hide();
+  _func();
+  _ended = true;
+}
 
-  /**
-  On screen pause.
-  */
-  virtual void pause();
-  /**
-  On screen resume.
-  */
-  virtual void resume();
-
-  /**
-  On screen update.
-
-  @param delta Delta time
-  */
-  virtual void update(float delta);
-  /**
-  On screen render.
-  */
-  virtual void render();
-  /**
-  On screen resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height);
-
-  /**
-  On screen disposal.
-  */
-  virtual void dispose();
-};
-
+} /* tweens */
 } /* hx3d */
-
-#endif

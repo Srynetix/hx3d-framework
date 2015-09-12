@@ -1,5 +1,5 @@
 /*
-    Screen management.
+    Tween sequence.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +18,14 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREEN
-#define HX3D_CORE_SCREEN
-
 namespace hx3d {
+namespace tweens {
 
-class Screen {
+template <class T>
+void Sequence::addTween(T& mod, T to, float duration, math::Interpolation interp) {
+  Ptr<BaseTween> tween = Make<Tween<T>>(mod, to, duration, interp);
+  tweens.push(tween);
+}
 
-public:
-  Screen();
-  virtual ~Screen();
-
-  /**
-  On screen show.
-  */
-  virtual void show();
-  /**
-  On screen hide.
-  */
-  virtual void hide();
-
-  /**
-  On screen pause.
-  */
-  virtual void pause();
-  /**
-  On screen resume.
-  */
-  virtual void resume();
-
-  /**
-  On screen update.
-
-  @param delta Delta time
-  */
-  virtual void update(float delta);
-  /**
-  On screen render.
-  */
-  virtual void render();
-  /**
-  On screen resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height);
-
-  /**
-  On screen disposal.
-  */
-  virtual void dispose();
-};
-
+} /* math */
 } /* hx3d */
-
-#endif

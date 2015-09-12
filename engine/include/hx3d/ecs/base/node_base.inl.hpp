@@ -73,7 +73,7 @@ void NodeBase<EntityEnabled>::draw(Batch& batch) {
 }
 
 template <bool EntityEnabled>
-void NodeBase<EntityEnabled>::update() {
+void NodeBase<EntityEnabled>::update(float delta) {
 }
 
 template <bool EntityEnabled>
@@ -83,7 +83,7 @@ void NodeBase<EntityEnabled>::destroy() {
 
 template <bool EntityEnabled>
 unsigned int NodeBase<EntityEnabled>::getChildCount() {
-  
+
   unsigned int totalChildren = 0;
   for (auto child: _children) {
     totalChildren += child->getChildCount();

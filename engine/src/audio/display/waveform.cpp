@@ -20,6 +20,8 @@
 
 #include "hx3d/audio/display/waveform.hpp"
 
+#include "hx3d/math/interpolation.hpp"
+
 namespace hx3d {
 namespace audio {
 
@@ -35,7 +37,7 @@ void Waveform::update(Sint16* stream, int length) {
   int w = _image.getWidth();
   int h = _image.getHeight();
 
-  if (_timer.isEnded()) {
+  if (_timer.hasEnded()) {
 
     _image.setRect(0, 0, w, h, Color::Black);
     drawBorders();
@@ -51,7 +53,7 @@ void Waveform::update(Sint16* stream, int length) {
         float normalized_amp = (1.f/32767.f) * amp;
         normalized_amp = 0.5f + normalized_amp / 2;
 
-        Color color = Color::interp(Color(255, 64, 0), Color::Red, normalized_amp, math::Interpolation::Linear);
+        Color color = math::interpolate(Color(255, 64, 0), Color::Red, normalized_amp, math::Interpolation::Linear);
 
         int y_pos = 0;
         int bar_h = 0;

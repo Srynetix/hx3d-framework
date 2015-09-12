@@ -29,13 +29,13 @@ namespace hx3d {
 namespace audio {
 
 class Effect;
-class Audio {
+class AudioDevice {
 public:
   /**
   Initialize the audio system.
   */
-  Audio();
-  ~Audio();
+  AudioDevice();
+  ~AudioDevice();
 
   ///////////////////////////////
 

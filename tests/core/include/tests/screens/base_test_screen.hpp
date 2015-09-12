@@ -25,7 +25,7 @@ public:
     }
   }
 
-  virtual void update() override {}
+  virtual void update(float delta) override {}
   virtual void render() override {}
 };
 

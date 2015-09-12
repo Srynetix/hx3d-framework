@@ -27,6 +27,7 @@
 #include "hx3d/utils/log.hpp"
 
 #include "hx3d/math/number_utils.hpp"
+#include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {
 namespace audio {
@@ -82,7 +83,7 @@ void Spectrum::update(Sint16* stream, int length) {
   int h = _image.getHeight();
   int step = length / w;
 
-  if (_timer.isEnded()) {
+  if (_timer.hasEnded()) {
 
     /* FFT */
 
@@ -105,7 +106,7 @@ void Spectrum::update(Sint16* stream, int length) {
       int low = lowerLimitSample(currentFreq, octaves, w/2);
       int hi = upperLimitSample(currentFreq, octaves, w/2);
 
-      if (currentFreq > Core::AudioDevice()->getFrequencyRate() || hi > w/2)
+      if (currentFreq > Core::Audio()->getFrequencyRate() || hi > w/2)
         break;
 
       // Log.Info("C: %d [L: %d / H: %d]", currentFreq, low, hi);
@@ -129,7 +130,7 @@ void Spectrum::update(Sint16* stream, int length) {
 
       _normalizedBarValues[i] = norm_val;
 
-      Color color = Color::interp(Color(255, 64, 0), Color::Red, norm_val, math::Interpolation::Linear);
+      Color color = math::interpolate(Color(255, 64, 0), Color::Red, norm_val, math::Interpolation::Linear);
 
       // Values
       // Log.Info("Bar %d: %f", i, val);
@@ -195,10 +196,10 @@ int Spectrum::upperLimit(int centerFreq, float octaves) {
 }
 
 int Spectrum::lowerLimitSample(int centerFreq, float octaves, int samplesLength) {
-  return lowerLimit(centerFreq, octaves) / (Core::AudioDevice()->getFrequencyRate() / samplesLength);
+  return lowerLimit(centerFreq, octaves) / (Core::Audio()->getFrequencyRate() / samplesLength);
 }
 int Spectrum::upperLimitSample(int centerFreq, float octaves, int samplesLength) {
-  return upperLimit(centerFreq, octaves) / (Core::AudioDevice()->getFrequencyRate() / samplesLength);
+  return upperLimit(centerFreq, octaves) / (Core::Audio()->getFrequencyRate() / samplesLength);
 }
 
 float Spectrum::averageFreq(std::vector<float>& values, int low, int hi) {

@@ -30,7 +30,7 @@ class EventManager;
 class Net;
 
 namespace audio {
-  class Audio;
+  class AudioDevice;
 }
 
 /**
@@ -89,7 +89,7 @@ public:
 
   @return Audio
   */
-  static audio::Audio* AudioDevice();
+  static audio::AudioDevice* Audio();
 
   /// Current system type
   static SystemType CurrentSystem;
@@ -106,15 +106,14 @@ private:
   @return Core instance.
   */
   static Core* get();
-
   static Core* _instance;
 
-  static Application* _application;
-  static Game* _game;
-  static AssetManager* _assets;
-  static EventManager* _events;
-  static Net* _net;
-  static audio::Audio* _audio;
+  Application* _application;
+  Game* _game;
+  AssetManager* _assets;
+  EventManager* _events;
+  Net* _net;
+  audio::AudioDevice* _audio;
 
   /**
   Initialize the core system.

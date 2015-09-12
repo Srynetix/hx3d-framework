@@ -1,5 +1,5 @@
 /*
-    Screen management.
+    Tween sequence.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +18,40 @@
     USA
 */
 
-#ifndef HX3D_CORE_SCREEN
-#define HX3D_CORE_SCREEN
+#ifndef HX3D_TWEENS_SEQUENCE
+#define HX3D_TWEENS_SEQUENCE
+
+#include "hx3d/math/interpolation.hpp"
+
+#include "hx3d/tweens/tween.hpp"
+#include "hx3d/tweens/delay.hpp"
+#include "hx3d/tweens/callback.hpp"
+
+#include "hx3d/utils/ptr.hpp"
+
+#include <queue>
 
 namespace hx3d {
+namespace tweens {
 
-class Screen {
-
+class Sequence: public BaseTween {
 public:
-  Screen();
-  virtual ~Screen();
+  Sequence();
 
-  /**
-  On screen show.
-  */
-  virtual void show();
-  /**
-  On screen hide.
-  */
-  virtual void hide();
+  template <class T>
+  void addTween(T& mod, T to, float duration, math::Interpolation interp);
+  void addDelay(float delay);
+  void addCallback(std::function<void()> func);
+  void add(Ptr<BaseTween> tween);
 
-  /**
-  On screen pause.
-  */
-  virtual void pause();
-  /**
-  On screen resume.
-  */
-  virtual void resume();
+  virtual void update(float delta) override;
 
-  /**
-  On screen update.
-
-  @param delta Delta time
-  */
-  virtual void update(float delta);
-  /**
-  On screen render.
-  */
-  virtual void render();
-  /**
-  On screen resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height);
-
-  /**
-  On screen disposal.
-  */
-  virtual void dispose();
+  std::queue<Ptr<BaseTween>> tweens;
 };
 
+} /* math */
 } /* hx3d */
+
+#include "hx3d/tweens/sequence.inc.hpp"
 
 #endif

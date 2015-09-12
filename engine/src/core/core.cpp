@@ -48,15 +48,24 @@ namespace hx3d {
 #endif
 
 Core* Core::_instance(nullptr);
-Application* Core::_application(nullptr);
-Game* Core::_game(nullptr);
-AssetManager* Core::_assets(nullptr);
-EventManager* Core::_events(nullptr);
-Net* Core::_net(nullptr);
-audio::Audio* Core::_audio(nullptr);
 
-Core::Core() {}
-Core::~Core() {}
+Core::Core() {
+  _assets = new AssetManager();
+  _events = new EventManager();
+  _net = new Net();
+  _audio = new audio::AudioDevice();
+}
+
+Core::~Core() {
+  if (_assets)
+    delete _assets;
+  if (_events)
+    delete _events;
+  if (_net)
+    delete _net;
+  if (_audio)
+    delete _audio;
+}
 
 Application* Core::App() {
   return get()->_application;
@@ -78,33 +87,21 @@ Net* Core::Network() {
   return get()->_net;
 }
 
-audio::Audio* Core::AudioDevice() {
+audio::AudioDevice* Core::Audio() {
   return get()->_audio;
 }
 
 /////////////////////////
 
 void Core::initialize(Application* app, Game* game) {
-  _application = app;
-  _game = game;
-
-  _assets = new AssetManager();
-  _events = new EventManager();
-  _net = new Net();
-  _audio = new audio::Audio();
-
   _instance = new Core();
+  _instance->_application = app;
+  _instance->_game = game;
 }
 
 void Core::shutdown() {
-  if (_assets)
-    delete _assets;
-  if (_events)
-    delete _events;
-  if (_net)
-    delete _net;
-  if (_audio)
-    delete _audio;
+  if (_instance)
+    delete _instance;
 }
 
 Core* Core::get() {
