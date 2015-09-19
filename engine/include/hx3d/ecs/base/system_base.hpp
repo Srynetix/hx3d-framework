@@ -78,7 +78,7 @@ private:
   unsigned int _requiredFamily;
 };
 
-#include "hx3d/ecs/base/system_base.inl.hpp"
+#include "hx3d/ecs/base/inline/system_base.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

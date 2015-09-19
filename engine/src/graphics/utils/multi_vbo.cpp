@@ -1,5 +1,5 @@
 /*
-    Base VBO.
+    Multi VBO.
     Contains one index array buffer and multiple attributes array buffers.
 
     Copyright (C) 2015 Denis BOURGE
@@ -20,7 +20,7 @@
     USA
 */
 
-#include "hx3d/graphics/utils/vbo.hpp"
+#include "hx3d/graphics/utils/multi_vbo.hpp"
 
 #include "hx3d/graphics/shader.hpp"
 
@@ -28,72 +28,57 @@
 
 namespace hx3d {
 
-VBO::VBO() {}
+MultiVBO::MultiVBO() {}
 
-VBO::~VBO() {}
+MultiVBO::~MultiVBO() {}
 
-void VBO::uploadAll() {
-  for (auto& pair: attributes) {
-      pair.second.upload();
-  }
+void MultiVBO::uploadAll() {
+  multiBuffer.upload();
 
   indices.upload();
 }
 
-void VBO::uploadIndices() {
+void MultiVBO::uploadIndices() {
   indices.upload();
 }
 
-void VBO::uploadAttribute(std::string name) {
-  if (attributes.find(name) != attributes.end()) {
-    attributes[name].upload();
-  }
-}
-
-void VBO::draw(Ptr<Shader> shader) {
+void MultiVBO::draw(Ptr<Shader> shader) {
 
   if (!shader) {
     Log.Error("Attempt to draw VBO without shader.");
     return;
   }
 
-  for (auto& pair: attributes) {
-    pair.second.begin(shader);
-  }
+  multiBuffer.begin(shader);
 
   indices.begin(shader);
   indices.end(shader);
 
-  for (auto& pair: attributes) {
-    pair.second.end(shader);
-  }
+  multiBuffer.end(shader);
 }
 
-void VBO::addAttribute(std::string name, Attribute attribute) {
-  if (attributes.find(name) != attributes.end()) {
-    Log.Error("Attribute %s already exists.", name.c_str());
-    return;
-  }
-
-  attributes[name].create(attribute);
+void MultiVBO::addAttribute(std::string name, Attribute attribute) {
+  multiBuffer.addAttribute(name, attribute);
 }
 
-void VBO::setAttribute(std::string name, std::vector<float> data) {
-  if (attributes.find(name) != attributes.end()) {
-    attributes[name].set(data);
-  }
+void MultiVBO::setAttribute(std::string name, std::vector<float> data) {
+  multiBuffer.setAttribute(name, data);
 }
 
-AttributeArrayBuffer& VBO::getAttribute(std::string name) {
-  return attributes[name];
+AttributeArrayBuffer& MultiVBO::getAttribute(std::string name) {
+  return multiBuffer.getAttribute(name);
 }
 
-void VBO::setIndices(std::vector<GLushort> data) {
+void MultiVBO::setIndices(std::vector<GLushort> data) {
   indices.set(data);
 }
 
-IndexArrayBuffer& VBO::getIndices() {
+IndexArrayBuffer& MultiVBO::getIndices() {
   return indices;
+}
+
+MultiArrayBuffer& MultiVBO::getMultiBuffer() {
+  return multiBuffer;
 }
 
 } /* hx3d */

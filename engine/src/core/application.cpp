@@ -34,6 +34,8 @@
 
 #include "hx3d/audio/audio.hpp"
 
+#include "hx3d/math/number_utils.hpp"
+
 #include "hx3d/net/net.hpp"
 
 #include <ctime>
@@ -173,9 +175,8 @@ void Application::display() {
     deltaTime = frameTime / 1000.f;
 
     _currentFPS = 1.f / (frameTime / 1000.f);
-    _elapsedTime += 1;
+    _elapsedTime = math::mclamp(_elapsedTime + deltaTime, 0.f, 3600.f);
   }
-
 }
 void Application::update(float delta) {
 
@@ -217,7 +218,7 @@ float Application::getFPS() {
   return _currentFPS;
 }
 
-unsigned int Application::getElapsedTime() {
+float Application::getElapsedTime() {
   return _elapsedTime;
 }
 

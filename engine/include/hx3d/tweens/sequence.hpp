@@ -52,6 +52,6 @@ public:
 } /* math */
 } /* hx3d */
 
-#include "hx3d/tweens/sequence.inc.hpp"
+#include "hx3d/tweens/inline/sequence.inl.hpp"
 
 #endif

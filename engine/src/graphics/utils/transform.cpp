@@ -73,6 +73,10 @@ Transform Transform::add(const Transform& transform) {
   return t;
 }
 
+glm::vec3 Transform::realSize() {
+  return size * scale;
+}
+
 void Transform::show() {
   Log.Info("-- Transform");
   Log.Info("\t Pos: [%f, %f, %f]", position.x, position.y, position.z);

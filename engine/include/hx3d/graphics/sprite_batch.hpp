@@ -1,5 +1,5 @@
 /*
-    Batch.
+    Sprite batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -16,17 +16,14 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Real batching (ie. 1 VBO for all the meshes for 1 texture)
 */
 
-#ifndef HX3D_GRAPHICS_BATCH
-#define HX3D_GRAPHICS_BATCH
+#ifndef HX3D_GRAPHICS_SPRITEBATCH
+#define HX3D_GRAPHICS_SPRITEBATCH
 
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/multi_mesh.hpp"
+#include "hx3d/graphics/multi_sprite.hpp"
 
 #include "hx3d/gui/text.hpp"
 
@@ -36,10 +33,10 @@ namespace hx3d {
 
 class Shader;
 class Camera;
-class Batch {
+class SpriteBatch {
 
 public:
-  Batch();
+  SpriteBatch();
 
   /**
   Begin the batching.
@@ -55,27 +52,9 @@ public:
   Draw the mesh.
   You must have called @link#begin before.
 
-  @param mesh Mesh
+  @param mesh MultiSprite
   */
-  void draw(Mesh& mesh);
-  void draw(MultiMesh& mesh);
-
-  /**
-  Draw the text.
-  You must have called @link#begin before.
-
-  @param text Text
-  */
-  void draw(gui::Text& text);
-
-  /**
-  Draw the text following a function.
-  You must have called @link#begin before.
-
-  @param text   Text
-  @param function  Function
-  */
-  void draw(gui::Text& text, math::Function function);
+  void draw(MultiSprite& sprite);
 
   ///////////////////
 
@@ -103,6 +82,11 @@ public:
 private:
   Camera* _camera;
   Ptr<Shader> _shader;
+
+  MultiMesh _mesh;
+  unsigned int _lastIndex;
+
+  Ptr<Texture> _lastTexture;
 };
 
 } /* hx3d */

@@ -78,11 +78,12 @@ public:
   float getFPS();
 
   /*
-  Get the elapsed time since the application start.
+  Get the elapsed time in seconds since the application start.
+  Reset after one hour.
 
   @return Elapsed time
   */
-  unsigned int getElapsedTime();
+  float getElapsedTime();
 
 private:
   SDL_Window* _window;
@@ -96,7 +97,7 @@ private:
 
   float _currentFPS;
   unsigned int _fpsLimit;
-  unsigned int _elapsedTime;
+  float _elapsedTime;
 
   /**
   Create and initialize the window.

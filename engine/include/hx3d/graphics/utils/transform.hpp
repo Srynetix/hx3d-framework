@@ -51,6 +51,13 @@ public:
   Transform add(const Transform& transform);
 
   /**
+  Get the real size (size * scale).
+
+  @return Real size
+  */
+  glm::vec3 realSize();
+
+  /**
   Show the transform information. (Debug)
   */
   void show();

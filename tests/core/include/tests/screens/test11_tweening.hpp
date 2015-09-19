@@ -72,7 +72,7 @@ public:
     batch.draw(fps);
 
     if (showText)
-      batch.draw(text, math::Function(Core::App()->getElapsedTime() / 20.f, 0.5f, [](float& x, float& y, float t) {
+      batch.draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
         y = std::sin(t) * 5;
       }));
 

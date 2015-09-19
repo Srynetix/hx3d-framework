@@ -21,6 +21,8 @@ Screens list.
 #include "tests/screens/test9_interpolation.hpp"
 #include "tests/screens/test10_stencil.hpp"
 #include "tests/screens/test11_tweening.hpp"
+#include "tests/screens/test12_particles.hpp"
+#include "tests/screens/test13_multidraw2d.hpp"
 
 using namespace hx3d;
 
@@ -67,7 +69,9 @@ MenuScreen::MenuScreen():
     {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
     {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}},
     {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
-    {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}}
+    {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
+    {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
+    {"Multi VBOs 2D", [](){Core::CurrentGame()->setScreen(Make<Test13>());}}
   };
 
   buttonCount = worldSize.y / buttonHeight;
@@ -137,7 +141,7 @@ void MenuScreen::render() {
     batch.draw(text);
   }
 
-  batch.draw(instructions, math::Function(Core::App()->getElapsedTime()/10.f, 0.5f, [](float& x, float& y, float t) {
+  batch.draw(instructions, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
     y = std::sin(t) * 2.f;
     x = std::cos(t / 2.f);
   }));
@@ -145,7 +149,7 @@ void MenuScreen::render() {
 
   /** PIX */
   Shader::use(pixShader);
-  pixShader->setUniform1f("time", Core::App()->getElapsedTime() / 100.f);
+  pixShader->setUniform1f("time", Core::App()->getElapsedTime());
   pixShader->setUniform2f("resolution", glm::vec2(250, 250));
   pixShader->setUniform2f("pixel_size", glm::vec2(5, 5));
   Shader::disable();

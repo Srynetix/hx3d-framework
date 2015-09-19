@@ -142,6 +142,6 @@ protected:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/base/node_base.inl.hpp"
+#include "hx3d/ecs/base/inline/node_base.inl.hpp"
 
 #endif

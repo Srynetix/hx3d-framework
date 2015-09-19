@@ -1,5 +1,5 @@
 /*
-    Base buffer.
+    Multi mesh.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,40 +18,57 @@
     USA
 */
 
-template <class T>
-Buffer<T>::Buffer() {
-  glGenBuffers(1, &_buf);
-}
+#ifndef HX3D_GRAPHICS_MULTIMESH
+#define HX3D_GRAPHICS_MULTIMESH
 
-template <class T>
-Buffer<T>::~Buffer() {
-  glDeleteBuffers(1, &_buf);
-}
+#include "hx3d/graphics/color.hpp"
 
-template <class T>
-GLuint Buffer<T>::getId() {
-  return _buf;
-}
+#include "hx3d/graphics/utils/multi_vbo.hpp"
+#include "hx3d/graphics/utils/transform.hpp"
 
-template <class T>
-void Buffer<T>::set(std::vector<T> values) {
-  _vector.clear();
-  _vector.resize(values.size());
+namespace hx3d {
 
-  std::copy(values.begin(), values.end(), _vector.begin());
-}
+class Shader;
+class MultiMesh: public MultiVBO {
 
-template <class T>
-T* Buffer<T>::data() {
-  return _vector.data();
-}
+public:
+  MultiMesh();
 
-template <class T>
-unsigned int Buffer<T>::size() {
-  return _vector.size();
-}
+  /**
+  Draw the mesh using a shader.
 
-template <class T>
-std::vector<T>& Buffer<T>::getVector() {
-  return _vector;
-}
+  @param shader Shader (Ptr)
+  */
+  virtual void draw(Ptr<Shader> shader);
+
+  /**
+  Set the mesh tint.
+  Automatically update the color.
+  See @link#updateColor.
+
+  @param tint Color
+  */
+  void setTint(Color tint);
+
+  /**
+  Get the mesh tint.
+
+  @return Tint
+  */
+  Color& getTint();
+
+  /**
+  Update the mesh color from the tint.
+  */
+  void updateColor();
+
+  Transform transform;
+
+protected:
+
+  Color _tint;
+};
+
+} /* hx3d */
+
+#endif

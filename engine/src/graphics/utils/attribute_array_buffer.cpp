@@ -25,25 +25,27 @@
 namespace hx3d {
 
 AttributeArrayBuffer::AttributeArrayBuffer():
-  ArrayBuffer<float>(), _attribute(""), _type(GL_FLOAT), _attributeSize(0)
+  ArrayBuffer<float>(), _attribute()
 {}
 
-AttributeArrayBuffer::AttributeArrayBuffer(std::string attribute, GLenum type, GLuint attributeSize):
-  ArrayBuffer<float>(), _attribute(attribute), _type(type), _attributeSize(attributeSize)
+AttributeArrayBuffer::AttributeArrayBuffer(Attribute attribute):
+  ArrayBuffer<float>(), _attribute(attribute)
 {}
 
-AttributeArrayBuffer::AttributeArrayBuffer(std::string attribute, GLenum type, GLuint attributeSize, std::vector<float> values):
-  AttributeArrayBuffer(attribute, type, attributeSize)
+AttributeArrayBuffer::AttributeArrayBuffer(Attribute attribute, std::vector<float> values):
+  AttributeArrayBuffer(attribute)
 {
   set(values);
 }
 
 AttributeArrayBuffer::~AttributeArrayBuffer() {}
 
-void AttributeArrayBuffer::create(std::string attribute, GLenum type, GLuint attributeSize) {
+void AttributeArrayBuffer::create(Attribute attribute) {
   _attribute = attribute;
-  _type = type;
-  _attributeSize = attributeSize;
+}
+
+Attribute& AttributeArrayBuffer::getAttribute() {
+  return _attribute;
 }
 
 void AttributeArrayBuffer::upload() {
@@ -58,11 +60,11 @@ void AttributeArrayBuffer::upload() {
 void AttributeArrayBuffer::begin(Ptr<Shader> shader) {
 
   if (_vector.size() > 0) {
-    GLint loc = shader->getAttribute(_attribute);
+    GLint loc = shader->getAttribute(_attribute.getName());
 
     glBindBuffer(GL_ARRAY_BUFFER, _buf);
     glEnableVertexAttribArray(loc);
-    glVertexAttribPointer(loc, _attributeSize, _type, GL_FALSE, 0, BUFFER_OFFSET(0));
+    glVertexAttribPointer(loc, _attribute.getSize(), _attribute.getType(), GL_FALSE, 0, BUFFER_OFFSET(0));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
@@ -70,7 +72,7 @@ void AttributeArrayBuffer::begin(Ptr<Shader> shader) {
 
 void AttributeArrayBuffer::end(Ptr<Shader> shader) {
   if (_vector.size() > 0) {
-    GLint loc = shader->getAttribute(_attribute);
+    GLint loc = shader->getAttribute(_attribute.getName());
 
     glDisableVertexAttribArray(loc);
   }

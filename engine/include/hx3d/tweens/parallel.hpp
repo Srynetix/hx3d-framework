@@ -38,6 +38,7 @@ public:
 
   template <class T>
   void addTween(T& mod, T to, float duration, math::Interpolation interp);
+  void addRepeatingCallback(std::function<void()> func, float duration);
   void add(Ptr<BaseTween> tween);
 
   virtual void update(float delta) override;
@@ -49,6 +50,6 @@ private:
 } /* tween */
 } /* hx3d */
 
-#include "hx3d/tweens/parallel.inc.hpp"
+#include "hx3d/tweens/inline/parallel.inl.hpp"
 
 #endif

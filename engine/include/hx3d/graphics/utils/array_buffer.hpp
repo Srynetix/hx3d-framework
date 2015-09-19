@@ -50,13 +50,13 @@ public:
 
   /**
   End the use with a shader.
-  
+
   @parm shader Shader (Ptr)
   */
   virtual void end(Ptr<Shader> shader) = 0;
 };
 
-#include "hx3d/graphics/utils/array_buffer.inl.hpp"
+#include "hx3d/graphics/utils/inline/array_buffer.inl.hpp"
 
 } /* hx3d */
 

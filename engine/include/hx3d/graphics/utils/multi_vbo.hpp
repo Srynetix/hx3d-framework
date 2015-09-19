@@ -1,6 +1,6 @@
 /*
-    Multi array buffer.
-    One buffer for multiple attributes.
+    Multi VBO.
+    Contains one index array buffer and multiple attributes array buffers.
 
     Copyright (C) 2015 Denis BOURGE
 
@@ -18,26 +18,40 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Finish the class.
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_MULTIARRAYBUFFER
-#define HX3D_GRAPHICS_UTILS_MULTIARRAYBUFFER
+#ifndef HX3D_GRAPHICS_UTILS_MULTIVBO
+#define HX3D_GRAPHICS_UTILS_MULTIVBO
 
-#include "hx3d/graphics/utils/attribute_array_buffer.hpp"
+#include "hx3d/graphics/utils/index_array_buffer.hpp"
+#include "hx3d/graphics/utils/multi_array_buffer.hpp"
 
 #include <map>
 
 namespace hx3d {
 
-class MultiArrayBuffer: public ArrayBuffer<float> {
+class MultiVBO {
 
 public:
-  MultiArrayBuffer();
-  ~MultiArrayBuffer();
+  MultiVBO();
+  virtual ~MultiVBO();
+
+  /**
+  Upload all the buffers.
+  */
+  void uploadAll();
+
+  /**
+  Upload the index buffer.
+  */
+  void uploadIndices();
+
+  /**
+  Draw the VBO.
+
+  @param shader Shader (Ptr)
+  */
+  void draw(Ptr<Shader> shader);
 
   /**
   Add an empty initialized attribute array buffer.
@@ -64,20 +78,29 @@ public:
   AttributeArrayBuffer& getAttribute(std::string name);
 
   /**
-  Generate the vector using the attributes.
+  Set the index buffer values.
+
+  @param data Values
   */
-  void generate();
+  void setIndices(std::vector<GLushort> data);
 
-  virtual void upload() override;
+  /**
+  Get the index buffer.
 
-  virtual void begin(Ptr<Shader> shader) override;
-  virtual void end(Ptr<Shader> shader) override;
+  @return Index buffer.
+  */
+  IndexArrayBuffer& getIndices();
 
-private:
-  std::map<std::string, AttributeArrayBuffer> _attributes;
+  /**
+  Get the multi buffer.
 
-  AttributeArrayBuffer& getMapAttribute(unsigned int i);
-  unsigned int attributeTotalSize();
+  @¶eturn Multi buffer.
+  */
+  MultiArrayBuffer& getMultiBuffer();
+
+protected:
+  MultiArrayBuffer multiBuffer;
+  IndexArrayBuffer indices;
 };
 
 } /* hx3d */

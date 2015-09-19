@@ -1,5 +1,5 @@
 /*
-    Sprite.
+    MultiSprite.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,15 +18,15 @@
     USA
 */
 
-#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/multi_sprite.hpp"
 
 namespace hx3d {
 
-Sprite::Sprite():
-  Sprite(Ptr<Texture>(nullptr)) {}
+MultiSprite::MultiSprite():
+  MultiSprite(Ptr<Texture>(nullptr)) {}
 
-Sprite::Sprite(Ptr<Texture> texture):
-  Mesh(), _texture(texture) {
+MultiSprite::MultiSprite(Ptr<Texture> texture):
+  MultiMesh(), _texture(texture) {
 
     setAttribute("Position", std::vector<float> {
       -0.5f, 0.5f, 0.f,
@@ -56,18 +56,13 @@ Sprite::Sprite(Ptr<Texture> texture):
 
     uploadAll();
 
-    if (_texture) {
-      transform.size.x = _texture->getWidth();
-      transform.size.y = _texture->getHeight();
-    }
-
     setTint(Color::White);
   }
 
-Sprite::Sprite(Framebuffer& buffer):
-  Sprite(buffer.getColorBuffer()) {}
+MultiSprite::MultiSprite(Framebuffer& buffer):
+  MultiSprite(buffer.getColorBuffer()) {}
 
-void Sprite::setTexture(Ptr<Texture> texture) {
+void MultiSprite::setTexture(Ptr<Texture> texture) {
   _texture = texture;
 
   transform.size.x = _texture->getWidth();
@@ -82,10 +77,10 @@ void Sprite::setTexture(Ptr<Texture> texture) {
     0, 1
   });
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
-void Sprite::setTexture(Framebuffer& buffer) {
+void MultiSprite::setTexture(Framebuffer& buffer) {
   _texture = buffer.getColorBuffer();
 
   transform.size.x = _texture->getWidth();
@@ -100,14 +95,14 @@ void Sprite::setTexture(Framebuffer& buffer) {
     1, 1
   });
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
-Ptr<Texture> Sprite::getTexture() {
+Ptr<Texture> MultiSprite::getTexture() {
   return _texture;
 }
 
-void Sprite::scaleTexture() {
+void MultiSprite::scaleTexture() {
   float ratioW = transform.size.x / _texture->getWidth();
   float ratioH = transform.size.y / _texture->getHeight();
 
@@ -120,13 +115,13 @@ void Sprite::scaleTexture() {
       uv[i+1] = ratioH;
   }
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
-void Sprite::draw(Ptr<Shader> shader) {
+void MultiSprite::draw(Ptr<Shader> shader) {
   Texture::use(_texture);
 
-  Mesh::draw(shader);
+  MultiMesh::draw(shader);
 }
 
 } /* hx3d */

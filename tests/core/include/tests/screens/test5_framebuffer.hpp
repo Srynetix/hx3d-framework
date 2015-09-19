@@ -60,7 +60,7 @@ public:
 
     batch.begin();
     batch.draw(sprite);
-    batch.draw(text, math::Function(Core::App()->getElapsedTime() / 10.f, 0.5f, [](float& x, float& y, float t) {
+    batch.draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
       y = std::sin(t) * 5.f;
     }));
     batch.end();
@@ -69,7 +69,7 @@ public:
     Framebuffer::clear(Color(0, 0, 0));
 
     Shader::use(pixShader);
-    pixShader->setUniform1f("time", Core::App()->getElapsedTime() / 100.f);
+    pixShader->setUniform1f("time", Core::App()->getElapsedTime());
     pixShader->setUniform2f("resolution", Core::App()->getSize());
     pixShader->setUniform2f("pixel_size", glm::vec2(10.f, 10.f));
     Shader::disable();

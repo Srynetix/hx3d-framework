@@ -45,6 +45,13 @@ public:
   void set(std::vector<T> values);
 
   /**
+  Add buffer values.
+
+  @param values Values
+  */
+  void add(std::vector<T> values);
+
+  /**
   Get the buffer values.
 
   @return Values
@@ -67,17 +74,38 @@ public:
 
   /**
   Get the vector.
-  
+
   @return Vector
   */
   std::vector<T>& getVector();
+
+  /**
+  Get a value.
+
+  @param i Position
+  @return Value
+  */
+  T getValue(unsigned int i);
+
+  /**
+  Set a value.
+
+  @param i Position
+  @param value Value
+  */
+  void setValue(unsigned int i, T value);
+
+  /**
+  Clear all values.
+  */
+  void clear();
 
 protected:
   std::vector<T> _vector;
   GLuint _buf;
 };
 
-#include "hx3d/graphics/utils/buffer.inl.hpp"
+#include "hx3d/graphics/utils/inline/buffer.inl.hpp"
 
 } /* hx3d */
 

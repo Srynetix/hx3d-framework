@@ -23,6 +23,8 @@
 
 #include "hx3d/graphics/utils/array_buffer.hpp"
 
+#include "hx3d/graphics/utils/attribute.hpp"
+
 namespace hx3d {
 
 class AttributeArrayBuffer: public ArrayBuffer<float> {
@@ -30,7 +32,7 @@ class AttributeArrayBuffer: public ArrayBuffer<float> {
 public:
   /**
   Construct an empty attribute array buffer.
-  
+
   See @link#create to initialize it.
   */
   AttributeArrayBuffer();
@@ -39,30 +41,31 @@ public:
   /**
   Construct an empty but initialized attribute array buffer.
 
-  @param attribute      Attribute name (in the shader)
-  @param type           Attribute type (GL_FLOAT, etc.)
-  @param attributeSize  Attribute size (1, 2, 3, 4)
+  @param attribute Attribute
   */
-  AttributeArrayBuffer(std::string attribute, GLenum type, GLuint attributeSize);
+  AttributeArrayBuffer(Attribute attribute);
 
   /**
   Construct an initialized attribute array buffer with values.
 
-  @param attribute      Attribute name (in the shader)
-  @param type           Attribute type (GL_FLOAT, etc.)
-  @param attributeSize  Attribute size (1, 2, 3, 4)
+  @param attribute      Attribute
   @param values         Values
   */
-  AttributeArrayBuffer(std::string attribute, GLenum type, GLuint attributeSize, std::vector<float> values);
+  AttributeArrayBuffer(Attribute attribute, std::vector<float> values);
 
   /**
   Initialize the attribute array buffer.
 
-  @param attribute      Attribute name (in the shader)
-  @param type           Attribute type (GL_FLOAT, etc.)
-  @param attributeSize  Attribute size (1, 2, 3, 4)
+  @param attribute      Attribute
   */
-  void create(std::string attribute, GLenum type, GLuint attributeSize);
+  void create(Attribute attribute);
+
+  /**
+  Get the attribute.
+
+  @return Attribute
+  */
+  Attribute& getAttribute();
 
   virtual void upload() override;
 
@@ -70,10 +73,7 @@ public:
   virtual void end(Ptr<Shader> shader) override;
 
 protected:
-  std::string _attribute;
-  GLenum _type;
-  GLuint _attributeSize;
-
+  Attribute _attribute;
 };
 
 } /* hx3d */

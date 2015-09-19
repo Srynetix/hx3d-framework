@@ -20,12 +20,19 @@
 
 #include "hx3d/tweens/parallel.hpp"
 
+#include "hx3d/tweens/callback.hpp"
+
 namespace hx3d {
 namespace tweens {
 
 Parallel::Parallel() {}
 
 void Parallel::add(Ptr<BaseTween> tween) {
+  tweens.push_back(tween);
+}
+
+void Parallel::addRepeatingCallback(std::function<void()> func, float duration) {
+  Ptr<BaseTween> tween = Make<Callback>(func, duration);
   tweens.push_back(tween);
 }
 

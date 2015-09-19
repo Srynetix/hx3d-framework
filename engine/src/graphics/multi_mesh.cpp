@@ -1,5 +1,5 @@
 /*
-    Base mesh.
+    Multi mesh.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/multi_mesh.hpp"
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/shader.hpp"
@@ -27,34 +27,34 @@
 
 namespace hx3d {
 
-Mesh::Mesh():
-  VBO()
+MultiMesh::MultiMesh():
+  MultiVBO()
 {
   addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
   addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
   addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
 }
 
-void Mesh::draw(Ptr<Shader> shader) {
+void MultiMesh::draw(Ptr<Shader> shader) {
 
   if (getAttribute("Texture").size() == 0) {
     Texture::use(Texture::Blank);
-    VBO::draw(shader);
+    MultiVBO::draw(shader);
     Texture::disable();
   }
 
   else {
-    VBO::draw(shader);
+    MultiVBO::draw(shader);
   }
 }
 
-void Mesh::setTint(Color tint) {
+void MultiMesh::setTint(Color tint) {
   _tint = tint;
 
   updateColor();
 }
 
-void Mesh::updateColor() {
+void MultiMesh::updateColor() {
 
   glm::vec4 floatColor = _tint.toFloat();
 
@@ -73,10 +73,10 @@ void Mesh::updateColor() {
       colorsData[i+3] = floatColor.a;
     }
 
-  colors.upload();
+  uploadAll();
 }
 
-Color& Mesh::getTint() {
+Color& MultiMesh::getTint() {
   return _tint;
 }
 

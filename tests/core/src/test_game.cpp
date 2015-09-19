@@ -17,6 +17,7 @@ void TestGame::create() {
 
   Core::Assets()->create<Texture>("box", "textures/box.jpg");
   Core::Assets()->create<Texture>("logo", "textures/logo.png");
+  Core::Assets()->create<Texture>("fire", "textures/fire.png");
 
   Core::Assets()->create<Shader>("pix2D", "shaders/pix2D");
 

@@ -31,11 +31,14 @@ namespace tweens {
 class Callback: public BaseTween {
 public:
   Callback(std::function<void()> func);
+  Callback(std::function<void()> func, float duration);
 
   virtual void update(float delta) override;
 
 private:
   std::function<void()> _func;
+  float _delay;
+  float _currentTime;
 };
 
 } /* tween */

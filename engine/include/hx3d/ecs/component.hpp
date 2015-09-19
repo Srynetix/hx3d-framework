@@ -65,7 +65,7 @@ private:
 
   /**
     Build a bitset corresponding to the suite of Types.
-    
+
     @param Types Suite of Component types
     */
   template <class T, class... Types>
@@ -74,7 +74,7 @@ private:
   static Bitset getFamilyInternal(typename std::enable_if<sizeof...(Types) == 0>::type* test = nullptr);
 };
 
-#include "hx3d/ecs/component.inl.hpp"
+#include "hx3d/ecs/inline/component.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

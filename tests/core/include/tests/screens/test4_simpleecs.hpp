@@ -80,7 +80,7 @@ public:
     batch.draw(sprite);
 
     batch.draw(rotText);
-    batch.draw(text, math::Function(Core::App()->getElapsedTime() / 5.f, 0.5f, [](float& x, float& y, float t) {
+    batch.draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
       x = std::abs(std::sin(t / 2.f));
       y = std::sin(t) * 2.5f;
     }));

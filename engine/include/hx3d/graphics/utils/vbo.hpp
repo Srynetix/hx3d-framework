@@ -63,11 +63,10 @@ public:
   /**
   Add an empty initialized attribute array buffer.
 
-  @param name Attribute name
-  @param type Attribute type
-  @param size Attribute size
+  @param name      Name
+  @param attribute Attribute
   */
-  void addAttribute(std::string name, std::string shaderName, GLenum type, GLuint size);
+  void addAttribute(std::string name, Attribute attribute);
 
   /**
   Set the wanted attribute array buffer content.
@@ -94,7 +93,7 @@ public:
 
   /**
   Get the index buffer.
-  
+
   @return Index buffer.
   */
   IndexArrayBuffer& getIndices();

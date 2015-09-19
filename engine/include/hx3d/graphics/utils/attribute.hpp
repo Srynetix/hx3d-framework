@@ -1,5 +1,5 @@
 /*
-    Callback tween.
+    Buffer attribute.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,29 +18,42 @@
     USA
 */
 
-#include "hx3d/tweens/callback.hpp"
+#ifndef HX3D_GRAPHICS_UTILS_ATTRIBUTE
+#define HX3D_GRAPHICS_UTILS_ATTRIBUTE
+
+#include "hx3d/graphics/gl.hpp"
+
+#include <string>
 
 namespace hx3d {
-namespace tweens {
 
-Callback::Callback(std::function<void()> func):
-  Callback(func, 0)
-{}
+class Attribute {
+public:
 
-Callback::Callback(std::function<void()> func, float duration):
-  _func(func), _delay(duration)
-{}
+  /*
+  Construct an empty attribute.
+  */
+  Attribute();
 
-void Callback::update(float delta) {
-  if (_ended)
-    return;
+  /*
+  Construct a buffer attribute.
 
-  _func();
+  @param name   Attribute name (in the shader)
+  @param type   Attribute type (GL_FLOAT, etc.)
+  @param size   Attribute size (1, 2, 3, 4)
+  */
+  Attribute(std::string name, GLenum type, GLuint size);
 
-  _currentTime += delta;
-  if (_currentTime > _delay)
-    _ended = true;
-}
+  const std::string getName() const;
+  const GLenum getType() const;
+  const GLuint getSize() const;
 
-} /* tweens */
+private:
+  std::string _name;
+  GLenum _type;
+  GLuint _size;
+};
+
 } /* hx3d */
+
+#endif
