@@ -82,7 +82,7 @@ void Sprite::setTexture(Ptr<Texture> texture) {
     0, 1
   });
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
 void Sprite::setTexture(Framebuffer& buffer) {
@@ -100,7 +100,7 @@ void Sprite::setTexture(Framebuffer& buffer) {
     1, 1
   });
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
 Ptr<Texture> Sprite::getTexture() {
@@ -120,7 +120,7 @@ void Sprite::scaleTexture() {
       uv[i+1] = ratioH;
   }
 
-  uploadAttribute("Texture");
+  uploadAll();
 }
 
 void Sprite::draw(Ptr<Shader> shader) {

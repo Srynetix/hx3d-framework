@@ -89,8 +89,7 @@ void Text::draw(Ptr<Shader> shader) {
         s1, t0
       });
 
-      uploadAttribute("Position");
-      uploadAttribute("Texture");
+      uploadAll();
 
       Mesh::draw(shader);
 
@@ -139,8 +138,7 @@ void Text::functionDraw(Ptr<Shader> shader, math::Function function) {
         s1, t0
       });
 
-      uploadAttribute("Position");
-      uploadAttribute("Texture");
+      uploadAll();
 
       Mesh::draw(shader);
 

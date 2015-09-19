@@ -1,5 +1,5 @@
 /*
-    Base mesh.
+    Multi mesh.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or

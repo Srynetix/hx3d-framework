@@ -68,14 +68,6 @@ void Batch::draw(Mesh& mesh) {
   mesh.draw(_shader);
 }
 
-void Batch::draw(MultiMesh& mesh) {
-
-  glm::mat4 model = mesh.transform.compute();
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
-
-  mesh.draw(_shader);
-}
-
 void Batch::draw(gui::Text& text) {
 
   Texture::use(text.getFont());

@@ -84,7 +84,7 @@ void SpriteBatch::setCamera(Camera& camera) {
   _camera = &camera;
 }
 
-void SpriteBatch::draw(MultiSprite& mesh) {
+void SpriteBatch::draw(Sprite& mesh) {
   glm::mat4 model = mesh.transform.compute();
   _lastTexture = mesh.getTexture();
 

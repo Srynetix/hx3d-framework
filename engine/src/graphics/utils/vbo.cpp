@@ -1,5 +1,5 @@
 /*
-    Base VBO.
+    Multi VBO.
     Contains one index array buffer and multiple attributes array buffers.
 
     Copyright (C) 2015 Denis BOURGE
@@ -33,21 +33,13 @@ VBO::VBO() {}
 VBO::~VBO() {}
 
 void VBO::uploadAll() {
-  for (auto& pair: attributes) {
-      pair.second.upload();
-  }
+  multiBuffer.upload();
 
   indices.upload();
 }
 
 void VBO::uploadIndices() {
   indices.upload();
-}
-
-void VBO::uploadAttribute(std::string name) {
-  if (attributes.find(name) != attributes.end()) {
-    attributes[name].upload();
-  }
 }
 
 void VBO::draw(Ptr<Shader> shader) {
@@ -57,35 +49,24 @@ void VBO::draw(Ptr<Shader> shader) {
     return;
   }
 
-  for (auto& pair: attributes) {
-    pair.second.begin(shader);
-  }
+  multiBuffer.begin(shader);
 
   indices.begin(shader);
   indices.end(shader);
 
-  for (auto& pair: attributes) {
-    pair.second.end(shader);
-  }
+  multiBuffer.end(shader);
 }
 
 void VBO::addAttribute(std::string name, Attribute attribute) {
-  if (attributes.find(name) != attributes.end()) {
-    Log.Error("Attribute %s already exists.", name.c_str());
-    return;
-  }
-
-  attributes[name].create(attribute);
+  multiBuffer.addAttribute(name, attribute);
 }
 
 void VBO::setAttribute(std::string name, std::vector<float> data) {
-  if (attributes.find(name) != attributes.end()) {
-    attributes[name].set(data);
-  }
+  multiBuffer.setAttribute(name, data);
 }
 
 AttributeArrayBuffer& VBO::getAttribute(std::string name) {
-  return attributes[name];
+  return multiBuffer.getAttribute(name);
 }
 
 void VBO::setIndices(std::vector<GLushort> data) {
@@ -94,6 +75,10 @@ void VBO::setIndices(std::vector<GLushort> data) {
 
 IndexArrayBuffer& VBO::getIndices() {
   return indices;
+}
+
+MultiArrayBuffer& VBO::getMultiBuffer() {
+  return multiBuffer;
 }
 
 } /* hx3d */

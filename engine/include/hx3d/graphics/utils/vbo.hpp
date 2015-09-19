@@ -1,5 +1,5 @@
 /*
-    Base VBO.
+    Multi VBO.
     Contains one index array buffer and multiple attributes array buffers.
 
     Copyright (C) 2015 Denis BOURGE
@@ -24,7 +24,7 @@
 #define HX3D_GRAPHICS_UTILS_VBO
 
 #include "hx3d/graphics/utils/index_array_buffer.hpp"
-#include "hx3d/graphics/utils/attribute_array_buffer.hpp"
+#include "hx3d/graphics/utils/multi_array_buffer.hpp"
 
 #include <map>
 
@@ -45,13 +45,6 @@ public:
   Upload the index buffer.
   */
   void uploadIndices();
-
-  /**
-  Upload the wanted attribute buffer.
-
-  @param name Attribute name
-  */
-  void uploadAttribute(std::string name);
 
   /**
   Draw the VBO.
@@ -98,8 +91,15 @@ public:
   */
   IndexArrayBuffer& getIndices();
 
+  /**
+  Get the multi buffer.
+
+  @¶eturn Multi buffer.
+  */
+  MultiArrayBuffer& getMultiBuffer();
+
 protected:
-  std::map<std::string, AttributeArrayBuffer> attributes;
+  MultiArrayBuffer multiBuffer;
   IndexArrayBuffer indices;
 };
 

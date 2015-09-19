@@ -54,14 +54,11 @@ set(
   "${ENGINE_SRC}/graphics/meshes/origin.cpp"
   "${ENGINE_SRC}/graphics/utils/attribute.cpp"
   "${ENGINE_SRC}/graphics/utils/attribute_array_buffer.cpp"
+  "${ENGINE_SRC}/graphics/utils/multi_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/utils/index_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/utils/transform.cpp"
   "${ENGINE_SRC}/graphics/utils/vbo.cpp"
 
-  "${ENGINE_SRC}/graphics/utils/multi_array_buffer.cpp"
-  "${ENGINE_SRC}/graphics/utils/multi_vbo.cpp"
-  "${ENGINE_SRC}/graphics/multi_mesh.cpp"
-  "${ENGINE_SRC}/graphics/multi_sprite.cpp"
 
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"

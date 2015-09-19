@@ -26,7 +26,6 @@
 #define HX3D_GRAPHICS_BATCH
 
 #include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/multi_mesh.hpp"
 
 #include "hx3d/gui/text.hpp"
 
@@ -58,7 +57,6 @@ public:
   @param mesh Mesh
   */
   void draw(Mesh& mesh);
-  void draw(MultiMesh& mesh);
 
   /**
   Draw the text.

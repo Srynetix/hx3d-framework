@@ -22,8 +22,7 @@
 #define HX3D_GRAPHICS_SPRITEBATCH
 
 #include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/multi_mesh.hpp"
-#include "hx3d/graphics/multi_sprite.hpp"
+#include "hx3d/graphics/sprite.hpp"
 
 #include "hx3d/gui/text.hpp"
 
@@ -52,9 +51,9 @@ public:
   Draw the mesh.
   You must have called @link#begin before.
 
-  @param mesh MultiSprite
+  @param mesh Sprite
   */
-  void draw(MultiSprite& sprite);
+  void draw(Sprite& sprite);
 
   ///////////////////
 
@@ -83,7 +82,7 @@ private:
   Camera* _camera;
   Ptr<Shader> _shader;
 
-  MultiMesh _mesh;
+  Mesh _mesh;
   unsigned int _lastIndex;
 
   Ptr<Texture> _lastTexture;

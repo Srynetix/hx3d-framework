@@ -1,6 +1,5 @@
 #include "./base_test_screen.hpp"
 
-#include "hx3d/graphics/multi_sprite.hpp"
 #include "hx3d/graphics/sprite_batch.hpp"
 
 using namespace hx3d;
@@ -100,7 +99,7 @@ private:
 
   Batch batch;
   SpriteBatch spriteBatch;
-  MultiSprite sprite;
+  Sprite sprite;
 
   float angle;
 };
