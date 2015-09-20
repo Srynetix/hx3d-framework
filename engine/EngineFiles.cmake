@@ -58,7 +58,9 @@ set(
   "${ENGINE_SRC}/graphics/utils/index_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/utils/transform.cpp"
   "${ENGINE_SRC}/graphics/utils/vbo.cpp"
-
+  "${ENGINE_SRC}/graphics/particles/particle.cpp"
+  "${ENGINE_SRC}/graphics/particles/particle_emitter.cpp"
+  "${ENGINE_SRC}/graphics/particles/particle_manager.cpp"
 
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"

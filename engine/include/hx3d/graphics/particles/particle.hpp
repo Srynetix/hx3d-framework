@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Particle.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,63 +18,61 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
+#ifndef HX3D_GRAPHICS_PARTICLES_PARTICLE
+#define HX3D_GRAPHICS_PARTICLES_PARTICLE
 
-#include <chrono>
+#include "hx3d/utils/poolable.hpp"
+#include "hx3d/utils/ptr.hpp"
+
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/batch.hpp"
 
 namespace hx3d {
 
-class Timer {
-
+class Particle: public Poolable {
 public:
+  Particle();
 
   /**
-  Create an uninitialized timer.
-  See @link#initialize.
+  Set the texture.
+
+  @param texture Texture (Ptr)
   */
-  Timer();
+  void setTexture(Ptr<Texture> texture);
 
   /**
-  Create a timer with a delay as milliseconds.
+  Update the particle.
 
-  @param delay Delay
-  */
-  Timer(long delay);
-
-  /**
-  Initialize the timer with a delay.
-
-  @param delay Delay
-  */
-  void initialize(long delay);
-
-  /**
-  Reset the timer.
-  */
-  void reset();
-
-  /**
-  Get the remaining time as milliseconds.
-
-  @return milliseconds
-  */
-  long remaining();
-
-  /**
-  Test if the timer has ended.
-  */
-  bool hasEnded();
-
-  /**
-  Update the timer.
+  @param delta Delta time
   */
   void update(float delta);
 
+  /**
+  Draw the particle.
+
+  @param batch Batch
+  */
+  void draw(Batch& batch);
+
+  virtual void reset() override;
+
+  /////////////////
+
 private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
+  glm::vec3 position;
+  glm::vec3 size;
+  glm::vec3 velocity;
+  glm::vec3 gravity;
+
+  float baseLife;
+  float life;
+  Color color;
+
+  Sprite sprite;
+  bool dead;
+
+  friend class ParticleEmitter;
 };
 
 } /* hx3d */

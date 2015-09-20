@@ -65,7 +65,10 @@ public:
   */
   void reset();
 
-  void update();
+  /**
+  Update the timer.
+  */
+  void update(float delta);
 
 private:
   Timer _timer;

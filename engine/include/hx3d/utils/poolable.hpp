@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Poolable.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,63 +18,18 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
-
-#include <chrono>
+#ifndef HX3D_UTILS_POOLABLE
+#define HX3D_UTILS_POOLABLE
 
 namespace hx3d {
 
-class Timer {
-
+class Poolable {
 public:
 
   /**
-  Create an uninitialized timer.
-  See @link#initialize.
+  Reset.
   */
-  Timer();
-
-  /**
-  Create a timer with a delay as milliseconds.
-
-  @param delay Delay
-  */
-  Timer(long delay);
-
-  /**
-  Initialize the timer with a delay.
-
-  @param delay Delay
-  */
-  void initialize(long delay);
-
-  /**
-  Reset the timer.
-  */
-  void reset();
-
-  /**
-  Get the remaining time as milliseconds.
-
-  @return milliseconds
-  */
-  long remaining();
-
-  /**
-  Test if the timer has ended.
-  */
-  bool hasEnded();
-
-  /**
-  Update the timer.
-  */
-  void update(float delta);
-
-private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
+  virtual void reset() = 0;
 };
 
 } /* hx3d */

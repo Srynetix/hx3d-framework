@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Particle manager.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,65 +18,32 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
-
-#include <chrono>
+#include "hx3d/graphics/particles/particle_manager.hpp"
 
 namespace hx3d {
 
-class Timer {
+ParticleManager::ParticleManager()
+{}
 
-public:
+void ParticleManager::addEmitter(Ptr<ParticleEmitter> emitter) {
+  emitters.push_back(emitter);
+}
 
-  /**
-  Create an uninitialized timer.
-  See @link#initialize.
-  */
-  Timer();
+void ParticleManager::update(float delta) {
+  for (Ptr<ParticleEmitter>& emitter: emitters) {
+    emitter->update(delta);
+  }
+}
 
-  /**
-  Create a timer with a delay as milliseconds.
+void ParticleManager::draw(Batch& batch) {
 
-  @param delay Delay
-  */
-  Timer(long delay);
+  glDisable(GL_DEPTH_TEST);
 
-  /**
-  Initialize the timer with a delay.
+  for (Ptr<ParticleEmitter>& emitter: emitters) {
+    emitter->draw(batch);
+  }
 
-  @param delay Delay
-  */
-  void initialize(long delay);
-
-  /**
-  Reset the timer.
-  */
-  void reset();
-
-  /**
-  Get the remaining time as milliseconds.
-
-  @return milliseconds
-  */
-  long remaining();
-
-  /**
-  Test if the timer has ended.
-  */
-  bool hasEnded();
-
-  /**
-  Update the timer.
-  */
-  void update(float delta);
-
-private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
-};
+  glEnable(GL_DEPTH_TEST);
+}
 
 } /* hx3d */
-
-#endif

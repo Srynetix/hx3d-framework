@@ -36,6 +36,13 @@ namespace gui {
 class Text: public Widget {
 
 public:
+
+  /**
+  Create a text without font.
+  See @link#setFont.
+  */
+  Text();
+
   /**
   Create a text from a font.
 
@@ -50,6 +57,13 @@ public:
   @param Font   Font (Ptr)
   */
   Text(Ptr<Widget> parent, Ptr<Font> font);
+
+  /**
+  Set the font.
+
+  @param font Font (Ptr)
+  */
+  void setFont(Ptr<Font> font);
 
   /**
   Set the text content.
@@ -68,7 +82,7 @@ public:
 
   /**
   Get the text font.
-  
+
   @return Font (Ptr)
   */
   Ptr<Font> getFont();

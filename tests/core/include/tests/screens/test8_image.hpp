@@ -57,8 +57,8 @@ public:
   }
 
   virtual void update(float delta) override {
+    timer.update(delta);
     camera.update();
-    timer.update();
 
     sprite.transform.rotation.z = glm::radians(angle);
 

@@ -1,5 +1,5 @@
 /*
-    Callback Timer.
+    Pool system.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,36 +18,53 @@
     USA
 */
 
-#include "hx3d/utils/callback_timer.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
-CallbackTimer::CallbackTimer():
-  _timer(-1) {}
-
-CallbackTimer::CallbackTimer(float delay, std::function<void()> function):
-  _timer(delay), _function(function) {}
-
-void CallbackTimer::initialize(float delay, std::function<void()> function) {
-  _timer.initialize(delay);
-  _function = function;
-}
-
-long CallbackTimer::remaining() {
-  return _timer.remaining();
-}
-
-void CallbackTimer::update(float delta) {
-  _timer.update(delta);
-  
-  if (_timer.hasEnded()) {
-    if (_function)
-      _function();
+template <class T>
+template <class... Args>
+Pool<T>::Pool(unsigned int size, Args... args): size(size) {
+  for (unsigned int i = 0; i < size; ++i) {
+    Ptr<T> p = Make<T>(args...);
+    _available.push(p);
   }
 }
 
-void CallbackTimer::reset() {
-  _timer.reset();
+template <class T>
+Pool<T>::~Pool() {}
+
+template <class T>
+Ptr<T> Pool<T>::take() {
+  if (_available.size() > 0) {
+    Ptr<T> ptr = _available.front();
+    _available.pop();
+    _locked.insert(ptr);
+
+    ptr->reset();
+    return ptr;
+  }
+
+  return nullptr;
+}
+
+template <class T>
+void Pool<T>::release(Ptr<T> ptr) {
+  if (_locked.find(ptr) != _locked.end()) {
+    _locked.erase(ptr);
+    _available.push(ptr);
+
+    ptr->reset();
+  }
+
+  else {
+    Log.Error("Pool: Ptr is not working.");
+  }
+}
+
+template <class T>
+std::set<Ptr<T>>& Pool<T>::getWorking() {
+  return _locked;
 }
 
 } /* hx3d */

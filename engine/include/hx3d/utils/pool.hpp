@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Pool system.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,65 +18,61 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
+#ifndef HX3D_UTILS_POOL
+#define HX3D_UTILS_POOL
 
-#include <chrono>
+#include "hx3d/utils/ptr.hpp"
+
+#include <set>
+#include <queue>
 
 namespace hx3d {
 
-class Timer {
-
+template <class T>
+class Pool {
 public:
 
   /**
-  Create an uninitialized timer.
-  See @link#initialize.
+  Construct a pool with a size and arguments.
+
+  @param size Size
+  @param args Arguments
   */
-  Timer();
+  template <class... Args>
+  Pool(unsigned int size, Args... args);
+  ~Pool();
 
   /**
-  Create a timer with a delay as milliseconds.
+  Fetch a free poolable element.
 
-  @param delay Delay
+  @return Poolable element
   */
-  Timer(long delay);
+  Ptr<T> take();
 
   /**
-  Initialize the timer with a delay.
+  Release a poolable element.
 
-  @param delay Delay
+  @param ptr Poolable (Ptr)
   */
-  void initialize(long delay);
+  void release(Ptr<T> ptr);
 
   /**
-  Reset the timer.
-  */
-  void reset();
+  Get the locked elements.
 
-  /**
-  Get the remaining time as milliseconds.
-
-  @return milliseconds
+  @return Set of elements
   */
-  long remaining();
-
-  /**
-  Test if the timer has ended.
-  */
-  bool hasEnded();
-
-  /**
-  Update the timer.
-  */
-  void update(float delta);
+  std::set<Ptr<T>>& getWorking();
 
 private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
+  std::queue<Ptr<T>> _available;
+  std::set<Ptr<T>> _locked;
+
+  unsigned int size;
+
 };
 
 } /* hx3d */
+
+#include "hx3d/utils/inline/pool.inl.hpp"
 
 #endif

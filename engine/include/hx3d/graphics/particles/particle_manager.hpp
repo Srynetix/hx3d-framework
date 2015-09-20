@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Particle manager.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,63 +18,40 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
+#ifndef HX3D_GRAPHICS_PARTICLES_PARTICLEMANAGER
+#define HX3D_GRAPHICS_PARTICLES_PARTICLEMANAGER
 
-#include <chrono>
+#include "hx3d/graphics/particles/particle_emitter.hpp"
 
 namespace hx3d {
 
-class Timer {
-
+class ParticleManager {
 public:
+  ParticleManager();
 
   /**
-  Create an uninitialized timer.
-  See @link#initialize.
+  Add an emitter.
+
+  @param emitter Particle emitter
   */
-  Timer();
+  void addEmitter(Ptr<ParticleEmitter> emitter);
 
   /**
-  Create a timer with a delay as milliseconds.
+  Update the particle manager.
 
-  @param delay Delay
-  */
-  Timer(long delay);
-
-  /**
-  Initialize the timer with a delay.
-
-  @param delay Delay
-  */
-  void initialize(long delay);
-
-  /**
-  Reset the timer.
-  */
-  void reset();
-
-  /**
-  Get the remaining time as milliseconds.
-
-  @return milliseconds
-  */
-  long remaining();
-
-  /**
-  Test if the timer has ended.
-  */
-  bool hasEnded();
-
-  /**
-  Update the timer.
+  @param delta Delta time
   */
   void update(float delta);
 
+  /**
+  Draw the particles.
+
+  @param batch Batch
+  */
+  void draw(Batch& batch);
+
 private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
+  std::vector<Ptr<ParticleEmitter>> emitters;
 };
 
 } /* hx3d */

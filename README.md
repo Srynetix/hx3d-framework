@@ -61,9 +61,9 @@ You can use the `clone_dependencies.sh` script.
   - [x] Framebuffers
   - [x] Cameras
   - [x] Viewports
+  - [x] Particle system
   - [ ] Animations
   - [ ] Lights
-  - [ ] Particle system
   - [ ] SVG handling or preprocessing
   - [ ] Mesh loading
 - **Tweening**

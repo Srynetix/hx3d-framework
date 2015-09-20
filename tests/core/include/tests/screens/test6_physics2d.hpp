@@ -114,6 +114,7 @@ public:
 
   virtual void update(float delta) override {
     graph.update(delta);
+    timer.update(delta);
 
     camera.update();
     world.Step(1.f/60.f, 5, 7);

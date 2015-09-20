@@ -29,10 +29,11 @@
 namespace hx3d {
 namespace gui {
 
+Text::Text():
+  Text(nullptr) {}
+
 Text::Text(Ptr<Font> font):
-  Widget(nullptr), _font(font), _content("") {
-    init();
-}
+  Text(nullptr, font) {}
 
 Text::Text(Ptr<Widget> parent, Ptr<Font> font):
   Widget(parent), _font(font), _content("") {
@@ -42,6 +43,10 @@ Text::Text(Ptr<Widget> parent, Ptr<Font> font):
 void Text::init() {
   setTint(Color(255, 255, 255));
   transform.size = glm::vec3(1);
+}
+
+void Text::setFont(Ptr<Font> font) {
+  _font = font;
 }
 
 void Text::setContent(std::string content) {

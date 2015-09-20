@@ -1,5 +1,5 @@
 /*
-    Timer.
+    Particle.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,53 +18,52 @@
     USA
 */
 
-#include "hx3d/utils/timer.hpp"
+#include "hx3d/graphics/particles/particle.hpp"
 
-#include <algorithm>
+#include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {
 
-Timer::Timer():
-  Timer(-1) {}
-
-Timer::Timer(long delay):
-  _delay(delay), _elapsed(0), _alreadyEnded(false)
-{}
-
-void Timer::initialize(long delay) {
-  _delay = delay;
+Particle::Particle() {
   reset();
 }
 
-void Timer::reset() {
-  _elapsed = 0;
-  _alreadyEnded = false;
+void Particle::reset() {
+  life = baseLife = 0.f;
+  dead = false;
+  color = Color::White;
 }
 
-long Timer::remaining() {
-  if (_delay == -1)
-    return 0xFF;
-
-  long elapsed = _elapsed * 1000;
-  return std::max(0L, _delay - elapsed);
+void Particle::setTexture(Ptr<Texture> texture) {
+  sprite.setTexture(texture);
 }
 
-bool Timer::hasEnded() {
-  if (_alreadyEnded)
-    return false;
+void Particle::update(float delta) {
+  life -= delta;
 
-  if (remaining() == 0) {
-    _alreadyEnded = true;
-    return true;
+  if (life <= 0.f) {
+    dead = true;
+    return;
   }
 
-  return false;
+  else {
+    float percentage = life / baseLife;
+    color.a = math::interpolate(0, 255, percentage, math::Interpolation::Linear);
+    sprite.setTint(color);
+
+    position.x -= velocity.x * delta;
+    position.y -= velocity.y * delta;
+
+    velocity.x -= gravity.x * delta;
+    velocity.y -= gravity.y * delta;
+  }
 }
 
-void Timer::update(float delta) {
-  _elapsed += delta;
+void Particle::draw(Batch& batch) {
+  sprite.transform.position = position;
+  sprite.transform.size = size;
 
-
+  batch.draw(sprite);
 }
 
 } /* hx3d */
