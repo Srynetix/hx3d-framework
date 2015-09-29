@@ -24,8 +24,8 @@
     > Add more viewport types.
 */
 
-#ifndef HX3D_GRAPHICS_VIEWPORT
-#define HX3D_GRAPHICS_VIEWPORT
+#ifndef HX3D_GRAPHICS_VIEWPORTS_VIEWPORT
+#define HX3D_GRAPHICS_VIEWPORTS_VIEWPORT
 
 #include <glm/vec2.hpp>
 
@@ -115,7 +115,7 @@ protected:
 
   /**
   Update the viewport with or without centering the camera (internal).
-  
+
   @param centerCamera Center camera ?
   */
   virtual void internalUpdate(bool centerCamera) = 0;

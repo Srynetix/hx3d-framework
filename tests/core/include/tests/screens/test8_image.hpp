@@ -66,7 +66,7 @@ public:
   }
 
   void render() {
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
 

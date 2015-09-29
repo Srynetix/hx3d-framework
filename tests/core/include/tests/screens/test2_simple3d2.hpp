@@ -2,22 +2,26 @@
 
 #include "hx3d/graphics/cameras/perspective_camera.hpp"
 
-#include "hx3d/graphics/meshes/cube.hpp"
-#include "hx3d/graphics/meshes/star.hpp"
+#include "hx3d/graphics/geometries/cube_geometry.hpp"
+#include "hx3d/graphics/geometries/star_geometry.hpp"
 
 using namespace hx3d;
 
 class Test2: public BaseTestScreen {
 public:
   Test2():
-    camera(0.1f, 100.f),
-    sprite(Core::Assets()->get<Texture>("box"))
+    camera(0.1f, 100.f)
   {
     camera.translate(glm::vec3(0.f, 0.f, -5.f));
     camera.rotate(180.f, glm::vec3(0, 1, 0));
 
+    sprite.setTexture(Core::Assets()->get<Texture>("box"));
+
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
+
+    cube.setGeometry(Make<CubeGeometry>());
+    star.setGeometry(Make<StarGeometry>());
 
     angle = 0.f;
   }
@@ -29,7 +33,7 @@ public:
 
   virtual void render() override {
 
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
 
@@ -107,8 +111,8 @@ private:
 
   hx3d::Batch batch;
 
-  hx3d::mesh::Cube cube;
-  hx3d::mesh::Star star;
+  hx3d::Mesh cube;
+  hx3d::Mesh star;
   hx3d::Sprite sprite;
 
   float angle;

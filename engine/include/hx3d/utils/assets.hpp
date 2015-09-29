@@ -67,7 +67,7 @@ private:
   std::map<std::type_index, std::map<std::string, Ptr<Resource>>> _assets;
 };
 
-#include "hx3d/utils/inline/assets.inl.hpp"
+#include "hx3d/utils/_inline/assets.inl.hpp"
 
 } /* hx3d */
 

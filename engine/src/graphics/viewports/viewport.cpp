@@ -20,10 +20,10 @@
     USA
 */
 
-#include "hx3d/graphics/viewport.hpp"
+#include "hx3d/graphics/viewports/viewport.hpp"
 
+#include "hx3d/graphics/cameras/camera.hpp"
 #include "hx3d/graphics/gl.hpp"
-#include "hx3d/graphics/camera.hpp"
 
 namespace hx3d {
 

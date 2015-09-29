@@ -1,5 +1,7 @@
 /*
-    Buffer attribute.
+    Origin model.
+    Used at point (0, 0, 0) to show the origin.
+
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,40 +20,16 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_ATTRIBUTE
-#define HX3D_GRAPHICS_UTILS_ATTRIBUTE
+#ifndef HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
 
-#include "hx3d/graphics/gl.hpp"
-
-#include <string>
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
 
-class Attribute {
+class OriginGeometry: public Geometry {
 public:
-
-  /*
-  Construct an empty attribute.
-  */
-  Attribute();
-
-  /*
-  Construct a buffer attribute.
-
-  @param name   Attribute name (in the shader)
-  @param type   Attribute type (GL_FLOAT, etc.)
-  @param size   Attribute size (1, 2, 3, 4)
-  */
-  Attribute(std::string name, GLenum type, GLuint size);
-
-  const std::string getName() const;
-  const GLenum getType() const;
-  const GLuint getSize() const;
-
-private:
-  std::string _name;
-  GLenum _type;
-  GLuint _size;
+  OriginGeometry();
 };
 
 } /* hx3d */

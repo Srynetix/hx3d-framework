@@ -1,5 +1,5 @@
 /*
-    Star mesh.
+    Buffer attribute.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,21 +18,42 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_MESHES_STAR
-#define HX3D_GRAPHICS_MESHES_STAR
+#ifndef HX3D_GRAPHICS_BUFFERS_ATTRIBUTE
+#define HX3D_GRAPHICS_BUFFERS_ATTRIBUTE
 
-#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/gl.hpp"
+
+#include <string>
 
 namespace hx3d {
-namespace mesh {
 
-class Star: public Mesh {
-
+class Attribute {
 public:
-  Star();
+
+  /*
+  Construct an empty attribute.
+  */
+  Attribute();
+
+  /*
+  Construct a buffer attribute.
+
+  @param name   Attribute name (in the shader)
+  @param type   Attribute type (GL_FLOAT, etc.)
+  @param size   Attribute size (1, 2, 3, 4)
+  */
+  Attribute(std::string name, GLenum type, GLuint size);
+
+  const std::string getName() const;
+  const GLenum getType() const;
+  const GLuint getSize() const;
+
+private:
+  std::string _name;
+  GLenum _type;
+  GLuint _size;
 };
 
-} /* mesh */
 } /* hx3d */
 
 #endif

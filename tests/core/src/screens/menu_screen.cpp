@@ -23,6 +23,7 @@ Screens list.
 #include "tests/screens/test11_tweening.hpp"
 #include "tests/screens/test12_particles.hpp"
 #include "tests/screens/test13_multidraw2d.hpp"
+#include "tests/screens/test14_buffertest.hpp"
 
 using namespace hx3d;
 
@@ -39,7 +40,7 @@ MenuScreen::MenuScreen():
   buttonHeight(32)
 {
   sprite.setTexture(Core::Assets()->get<Texture>("box"));
-  sprite.setTint(Color(0, 0, 50));
+  sprite.setTint(Color(0, 0, 64));
 
   logoSprite.setTexture(Core::Assets()->get<Texture>("logo"));
 
@@ -71,7 +72,8 @@ MenuScreen::MenuScreen():
     {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
     {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
     {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
-    {"Multi VBOs 2D", [](){Core::CurrentGame()->setScreen(Make<Test13>());}}
+    {"Multi VBOs 2D", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
+    {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}}
   };
 
   buttonCount = worldSize.y / buttonHeight;
@@ -119,7 +121,7 @@ void MenuScreen::update(float delta) {
 
 void MenuScreen::render() {
 
-  Framebuffer::clear(Color(0, 0, 0));
+  Framebuffer::clear(Color::Black);
   glm::vec2 worldSize = viewport.getWorldSize();
 
   batch.setShader(defaultShader);
@@ -158,5 +160,4 @@ void MenuScreen::render() {
   batch.begin();
   batch.draw(logoSprite);
   batch.end();
-
 }

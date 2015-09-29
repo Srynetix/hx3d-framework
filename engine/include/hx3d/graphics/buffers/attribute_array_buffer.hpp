@@ -18,12 +18,11 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_ATTRIBUTEARRAYBUFFER
-#define HX3D_GRAPHICS_UTILS_ATTRIBUTEARRAYBUFFER
+#ifndef HX3D_GRAPHICS_BUFFERS_ATTRIBUTEARRAYBUFFER
+#define HX3D_GRAPHICS_BUFFERS_ATTRIBUTEARRAYBUFFER
 
-#include "hx3d/graphics/utils/array_buffer.hpp"
-
-#include "hx3d/graphics/utils/attribute.hpp"
+#include "hx3d/graphics/buffers/array_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute.hpp"
 
 namespace hx3d {
 

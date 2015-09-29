@@ -20,52 +20,16 @@
 
 #include "hx3d/graphics/sprite.hpp"
 
+#include "hx3d/graphics/geometries/sprite_geometry.hpp"
+
 namespace hx3d {
 
 Sprite::Sprite():
-  Sprite(Ptr<Texture>(nullptr)) {}
+Mesh() {
+  _geometry = Make<SpriteGeometry>();
 
-Sprite::Sprite(Ptr<Texture> texture):
-  Mesh(), _texture(texture) {
-
-    setAttribute("Position", std::vector<float> {
-      -0.5f, 0.5f, 0.f,
-      0.5, 0.5f, 0.f,
-      0.5f, -0.5f, 0.f,
-      -0.5f, -0.5f, 0.f
-    });
-
-    setIndices(std::vector<GLushort> {
-      0, 2, 1,
-      0, 3, 2
-    });
-
-    setAttribute("Color", std::vector<float> {
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      1, 1, 1, 1
-    });
-
-    setAttribute("Texture", std::vector<float> {
-      0, 0,
-      1, 0,
-      1, 1,
-      0, 1
-    });
-
-    uploadAll();
-
-    if (_texture) {
-      transform.size.x = _texture->getWidth();
-      transform.size.y = _texture->getHeight();
-    }
-
-    setTint(Color::White);
-  }
-
-Sprite::Sprite(Framebuffer& buffer):
-  Sprite(buffer.getColorBuffer()) {}
+  setTint(Color::White);
+}
 
 void Sprite::setTexture(Ptr<Texture> texture) {
   _texture = texture;
@@ -74,15 +38,10 @@ void Sprite::setTexture(Ptr<Texture> texture) {
   transform.size.y = _texture->getHeight();
 
   /* Set the correct texture coordinates, in case of previous framebuffer. */
+  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  spriteGeo->activateTextureMode();
 
-  setAttribute("Texture", std::vector<float> {
-    0, 0,
-    1, 0,
-    1, 1,
-    0, 1
-  });
-
-  uploadAll();
+  _geometry->uploadAll();
 }
 
 void Sprite::setTexture(Framebuffer& buffer) {
@@ -92,15 +51,10 @@ void Sprite::setTexture(Framebuffer& buffer) {
   transform.size.y = _texture->getHeight();
 
   /* Reverse the framebuffer ! */
+  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  spriteGeo->activateFramebufferMode();
 
-  setAttribute("Texture", std::vector<float> {
-    1, 0,
-    0, 0,
-    0, 1,
-    1, 1
-  });
-
-  uploadAll();
+  _geometry->uploadAll();
 }
 
 Ptr<Texture> Sprite::getTexture() {
@@ -111,7 +65,7 @@ void Sprite::scaleTexture() {
   float ratioW = transform.size.x / _texture->getWidth();
   float ratioH = transform.size.y / _texture->getHeight();
 
-  auto& uv = getAttribute("Texture").getVector();
+  auto& uv = _geometry->getAttribute("Texture").getVector();
   for (unsigned int i = 0; i < uv.size(); i+=2) {
     if (uv[i] != 0)
       uv[i] = ratioW;
@@ -120,12 +74,11 @@ void Sprite::scaleTexture() {
       uv[i+1] = ratioH;
   }
 
-  uploadAll();
+  _geometry->uploadAll();
 }
 
 void Sprite::draw(Ptr<Shader> shader) {
   Texture::use(_texture);
-
   Mesh::draw(shader);
 }
 

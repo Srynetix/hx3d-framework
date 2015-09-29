@@ -37,11 +37,12 @@ public:
   Test4():
     text(Core::Assets()->get<Font>("default")),
     rotText(Core::Assets()->get<Font>("default")),
-    sprite(Core::Assets()->get<Texture>("box")),
     angle(0.f)
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
+
+    sprite.setTexture(Core::Assets()->get<Texture>("box"));
 
     entity = engine.createEntity();
     engine.registerComponentAdded<RotationComponent>([](Ptr<ecs::Component> component, Ptr<ecs::Entity> entity) {
@@ -53,7 +54,7 @@ public:
 
     sprite.transform.size = glm::vec3(64);
     sprite.transform.position = glm::vec3(Core::App()->getWidth() / 2 - 64 / 2, Core::App()->getHeight() / 2 - 64 / 2, 0);
-    sprite.setTint(Color(255, 255, 255));
+    sprite.setTint(Color::White);
 
     text.setContent("This cube is rotating thanks to a RotatingComponent and a RotatingSystem.");
     text.transform.position = glm::vec3(Core::App()->getWidth() / 2 - 550 / 2, Core::App()->getHeight() / 4, 0);
@@ -73,7 +74,7 @@ public:
   }
 
   virtual void render() override {
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
 

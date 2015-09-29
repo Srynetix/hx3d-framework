@@ -24,10 +24,10 @@
     > Finish the class.
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_MULTIARRAYBUFFER
-#define HX3D_GRAPHICS_UTILS_MULTIARRAYBUFFER
+#ifndef HX3D_GRAPHICS_BUFFERS_MULTIARRAYBUFFER
+#define HX3D_GRAPHICS_BUFFERS_MULTIARRAYBUFFER
 
-#include "hx3d/graphics/utils/attribute_array_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
 
 #include <map>
 

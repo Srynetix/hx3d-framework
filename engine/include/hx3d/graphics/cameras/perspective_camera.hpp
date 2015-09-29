@@ -23,7 +23,7 @@
 #ifndef HX3D_GRAPHICS_CAMERAS_PERSPECTIVECAMERA
 #define HX3D_GRAPHICS_CAMERAS_PERSPECTIVECAMERA
 
-#include "hx3d/graphics/camera.hpp"
+#include "hx3d/graphics/cameras/camera.hpp"
 
 namespace hx3d {
 

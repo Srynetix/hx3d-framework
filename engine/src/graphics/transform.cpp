@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/graphics/utils/transform.hpp"
+#include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/utils/log.hpp"
 
@@ -27,7 +27,7 @@ namespace hx3d {
 Transform::Transform():
   position(0, 0, 0),
   scale(1, 1, 1),
-  size(0, 0, 0),
+  size(1, 1, 1),
   rotation(0, 0, 0) {}
 
 Transform& Transform::operator=(const Transform& transform) {

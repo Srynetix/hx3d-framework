@@ -74,7 +74,7 @@ void Spectrum::onInitialization() {
   }
 }
 
-void Spectrum::update(Sint16* stream, int length) {
+void Spectrum::update(Sint16* stream, int length, float delta) {
 
   if (!_initialized || length == 0)
     return;
@@ -142,6 +142,8 @@ void Spectrum::update(Sint16* stream, int length) {
     _image.updateTextureZone(0, 0, w, h);
     _timer.reset();
   }
+
+  _timer.update(delta);
 }
 
 float Spectrum::getNormalizedFrequencyAmplitude(unsigned int frequency, unsigned int range) {

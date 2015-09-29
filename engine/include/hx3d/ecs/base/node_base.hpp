@@ -24,7 +24,7 @@
 #include "hx3d/ecs/base/id_base.hpp"
 
 #include "hx3d/graphics/batch.hpp"
-#include "hx3d/graphics/utils/transform.hpp"
+#include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/log.hpp"
@@ -142,6 +142,6 @@ protected:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/base/inline/node_base.inl.hpp"
+#include "hx3d/ecs/base/_inline/node_base.inl.hpp"
 
 #endif

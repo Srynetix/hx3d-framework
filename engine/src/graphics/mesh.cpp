@@ -1,5 +1,5 @@
 /*
-    Multi mesh.
+    Mesh.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -21,30 +21,21 @@
 #include "hx3d/graphics/mesh.hpp"
 
 #include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/shader.hpp"
-
-#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
-Mesh::Mesh():
-  VBO()
-{
-  addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
-  addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
-  addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
-}
+Mesh::Mesh() {}
 
 void Mesh::draw(Ptr<Shader> shader) {
 
-  if (getAttribute("Texture").size() == 0) {
+  if (_geometry->getAttribute("Texture").size() == 0) {
     Texture::use(Texture::Blank);
-    VBO::draw(shader);
+    _geometry->draw(shader);
     Texture::disable();
   }
 
   else {
-    VBO::draw(shader);
+    _geometry->draw(shader);
   }
 }
 
@@ -54,11 +45,19 @@ void Mesh::setTint(Color tint) {
   updateColor();
 }
 
+void Mesh::setGeometry(Ptr<BaseGeometry> geometry) {
+  _geometry = geometry;
+}
+
+Ptr<BaseGeometry>& Mesh::getGeometry() {
+  return _geometry;
+}
+
 void Mesh::updateColor() {
 
   glm::vec4 floatColor = _tint.toFloat();
 
-  AttributeArrayBuffer& colors = getAttribute("Color");
+  AttributeArrayBuffer& colors = _geometry->getAttribute("Color");
   float* colorsData = colors.data();
     if (colorsData[0] == floatColor.r
       && colorsData[1] == floatColor.g
@@ -73,7 +72,7 @@ void Mesh::updateColor() {
       colorsData[i+3] = floatColor.a;
     }
 
-  uploadAll();
+  _geometry->uploadAll();
 }
 
 Color& Mesh::getTint() {

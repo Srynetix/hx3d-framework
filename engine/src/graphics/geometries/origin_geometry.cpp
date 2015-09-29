@@ -1,5 +1,5 @@
 /*
-    Origin mesh.
+    Origin models.
     Used at point (0, 0, 0) to show the origin.
 
     Copyright (C) 2015 Denis BOURGE
@@ -20,12 +20,11 @@
     USA
 */
 
-#include "hx3d/graphics/meshes/origin.hpp"
+#include "hx3d/graphics/geometries/origin_geometry.hpp"
 
 namespace hx3d {
-namespace mesh {
 
-Origin::Origin(): Mesh() {
+OriginGeometry::OriginGeometry(): Geometry() {
 
   setAttribute("Position", std::vector<float> {
 
@@ -211,5 +210,4 @@ Origin::Origin(): Mesh() {
   uploadAll();
 }
 
-} /* mesh */
 } /* hx3d */

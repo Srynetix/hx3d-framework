@@ -20,10 +20,9 @@
     USA
 */
 
-#include "hx3d/graphics/camera.hpp"
+#include "hx3d/graphics/cameras/camera.hpp"
 
 #include "hx3d/graphics/gl.hpp"
-
 #include "hx3d/math/vector_utils.hpp"
 
 namespace hx3d {

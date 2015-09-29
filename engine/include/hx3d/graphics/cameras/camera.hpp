@@ -20,8 +20,8 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_CAMERA
-#define HX3D_GRAPHICS_CAMERA
+#ifndef HX3D_GRAPHICS_CAMERAS_CAMERA
+#define HX3D_GRAPHICS_CAMERAS_CAMERA
 
 #include <glm/vec3.hpp>
 #include <glm/mat2x2.hpp>
@@ -52,7 +52,7 @@ public:
 
   /**
   Translate the camera.
-  
+
   @param vec Quantity
   */
   void translate(glm::vec3 vec);

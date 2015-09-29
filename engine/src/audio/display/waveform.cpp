@@ -21,6 +21,7 @@
 #include "hx3d/audio/display/waveform.hpp"
 
 #include "hx3d/math/interpolation.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace audio {
@@ -29,7 +30,7 @@ Waveform::Waveform(): Waveform(50) {}
 Waveform::Waveform(int refreshDelay): Display(refreshDelay) {}
 Waveform::~Waveform() {}
 
-void Waveform::update(Sint16* stream, int length) {
+void Waveform::update(Sint16* stream, int length, float delta) {
 
   if (!_initialized)
     return;
@@ -69,6 +70,8 @@ void Waveform::update(Sint16* stream, int length) {
     _image.updateTextureZone(0, 0, w, h);
     _timer.reset();
   }
+
+  _timer.update(delta);
 }
 
 } /* audio */

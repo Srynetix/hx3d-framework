@@ -210,7 +210,7 @@ private:
   void removeComponents(unsigned int entityId);
 };
 
-#include "hx3d/ecs/base/inline/engine_base.inl.hpp"
+#include "hx3d/ecs/base/_inline/engine_base.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

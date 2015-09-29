@@ -24,7 +24,7 @@ public:
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
     sprite.transform.size = glm::vec3(64);
     sprite.transform.position = glm::vec3(Core::App()->getWidth() / 2 - 64 / 2, Core::App()->getHeight() / 2 - 64 / 2, 0);
-    sprite.setTint(Color(255, 255, 255));
+    sprite.setTint(Color::White);
 
     glm::vec2 screenSize = Core::App()->getSize();
     framebufferSprite.setTexture(framebuffer);
@@ -56,7 +56,7 @@ public:
   virtual void render() override {
 
     Framebuffer::use(framebuffer);
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
     batch.draw(sprite);
@@ -66,7 +66,7 @@ public:
     batch.end();
 
     Framebuffer::useDefault();
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     Shader::use(pixShader);
     pixShader->setUniform1f("time", Core::App()->getElapsedTime());

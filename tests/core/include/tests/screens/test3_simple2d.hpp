@@ -6,11 +6,12 @@ class Test3: public BaseTestScreen {
 public:
   Test3():
     text(Core::Assets()->get<Font>("default")),
-    sprite(Core::Assets()->get<Texture>("box")),
     angle(0.f)
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
+
+    sprite.setTexture(Core::Assets()->get<Texture>("box"));
 
     text.transform.position.x = 100;
     text.transform.position.y = 100;
@@ -36,11 +37,11 @@ public:
   }
 
   virtual void render() override {
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
 
-    sprite.setTint(Color(255, 255, 255));
+    sprite.setTint(Color::White);
     sprite.transform.position.z = -0.5f;
 
     float boxCount = 50.f;
@@ -58,7 +59,7 @@ public:
       }
     }
 
-    sprite.setTint(Color(0, 255, 0));
+    sprite.setTint(Color::Green);
     sprite.transform.size = glm::vec3(64);
     sprite.transform.rotation.z = glm::radians(angle * 2);
 

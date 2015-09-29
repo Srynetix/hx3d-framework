@@ -74,7 +74,7 @@ private:
   static Bitset getFamilyInternal(typename std::enable_if<sizeof...(Types) == 0>::type* test = nullptr);
 };
 
-#include "hx3d/ecs/inline/component.inl.hpp"
+#include "hx3d/ecs/_inline/component.inl.hpp"
 
 } /* ecs */
 } /* hx3d */

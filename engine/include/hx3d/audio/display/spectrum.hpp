@@ -51,7 +51,7 @@ public:
   Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount, int refreshDelay);
   ~Spectrum();
 
-  virtual void update(Sint16* stream, int length) override;
+  virtual void update(Sint16* stream, int length, float delta) override;
   virtual void onInitialization() override;
 
   /**

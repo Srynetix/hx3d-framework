@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/graphics/utils/index_array_buffer.hpp"
+#include "hx3d/graphics/buffers/index_array_buffer.hpp"
 
 namespace hx3d {
 

@@ -24,7 +24,7 @@
 #ifndef HX3D_GRAPHICS_VIEWPORTS_FITVIEWPORT
 #define HX3D_GRAPHICS_VIEWPORTS_FITVIEWPORT
 
-#include "hx3d/graphics/viewport.hpp"
+#include "hx3d/graphics/viewports/viewport.hpp"
 
 namespace hx3d {
 

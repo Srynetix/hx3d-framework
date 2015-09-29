@@ -1,5 +1,5 @@
 /*
-    Multi mesh.
+    Mesh.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -21,15 +21,16 @@
 #ifndef HX3D_GRAPHICS_MESH
 #define HX3D_GRAPHICS_MESH
 
+#include "hx3d/graphics/geometries/base_geometry.hpp"
 #include "hx3d/graphics/color.hpp"
+#include "hx3d/graphics/transform.hpp"
 
-#include "hx3d/graphics/utils/vbo.hpp"
-#include "hx3d/graphics/utils/transform.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 
 class Shader;
-class Mesh: public VBO {
+class Mesh {
 
 public:
   Mesh();
@@ -62,11 +63,14 @@ public:
   */
   void updateColor();
 
+  void setGeometry(Ptr<BaseGeometry> geometry);
+  Ptr<BaseGeometry>& getGeometry();
+
   Transform transform;
 
 protected:
-
   Color _tint;
+  Ptr<BaseGeometry> _geometry;
 };
 
 } /* hx3d */

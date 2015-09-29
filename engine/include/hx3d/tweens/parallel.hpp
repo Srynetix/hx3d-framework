@@ -50,6 +50,6 @@ private:
 } /* tween */
 } /* hx3d */
 
-#include "hx3d/tweens/inline/parallel.inl.hpp"
+#include "hx3d/tweens/_inline/parallel.inl.hpp"
 
 #endif

@@ -1,5 +1,5 @@
 /*
-    Base widget.
+    Sprite model.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,55 +18,61 @@
     USA
 */
 
-#include "hx3d/gui/widget.hpp"
-
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/geometries/sprite_geometry.hpp"
 
 namespace hx3d {
-namespace gui {
 
-Widget::Widget(Ptr<Widget> parent): Mesh(),
-  _parent(parent)
- {
-  _geometry = Make<Geometry>();
+SpriteGeometry::SpriteGeometry(): Geometry() {
 
-  _geometry->setAttribute("Position", std::vector<float> {
+  setAttribute("Position", std::vector<float> {
     -0.5f, 0.5f, 0.f,
     0.5, 0.5f, 0.f,
-    -0.5f, -0.5f, 0.f,
-    0.5f, -0.5f, 0.f
+    0.5f, -0.5f, 0.f,
+    -0.5f, -0.5f, 0.f
   });
 
-  _geometry->setIndices(std::vector<GLushort> {
-    0, 1, 2,
-    0, 2, 3
+  setIndices(std::vector<GLushort> {
+    0, 2, 1,
+    0, 3, 2
   });
 
-  _geometry->setAttribute("Color", std::vector<float> {
+  setAttribute("Color", std::vector<float> {
     1, 1, 1, 1,
     1, 1, 1, 1,
     1, 1, 1, 1,
     1, 1, 1, 1
   });
 
-  _geometry->setAttribute("Texture", std::vector<float> {
+  setAttribute("Texture", std::vector<float> {
+    0, 0,
+    1, 0,
+    1, 1,
+    0, 1
+  });
+
+  uploadAll();
+}
+
+void SpriteGeometry::activateFramebufferMode() {
+  setAttribute("Texture", std::vector<float> {
+    1, 0,
     0, 0,
     0, 1,
-    1, 0,
     1, 1
   });
 
-  _geometry->uploadAll();
+  uploadAll();
 }
 
-void Widget::add(Ptr<Widget> widget) {
-  widget->_parent.reset(this);
-  _children.push_back(widget);
+void SpriteGeometry::activateTextureMode() {
+  setAttribute("Texture", std::vector<float> {
+    0, 0,
+    1, 0,
+    1, 1,
+    0, 1
+  });
+  
+  uploadAll();
 }
 
-void Widget::draw(Ptr<Shader> shader) {
-  Mesh::draw(shader);
-}
-
-} /* gui */
 } /* hx3d */

@@ -149,6 +149,6 @@ protected:
 } /* ecs */
 } /* hx3d */
 
-#include "hx3d/ecs/base/inline/scene_graph_base.inl.hpp"
+#include "hx3d/ecs/base/_inline/scene_graph_base.inl.hpp"
 
 #endif

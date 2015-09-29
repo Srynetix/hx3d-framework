@@ -1,6 +1,6 @@
 #include "./base_test_screen.hpp"
 
-#include "hx3d/graphics/sprite_batch.hpp"
+#include "hx3d/graphics/batch.hpp"
 
 using namespace hx3d;
 
@@ -12,8 +12,6 @@ public:
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
-    spriteBatch.setShader(Core::Assets()->get<Shader>("base"));
-    spriteBatch.setCamera(camera);
 
     text.transform.position.x = 100;
     text.transform.position.y = 100;
@@ -43,7 +41,7 @@ public:
   virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
-    spriteBatch.begin();
+    batch.begin();
 
     sprite.setTint(Color(255, 255, 255));
     sprite.transform.position.z = -0.5f;
@@ -59,7 +57,7 @@ public:
       for (int i = 0; i < boxCount; ++i) {
         sprite.transform.position.x = (i * boxSize) + boxSize / 2;
         sprite.transform.rotation.z = glm::radians(angle * 4);
-        spriteBatch.draw(sprite);
+        batch.draw(sprite);
       }
     }
 
@@ -70,20 +68,18 @@ public:
     sprite.transform.position.x = 100.f;
     sprite.transform.position.y = 100.f;
     sprite.transform.position.z = 0.f;
-    spriteBatch.draw(sprite);
+    batch.draw(sprite);
 
     sprite.transform.position.x = 125.f;
     sprite.transform.position.y = 125.f;
     sprite.transform.position.z = 0.1f;
-    spriteBatch.draw(sprite);
+    batch.draw(sprite);
 
     sprite.transform.position.x = 150.f;
     sprite.transform.position.y = 150.f;
     sprite.transform.position.z = 0.f;
-    spriteBatch.draw(sprite);
-    spriteBatch.end();
+    batch.draw(sprite);
 
-    batch.begin();
     batch.draw(text);
     batch.end();
 
@@ -94,11 +90,10 @@ public:
   }
 
 private:
-  hx3d::OrthographicCamera camera;
+  OrthographicCamera camera;
   gui::Text text;
 
   Batch batch;
-  SpriteBatch spriteBatch;
   Sprite sprite;
 
   float angle;

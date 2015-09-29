@@ -1,5 +1,5 @@
 /*
-    Sprite.
+    Index array buffer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,55 +18,32 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_SPRITE
-#define HX3D_GRAPHICS_SPRITE
+#ifndef HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
+#define HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/buffers/array_buffer.hpp"
 
 namespace hx3d {
 
-class Sprite: public Mesh {
+class IndexArrayBuffer: public ArrayBuffer<GLushort> {
 
 public:
+  /**
+  Build an empty index buffer.
+  */
+  IndexArrayBuffer();
+  ~IndexArrayBuffer();
 
   /**
-  Create a sprite without texture.
-  You must set it after with @link#setTexture.
+  Build an index buffer with values.
+
+  @param values Values
   */
-  Sprite();
+  IndexArrayBuffer(std::vector<GLushort> values);
 
-  /**
-  Set the sprite texture.
-
-  @param texture Texture (Ptr)
-  */
-  void setTexture(Ptr<Texture> texture);
-
-  /**
-  Set the sprite texture from a framebuffer color buffer.
-
-  @param buffer Framebuffer
-  */
-  void setTexture(Framebuffer& buffer);
-
-  /**
-  Get the sprite texture.
-
-  @return Texture (Ptr)
-  */
-  Ptr<Texture> getTexture();
-
-  /**
-  Scale the texture coordinates following the texture size.
-  */
-  void scaleTexture();
-
-  virtual void draw(Ptr<Shader> shader) override;
-
-private:
-  Ptr<Texture> _texture;
+  virtual void upload() override;
+  virtual void begin(Ptr<Shader> shader) override;
+  virtual void end(Ptr<Shader> shader) override;
 };
 
 } /* hx3d */

@@ -1,5 +1,5 @@
 /*
-    Cube mesh.
+    Base array buffer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,21 +18,46 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_MESHES_CUBE
-#define HX3D_GRAPHICS_MESHES_CUBE
+#ifndef HX3D_GRAPHICS_BUFFERS_ARRAYBUFFER
+#define HX3D_GRAPHICS_BUFFERS_ARRAYBUFFER
 
-#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/buffers/buffer.hpp"
+
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
-namespace mesh {
 
-class Cube: public Mesh {
+class Shader;
+
+template <class T>
+class ArrayBuffer: public Buffer<T> {
 
 public:
-  Cube();
+  ArrayBuffer();
+  virtual ~ArrayBuffer();
+
+  /**
+  Upload the data to the GPU.
+  */
+  virtual void upload() = 0;
+
+  /**
+  Begin the use with a shader.
+
+  @param shader Shader (Ptr)
+  */
+  virtual void begin(Ptr<Shader> shader) = 0;
+
+  /**
+  End the use with a shader.
+
+  @parm shader Shader (Ptr)
+  */
+  virtual void end(Ptr<Shader> shader) = 0;
 };
 
-} /* mesh */
+#include "hx3d/graphics/buffers/_inline/array_buffer.inl.hpp"
+
 } /* hx3d */
 
 #endif

@@ -1,5 +1,5 @@
 /*
-    Transform.
+    Array geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,54 +18,34 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_TRANSFORM
-#define HX3D_GRAPHICS_UTILS_TRANSFORM
+#ifndef HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
 
-#include <glm/vec3.hpp>
-#include <glm/mat2x2.hpp>
-
-#include <glm/gtx/transform.hpp>
+#include "hx3d/graphics/geometries/base_geometry.hpp"
 
 namespace hx3d {
 
-class Transform {
-
+class Geometry: public BaseGeometry {
 public:
-  Transform();
-  Transform& operator=(const Transform& transform);
+  Geometry(): BaseGeometry() {}
 
-  /**
-  Build the model matrix using the position, scale, size and rotation.
+  virtual void draw(Ptr<Shader> shader) override {
 
-  @return Matrix (mat4)
-  */
-  glm::mat4 compute();
+    for (auto& a: _attributes) {
+      a.second.begin(shader);
+    }
 
-  /**
-  Add a transform to another.
-  In use for parent/child transform calculation.
+    if (_indices.size() == 0) {
+      glDrawArrays(GL_TRIANGLES, 0, _attributes["Position"].size());
+    } else {
+      _indices.begin(shader);
+      _indices.end(shader);
+    }
 
-  @param transform Other transform
-  @return Current transform
-  */
-  Transform add(const Transform& transform);
-
-  /**
-  Get the real size (size * scale).
-
-  @return Real size
-  */
-  glm::vec3 realSize();
-
-  /**
-  Show the transform information. (Debug)
-  */
-  void show();
-
-  glm::vec3 position;
-  glm::vec3 scale;
-  glm::vec3 size;
-  glm::vec3 rotation;
+    for (auto& a: _attributes) {
+      a.second.end(shader);
+    }
+  }
 };
 
 } /* hx3d */

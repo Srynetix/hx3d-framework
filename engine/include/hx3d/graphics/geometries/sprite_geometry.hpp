@@ -1,5 +1,5 @@
 /*
-    Base array buffer.
+    Sprite model.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,45 +18,21 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_ARRAYBUFFER
-#define HX3D_GRAPHICS_UTILS_ARRAYBUFFER
+#ifndef HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 
-#include "hx3d/graphics/utils/buffer.hpp"
-
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
 
-class Shader;
-
-template <class T>
-class ArrayBuffer: public Buffer<T> {
+class SpriteGeometry: public Geometry {
 
 public:
-  ArrayBuffer();
-  virtual ~ArrayBuffer();
+  SpriteGeometry();
 
-  /**
-  Upload the data to the GPU.
-  */
-  virtual void upload() = 0;
-
-  /**
-  Begin the use with a shader.
-
-  @param shader Shader (Ptr)
-  */
-  virtual void begin(Ptr<Shader> shader) = 0;
-
-  /**
-  End the use with a shader.
-
-  @parm shader Shader (Ptr)
-  */
-  virtual void end(Ptr<Shader> shader) = 0;
+  void activateFramebufferMode();
+  void activateTextureMode();
 };
-
-#include "hx3d/graphics/utils/inline/array_buffer.inl.hpp"
 
 } /* hx3d */
 

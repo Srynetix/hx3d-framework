@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/graphics/utils/attribute_array_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
 
 #include "hx3d/graphics/shader.hpp"
 

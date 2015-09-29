@@ -79,8 +79,8 @@ public:
     Log.Info("Bass: %f", bass);
 
     if (converter.hasProcessed()) {
-      waveform.update(converter.getS16Stream(), converter.getSampleSize());
-      spectrum.update(converter.getS16Stream(), converter.getSampleSize());
+      waveform.update(converter.getS16Stream(), converter.getSampleSize(), delta);
+      spectrum.update(converter.getS16Stream(), converter.getSampleSize(), delta);
     }
   }
 

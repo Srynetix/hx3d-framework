@@ -73,6 +73,6 @@ private:
 
 } /* hx3d */
 
-#include "hx3d/utils/inline/pool.inl.hpp"
+#include "hx3d/utils/_inline/pool.inl.hpp"
 
 #endif

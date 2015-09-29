@@ -83,6 +83,6 @@ inline Color interpolate(Color a, Color b, float t, Interpolation type);
 } /* math */
 } /* hx3d */
 
-#include "hx3d/math/inline/interpolation.inl.hpp"
+#include "hx3d/math/_inline/interpolation.inl.hpp"
 
 #endif

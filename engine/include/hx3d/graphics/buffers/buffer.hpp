@@ -18,8 +18,8 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_BUFFER
-#define HX3D_GRAPHICS_UTILS_BUFFER
+#ifndef HX3D_GRAPHICS_BUFFERS_BUFFER
+#define HX3D_GRAPHICS_BUFFERS_BUFFER
 
 #include <vector>
 #include <algorithm>
@@ -105,7 +105,7 @@ protected:
   GLuint _buf;
 };
 
-#include "hx3d/graphics/utils/inline/buffer.inl.hpp"
+#include "hx3d/graphics/buffers/_inline/buffer.inl.hpp"
 
 } /* hx3d */
 

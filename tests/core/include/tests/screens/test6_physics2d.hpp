@@ -76,7 +76,6 @@ public:
 class Test6: public BaseTestScreen {
 public:
   Test6():
-    groundSprite(Core::Assets()->get<Texture>("box")),
     world(b2Vec2(0, -9.81f)),
     text(Core::Assets()->get<Font>("default")),
     timer(50),
@@ -85,7 +84,8 @@ public:
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
 
-    groundSprite.setTint(Color(255, 127, 65));
+    groundSprite.setTexture(Core::Assets()->get<Texture>("box"));
+    groundSprite.setTint(Color(1.f, 0.5f, 0.25f));
     groundSprite.transform.size = glm::vec3(Core::App()->getWidth(), 100.f, 0);
     groundSprite.scaleTexture();
 
@@ -137,7 +137,7 @@ public:
   }
 
   virtual void render() override {
-    Framebuffer::clear(Color(0, 0, 0));
+    Framebuffer::clear(Color::Black);
 
     batch.begin();
 

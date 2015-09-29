@@ -70,8 +70,9 @@ public:
 
   @param stream Stream of amplitudes (between -32767 and 32767)
   @param length Length of the stream
+  @param delta Delta time
   */
-  virtual void update(Sint16* stream, int length) = 0;
+  virtual void update(Sint16* stream, int length, float delta) = 0;
 
   /**
   Use this to execute code after initialization.

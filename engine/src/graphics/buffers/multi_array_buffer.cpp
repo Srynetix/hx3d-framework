@@ -20,7 +20,7 @@
     USA
 */
 
-#include "hx3d/graphics/utils/multi_array_buffer.hpp"
+#include "hx3d/graphics/buffers/multi_array_buffer.hpp"
 #include "hx3d/utils/log.hpp"
 
 #include "hx3d/graphics/shader.hpp"

@@ -37,7 +37,7 @@ public:
 
   /**
   Add a widget to the list.
-  
+
   @param widget Widget (Ptr)
   */
   void add(Ptr<Widget> widget);

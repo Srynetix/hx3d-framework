@@ -44,13 +44,7 @@ public:
   Waveform(int refreshDelay);
   ~Waveform();
 
-  /**
-  Update the waveform.
-  
-  @param stream Stream of amplitudes (between 0 and 255)
-  @param length Length of the stream
-  */
-  virtual void update(Sint16* stream, int length) override;
+  virtual void update(Sint16* stream, int length, float delta) override;
 };
 
 } /* audio */

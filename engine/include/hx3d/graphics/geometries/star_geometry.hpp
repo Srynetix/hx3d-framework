@@ -1,5 +1,5 @@
 /*
-    Buffer attribute.
+    Star model.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,29 +18,19 @@
     USA
 */
 
-#include "hx3d/graphics/utils/attribute.hpp"
+#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
 
-Attribute::Attribute():
-  Attribute("", GL_INVALID_ENUM, 0) {}
+class StarGeometry: public Geometry {
 
-Attribute::Attribute(std::string name, GLenum type, GLuint size):
-  _name(name),
-  _type(type),
-  _size(size)
-{}
-
-const std::string Attribute::getName() const {
-  return _name;
-}
-
-const GLenum Attribute::getType() const {
-  return _type;
-}
-
-const GLuint Attribute::getSize() const {
-  return _size;
-}
+public:
+  StarGeometry();
+};
 
 } /* hx3d */
+
+#endif

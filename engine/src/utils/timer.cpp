@@ -63,8 +63,6 @@ bool Timer::hasEnded() {
 
 void Timer::update(float delta) {
   _elapsed += delta;
-
-
 }
 
 } /* hx3d */

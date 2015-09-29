@@ -41,7 +41,7 @@ Text::Text(Ptr<Widget> parent, Ptr<Font> font):
 }
 
 void Text::init() {
-  setTint(Color(255, 255, 255));
+  setTint(Color::White);
   transform.size = glm::vec3(1);
 }
 
@@ -80,21 +80,21 @@ void Text::draw(Ptr<Shader> shader) {
       float s1 = glyph->s1;
       float t1 = glyph->t1;
 
-      setAttribute("Position", std::vector<float> {
+      _geometry->setAttribute("Position", std::vector<float> {
         x0, y0, 0,
         x0, y1, 0,
         x1, y1, 0,
         x1, y0, 0
       });
 
-      setAttribute("Texture", std::vector<float> {
+      _geometry->setAttribute("Texture", std::vector<float> {
         s0, t0,
         s0, t1,
         s1, t1,
         s1, t0
       });
 
-      uploadAll();
+      _geometry->uploadAll();
 
       Mesh::draw(shader);
 
@@ -129,21 +129,21 @@ void Text::functionDraw(Ptr<Shader> shader, math::Function function) {
       float s1 = glyph->s1;
       float t1 = glyph->t1;
 
-      setAttribute("Position", std::vector<float> {
+      _geometry->setAttribute("Position", std::vector<float> {
         x0, y0, 0,
         x0, y1, 0,
         x1, y1, 0,
         x1, y0, 0
       });
 
-      setAttribute("Texture", std::vector<float> {
+      _geometry->setAttribute("Texture", std::vector<float> {
         s0, t0,
         s0, t1,
         s1, t1,
         s1, t0
       });
 
-      uploadAll();
+      _geometry->uploadAll();
 
       Mesh::draw(shader);
 

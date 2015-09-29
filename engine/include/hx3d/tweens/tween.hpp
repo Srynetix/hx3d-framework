@@ -47,6 +47,6 @@ private:
 } /* tween */
 } /* hx3d */
 
-#include "hx3d/tweens/inline/tween.inl.hpp"
+#include "hx3d/tweens/_inline/tween.inl.hpp"
 
 #endif

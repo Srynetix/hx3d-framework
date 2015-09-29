@@ -1,5 +1,5 @@
 /*
-    Index array buffer.
+    Transform.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,32 +18,54 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_UTILS_INDEXARRAYBUFFER
-#define HX3D_GRAPHICS_UTILS_INDEXARRAYBUFFER
+#ifndef HX3D_GRAPHICS_TRANSFORM
+#define HX3D_GRAPHICS_TRANSFORM
 
-#include "hx3d/graphics/utils/array_buffer.hpp"
+#include <glm/vec3.hpp>
+#include <glm/mat2x2.hpp>
+
+#include <glm/gtx/transform.hpp>
 
 namespace hx3d {
 
-class IndexArrayBuffer: public ArrayBuffer<GLushort> {
+class Transform {
 
 public:
-  /**
-  Build an empty index buffer.
-  */
-  IndexArrayBuffer();
-  ~IndexArrayBuffer();
+  Transform();
+  Transform& operator=(const Transform& transform);
 
   /**
-  Build an index buffer with values.
-  
-  @param values Values
-  */
-  IndexArrayBuffer(std::vector<GLushort> values);
+  Build the model matrix using the position, scale, size and rotation.
 
-  virtual void upload() override;
-  virtual void begin(Ptr<Shader> shader) override;
-  virtual void end(Ptr<Shader> shader) override;
+  @return Matrix (mat4)
+  */
+  glm::mat4 compute();
+
+  /**
+  Add a transform to another.
+  In use for parent/child transform calculation.
+
+  @param transform Other transform
+  @return Current transform
+  */
+  Transform add(const Transform& transform);
+
+  /**
+  Get the real size (size * scale).
+
+  @return Real size
+  */
+  glm::vec3 realSize();
+
+  /**
+  Show the transform information. (Debug)
+  */
+  void show();
+
+  glm::vec3 position;
+  glm::vec3 scale;
+  glm::vec3 size;
+  glm::vec3 rotation;
 };
 
 } /* hx3d */

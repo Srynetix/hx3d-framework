@@ -20,8 +20,9 @@
 
 #include "hx3d/graphics/batch.hpp"
 
+#include "hx3d/graphics/cameras/camera.hpp"
+
 #include "hx3d/graphics/shader.hpp"
-#include "hx3d/graphics/camera.hpp"
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/font.hpp"
 
