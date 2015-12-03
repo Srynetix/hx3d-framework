@@ -1,5 +1,5 @@
-#include "hx3d/core/application.hpp"
-#include "hx3d/core/application_config.hpp"
+#include "hx3d/window/sdl2/sdl2_application.hpp"
+#include "hx3d/window/application_config.hpp"
 
 #include "tests/test_game.hpp"
 
@@ -9,7 +9,8 @@ int main(int argc, char** argv) {
   ApplicationConfig config;
   config.title = "Tests";
 
-  Application app(Make<TestGame>(), config);
+  SDL2Application app(Make<TestGame>(), config);
+  app.start();
 
   return 0;
 }
