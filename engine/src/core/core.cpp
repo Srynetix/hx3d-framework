@@ -19,7 +19,7 @@
 */
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/events.hpp"
+#include "hx3d/window/events.hpp"
 
 #include "hx3d/net/net.hpp"
 #include "hx3d/audio/audio.hpp"
@@ -51,7 +51,6 @@ Core* Core::_instance(nullptr);
 
 Core::Core() {
   _assets = new AssetManager();
-  _events = new EventManager();
   _net = new Net();
   _audio = new audio::AudioDevice();
 }
@@ -59,8 +58,6 @@ Core::Core() {
 Core::~Core() {
   if (_assets)
     delete _assets;
-  if (_events)
-    delete _events;
   if (_net)
     delete _net;
   if (_audio)
@@ -93,10 +90,11 @@ audio::AudioDevice* Core::Audio() {
 
 /////////////////////////
 
-void Core::initialize(Application* app, Game* game) {
+void Core::initialize(Application* app, Game* game, EventManager* events) {
   _instance = new Core();
   _instance->_application = app;
   _instance->_game = game;
+  _instance->_events = events;
 }
 
 void Core::shutdown() {

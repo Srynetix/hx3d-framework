@@ -2,9 +2,9 @@
 #define HX3D_TESTS_BASETESTSCREEN
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/events.hpp"
-#include "hx3d/core/input_handler.hpp"
-#include "hx3d/core/screen.hpp"
+#include "hx3d/window/events.hpp"
+#include "hx3d/window/input_handler.hpp"
+#include "hx3d/window/screen.hpp"
 
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
 

@@ -18,10 +18,10 @@
     USA
 */
 
-#include "hx3d/core/game.hpp"
+#include "hx3d/window/game.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include "hx3d/window/application.hpp"
 
 #include "hx3d/utils/log.hpp"
 

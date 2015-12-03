@@ -10,12 +10,16 @@ set(
   "${ENGINE_SRC}/audio/display/spectrum.cpp"
   "${ENGINE_SRC}/audio/converters/s16_converter.cpp"
 
-  "${ENGINE_SRC}/core/application.cpp"
-  "${ENGINE_SRC}/core/application_config.cpp"
-  "${ENGINE_SRC}/core/game.cpp"
   "${ENGINE_SRC}/core/core.cpp"
-  "${ENGINE_SRC}/core/events.cpp"
-  "${ENGINE_SRC}/core/screen.cpp"
+
+  "${ENGINE_SRC}/window/application.cpp"
+  "${ENGINE_SRC}/window/application_config.cpp"
+  "${ENGINE_SRC}/window/game.cpp"
+  "${ENGINE_SRC}/window/events.cpp"
+  "${ENGINE_SRC}/window/screen.cpp"
+
+  "${ENGINE_SRC}/window/sdl2/sdl2_application.cpp"
+  "${ENGINE_SRC}/window/sdl2/sdl2_events.cpp"
 
   "${ENGINE_SRC}/utils/bitset.cpp"
   "${ENGINE_SRC}/utils/log.cpp"
@@ -69,6 +73,12 @@ set(
   "${ENGINE_SRC}/net/net.cpp"
 
   "${ENGINE_SRC}/physics/2d/collision_matrix.cpp"
+  "${ENGINE_SRC}/physics/2d/attractors/zone_attractor.cpp"
+  "${ENGINE_SRC}/physics/2d/attractors/point_attractor.cpp"
+  "${ENGINE_SRC}/physics/2d/attractors/global_attractor.cpp"
+  "${ENGINE_SRC}/physics/2d/attractor.cpp"
+  "${ENGINE_SRC}/physics/2d/manifold.cpp"
+  "${ENGINE_SRC}/physics/2d/collisions.cpp"
 
   "${ENGINE_SRC}/ecs/base/id_base.cpp"
   "${ENGINE_SRC}/ecs/component.cpp"

@@ -21,8 +21,8 @@
 #ifndef HX3D_TEST_MENUSCREEN
 #define HX3D_TEST_MENUSCREEN
 
-#include "hx3d/core/screen.hpp"
-#include "hx3d/core/input_handler.hpp"
+#include "hx3d/window/screen.hpp"
+#include "hx3d/window/input_handler.hpp"
 
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/sprite.hpp"

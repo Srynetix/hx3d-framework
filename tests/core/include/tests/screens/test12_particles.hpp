@@ -1,7 +1,5 @@
 #include "./base_test_screen.hpp"
 
-#include "hx3d/core/events.hpp"
-
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"

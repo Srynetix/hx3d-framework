@@ -18,35 +18,12 @@
     USA
 */
 
-#ifndef HX3D_CORE_APPLICATION_CONFIG
-#define HX3D_CORE_APPLICATION_CONFIG
-
-#include <string>
+#include "hx3d/window/application_config.hpp"
 
 namespace hx3d {
 
-class ApplicationConfig {
-
-public:
-  /**
-  Default application config.
-  Size: 1280 x 720
-  Fullscreen: Off
-  Title: Game
-  FPS Limit: 60
-  */
-  ApplicationConfig();
-
-  /* Common parameters */
-  unsigned int fpsLimit;
-
-  /* Desktop parameters */
-  int width;
-  int height;
-  std::string title;
-  bool fullscreen;
-};
+ApplicationConfig::ApplicationConfig():
+  fpsLimit(60), width(1280), height(720), title("Game"), fullscreen(false)
+  {}
 
 } /* hx3d */
-
-#endif

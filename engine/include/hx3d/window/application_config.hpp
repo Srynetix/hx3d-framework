@@ -1,5 +1,5 @@
 /*
-    2D circle collider.
+    Application configuration.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,34 +18,35 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_CIRCLE
-#define HX3D_PHYSICS_2D_CIRCLE
+#ifndef HX3D_WINDOW_APPLICATION_CONFIG
+#define HX3D_WINDOW_APPLICATION_CONFIG
 
-#include "hx3d/physics/2d/collider.hpp"
+#include <string>
 
 namespace hx3d {
-namespace physics2d {
 
-struct Circle: public Collider {
-  float radius;
+class ApplicationConfig {
 
-  Circle(float radius, const Type colliderType = Type::Dynamic):
-    Collider(Shape::Circle, colliderType),
-    radius(radius)
-  {
-    setDensity(1.f);
-  }
+public:
+  /**
+  Default application config.
+  Size: 1280 x 720
+  Fullscreen: Off
+  Title: Game
+  FPS Limit: 60
+  */
+  ApplicationConfig();
 
-  virtual void setOrientation(float angle) override {
-   orientation = angle;
-  }
+  /* Common parameters */
+  unsigned int fpsLimit;
 
-  virtual void computeMass(float density) override {
-    massData.setMass(density);
-  }
+  /* Desktop parameters */
+  int width;
+  int height;
+  std::string title;
+  bool fullscreen;
 };
 
-} /* physics2d */
 } /* hx3d */
 
-#endif
+#endif /* HX3D_WINDOW_APPLICATION_CONFIG */

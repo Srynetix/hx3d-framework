@@ -155,7 +155,7 @@ public:
 
   /**
   Use the current font atlas for drawing.
-  
+
   @param font Font (Ptr)
   */
   static void use(Ptr<Font> font);
@@ -165,6 +165,11 @@ public:
   */
   static void disable();
 
+  /**
+  Used to create the Texture::Blank texture.
+  */
+  static void generateBlankTexture();
+
   friend class Application;
 
 private:
@@ -173,11 +178,6 @@ private:
   unsigned int _height;
 
   //////////////////////
-
-  /**
-  Used to create the Texture::Blank texture.
-  */
-  static void generateBlankTexture();
 };
 
 } /* hx3d */

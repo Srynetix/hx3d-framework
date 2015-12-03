@@ -3,7 +3,10 @@
 
 #include "hx3d/physics/2d/manifold.hpp"
 #include "hx3d/physics/2d/collider.hpp"
-#include "hx3d/physics/2d/attractor.hpp"
+
+#include "hx3d/physics/2d/attractors/global_attractor.hpp"
+#include "hx3d/physics/2d/attractors/point_attractor.hpp"
+#include "hx3d/physics/2d/attractors/zone_attractor.hpp"
 
 namespace hx3d {
 namespace physics2d {
@@ -173,12 +176,20 @@ private:
 
     c->position += c->velocity * dt;
 
-    // Calcul
+    // Calcul de l'angle
 
     glm::vec2 nP = glm::vec2(0, -1);
     glm::vec2 nG = glm::normalize(c->gravityForce);
+    float angle = 0.f;
+    float a = glm::dot(nP, nG);
 
-    float angle = std::acos(glm::dot(nP, nG));
+    if (nG.x < 0) {
+      angle = -std::acos(a);
+    } else {
+      angle = std::acos(a);
+    }
+
+
     c->setOrientation(angle);
 
     // c->orientation += c->angularVelocity * dt;

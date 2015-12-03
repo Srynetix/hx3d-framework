@@ -1,5 +1,5 @@
 /*
-    Game management.
+    Application listener.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -16,57 +16,61 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Screen transitions using framebuffers
 */
 
-#ifndef HX3D_CORE_GAME
-#define HX3D_CORE_GAME
-
-#include "hx3d/core/application_listener.hpp"
-#include "hx3d/core/screen.hpp"
-
-#include "hx3d/utils/ptr.hpp"
+#ifndef HX3D_WINDOW_APPLICATIONLISTENER
+#define HX3D_WINDOW_APPLICATIONLISTENER
 
 namespace hx3d {
 
-class Game: public ApplicationListener {
+/**
+Application listener.
+*/
+class ApplicationListener {
 public:
-  Game();
-
-  virtual void render() override;
-  virtual void update(float delta) override;
-  virtual void resize(int width, int height) override;
-
-  virtual void pause() override;
-  virtual void resume() override;
-
-  virtual void dispose() override;
 
   /**
-  Set the current screen.
-
-  @param screen Screen (Ptr)
+  On application creation.
   */
-  void setScreen(Ptr<Screen> screen);
+  virtual void create() = 0;
 
   /**
-  Test if the game is running.
+  On application render.
   */
-  bool isRunning();
+  virtual void render() = 0;
 
   /**
-  Stop the game.
-  */
-  void stop();
+  On application update.
 
-private:
-  bool _running;
-  Ptr<Screen> _screen;
+  @param delta Delta time
+  */
+  virtual void update(float delta) = 0;
+
+  /**
+  On application pause.
+  */
+  virtual void pause() = 0;
+
+  /**
+  On application resume.
+  */
+  virtual void resume() = 0;
+
+  /**
+  On application resize.
+
+  @param width  New width
+  @param height New height
+  */
+  virtual void resize(int width, int height) = 0;
+
+  /**
+  On application disposal.
+  */
+  virtual void dispose() = 0;
 };
+
 
 } /* hx3d */
 
-#endif
+#endif /* HX3D_WINDOW_APPLICATIONLISTENER */

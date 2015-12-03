@@ -71,14 +71,14 @@ private:
 
   /**
   Add one mask for a category.
-  
+
   @param name     Category
   @param category Other category
   */
   void addOneMask(std::string name, std::string category);
 };
 
-#include "hx3d/physics/2d/collision_matrix.inl.hpp"
+#include "hx3d/physics/2d/_inline/collision_matrix.inl.hpp"
 
 } /* physics2d */
 } /* hx3d */

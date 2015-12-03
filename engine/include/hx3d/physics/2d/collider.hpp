@@ -21,75 +21,21 @@
 #ifndef HX3D_PHYSICS_2D_COLLIDER
 #define HX3D_PHYSICS_2D_COLLIDER
 
-#include <iostream>
 #include <glm/vec2.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include <cfloat>
+#include <vector>
 
-#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/math/vector_utils.hpp"
+#include "hx3d/utils/ptr.hpp"
+
+#include "hx3d/physics/2d/mass.hpp"
+#include "hx3d/physics/2d/material.hpp"
 
 namespace hx3d {
 namespace physics2d {
 
 struct Attractor;
-
-struct Mass {
-  Mass() {
-    mass = 0;
-    invMass = 0;
-
-    inertia = 0;
-    invInertia = 0;
-  }
-
-  void setMass(float amount) {
-    mass = amount;
-    invMass = (amount == 0) ? 0 : 1.f / amount;
-  }
-
-  void setInertia(float amount) {
-    inertia = amount;
-    invInertia = (amount == 0) ? 0 : 1.f / amount;
-  }
-
-  //////////////////
-
-  float mass;
-  float invMass;
-
-  float inertia;
-  float invInertia;
-};
-
-struct Material {
-  Material() {
-    staticFriction = 0.5f;
-    dynamicFriction = 0.3f;
-    restitution = 0.2f;
-  }
-
-  float staticFriction;
-  float dynamicFriction;
-  float restitution;
-};
-
-struct AttractorInformation {
-  AttractorInformation() {
-    current = nullptr;
-  }
-
-  Ptr<Attractor> current;
-};
-
-struct ColliderDefinition {
-  ColliderDefinition(): unitCoef(1.f/30.f) {}
-
-  float unitCoef;
-
-  glm::vec2 position;
-  Material material;
-};
-
 class Collider {
 public:
   enum class Type {
@@ -100,6 +46,15 @@ public:
   enum class Shape {
     Circle,
     Polygon
+  };
+
+  struct Definition {
+    Definition(): unitCoef(1.f/30.f) {}
+
+    float unitCoef;
+
+    glm::vec2 position;
+    Material material;
   };
 
   Collider(Shape shapeType, const Type colliderType = Type::Dynamic) {
@@ -115,7 +70,7 @@ public:
     shape = shapeType;
   }
 
-  void useDefinition(ColliderDefinition& def) {
+  void useDefinition(const Definition& def) {
     position = def.unitCoef * def.position;
   }
 
@@ -159,7 +114,8 @@ public:
 
   Material material;
   Mass massData;
-  AttractorInformation attractors;
+
+  Ptr<Attractor> currentAttractor;
 };
 
 /////////////

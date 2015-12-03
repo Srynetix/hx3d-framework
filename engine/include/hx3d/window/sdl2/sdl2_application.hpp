@@ -1,5 +1,5 @@
 /*
-    Application management.
+    SDL2 Application.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,12 @@
     USA
 */
 
-#ifndef HX3D_CORE_APPLICATION
-#define HX3D_CORE_APPLICATION
+#ifndef HX3D_WINDOW_SDL2_SDL2APPLICATION
+#define HX3D_WINDOW_SDL2_SDL2APPLICATION
+
+#include "hx3d/window/application.hpp"
 
 #include <SDL2/SDL.h>
-#include <glm/vec2.hpp>
-
-#include <string>
-
-#include "hx3d/core/application_config.hpp"
-
-#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 
@@ -37,7 +32,7 @@ class Game;
 /**
 Application management
 */
-class Application {
+class SDL2Application: public Application {
 
 public:
   /**
@@ -46,58 +41,14 @@ public:
   @param game   Game instance (Ptr)
   @param config Configuration
   */
-  Application(Ptr<Game> game, ApplicationConfig config);
-  virtual ~Application();
+  SDL2Application(const Ptr<Game>& game, ApplicationConfig config);
+  virtual ~SDL2Application();
 
-  /**
-  Get the window width
-
-  @return Window width
-  */
-  int getWidth();
-
-  /**
-  Get the window height
-
-  @return Window height
-  */
-  int getHeight();
-
-  /**
-  Get the window size (ivec2)
-
-  @return Window size
-  */
-  glm::ivec2 getSize();
-
-  /**
-  Get the current frames per second (FPS)
-
-  @return Current FPS
-  */
-  float getFPS();
-
-  /*
-  Get the elapsed time in seconds since the application start.
-  Reset after one hour.
-
-  @return Elapsed time
-  */
-  float getElapsedTime();
+  virtual void start() override;
 
 private:
   SDL_Window* _window;
   SDL_GLContext _context;
-  Ptr<Game> _game;
-
-  bool _running;
-
-  int _width;
-  int _height;
-
-  float _currentFPS;
-  unsigned int _fpsLimit;
-  float _elapsedTime;
 
   /**
   Create and initialize the window.
@@ -128,4 +79,4 @@ private:
 
 } /* hx3d */
 
-#endif
+#endif /* HX3D_WINDOW_SDL2_SDL2APPLICATION */

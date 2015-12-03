@@ -18,10 +18,10 @@
     USA
 */
 
-#ifndef HX3D_CORE_INPUTHANDLER
-#define HX3D_CORE_INPUTHANDLER
+#ifndef HX3D_WINDOW_INPUTHANDLER
+#define HX3D_WINDOW_INPUTHANDLER
 
-#include "hx3d/core/events.hpp"
+#include "hx3d/window/events.hpp"
 
 namespace hx3d {
 
@@ -44,4 +44,4 @@ public:
 
 } /* hx3d */
 
-#endif
+#endif /* HX3D_WINDOW_INPUTHANDLER */

@@ -1,9 +1,9 @@
 #include "tests/screens/menu_screen.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
-#include "hx3d/core/events.hpp"
-#include "hx3d/core/game.hpp"
+#include "hx3d/window/application.hpp"
+#include "hx3d/window/events.hpp"
+#include "hx3d/window/game.hpp"
 
 #include "hx3d/utils/assets.hpp"
 

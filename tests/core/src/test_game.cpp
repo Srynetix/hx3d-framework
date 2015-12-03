@@ -5,7 +5,7 @@
 #include "hx3d/utils/assets.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/events.hpp"
+#include "hx3d/window/events.hpp"
 
 using namespace hx3d;
 

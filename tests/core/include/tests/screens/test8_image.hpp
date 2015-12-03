@@ -5,8 +5,6 @@
 
 #include "hx3d/utils/callback_timer.hpp"
 
-#include "hx3d/core/events.hpp"
-
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"

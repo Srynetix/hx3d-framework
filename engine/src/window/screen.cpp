@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/core/screen.hpp"
+#include "hx3d/window/screen.hpp"
 
 namespace hx3d {
 

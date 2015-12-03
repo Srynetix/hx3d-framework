@@ -1,10 +1,11 @@
-#ifndef HX3D_PHYSICS_2D_POLYGON
-#define HX3D_PHYSICS_2D_POLYGON
+#ifndef HX3D_PHYSICS_2D_COLLIDERS_POLYGON
+#define HX3D_PHYSICS_2D_COLLIDERS_POLYGON
 
 #include "hx3d/physics/2d/collider.hpp"
 
 namespace hx3d {
 namespace physics2d {
+namespace colliders {
 
   struct Polygon: public Collider {
     unsigned int vertexCount;
@@ -174,6 +175,7 @@ namespace physics2d {
   };
 
 } /* physics2d */
+} /* colliders */
 } /* hx3d */
 
 #endif

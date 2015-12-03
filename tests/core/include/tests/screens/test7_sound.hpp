@@ -3,8 +3,6 @@
 #include "hx3d/math/random.hpp"
 #include "hx3d/math/vector_utils.hpp"
 
-#include "hx3d/core/events.hpp"
-
 #include "hx3d/utils/timer.hpp"
 
 #include "hx3d/audio/audio.hpp"

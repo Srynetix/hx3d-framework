@@ -91,6 +91,20 @@ public:
   */
   static audio::AudioDevice* Audio();
 
+  /**
+  Initialize the core system.
+
+  @param app    Application (Ptr)
+  @param game   Game (Ptr)
+  @param events Events (Ptr)
+  */
+  static void initialize(Application* app, Game* game, EventManager* events);
+
+  /**
+  Shutdown the core system.
+  */
+  static void shutdown();
+
   /// Current system type
   static SystemType CurrentSystem;
 
@@ -114,19 +128,6 @@ private:
   EventManager* _events;
   Net* _net;
   audio::AudioDevice* _audio;
-
-  /**
-  Initialize the core system.
-
-  @param app  Application (Ptr)
-  @param game Game (Ptr)
-  */
-  static void initialize(Application* app, Game* game);
-
-  /**
-  Shutdown the core system.
-  */
-  static void shutdown();
 };
 
 } /* hx3d */

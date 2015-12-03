@@ -1,5 +1,5 @@
 /*
-    Application management.
+    SDL2 Application.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,7 +18,8 @@
     USA
 */
 
-#include "hx3d/core/application.hpp"
+#include "hx3d/window/sdl2/sdl2_application.hpp"
+#include "hx3d/window/sdl2/sdl2_events.hpp"
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/assets.hpp"
@@ -28,9 +29,9 @@
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/font.hpp"
 
-#include "hx3d/core/game.hpp"
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/events.hpp"
+#include "hx3d/window/game.hpp"
+#include "hx3d/window/events.hpp"
 
 #include "hx3d/audio/audio.hpp"
 
@@ -42,13 +43,11 @@
 
 namespace hx3d {
 
-Application::Application(Ptr<Game> game, ApplicationConfig config):
-  _game(game), _running(true), _width(config.width), _height(config.height), _fpsLimit(config.fpsLimit), _elapsedTime(0)
-{
-  create(_width, _height, config.title);
-}
+SDL2Application::SDL2Application(const Ptr<Game>& game, ApplicationConfig config):
+  Application(game, config)
+{}
 
-Application::~Application() {
+SDL2Application::~SDL2Application() {
 
   SDL_GL_DeleteContext(_context);
 
@@ -64,7 +63,11 @@ Application::~Application() {
   //.........
 }
 
-void Application::create(int width, int height, std::string title) {
+void SDL2Application::start() {
+  create(_width, _height, _title);
+}
+
+void SDL2Application::create(int width, int height, std::string title) {
 
   srand(time(0));
 
@@ -141,7 +144,7 @@ void Application::create(int width, int height, std::string title) {
 
   /** Initializations **/
 
-  Core::initialize(this, _game.get());
+  Core::initialize(this, _game.get(), new SDL2EventManager());
   Framebuffer::fetchDefaultFramebuffer();
   Texture::generateBlankTexture();
 
@@ -153,10 +156,11 @@ void Application::create(int width, int height, std::string title) {
 
   _game->create();
 
+  _running = true;
   display();
 }
 
-void Application::display() {
+void SDL2Application::display() {
 
   Uint32 frameTime = 0;
   Uint32 frameStart;
@@ -178,7 +182,7 @@ void Application::display() {
     _elapsedTime = math::mclamp(_elapsedTime + deltaTime, 0.f, 3600.f);
   }
 }
-void Application::update(float delta) {
+void SDL2Application::update(float delta) {
 
   Core::Events()->poll();
 
@@ -192,7 +196,7 @@ void Application::update(float delta) {
     _running = false;
 }
 
-void Application::render() {
+void SDL2Application::render() {
 
   _game->render();
 
@@ -200,26 +204,6 @@ void Application::render() {
 
   if (!_game->isRunning())
     _running = false;
-}
-
-int Application::getWidth() {
-  return _width;
-}
-
-int Application::getHeight() {
-  return _height;
-}
-
-glm::ivec2 Application::getSize() {
-  return glm::ivec2(_width, _height);
-}
-
-float Application::getFPS() {
-  return _currentFPS;
-}
-
-float Application::getElapsedTime() {
-  return _elapsedTime;
 }
 
 } /* hx3d */

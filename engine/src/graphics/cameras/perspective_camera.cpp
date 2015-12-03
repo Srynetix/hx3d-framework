@@ -23,7 +23,7 @@
 #include "hx3d/graphics/cameras/perspective_camera.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include "hx3d/window/application.hpp"
 
 #include "hx3d/utils/log.hpp"
 
@@ -46,7 +46,7 @@ PerspectiveCamera::PerspectiveCamera(float width, float height, float near, floa
 void PerspectiveCamera::update() {
   float aspect = viewportWidth / viewportHeight;
   projection = glm::perspective(fieldOfView, aspect, near, far);
-  // 
+  //
   // for (int j = 0; j < 4; ++j) {
   //   for (int i = 0; i < 4; ++i) {
   //     Log.Info("[%d][%d]: %f", i, j, projection[i][j]);

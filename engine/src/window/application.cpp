@@ -1,5 +1,5 @@
 /*
-    Application listener.
+    Application management.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,58 +18,37 @@
     USA
 */
 
-#ifndef HX3D_CORE_APPLICATIONLISTENER
-#define HX3D_CORE_APPLICATIONLISTENER
+#include "hx3d/window/application.hpp"
 
 namespace hx3d {
 
-/**
-Application listener.
-*/
-class ApplicationListener {
-public:
+Application::Application(const Ptr<Game>& game, ApplicationConfig config):
+  _game(game), _running(false),
+  _width(config.width), _height(config.height), _fpsLimit(config.fpsLimit), _title(config.title),
+  _elapsedTime(0)
+  {}
 
-  /**
-  On application creation.
-  */
-  virtual void create() = 0;
+Application::~Application() {}
 
-  /**
-  On application render.
-  */
-  virtual void render() = 0;
+int Application::getWidth() {
+  return _width;
+}
 
-  /**
-  On application update.
+int Application::getHeight() {
+  return _height;
+}
 
-  @param delta Delta time
-  */
-  virtual void update(float delta) = 0;
+glm::ivec2 Application::getSize() {
+  return glm::ivec2(_width, _height);
+}
 
-  /**
-  On application pause.
-  */
-  virtual void pause() = 0;
+float Application::getFPS() {
+  return _currentFPS;
+}
 
-  /**
-  On application resume.
-  */
-  virtual void resume() = 0;
+float Application::getElapsedTime() {
+  return _elapsedTime;
+}
 
-  /**
-  On application resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height) = 0;
-
-  /**
-  On application disposal.
-  */
-  virtual void dispose() = 0;
-};
 
 } /* hx3d */
-
-#endif

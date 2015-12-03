@@ -23,7 +23,7 @@
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/core/application.hpp"
+#include "hx3d/window/application.hpp"
 
 namespace hx3d {
 
