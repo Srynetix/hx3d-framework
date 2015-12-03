@@ -20,7 +20,7 @@
 config = {}
 
 config["game_name"] = "game"
-config["debugger_name"] = "gdb"
+config["debugger_name"] = "kdbg"
 
 config["android_toolchain_path"] = "/opt/custom-ndk"
 config["android_build_type"] = "Debug"

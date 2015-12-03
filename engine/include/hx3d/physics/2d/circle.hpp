@@ -1,5 +1,5 @@
 /*
-    2D physics body definition.
+    2D circle collider.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,20 +18,34 @@
     USA
 */
 
-#include "hx3d/physics/2d/body_def.hpp"
+#ifndef HX3D_PHYSICS_2D_CIRCLE
+#define HX3D_PHYSICS_2D_CIRCLE
 
-#include "hx3d/math/vector_utils.hpp"
+#include "hx3d/physics/2d/collider.hpp"
 
 namespace hx3d {
 namespace physics2d {
 
-b2BodyDef BodyDef::create(b2BodyType type, glm::vec2 position, float unitScale) {
-  b2BodyDef def;
-  def.type = type;
-  def.position = math::convert(position / unitScale);
+struct Circle: public Collider {
+  float radius;
 
-  return def;
-}
+  Circle(float radius, const Type colliderType = Type::Dynamic):
+    Collider(Shape::Circle, colliderType),
+    radius(radius)
+  {
+    setDensity(1.f);
+  }
+
+  virtual void setOrientation(float angle) override {
+   orientation = angle;
+  }
+
+  virtual void computeMass(float density) override {
+    massData.setMass(density);
+  }
+};
 
 } /* physics2d */
 } /* hx3d */
+
+#endif

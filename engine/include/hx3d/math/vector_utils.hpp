@@ -36,6 +36,14 @@ Rotate a vector of an angle on one/multiple axis.
 */
 glm::vec3 rotate(glm::vec3 vector, float angle, glm::vec3 axis);
 
+glm::vec2 cross(glm::vec2 vec, float v);
+glm::vec2 cross(float v, glm::vec2 vec);
+float cross(glm::vec2 vec1, glm::vec2 vec2);
+
+glm::vec2 normalize(glm::vec2 vec);
+
+float squareLength(glm::vec2 vec);
+
 /**
 Convert a Box2D vector to GLM vector.
 

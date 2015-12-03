@@ -38,6 +38,28 @@ glm::vec3 rotate(glm::vec3 vector, float angle, glm::vec3 axis) {
   return ret;
 }
 
+glm::vec2 cross(float v, glm::vec2 vec) {
+  return glm::vec2(-v * vec.y, v * vec.x);
+}
+glm::vec2 cross(glm::vec2 vec, float v) {
+  return glm::vec2(v * vec.y, -v * vec.x);
+}
+float cross(glm::vec2 vec1, glm::vec2 vec2) {
+  return vec1.x * vec2.y - vec1.y * vec2.x;
+}
+
+glm::vec2 normalize(glm::vec2 vec) {
+  if (vec.x == 0.f && vec.y == 0.f) {
+    return vec;
+  }
+
+  return glm::normalize(vec);
+}
+
+float squareLength(glm::vec2 vec) {
+  return vec.x * vec.x + vec.y * vec.y;
+}
+
 glm::vec2 convert(b2Vec2 vector) {
   return glm::vec2(vector.x, vector.y);
 }

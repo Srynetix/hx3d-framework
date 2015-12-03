@@ -22,7 +22,7 @@ Screens list.
 #include "tests/screens/test10_stencil.hpp"
 #include "tests/screens/test11_tweening.hpp"
 #include "tests/screens/test12_particles.hpp"
-#include "tests/screens/test13_multidraw2d.hpp"
+#include "tests/screens/test13_gravity.hpp"
 #include "tests/screens/test14_buffertest.hpp"
 
 using namespace hx3d;
@@ -72,7 +72,7 @@ MenuScreen::MenuScreen():
     {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
     {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
     {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
-    {"Multi VBOs 2D", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
+    {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
     {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}}
   };
 

@@ -6,6 +6,8 @@ _build_ios/
 
 dependencies/
 game/
+doc/
+_game/
 
 tests/android/libs
 tests/android/gen
