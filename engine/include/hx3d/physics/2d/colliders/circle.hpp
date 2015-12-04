@@ -30,20 +30,10 @@ namespace colliders {
 struct Circle: public Collider {
   float radius;
 
-  Circle(float radius, const Type colliderType = Type::Dynamic):
-    Collider(Shape::Circle, colliderType),
-    radius(radius)
-  {
-    setDensity(1.f);
-  }
+  Circle(float radius, const Type colliderType = Type::Dynamic);
 
-  virtual void setOrientation(float angle) override {
-   orientation = angle;
-  }
-
-  virtual void computeMass(float density) override {
-    massData.setMass(density);
-  }
+  virtual void setOrientation(float angle) override;
+  virtual void computeMass(float density) override;
 };
 
 } /* colliders */

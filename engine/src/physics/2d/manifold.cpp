@@ -2,6 +2,8 @@
 
 #include "hx3d/physics/2d/collisions.hpp"
 
+#include "hx3d/math/vector_utils.hpp"
+
 namespace hx3d {
 namespace physics2d {
 

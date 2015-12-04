@@ -21,16 +21,12 @@
 #ifndef HX3D_PHYSICS_2D_COLLIDER
 #define HX3D_PHYSICS_2D_COLLIDER
 
-#include <glm/vec2.hpp>
-#include <glm/gtx/rotate_vector.hpp>
-#include <cfloat>
-#include <vector>
-
-#include "hx3d/math/vector_utils.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 #include "hx3d/physics/2d/mass.hpp"
 #include "hx3d/physics/2d/material.hpp"
+
+#include <glm/glm.hpp>
 
 namespace hx3d {
 namespace physics2d {
@@ -49,7 +45,7 @@ public:
   };
 
   struct Definition {
-    Definition(): unitCoef(1.f/30.f) {}
+    Definition();
 
     float unitCoef;
 
@@ -57,45 +53,18 @@ public:
     Material material;
   };
 
-  Collider(Shape shapeType, const Type colliderType = Type::Dynamic) {
-    position = {0, 0};
-    velocity = {0, 0};
-    force = {0, 0};
-    angularVelocity = 0;
+  Collider(Shape shapeType, const Type colliderType = Type::Dynamic);
 
-    torque = 0;
-    orientation = 0;
+  void useDefinition(const Definition& def);
 
-    type = colliderType;
-    shape = shapeType;
-  }
-
-  void useDefinition(const Definition& def) {
-    position = def.unitCoef * def.position;
-  }
-
-  virtual ~Collider() {}
+  virtual ~Collider();
 
   virtual void computeMass(float density) = 0;
   virtual void setOrientation(float angle) = 0;
 
-  void applyForce(const glm::vec2& amount) {
-    force += amount;
-  }
-
-  void applyImpulse(const glm::vec2& amount, const glm::vec2& contact) {
-    velocity += massData.invMass * amount;
-    angularVelocity += massData.invInertia * math::cross(contact, amount);
-  }
-
-  void setDensity(float density) {
-    if (type == Type::Static) {
-      massData.setMass(0);
-      massData.setInertia(0);
-    } else {
-      computeMass(density);
-    }
-  }
+  void applyForce(const glm::vec2& amount);
+  void applyImpulse(const glm::vec2& amount, const glm::vec2& contact);
+  void setDensity(float density);
 
   ///////////////
 

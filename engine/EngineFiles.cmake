@@ -72,12 +72,18 @@ set(
 
   "${ENGINE_SRC}/net/net.cpp"
 
-  "${ENGINE_SRC}/physics/2d/collision_matrix.cpp"
   "${ENGINE_SRC}/physics/2d/attractors/zone_attractor.cpp"
   "${ENGINE_SRC}/physics/2d/attractors/point_attractor.cpp"
   "${ENGINE_SRC}/physics/2d/attractors/global_attractor.cpp"
+  "${ENGINE_SRC}/physics/2d/colliders/polygon.cpp"
+  "${ENGINE_SRC}/physics/2d/colliders/circle.cpp"
+  "${ENGINE_SRC}/physics/2d/collision_matrix.cpp"
   "${ENGINE_SRC}/physics/2d/attractor.cpp"
   "${ENGINE_SRC}/physics/2d/manifold.cpp"
+  "${ENGINE_SRC}/physics/2d/world.cpp"
+  "${ENGINE_SRC}/physics/2d/mass.cpp"
+  "${ENGINE_SRC}/physics/2d/material.cpp"
+  "${ENGINE_SRC}/physics/2d/collider.cpp"
   "${ENGINE_SRC}/physics/2d/collisions.cpp"
 
   "${ENGINE_SRC}/ecs/base/id_base.cpp"
