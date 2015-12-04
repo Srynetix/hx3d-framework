@@ -25,7 +25,7 @@
 namespace hx3d {
 
 ParticleEmitter::ParticleEmitter(unsigned int maxParticles):
-  particles(maxParticles), texture(nullptr)
+  particles(maxParticles), texture(nullptr), rotationSpeed(0.f)
 {}
 
 void ParticleEmitter::emit(unsigned int qty) {
@@ -42,6 +42,7 @@ void ParticleEmitter::update(float delta) {
     if (p->dead) {
       particles.release(p);
     } else {
+      p->rotation += rotationSpeed * delta;
       p->update(delta);
       ++i;
     }

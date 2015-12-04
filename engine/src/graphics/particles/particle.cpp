@@ -31,6 +31,7 @@ Particle::Particle() {
 void Particle::reset() {
   life = baseLife = 0.f;
   dead = false;
+  rotation = 0.f;
   color = Color::White;
 }
 
@@ -62,6 +63,7 @@ void Particle::update(float delta) {
 void Particle::draw(Batch& batch) {
   sprite.transform.position = position;
   sprite.transform.size = size;
+  sprite.transform.rotation.z = rotation;
 
   batch.draw(sprite);
 }

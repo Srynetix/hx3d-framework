@@ -47,25 +47,28 @@ public:
 
   @return Poolable element
   */
-  Ptr<T> take();
+  const Ptr<T>& take();
 
   /**
   Release a poolable element.
 
   @param ptr Poolable (Ptr)
   */
-  void release(Ptr<T> ptr);
+  void release(const Ptr<T>& ptr);
 
   /**
   Get the locked elements.
 
   @return Set of elements
   */
-  std::set<Ptr<T>>& getWorking();
+  const std::set<Ptr<T>>& getWorking();
 
 private:
-  std::queue<Ptr<T>> _available;
-  std::set<Ptr<T>> _locked;
+  std::queue<unsigned int> _available;
+  std::set<unsigned int> _locked;
+
+  std::set<Ptr<T>> _working;
+  std::vector<Ptr<T>> _content;
 
   unsigned int size;
 

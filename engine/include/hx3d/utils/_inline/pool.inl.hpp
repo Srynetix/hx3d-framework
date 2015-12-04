@@ -26,8 +26,11 @@ template <class T>
 template <class... Args>
 Pool<T>::Pool(unsigned int size, Args... args): size(size) {
   for (unsigned int i = 0; i < size; ++i) {
-    Ptr<T> p = Make<T>(args...);
-    _available.push(p);
+    const Ptr<T>& p = Make<T>(args...);
+    p->setId(i);
+
+    _available.push(i);
+    _content.push_back(p);
   }
 }
 
@@ -35,24 +38,25 @@ template <class T>
 Pool<T>::~Pool() {}
 
 template <class T>
-Ptr<T> Pool<T>::take() {
+const Ptr<T>& Pool<T>::take() {
   if (_available.size() > 0) {
-    Ptr<T> ptr = _available.front();
+    const Ptr<T>& ptr = _content[_available.front()];
     _available.pop();
-    _locked.insert(ptr);
+    _locked.insert(ptr->getId());
 
     ptr->reset();
     return ptr;
   }
 
-  return nullptr;
+  throw std::runtime_error("STOP");
 }
 
 template <class T>
-void Pool<T>::release(Ptr<T> ptr) {
-  if (_locked.find(ptr) != _locked.end()) {
-    _locked.erase(ptr);
-    _available.push(ptr);
+void Pool<T>::release(const Ptr<T>& ptr) {
+  unsigned int id = ptr->getId();
+  if (_locked.find(id) != _locked.end()) {
+    _locked.erase(id);
+    _available.push(id);
 
     ptr->reset();
   }
@@ -63,8 +67,13 @@ void Pool<T>::release(Ptr<T> ptr) {
 }
 
 template <class T>
-std::set<Ptr<T>>& Pool<T>::getWorking() {
-  return _locked;
+const std::set<Ptr<T>>& Pool<T>::getWorking() {
+  _working.clear();
+  for (auto& i: _locked) {
+    _working.insert(_content[i]);
+  }
+
+  return _working;
 }
 
 } /* hx3d */

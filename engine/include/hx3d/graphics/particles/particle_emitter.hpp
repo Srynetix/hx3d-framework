@@ -76,6 +76,7 @@ public:
   glm::vec3 particle_size;
   glm::vec3 gravity;
   glm::vec3 velocity;
+  float rotationSpeed;
   float life;
 
 private:

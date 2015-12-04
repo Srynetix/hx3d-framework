@@ -30,10 +30,23 @@ namespace hx3d {
 class Poolable {
 public:
 
+  Poolable(): _id(0) {}
+
+  void setId(const unsigned int id) {
+    _id = id;
+  }
+
+  unsigned int getId() const {
+    return _id;
+  }
+
   /**
   Reset.
   */
   virtual void reset() = 0;
+
+private:
+  unsigned int _id;
 };
 
 } /* hx3d */

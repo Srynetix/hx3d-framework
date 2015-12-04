@@ -64,6 +64,7 @@ private:
   glm::vec3 size;
   glm::vec3 velocity;
   glm::vec3 gravity;
+  float rotation;
 
   float baseLife;
   float life;
