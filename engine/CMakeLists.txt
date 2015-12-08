@@ -36,11 +36,7 @@ set(
 set(
   COMMON_LIBRARIES
 
-  "-lSDL2\
-  -lSDL2_image\
-  -lSDL2_mixer\
-  -lSDL2_net\
-  -lfreetype-gl\
+  "-lfreetype-gl\
   -lfreetype\
   -lBox2D"
 )
@@ -49,7 +45,10 @@ set(
   LINUX_LIBRARIES
 
   ${COMMON_LIBRARIES}
-  "-lGLEW\
+  "-lSDL2\
+  -lSDL2_mixer\
+  -lSDL2_net\
+  -lGLEW\
   -lGL"
 )
 
@@ -57,7 +56,10 @@ set(
   WINDOWS_LIBRARIES
 
   ${COMMON_LIBRARIES}
-  "-lglew32\
+  "-lSDL2\
+  -lSDL2_mixer\
+  -lSDL2_net\
+  -lglew32\
   -lopengl32\
   -lSDL2main"
 )
@@ -67,11 +69,14 @@ set(
 
   ${COMMON_LIBRARIES}
   "-lGLEW \
+  -F${DEPENDENCIES_DIR}/lib/macos/Frameworks\
   -framework CoreFoundation\
   -framework OpenGL\
   -framework Cocoa\
   -framework ForceFeedback\
   -framework IOKit\
+  -framework SDL2\
+  -framework SDL2_mixer\
   -framework Carbon"
 )
 
@@ -79,7 +84,10 @@ set(
   ANDROID_LIBRARIES
 
   ${COMMON_LIBRARIES}
-  "-lGLESv2\
+  "-lSDL2\
+  -lSDL2_mixer\
+  -lSDL2_net\
+  -lGLESv2\
   -llog\
   -landroid"
 )

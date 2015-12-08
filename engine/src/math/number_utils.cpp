@@ -42,7 +42,7 @@ int modulo(int a, int b) {
     return -(a%b);
   }
 
-  return a >= 0 ? a % b : (b - static_cast<unsigned int>(std::abs(a%b))) % b;
+  return a >= 0 ? a % b : (b - static_cast<unsigned int>(std::abs((float)(a % b)))) % b;
 }
 
 float log2(int a) {

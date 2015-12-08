@@ -25,36 +25,35 @@ class MacOSBuilder(Builder):
     def __init__(self, options, game):
         super().__init__("macos", options, game)
 
-    def install(self):
-        pass
-
-    def prepare(self):
-        if self._test:
-            test_command = "-DBUILD_TESTS:BOOL=true"
-        else:
-            test_command = ""
-
-        self.prepare_internal("cmake -GNinja {} ..".format(test_command))
-
-    def build(self):
-        self.build_internal()
-
-        game_name = config["game_name"]
-        Utils.copydir("engine/assets", "{}/{}/assets".format(self.path, game_name))
-        Utils.copydir("{}/assets".format(game_name), "{}/{}/assets".format(self.path, game_name))
-
     def clean(self):
         Utils.rmdir(self.path)
 
-    def test(self):
-        Utils.execCommand("cd {}/engine && ./tests".format(self.path))
+    # Engine
+    def prepare_engine(self):
+        self.prepare_internal("CXX={} cmake -GNinja ..".format(config["compiler_name"]))
+    def build_engine(self):
+        self.build_internal()
+        Utils.copydir("dependencies/lib/macos/Frameworks", "{}/Frameworks".format(self.path))
 
-    def debug(self):
+    # Game
+    def build_game(self):
+        game_name = config["game_name"]
+        Utils.copydir("engine/assets", "{}/{}/assets".format(self.path, game_name))
+        Utils.copydir("{}/assets".format(game_name), "{}/{}/assets".format(self.path, game_name))
+    def debug_game(self):
         game_name = config["game_name"]
         debugger_name = config["debugger_name"]
-
         Utils.execCommand("cd {}/{} && {} ./{}".format(self.path, game_name, debugger_name, game_name))
-
-    def execute(self):
+    def execute_game(self):
         game_name = config["game_name"]
         Utils.execCommand("cd {}/{} && ./{}".format(self.path, game_name, game_name))
+
+    # Tests
+    def build_tests(self):
+        Utils.copydir("engine/assets", "{}/tests/assets".format(self.path))
+        Utils.copydir("tests/assets", "{}/tests/assets".format(self.path))
+    def debug_tests(self):
+        debugger_name = config["debugger_name"]
+        Utils.execCommand("cd {}/tests && {} ./tests".format(self.path, debugger_name))
+    def execute_tests(self):
+        Utils.execCommand("cd {}/tests && ./tests".format(self.path))

@@ -23,11 +23,11 @@
 namespace hx3d {
 
 Net::Net() {
-  SDLNet_Init();
+  // SDLNet_Init();
 }
 
 Net::~Net() {
-  SDLNet_Quit();
+  // SDLNet_Quit();
 }
 
 } /* hx3d */

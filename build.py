@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 #     Main build program.
 #     Copyright (C) 2015 Denis BOURGE

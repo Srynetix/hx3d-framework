@@ -41,7 +41,7 @@ namespace hx3d {
   #elif TARGET_OS_IPHONE
     Core::SystemType Core::CurrentSystem = Core::SystemType::iOS;
   #elif TARGET_OS_MAC
-    Core::SystemType Core::CurrentSystem = Core::SystemType::MacOSX;
+    Core::SystemType Core::CurrentSystem = Core::SystemType::MacOS;
   #endif
 #else
   Core::SystemType Core::CurrentSystem = Core::SystemType::Unknown;
