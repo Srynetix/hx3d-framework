@@ -44,6 +44,8 @@ namespace hx3d {
       Log.Error("Shader ERROR !");
     }
 
+    Log.Info("Loading shader `%s`...", pathToShader.c_str());
+
     if (compile(vertexContent, fragmentContent)) {
       Log.Info("Shader `%s` loaded.", pathToShader.c_str());
     } else {
@@ -79,7 +81,6 @@ namespace hx3d {
 
     Log.Shader("\tVertex shader OK");
 
-    Log.Info(frag);
     if (!compile(_fragmentID, GL_FRAGMENT_SHADER, frag)) {
       return false;
     }
