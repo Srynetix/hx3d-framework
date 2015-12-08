@@ -42,14 +42,14 @@ public:
 
   @param values Values
   */
-  void set(std::vector<T> values);
+  void set(const std::vector<T>& values);
 
   /**
   Add buffer values.
 
   @param values Values
   */
-  void add(std::vector<T> values);
+  void add(const std::vector<T>& values);
 
   /**
   Get the buffer values.
@@ -93,7 +93,7 @@ public:
   @param i Position
   @param value Value
   */
-  void setValue(unsigned int i, T value);
+  void setValue(const unsigned int i, const T value);
 
   /**
   Clear all values.

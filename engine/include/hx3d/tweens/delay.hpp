@@ -28,8 +28,8 @@ namespace tweens {
 
 class Delay: public BaseTween {
 public:
-  Delay(float delayAsSeconds);
-  virtual void update(float delta) override;
+  Delay(const float delayAsSeconds);
+  virtual void update(const float delta) override;
 
 private:
   float _delay;

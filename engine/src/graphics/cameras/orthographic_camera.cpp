@@ -31,7 +31,7 @@ OrthographicCamera::OrthographicCamera():
   OrthographicCamera(Core::App()->getWidth(), Core::App()->getHeight())
 {}
 
-OrthographicCamera::OrthographicCamera(float width, float height):
+OrthographicCamera::OrthographicCamera(const float width, const float height):
   Camera(width, height, -1, 1), zoom(1.f)
   {
     position = glm::vec3(zoom * viewportWidth / 2.f, zoom * viewportHeight / 2.f, 0);
@@ -41,11 +41,10 @@ OrthographicCamera::OrthographicCamera(float width, float height):
 
 void OrthographicCamera::update() {
   projection = glm::ortho(zoom * (-viewportWidth / 2.f), zoom * (viewportWidth / 2.f), zoom * (-viewportHeight / 2.f), zoom * (viewportHeight / 2.f), near, far);
-
   view = glm::lookAt(position, position + direction, up);
 }
 
-void OrthographicCamera::setToOrtho(float width, float height) {
+void OrthographicCamera::setToOrtho(const float width, const float height) {
   position = glm::vec3(zoom * viewportWidth / 2.f, zoom * viewportHeight / 2.f, 0);
 
   viewportWidth = width;

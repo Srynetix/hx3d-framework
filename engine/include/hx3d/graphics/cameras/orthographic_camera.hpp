@@ -40,7 +40,7 @@ public:
   @param width  Viewport width
   @param height Viewport height
   */
-  OrthographicCamera(float width, float height);
+  OrthographicCamera(const float width, const float height);
 
   /**
   Set the orthographic size.
@@ -48,7 +48,7 @@ public:
   @param width  Viewport width
   @param height Viewport height
   */
-  void setToOrtho(float width, float height);
+  void setToOrtho(const float width, const float height);
 
   virtual void update() override;
 

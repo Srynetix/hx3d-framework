@@ -26,7 +26,7 @@ namespace audio {
 S16Converter::S16Converter(): Effect() {}
 S16Converter::~S16Converter() {}
 
-void S16Converter::onFunction(int channel, void* stream, int length) {
+void S16Converter::onFunction(const int channel, const void* stream, const int length) {
   if (!_stream)
     _stream = new Sint16[length/2];
   _length = length/2;
@@ -48,7 +48,7 @@ void S16Converter::onFunction(int channel, void* stream, int length) {
   _processed = true;
 }
 
-void S16Converter::onDone(int channel)
+void S16Converter::onDone(const int channel)
 {}
 
 Sint16* S16Converter::getS16Stream() {

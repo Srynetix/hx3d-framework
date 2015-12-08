@@ -34,7 +34,7 @@ MultiArrayBuffer::MultiArrayBuffer():
 MultiArrayBuffer::~MultiArrayBuffer()
 {}
 
-void MultiArrayBuffer::addAttribute(std::string name, Attribute attribute) {
+void MultiArrayBuffer::addAttribute(const std::string name, const Attribute attribute) {
 
   if (_attributes.find(name) != _attributes.end()) {
     Log.Error("MultiArrayBuffer: Attribute %s already exists.", name.c_str());
@@ -44,13 +44,13 @@ void MultiArrayBuffer::addAttribute(std::string name, Attribute attribute) {
   _attributes[name].create(attribute);
 }
 
-void MultiArrayBuffer::setAttribute(std::string name, std::vector<float> data) {
+void MultiArrayBuffer::setAttribute(const std::string name, const std::vector<float> data) {
   if (_attributes.find(name) != _attributes.end()) {
     _attributes[name].set(data);
   }
 }
 
-AttributeArrayBuffer& MultiArrayBuffer::getAttribute(std::string name) {
+AttributeArrayBuffer& MultiArrayBuffer::getAttribute(const std::string name) {
   return _attributes[name];
 }
 
@@ -82,7 +82,7 @@ void MultiArrayBuffer::upload() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void MultiArrayBuffer::begin(Ptr<Shader> shader)
+void MultiArrayBuffer::begin(const Ptr<Shader>& shader)
 {
   glBindBuffer(GL_ARRAY_BUFFER, _buf);
 
@@ -98,7 +98,7 @@ void MultiArrayBuffer::begin(Ptr<Shader> shader)
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void MultiArrayBuffer::end(Ptr<Shader> shader)
+void MultiArrayBuffer::end(const Ptr<Shader>& shader)
 {
   for (auto& attr: _attributes) {
     Attribute& attribute = attr.second.getAttribute();

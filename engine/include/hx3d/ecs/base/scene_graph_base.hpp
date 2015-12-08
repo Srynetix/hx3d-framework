@@ -49,7 +49,7 @@ public:
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> createAtRoot(std::string name, Args... args);
+  Ptr<T> createAtRoot(const std::string name, Args... args);
 
   /**
   Create a game object at a path.
@@ -61,14 +61,14 @@ public:
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> create(std::string path, std::string name, Args... args);
+  Ptr<T> create(const std::string path, const std::string name, Args... args);
 
   /**
   Remove a game object from a path.
 
   @param path Path
   */
-  void remove(std::string path);
+  void remove(const std::string path);
 
   /**
   Fetch a game object from a path.
@@ -78,7 +78,7 @@ public:
   @return T (Ptr)
   */
   template <class T>
-  Ptr<T> fetch(std::string path);
+  Ptr<T> fetch(const std::string path);
 
   /**
   Get the root.
@@ -111,7 +111,7 @@ public:
 
   @param delta Delta time
   */
-  void update(float delta);
+  void update(const float delta);
 
   friend class NodeBase<EntityEnabled>;
 
@@ -125,14 +125,14 @@ protected:
 
   @param object Node (Ptr)
   */
-  void addIndex(Ptr<NodeBase<EntityEnabled>> object);
+  void addIndex(const Ptr<NodeBase<EntityEnabled>>& object);
 
   /**
   Test if the path exists and returns the node.
 
   @return Node (Ptr)
   */
-  Ptr<NodeBase<EntityEnabled>> pathExists(std::string path);
+  Ptr<NodeBase<EntityEnabled>> pathExists(const std::string path);
 
   /**
   Create a child for a container Node.
@@ -143,7 +143,7 @@ protected:
   @param args       Arguments
   */
   template <class T, class... Args>
-  Ptr<T> createNodeChild(Ptr<NodeBase<EntityEnabled>> container, std::string name, Args... args);
+  Ptr<T> createNodeChild(const Ptr<NodeBase<EntityEnabled>>& container, const std::string name, Args... args);
 };
 
 } /* ecs */

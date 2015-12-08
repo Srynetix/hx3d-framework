@@ -34,14 +34,14 @@ public:
 
   @param emitter Particle emitter
   */
-  void addEmitter(Ptr<ParticleEmitter> emitter);
+  void addEmitter(const Ptr<ParticleEmitter>& emitter);
 
   /**
   Update the particle manager.
 
   @param delta Delta time
   */
-  void update(float delta);
+  void update(const float delta);
 
   /**
   Draw the particles.

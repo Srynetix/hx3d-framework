@@ -41,7 +41,7 @@ public:
   @param near   Near
   @param far    Far
   */
-  Camera(float width, float height, float near, float far);
+  Camera(const float width, const float height, const float near, const float far);
 
   /**
   Look at target.
@@ -55,7 +55,7 @@ public:
 
   @param vec Quantity
   */
-  void translate(glm::vec3 vec);
+  void translate(const glm::vec3 vec);
 
   /**
   Rotate the camera on one/multiple axes.
@@ -63,7 +63,7 @@ public:
   @param angle Angle in degrees
   @param axis  Direction(s)
   */
-  void rotate(float angle, glm::vec3 axis);
+  void rotate(const float angle, const glm::vec3 axis);
 
   /**
   Rotate the camera around one point, on one/multiple axes.
@@ -72,7 +72,7 @@ public:
   @param angle  Angle in degrees
   @param axis   Direction(s)
   */
-  void rotateAround(glm::vec3 center, float angle, glm::vec3 axis);
+  void rotateAround(const glm::vec3 center, const float angle, const glm::vec3 axis);
 
   /**
   Update the camera.

@@ -27,21 +27,21 @@ namespace tweens {
 
 Parallel::Parallel() {}
 
-void Parallel::add(Ptr<BaseTween> tween) {
+void Parallel::add(const Ptr<BaseTween>& tween) {
   tweens.push_back(tween);
 }
 
-void Parallel::addRepeatingCallback(std::function<void()> func, float duration) {
+void Parallel::addRepeatingCallback(std::function<void()> func, const float duration) {
   Ptr<BaseTween> tween = Make<Callback>(func, duration);
   tweens.push_back(tween);
 }
 
-void Parallel::update(float delta) {
+void Parallel::update(const float delta) {
   if (_ended)
     return;
 
   for (auto i = tweens.begin(); i != tweens.end();) {
-    Ptr<BaseTween> tween = *i;
+    const Ptr<BaseTween>& tween = *i;
     if (tween->hasEnded()) {
       tweens.erase(i);
     } else {

@@ -34,21 +34,21 @@ public:
 
   @param maxParticles Max particle count
   */
-  ParticleEmitter(unsigned int maxParticles);
+  ParticleEmitter(const unsigned int maxParticles);
 
   /**
   Emit particles.
 
   @param qty Quantity
   */
-  void emit(unsigned int qty);
+  void emit(const unsigned int qty);
 
   /**
   Update the emitter.
 
   @param delta Delta time
   */
-  void update(float delta);
+  void update(const float delta);
 
   /**
   Draw the particles.
@@ -62,7 +62,7 @@ public:
 
   @param texture Texture (Ptr)
   */
-  void setTexture(Ptr<Texture> texture);
+  void setTexture(const Ptr<Texture>& texture);
 
   /**
   Get the active particle count.

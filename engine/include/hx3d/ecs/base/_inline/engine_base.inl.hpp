@@ -35,7 +35,7 @@ Ptr<EntityType> EngineBase<EntityType>::createEntity() {
 }
 
 template <class EntityType>
-void EngineBase<EntityType>::registerEntity(Ptr<EntityType> entity) {
+void EngineBase<EntityType>::registerEntity(const Ptr<EntityType>& entity) {
   if (entity->getId() != 0) {
     Log.Error("EngineBase: entity `%d` already registered.", entity->getId());
     return;
@@ -48,18 +48,18 @@ void EngineBase<EntityType>::registerEntity(Ptr<EntityType> entity) {
 }
 
 template <class EntityType>
-void EngineBase<EntityType>::removeEntity(Ptr<EntityType> entity) {
+void EngineBase<EntityType>::removeEntity(const Ptr<EntityType>& entity) {
   _toRemove.push_back(entity->getId());
 }
 
 template <class EntityType>
-unsigned int EngineBase<EntityType>::getComponentSize(Ptr<EntityType> entity) {
+unsigned int EngineBase<EntityType>::getComponentSize(const Ptr<EntityType>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return 0;
   }
 
-  std::map<std::type_index, Ptr<Component>>& compMap = _components[entity->getId()];
+  const std::map<std::type_index, Ptr<Component>>& compMap = _components[entity->getId()];
   return compMap.size();
 }
 
@@ -69,16 +69,16 @@ unsigned int EngineBase<EntityType>::getEntityCount() {
 }
 
 template <class EntityType>
-unsigned int EngineBase<EntityType>::getBits(Ptr<EntityType> entity) {
-  unsigned int id = entity->getId();
+unsigned int EngineBase<EntityType>::getBits(const Ptr<EntityType>& entity) {
+  const unsigned int id = entity->getId();
   return _bits[id].getBits();
 }
 
 template <class EntityType>
-void EngineBase<EntityType>::update(float delta) {
+void EngineBase<EntityType>::update(const float delta) {
   for (auto& id: _entities) {
     for (auto& pair: _systems) {
-      Ptr<SystemBase<EntityType>> sys = pair.second;
+      const Ptr<SystemBase<EntityType>>& sys = pair.second;
       if (sys->canProcess(_bits[id.first].getBits())) {
         sys->process(id.second, delta);
       }
@@ -91,7 +91,7 @@ void EngineBase<EntityType>::update(float delta) {
 template <class EntityType>
 void EngineBase<EntityType>::cleanEntities() {
 
-  for (unsigned int i: _toRemove) {
+  for (const unsigned int i: _toRemove) {
     removeComponents(i);
 
     _bits.erase(i);
@@ -115,11 +115,11 @@ unsigned int EngineBase<EntityType>::lastEntityAvailable() {
 }
 
 template <class EntityType>
-void EngineBase<EntityType>::removeComponents(unsigned int entityId) {
+void EngineBase<EntityType>::removeComponents(const unsigned int entityId) {
 
   if (_components.find(entityId) != _components.end()) {
     while (_components[entityId].size() > 0) {
-      auto& comp = *(_components[entityId].begin());
+      const auto& comp = *(_components[entityId].begin());
 
       if (_onComponentRemoved.find(comp.first) != _onComponentRemoved.end()) {
         _onComponentRemoved[comp.first](comp.second, _entities[entityId]);
@@ -149,7 +149,7 @@ void EngineBase<EntityType>::clear() {
 
 template <class EntityType>
 template <class T>
-Ptr<T> EngineBase<EntityType>::getComponent(Ptr<EntityType> entity) {
+Ptr<T> EngineBase<EntityType>::getComponent(const Ptr<EntityType>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return nullptr;
@@ -161,27 +161,27 @@ Ptr<T> EngineBase<EntityType>::getComponent(Ptr<EntityType> entity) {
     return nullptr;
   }
 
-  Ptr<Component> component = compMap[typeid(T)];
+  const Ptr<Component>& component = compMap[typeid(T)];
   return std::dynamic_pointer_cast<T>(component);
 }
 
 template <class EntityType>
 template <class T>
-void EngineBase<EntityType>::addComponent(Ptr<EntityType> entity, Ptr<Component> component) {
+void EngineBase<EntityType>::addComponent(const Ptr<EntityType>& entity, const Ptr<Component>& component) {
   addInternalComponent<T>(entity->getId(), component);
 }
 
 template <class EntityType>
 template <class T, class... Args>
-void EngineBase<EntityType>::createComponent(Ptr<EntityType> entity, Args... args) {
+void EngineBase<EntityType>::createComponent(const Ptr<EntityType>& entity, Args... args) {
   addInternalComponent<T>(entity->getId(), Make<T>(args...));
 }
 
 template <class EntityType>
 template <class T>
-void EngineBase<EntityType>::addInternalComponent(unsigned int entityId, Ptr<Component> component) {
+void EngineBase<EntityType>::addInternalComponent(const unsigned int entityId, const Ptr<Component>& component) {
 
-  auto& type = typeid(T);
+  const auto& type = typeid(T);
 
   if (_components.find(entityId) == _components.end()) {
     Log.Error("No entity %ld", entityId);
@@ -198,7 +198,6 @@ void EngineBase<EntityType>::addInternalComponent(unsigned int entityId, Ptr<Com
   }
 
   compMap[type] = component;
-
   _bits[entityId].set(ComponentBits::get<T>());
 
   if (_onComponentAdded.find(type) != _onComponentAdded.end()) {
@@ -209,8 +208,8 @@ void EngineBase<EntityType>::addInternalComponent(unsigned int entityId, Ptr<Com
 
 template <class EntityType>
 template <class T>
-void EngineBase<EntityType>::addSystem(Ptr<SystemBase<EntityType>> sys) {
-  auto& type = typeid(T);
+void EngineBase<EntityType>::addSystem(const Ptr<SystemBase<EntityType>>& sys) {
+  const auto& type = typeid(T);
 
   _systems[type] = sys;
   _systems[type]->_engine = this;
@@ -219,7 +218,7 @@ void EngineBase<EntityType>::addSystem(Ptr<SystemBase<EntityType>> sys) {
 template <class EntityType>
 template <class T, class... Args>
 void EngineBase<EntityType>::createSystem(Args... args) {
-  auto& type = typeid(T);
+  const auto& type = typeid(T);
 
   _systems[type] = Make<T>(args...);
   _systems[type]->_engine = this;
@@ -227,12 +226,12 @@ void EngineBase<EntityType>::createSystem(Args... args) {
 
 template <class EntityType>
 template <class T>
-void EngineBase<EntityType>::registerComponentAdded(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback) {
+void EngineBase<EntityType>::registerComponentAdded(std::function<void(const Ptr<Component>&, const Ptr<EntityType>&)> callback) {
   _onComponentAdded[typeid(T)] = callback;
 }
 
 template <class EntityType>
 template <class T>
-void EngineBase<EntityType>::registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback) {
+void EngineBase<EntityType>::registerComponentRemoved(std::function<void(const Ptr<Component>&, const Ptr<EntityType>&)> callback) {
   _onComponentRemoved[typeid(T)] = callback;
 }

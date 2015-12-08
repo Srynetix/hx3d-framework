@@ -36,7 +36,7 @@ public:
 
   @param name Name
   */
-  Node(std::string name): NodeBase(name) {}
+  Node(const std::string name): NodeBase(name) {}
 };
 
 } /* ecs */

@@ -26,7 +26,7 @@ public:
     setRequiredFamily<RotationComponent>();
   }
 
-  virtual void process(Ptr<ecs::Entity> entity, float delta) override {
+  virtual void process(const Ptr<ecs::Entity>& entity, const float delta) override {
     auto rotComp = getEngine()->getComponent<RotationComponent>(entity);
     rotComp->angle = math::mclamp(rotComp->angle + rotComp->speed, 0.f, 360.f);
   }

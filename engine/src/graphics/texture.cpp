@@ -20,12 +20,13 @@
 
 #include "hx3d/graphics/texture.hpp"
 
-#include <SDL2/SDL_image.h>
-
 #include "hx3d/graphics/font.hpp"
 
 #include "hx3d/utils/file.hpp"
 #include "hx3d/utils/log.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 namespace hx3d {
 
@@ -65,28 +66,50 @@ namespace hx3d {
   }
 
   bool Texture::load(std::string pathToImage) {
-    SDL_Surface* image = nullptr;
+    // SDL_Surface* image = nullptr;
+    //
+    // Ptr<File> file = File::loadBinaryFile(pathToImage);
+    //
+    // SDL_RWops* imageOps = SDL_RWFromConstMem(file->data, file->size);
+    // image = IMG_Load_RW(imageOps, 1);
+    //
+    // if (image == nullptr) {
+    //   Log.Error("Invalid image: %s", pathToImage.c_str());
+    //   return false;
+    // }
+    //
+    // SDL_Surface* formatted = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_ABGR8888, 0);
+    // SDL_FreeSurface(image);
+    //
+    // _width = formatted->w;
+    // _height = formatted->h;
+    //
+    // glGenTextures(1, &_id);
+    // glBindTexture(GL_TEXTURE_2D, _id);
+    //
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, formatted->pixels);
+    //
+    // // Base filter = Nearest
+    // setFilter(FilterType::Min, FilterValue::Nearest);
+    // setFilter(FilterType::Max, FilterValue::Nearest);
+    //
+    // glBindTexture(GL_TEXTURE_2D, 0);
+    //
+    // Log.Info("Texture %s loaded.", pathToImage.c_str());
+    //
+    // SDL_FreeSurface(formatted);
+    // return true;
 
-    Ptr<File> file = File::loadBinaryFile(pathToImage);
-
-    SDL_RWops* imageOps = SDL_RWFromConstMem(file->data, file->size);
-    image = IMG_Load_RW(imageOps, 1);
-
-    if (image == nullptr) {
-      Log.Error("Invalid image: %s", pathToImage.c_str());
-      return false;
-    }
-
-    SDL_Surface* formatted = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_ABGR8888, 0);
-    SDL_FreeSurface(image);
-
-    _width = formatted->w;
-    _height = formatted->h;
+    const Ptr<File>& file = File::loadBinaryFile(pathToImage);
+    
+    int bpp = 0;
+    unsigned char* file_content = reinterpret_cast<unsigned char*>(file->data);
+    unsigned char* content = stbi_load_from_memory(file_content, file->size, (int*)&_width, (int*)&_height, &bpp, 0);
 
     glGenTextures(1, &_id);
     glBindTexture(GL_TEXTURE_2D, _id);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, formatted->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, content);
 
     // Base filter = Nearest
     setFilter(FilterType::Min, FilterValue::Nearest);
@@ -94,9 +117,9 @@ namespace hx3d {
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    Log.Info("Texture %s loaded.", pathToImage.c_str());
+    Log.Info("Texture %s loaded: %d x %d", pathToImage.c_str(), _width, _height);
 
-    SDL_FreeSurface(formatted);
+    stbi_image_free(content);
     return true;
   }
 

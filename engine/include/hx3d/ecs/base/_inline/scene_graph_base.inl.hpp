@@ -53,9 +53,9 @@ unsigned int SceneGraphBase<EntityEnabled>::getNodeCount() {
 }
 
 template <bool EntityEnabled>
-void SceneGraphBase<EntityEnabled>::addIndex(Ptr<NodeBase<EntityEnabled>> object) {
-  std::string path = object->getPath();
-  for (auto& pair: _indices) {
+void SceneGraphBase<EntityEnabled>::addIndex(const Ptr<NodeBase<EntityEnabled>>& object) {
+  const std::string& path = object->getPath();
+  for (const auto& pair: _indices) {
     if (pair.first == object->_name) {
       Log.Error("SceneGraphBase: Index `%s` already exists !", path.c_str());
       return;
@@ -68,7 +68,7 @@ void SceneGraphBase<EntityEnabled>::addIndex(Ptr<NodeBase<EntityEnabled>> object
 template <bool EntityEnabled>
 void SceneGraphBase<EntityEnabled>::showIndices() {
   Log.Info("-- Graph indices");
-  for (auto& pair: _indices) {
+  for (const auto& pair: _indices) {
     Log.Info("\t%s: %s", pair.first.c_str(), pair.second->_name.c_str());
   }
 }
@@ -79,46 +79,46 @@ void SceneGraphBase<EntityEnabled>::draw(Batch& batch) {
   stack.push(_root);
 
   while (!stack.empty()) {
-    Ptr<NodeBase<EntityEnabled>> node = stack.top();
+    const Ptr<NodeBase<EntityEnabled>>& node = stack.top();
     stack.pop();
 
     node->draw(batch);
 
-    for (Ptr<NodeBase<EntityEnabled>> child: node->_children) {
+    for (const Ptr<NodeBase<EntityEnabled>>& child: node->_children) {
       stack.push(child);
     }
   }
 }
 
 template <>
-inline void SceneGraphBase<false>::update(float delta) {
+inline void SceneGraphBase<false>::update(const float delta) {
   std::stack<Ptr<NodeBase<false>>> stack;
   stack.push(_root);
 
   while (!stack.empty()) {
-    Ptr<NodeBase<false>> node = stack.top();
+    const Ptr<NodeBase<false>>& node = stack.top();
     stack.pop();
 
     node->update(delta);
 
-    for (Ptr<NodeBase<false>> child: node->_children) {
+    for (const Ptr<NodeBase<false>>& child: node->_children) {
       stack.push(child);
     }
   }
 }
 
 template <>
-inline void SceneGraphBase<true>::update(float delta) {
+inline void SceneGraphBase<true>::update(const float delta) {
   std::stack<Ptr<NodeBase<true>>> stack;
   stack.push(_root);
 
   while (!stack.empty()) {
-    Ptr<NodeBase<true>> node = stack.top();
+    const Ptr<NodeBase<true>>& node = stack.top();
     stack.pop();
 
     node->update(delta);
 
-    for (Ptr<NodeBase<true>> child: node->_children) {
+    for (const Ptr<NodeBase<true>>& child: node->_children) {
       stack.push(child);
     }
   }
@@ -130,26 +130,26 @@ inline void SceneGraphBase<true>::update(float delta) {
 
 template <bool EntityEnabled>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<EntityEnabled>::createAtRoot(std::string name, Args... args) {
-  Ptr<T> ptr = createNodeChild<T>(_root, name, args...);
+Ptr<T> SceneGraphBase<EntityEnabled>::createAtRoot(const std::string name, Args... args) {
+  const Ptr<T>& ptr = createNodeChild<T>(_root, name, args...);
   return ptr;
 }
 
 template <bool EntityEnabled>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<EntityEnabled>::create(std::string path, std::string name, Args... args) {
-  Ptr<NodeBase<EntityEnabled>> container = pathExists(path);
+Ptr<T> SceneGraphBase<EntityEnabled>::create(const std::string path, const std::string name, Args... args) {
+  const Ptr<NodeBase<EntityEnabled>>& container = pathExists(path);
   if (container == nullptr) {
     Log.Error("SceneGraph: could not create at `%s`.", path.c_str());
     return nullptr;
   }
 
-  Ptr<T> ptr = createNodeChild<T>(container, name, args...);
+  const Ptr<T>& ptr = createNodeChild<T>(container, name, args...);
   return ptr;
 }
 
 template <>
-inline void SceneGraphBase<false>::remove(std::string path) {
+inline void SceneGraphBase<false>::remove(const std::string path) {
   if (_indices.find(path) == _indices.end()) {
     Log.Error("SceneGraph: Index `%s` does not exists.", path.c_str());
     return;
@@ -160,9 +160,9 @@ inline void SceneGraphBase<false>::remove(std::string path) {
     return;
   }
 
-  Ptr<NodeBase<false>> obj = _indices[path];
-  Ptr<NodeBase<false>> parent = obj->_parent;
-  for (Ptr<NodeBase<false>> child: obj->_children) {
+  const Ptr<NodeBase<false>>& obj = _indices[path];
+  const Ptr<NodeBase<false>>& parent = obj->_parent;
+  for (const Ptr<NodeBase<false>>& child: obj->_children) {
     this->remove(child->getPath());
   }
 
@@ -176,7 +176,7 @@ inline void SceneGraphBase<false>::remove(std::string path) {
 }
 
 template <>
-inline void SceneGraphBase<true>::remove(std::string path) {
+inline void SceneGraphBase<true>::remove(const std::string path) {
   if (_indices.find(path) == _indices.end()) {
     Log.Error("SceneGraphBase: Index `%s` does not exists.", path.c_str());
     return;
@@ -187,9 +187,9 @@ inline void SceneGraphBase<true>::remove(std::string path) {
     return;
   }
 
-  Ptr<NodeBase<true>> obj = _indices[path];
-  Ptr<NodeBase<true>> parent = obj->_parent;
-  for (Ptr<NodeBase<true>> child: obj->_children) {
+  const Ptr<NodeBase<true>>& obj = _indices[path];
+  const Ptr<NodeBase<true>>& parent = obj->_parent;
+  for (const Ptr<NodeBase<true>>& child: obj->_children) {
     remove(child->getPath());
   }
 
@@ -207,12 +207,12 @@ inline void SceneGraphBase<true>::remove(std::string path) {
 
 template <bool EntityEnabled>
 template <class T>
-Ptr<T> SceneGraphBase<EntityEnabled>::fetch(std::string path) {
+Ptr<T> SceneGraphBase<EntityEnabled>::fetch(const std::string path) {
   return std::dynamic_pointer_cast<T>(_indices[path]);
 }
 
 template <bool EntityEnabled>
-Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::pathExists(std::string path) {
+Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::pathExists(const std::string path) {
   if (path.size() == 0 || path[0] != '/') {
     Log.Error("SceneGraph: ill-formed path: `%s`. Must start with `/`", path.c_str());
     return nullptr;
@@ -221,9 +221,9 @@ Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::pathExists(std::stri
   std::vector<std::string> folders = split(path, '/');
   folders.erase(folders.begin());
 
-  Ptr<NodeBase<EntityEnabled>> node = _root;
+  Ptr<NodeBase<EntityEnabled>>& node = _root;
   while (folders.size() > 0) {
-    std::string folder = folders[0];
+    const std::string folder = folders[0];
 
     if (!node->childNameExists(folder)) {
       return nullptr;
@@ -238,14 +238,14 @@ Ptr<NodeBase<EntityEnabled>> SceneGraphBase<EntityEnabled>::pathExists(std::stri
 
 template <>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<false>::createNodeChild(Ptr<NodeBase<false>> container, std::string name, Args... args) {
+Ptr<T> SceneGraphBase<false>::createNodeChild(const Ptr<NodeBase<false>>& container, const std::string name, Args... args) {
 
   if (container->childNameExists(name)) {
     Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), name.c_str());
     return nullptr;
   }
 
-  Ptr<T> object = Make<T>(name, args...);
+  const Ptr<T>& object = Make<T>(name, args...);
   object->_parent = container;
   object->_graph = this;
   container->_children.push_back(object);
@@ -256,14 +256,14 @@ Ptr<T> SceneGraphBase<false>::createNodeChild(Ptr<NodeBase<false>> container, st
 
 template <>
 template <class T, class... Args>
-Ptr<T> SceneGraphBase<true>::createNodeChild(Ptr<NodeBase<true>> container, std::string name, Args... args) {
+Ptr<T> SceneGraphBase<true>::createNodeChild(const Ptr<NodeBase<true>>& container, const std::string name, Args... args) {
 
   if (container->childNameExists(name)) {
     Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), name.c_str());
     return nullptr;
   }
 
-  Ptr<T> object = Make<T>(name, args...);
+  const Ptr<T>& object = Make<T>(name, args...);
   object->_parent = container;
   object->_graph = this;
   container->_children.push_back(object);

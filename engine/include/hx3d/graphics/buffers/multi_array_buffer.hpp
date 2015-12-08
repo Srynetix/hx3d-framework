@@ -45,7 +45,7 @@ public:
   @param name      Name
   @param attribute Attribute
   */
-  void addAttribute(std::string name, Attribute attribute);
+  void addAttribute(const std::string name, const Attribute attribute);
 
   /**
   Set the wanted attribute array buffer content.
@@ -53,7 +53,7 @@ public:
   @param name Attribute name
   @param data Values
   */
-  void setAttribute(std::string name, std::vector<float> data);
+  void setAttribute(const std::string name, const std::vector<float> data);
 
   /**
   Get the wanted attribute array buffer.
@@ -61,7 +61,7 @@ public:
   @param name Attribute name
   @return Attribute array buffer
   */
-  AttributeArrayBuffer& getAttribute(std::string name);
+  AttributeArrayBuffer& getAttribute(const std::string name);
 
   /**
   Generate the vector using the attributes.
@@ -70,13 +70,13 @@ public:
 
   virtual void upload() override;
 
-  virtual void begin(Ptr<Shader> shader) override;
-  virtual void end(Ptr<Shader> shader) override;
+  virtual void begin(const Ptr<Shader>& shader) override;
+  virtual void end(const Ptr<Shader>& shader) override;
 
 private:
   std::map<std::string, AttributeArrayBuffer> _attributes;
 
-  AttributeArrayBuffer& getMapAttribute(unsigned int i);
+  AttributeArrayBuffer& getMapAttribute(const unsigned int i);
   unsigned int attributeTotalSize();
 };
 

@@ -38,9 +38,9 @@ public:
   @param worldHeight  World height
   @param camera       Camera
   */
-  FitViewport(float worldWidth, float worldHeight, Camera& camera);
+  FitViewport(const float worldWidth, const float worldHeight, Camera& camera);
 
-  virtual void internalUpdate(bool centerCamera) override;
+  virtual void internalUpdate(const bool centerCamera) override;
 
 };
 

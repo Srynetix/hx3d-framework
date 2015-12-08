@@ -39,7 +39,7 @@ public:
   @param stream  Audio stream
   @param length  Sample length
   */
-  virtual void onFunction(int channel, void* stream, int length);
+  virtual void onFunction(const int channel, const void* stream, const int length);
 
   /**
   Effect done function.
@@ -47,7 +47,7 @@ public:
 
   @param channel Audio channel
   */
-  virtual void onDone(int channel);
+  virtual void onDone(const int channel);
 
   /**
   Get the audio channel related to the effect.

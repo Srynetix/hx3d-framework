@@ -66,7 +66,7 @@ AudioDevice::~AudioDevice() {
   Mix_Quit();
 }
 
-void AudioDevice::registerEffect(int channel, Effect& effect) {
+void AudioDevice::registerEffect(const int channel, Effect& effect) {
   Mix_RegisterEffect(
     channel,
     [](int channel, void* stream, int len, void* udata){
@@ -79,7 +79,7 @@ void AudioDevice::registerEffect(int channel, Effect& effect) {
     }, &effect);
 }
 
-void AudioDevice::clearEffects(int channel) {
+void AudioDevice::clearEffects(const int channel) {
   Mix_UnregisterAllEffects(channel);
 }
 

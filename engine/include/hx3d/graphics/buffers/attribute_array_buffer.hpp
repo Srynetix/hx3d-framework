@@ -42,7 +42,7 @@ public:
 
   @param attribute Attribute
   */
-  AttributeArrayBuffer(Attribute attribute);
+  AttributeArrayBuffer(const Attribute attribute);
 
   /**
   Construct an initialized attribute array buffer with values.
@@ -50,14 +50,14 @@ public:
   @param attribute      Attribute
   @param values         Values
   */
-  AttributeArrayBuffer(Attribute attribute, std::vector<float> values);
+  AttributeArrayBuffer(const Attribute attribute, const std::vector<float> values);
 
   /**
   Initialize the attribute array buffer.
 
   @param attribute      Attribute
   */
-  void create(Attribute attribute);
+  void create(const Attribute attribute);
 
   /**
   Get the attribute.
@@ -68,8 +68,8 @@ public:
 
   virtual void upload() override;
 
-  virtual void begin(Ptr<Shader> shader) override;
-  virtual void end(Ptr<Shader> shader) override;
+  virtual void begin(const Ptr<Shader>& shader) override;
+  virtual void end(const Ptr<Shader>& shader) override;
 
 protected:
   Attribute _attribute;

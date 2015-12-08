@@ -39,14 +39,14 @@ public:
 
   @param texture Texture (Ptr)
   */
-  void setTexture(Ptr<Texture> texture);
+  void setTexture(const Ptr<Texture>& texture);
 
   /**
   Update the particle.
 
   @param delta Delta time
   */
-  void update(float delta);
+  void update(const float delta);
 
   /**
   Draw the particle.
@@ -65,6 +65,7 @@ private:
   glm::vec3 velocity;
   glm::vec3 gravity;
   float rotation;
+  float rotationSpeed;
 
   float baseLife;
   float life;

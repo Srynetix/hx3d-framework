@@ -1,5 +1,5 @@
 /*
-    Index array buffer.
+    Attribute array buffer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,32 +18,54 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
-#define HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
+#ifndef HX3D_GRAPHICS_BUFFERS_ATTRIBUTESTREAMBUFFER
+#define HX3D_GRAPHICS_BUFFERS_ATTRIBUTESTREAMBUFFER
 
 #include "hx3d/graphics/buffers/array_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute.hpp"
 
 namespace hx3d {
 
-class IndexArrayBuffer: public ArrayBuffer<GLushort> {
+class AttributeStreamBuffer: public ArrayBuffer<float> {
 
 public:
   /**
-  Build an empty index buffer.
+  Construct an empty attribute array buffer.
+
+  See @link#create to initialize it.
   */
-  IndexArrayBuffer();
-  ~IndexArrayBuffer();
+  AttributeStreamBuffer();
+  ~AttributeStreamBuffer();
 
   /**
-  Build an index buffer with values.
+  Construct an empty but initialized attribute array buffer.
 
-  @param values Values
+  @param attribute Attribute
   */
-  IndexArrayBuffer(const std::vector<GLushort> values);
+  AttributeStreamBuffer(const Attribute attribute, const unsigned int stream_size);
+
+  /**
+  Initialize the attribute array buffer.
+
+  @param attribute      Attribute
+  */
+  void create(const Attribute attribute, const unsigned int stream_size);
+
+  /**
+  Get the attribute.
+
+  @return Attribute
+  */
+  Attribute& getAttribute();
 
   virtual void upload() override;
+
   virtual void begin(const Ptr<Shader>& shader) override;
   virtual void end(const Ptr<Shader>& shader) override;
+
+protected:
+  Attribute _attribute;
+  unsigned int _stream_size;
 };
 
 } /* hx3d */

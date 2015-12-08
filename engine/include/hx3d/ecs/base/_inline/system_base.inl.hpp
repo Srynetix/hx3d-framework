@@ -22,7 +22,7 @@ template <class EntityType>
 SystemBase<EntityType>::SystemBase(): _requiredFamily(0) {}
 
 template <class EntityType>
-bool SystemBase<EntityType>::canProcess(unsigned int bits) {
+bool SystemBase<EntityType>::canProcess(const unsigned int bits) {
   return (_requiredFamily & bits) == _requiredFamily;
 }
 

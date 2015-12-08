@@ -27,10 +27,10 @@ namespace hx3d {
 namespace audio {
 
 Waveform::Waveform(): Waveform(50) {}
-Waveform::Waveform(int refreshDelay): Display(refreshDelay) {}
+Waveform::Waveform(const int refreshDelay): Display(refreshDelay) {}
 Waveform::~Waveform() {}
 
-void Waveform::update(Sint16* stream, int length, float delta) {
+void Waveform::update(const Sint16* stream, const int length, const float delta) {
 
   if (!_initialized)
     return;

@@ -24,7 +24,7 @@ namespace hx3d {
 namespace ecs {
 
 template <bool EntityEnabled>
-NodeBase<EntityEnabled>::NodeBase(std::string name):
+NodeBase<EntityEnabled>::NodeBase(const std::string name):
   IDBase(0), _name(name), _graph(nullptr), _parent(nullptr)
 {}
 
@@ -38,20 +38,20 @@ Transform NodeBase<EntityEnabled>::getFullTransform() {
 }
 
 template <bool EntityEnabled>
-void NodeBase<EntityEnabled>::removeChild(std::string name) {
+void NodeBase<EntityEnabled>::removeChild(const std::string name) {
   if (!childNameExists(name)) {
     Log.Error("Node: child `%s` does not exists.", name.c_str());
     return;
   }
 
-  Ptr<NodeBase<EntityEnabled>> obj = getChild<NodeBase<EntityEnabled>>(name);
+  const Ptr<NodeBase<EntityEnabled>>& obj = getChild<NodeBase<EntityEnabled>>(name);
   _graph->remove(obj->getPath());
 }
 
 template <bool EntityEnabled>
 std::string NodeBase<EntityEnabled>::getPath() {
   std::string path = _name;
-  Ptr<NodeBase<EntityEnabled>> cursor = _parent;
+  Ptr<NodeBase<EntityEnabled>>& cursor = _parent;
   while (cursor != nullptr) {
 
     // Root
@@ -73,7 +73,7 @@ void NodeBase<EntityEnabled>::draw(Batch& batch) {
 }
 
 template <bool EntityEnabled>
-void NodeBase<EntityEnabled>::update(float delta) {
+void NodeBase<EntityEnabled>::update(const float delta) {
 }
 
 template <bool EntityEnabled>
@@ -85,7 +85,7 @@ template <bool EntityEnabled>
 unsigned int NodeBase<EntityEnabled>::getChildCount() {
 
   unsigned int totalChildren = 0;
-  for (auto child: _children) {
+  for (auto& child: _children) {
     totalChildren += child->getChildCount();
   }
 
@@ -95,8 +95,8 @@ unsigned int NodeBase<EntityEnabled>::getChildCount() {
 /////////////////////
 
 template <bool EntityEnabled>
-bool NodeBase<EntityEnabled>::childNameExists(std::string name) {
-  for (Ptr<NodeBase<EntityEnabled>> o: _children) {
+bool NodeBase<EntityEnabled>::childNameExists(const std::string name) {
+  for (const Ptr<NodeBase<EntityEnabled>>& o: _children) {
     if (o->_name == name) {
       return true;
     }
@@ -109,14 +109,14 @@ bool NodeBase<EntityEnabled>::childNameExists(std::string name) {
 
 template <bool EntityEnabled>
 template <class T, class... Args>
-Ptr<T> NodeBase<EntityEnabled>::createChild(std::string name, Args... args) {
+Ptr<T> NodeBase<EntityEnabled>::createChild(const std::string name, Args... args) {
   return _graph->template createNodeChild<T>(this->shared_from_this(), name, args...);
 }
 
 template <bool EntityEnabled>
 template <class T>
-Ptr<T> NodeBase<EntityEnabled>::getChild(std::string name) {
-  for (Ptr<NodeBase<EntityEnabled>> obj: _children) {
+Ptr<T> NodeBase<EntityEnabled>::getChild(const std::string name) {
+  for (const Ptr<NodeBase<EntityEnabled>>& obj: _children) {
     if (obj->_name == name) {
       return std::dynamic_pointer_cast<T>(obj);
     }

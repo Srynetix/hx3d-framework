@@ -30,7 +30,7 @@ class LinuxBuilder(Builder):
 
     # Engine
     def prepare_engine(self):
-        self.prepare_internal("cmake -GNinja ..")
+        self.prepare_internal("CXX={} cmake -GNinja ..".format(config["compiler_name"]))
     def build_engine(self):
         self.build_internal()
 

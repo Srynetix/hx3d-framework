@@ -26,8 +26,8 @@ namespace audio {
 Effect::Effect(): _processed(false), _channel(-1), _stream(nullptr), _length(0) {}
 Effect::~Effect() {}
 
-void Effect::onFunction(int channel, void* stream, int length) {}
-void Effect::onDone(int channel) {}
+void Effect::onFunction(const int channel, const void* stream, const int length) {}
+void Effect::onDone(const int channel) {}
 
 int Effect::getChannel() {
   return _channel;

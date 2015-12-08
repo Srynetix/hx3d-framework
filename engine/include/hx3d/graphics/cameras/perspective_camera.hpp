@@ -36,7 +36,7 @@ public:
   @param near Near
   @param far Far
   */
-  PerspectiveCamera(float near, float far);
+  PerspectiveCamera(const float near, const float far);
 
   /**
   Create a perspective camera with a viewport width and height.
@@ -47,7 +47,7 @@ public:
   @paran near   Near
   @param far    Far
   */
-  PerspectiveCamera(float width, float height, float near, float far);
+  PerspectiveCamera(const float width, const float height, const float near, const float far);
 
   /**
   Create a perspective camera with a viewport width and height,
@@ -59,7 +59,7 @@ public:
   @param far    Far
   @param fov    Field of view
   */
-  PerspectiveCamera(float width, float height, float near, float far, float fov);
+  PerspectiveCamera(const float width, const float height, const float near, const float far, const float fov);
 
   virtual void update() override;
 

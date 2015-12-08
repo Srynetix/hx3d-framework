@@ -25,7 +25,7 @@ namespace hx3d {
 Attribute::Attribute():
   Attribute("", GL_INVALID_ENUM, 0) {}
 
-Attribute::Attribute(std::string name, GLenum type, GLuint size):
+Attribute::Attribute(const std::string name, const GLenum type, const GLuint size):
   _name(name),
   _type(type),
   _size(size)

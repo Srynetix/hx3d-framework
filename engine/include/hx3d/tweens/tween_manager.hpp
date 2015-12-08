@@ -33,8 +33,8 @@ class TweenManager {
 public:
   TweenManager();
 
-  void add(Ptr<BaseTween> tween);
-  void update(float delta);
+  void add(const Ptr<BaseTween>& tween);
+  void update(const float delta);
 
   unsigned int getTweenCount();
 

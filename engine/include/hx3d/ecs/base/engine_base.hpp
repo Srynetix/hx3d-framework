@@ -22,11 +22,10 @@
 #define HX3D_ECS_ENGINEBASE
 
 #include "hx3d/ecs/base/system_base.hpp"
-
 #include "hx3d/ecs/component.hpp"
 
-#include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 #include <map>
 #include <typeindex>
@@ -55,7 +54,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  void registerEntity(Ptr<EntityType> entity);
+  void registerEntity(const Ptr<EntityType>& entity);
 
   /**
   Mark the entity for deletion from the engine.
@@ -63,7 +62,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  void removeEntity(Ptr<EntityType> entity);
+  void removeEntity(const Ptr<EntityType>& entity);
 
   // COMPONENTS /////////////////////
 
@@ -74,7 +73,7 @@ public:
   @param entity Entity (Ptr)
   */
   template <class T>
-  Ptr<T> getComponent(Ptr<EntityType> entity);
+  Ptr<T> getComponent(const Ptr<EntityType>& entity);
 
   /**
   Add a component for an entity.
@@ -84,7 +83,7 @@ public:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addComponent(Ptr<EntityType> entity, Ptr<Component> component);
+  void addComponent(const Ptr<EntityType>& entity, const Ptr<Component>& component);
 
   /**
   Create a component for an entity with variable args.
@@ -94,7 +93,7 @@ public:
   @param args   Arguments
   */
   template <class T, class... Args>
-  void createComponent(Ptr<EntityType> entity, Args... args);
+  void createComponent(const Ptr<EntityType>& entity, Args... args);
 
   // SYSTEM /////////////////////////
 
@@ -105,7 +104,7 @@ public:
   @param sys  System (Ptr)
   */
   template <class T>
-  void addSystem(Ptr<SystemBase<EntityType>> sys);
+  void addSystem(const Ptr<SystemBase<EntityType>>& sys);
 
   /**
   Create a system into the engine.
@@ -124,7 +123,7 @@ public:
   @param entity Entity (Ptr)
   @return Number of components
   */
-  unsigned int getComponentSize(Ptr<EntityType> entity);
+  unsigned int getComponentSize(const Ptr<EntityType>& entity);
 
   /**
   Get the number of entities.
@@ -137,7 +136,7 @@ public:
   @param entity Entity (Ptr)
   @return Entity components bits
   */
-  unsigned int getBits(Ptr<EntityType> entity);
+  unsigned int getBits(const Ptr<EntityType>& entity);
 
   /**
   Register a callback for a certain component type when it's added.
@@ -146,7 +145,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentAdded(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback);
+  void registerComponentAdded(std::function<void(const Ptr<Component>&, const Ptr<EntityType>&)> callback);
 
   /**
   Register a callback for a certain component type when it's removed.
@@ -155,14 +154,14 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentRemoved(std::function<void(Ptr<Component>, Ptr<EntityType>)> callback);
+  void registerComponentRemoved(std::function<void(const Ptr<Component>&, const Ptr<EntityType>&)> callback);
 
   /**
   Update the engine.
 
   @param delta Delta time
   */
-  void update(float delta);
+  void update(const float delta);
 
   /**
   Remove everything from the engine.
@@ -200,14 +199,14 @@ private:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addInternalComponent(unsigned int entityId, Ptr<Component> component);
+  void addInternalComponent(const unsigned int entityId, const Ptr<Component>& component);
 
   /**
   Remove all components for an entity.
 
   @param entityId   Entity id
   */
-  void removeComponents(unsigned int entityId);
+  void removeComponents(const unsigned int entityId);
 };
 
 #include "hx3d/ecs/base/_inline/engine_base.inl.hpp"

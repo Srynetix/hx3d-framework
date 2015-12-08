@@ -29,15 +29,15 @@
 
 namespace hx3d {
 
-PerspectiveCamera::PerspectiveCamera(float near, float far):
+PerspectiveCamera::PerspectiveCamera(const float near, const float far):
   PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight(), near, far)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float near, float far):
+PerspectiveCamera::PerspectiveCamera(const float width, const float height, const float near, const float far):
   PerspectiveCamera(width, height, near, far, 70)
 {}
 
-PerspectiveCamera::PerspectiveCamera(float width, float height, float near, float far, float fov):
+PerspectiveCamera::PerspectiveCamera(const float width, const float height, const float near, const float far, const float fov):
   Camera(width, height, near, far), fieldOfView(fov)
 {
   update();

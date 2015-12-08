@@ -24,17 +24,17 @@
 
 namespace hx3d {
 
-ParticleEmitter::ParticleEmitter(unsigned int maxParticles):
-  particles(maxParticles), texture(nullptr), rotationSpeed(0.f)
+ParticleEmitter::ParticleEmitter(const unsigned int maxParticles):
+  rotationSpeed(0.f), particles(maxParticles), texture(nullptr)
 {}
 
-void ParticleEmitter::emit(unsigned int qty) {
+void ParticleEmitter::emit(const unsigned int qty) {
   for (unsigned int i = 0; i < qty; ++i) {
     emitOne();
   }
 }
 
-void ParticleEmitter::update(float delta) {
+void ParticleEmitter::update(const float delta) {
   const auto& working = particles.getWorking();
 
   for (auto i = working.begin(); i != working.end();) {
@@ -42,7 +42,6 @@ void ParticleEmitter::update(float delta) {
     if (p->dead) {
       particles.release(p);
     } else {
-      p->rotation += rotationSpeed * delta;
       p->update(delta);
       ++i;
     }
@@ -57,7 +56,7 @@ void ParticleEmitter::draw(Batch& batch) {
   }
 }
 
-void ParticleEmitter::setTexture(Ptr<Texture> texture) {
+void ParticleEmitter::setTexture(const Ptr<Texture>& texture) {
   this->texture = texture;
 }
 
@@ -74,6 +73,7 @@ void ParticleEmitter::emitOne() {
   }
 
   p->setTexture(texture);
+  p->rotationSpeed = rotationSpeed;
   p->position.x = math::random(position.x - emitter_size.x / 2.f, position.x + emitter_size.x / 2.f);
   p->position.y = math::random(position.y - emitter_size.y / 2.f, position.y + emitter_size.y / 2.f);
   p->size.x = particle_size.x;

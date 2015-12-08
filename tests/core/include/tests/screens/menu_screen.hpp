@@ -46,7 +46,7 @@ public:
 
   MenuScreen();
 
-  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure);
+  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override;
 
   virtual void resize(int width, int height) override;
   virtual void update(float delta) override;

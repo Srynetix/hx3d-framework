@@ -15,18 +15,20 @@ namespace physics2d {
 
 class World {
 public:
-  World(glm::vec2 globalGravity = {0, -9.81}, unsigned int iterations = 5, float dt = 1.f/60.f);
+  World(const glm::vec2 globalGravity = {0, -9.81}, const unsigned int iterations = 5, const float physRatio = 30.f);
 
   void addAttractor(const Ptr<Attractor>& attractor);
   void addCollider(const Ptr<Collider>& collider);
   void removeCollider(const Ptr<Collider>& collider);
 
-  void step();
-  void render(Batch& batch, float unitCoef = 30.f);
+  void step(float dt = 1.f/60.f);
+  void render(Batch& batch);
+
+  float getPhysRatio() const;
 
 private:
   unsigned int _iterations;
-  float _deltaTime;
+  float _physRatio;
 
   std::vector<Ptr<Attractor>> _attractors;
   std::vector<Ptr<Collider>> _colliders;

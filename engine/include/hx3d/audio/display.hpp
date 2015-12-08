@@ -47,7 +47,7 @@ public:
 
   @param refreshDelay Refresh delay
   */
-  Display(int refreshDelay);
+  Display(const int refreshDelay);
   virtual ~Display();
 
   /**
@@ -56,14 +56,14 @@ public:
   @param width  Width
   @param height Height
   */
-  void initialize(unsigned int width, unsigned int height);
+  void initialize(const unsigned int width, const unsigned int height);
 
   /**
   Set the refresh delay.
 
   @param refreshDelay Refresh delay
   */
-  void setRefreshDelay(int refreshDelay);
+  void setRefreshDelay(const int refreshDelay);
 
   /**
   Update the display.
@@ -72,7 +72,7 @@ public:
   @param length Length of the stream
   @param delta Delta time
   */
-  virtual void update(Sint16* stream, int length, float delta) = 0;
+  virtual void update(const Sint16* stream, const int length, const float delta) = 0;
 
   /**
   Use this to execute code after initialization.
@@ -81,8 +81,8 @@ public:
   virtual void onInitialization();
 
   /* Not needed */
-  void setTexture(Ptr<Texture>) = delete;
-  void setTexture(Ptr<Framebuffer>) = delete;
+  void setTexture(const Ptr<Texture>&) = delete;
+  void setTexture(const Ptr<Framebuffer>&) = delete;
 
 protected:
   Image _image;

@@ -46,14 +46,14 @@ public:
 
   @param shader Shader (Ptr)
   */
-  virtual void begin(Ptr<Shader> shader) = 0;
+  virtual void begin(const Ptr<Shader>& shader) = 0;
 
   /**
   End the use with a shader.
 
   @parm shader Shader (Ptr)
   */
-  virtual void end(Ptr<Shader> shader) = 0;
+  virtual void end(const Ptr<Shader>& shader) = 0;
 };
 
 #include "hx3d/graphics/buffers/_inline/array_buffer.inl.hpp"

@@ -39,7 +39,7 @@ public:
 
   @param id New id
   */
-  void setId(unsigned int id);
+  void setId(const unsigned int id);
 
   /**
   Get the ID

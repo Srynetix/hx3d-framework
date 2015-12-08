@@ -27,11 +27,11 @@ Callback::Callback(std::function<void()> func):
   Callback(func, 0)
 {}
 
-Callback::Callback(std::function<void()> func, float duration):
+Callback::Callback(std::function<void()> func, const float duration):
   _func(func), _delay(duration)
 {}
 
-void Callback::update(float delta) {
+void Callback::update(const float delta) {
   if (_ended)
     return;
 

@@ -30,7 +30,7 @@ public:
 
   bool hasEnded();
 
-  virtual void update(float delta) = 0;
+  virtual void update(const float delta) = 0;
 
 protected:
   bool _ended;

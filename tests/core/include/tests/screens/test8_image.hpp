@@ -63,7 +63,7 @@ public:
     angle = math::mclamp(angle + 1, 0, 360);
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color::Black);
 
     batch.begin();

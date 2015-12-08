@@ -34,13 +34,16 @@ public:
     emitter->particle_size = glm::vec3(75, 75, 0);
     emitter->gravity = glm::vec3(0, -100.f, 0);
     emitter->velocity = glm::vec3(-50, -200.f, 0);
+    emitter->rotationSpeed = 1.f;
     emitter->life = 5.f;
 
     particles.addEmitter(emitter);
 
     timer.initialize(50, [this](){
-      emitter->emit(2);
+      emitter->emit(4);
       timer.reset();
+
+      emitter->rotationSpeed = math::random(0, 10);
     });
   }
 
@@ -53,7 +56,7 @@ public:
     particleCount.setContent(format("Particles: %ld", emitter->getParticleCount()));
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

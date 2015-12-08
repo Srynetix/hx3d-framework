@@ -26,7 +26,7 @@ IndexArrayBuffer::IndexArrayBuffer():
   ArrayBuffer<GLushort>()
 {}
 
-IndexArrayBuffer::IndexArrayBuffer(std::vector<GLushort> values):
+IndexArrayBuffer::IndexArrayBuffer(const std::vector<GLushort> values):
   ArrayBuffer<GLushort>()
 {
   set(values);
@@ -42,14 +42,14 @@ void IndexArrayBuffer::upload() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexArrayBuffer::begin(Ptr<Shader> shader) {
+void IndexArrayBuffer::begin(const Ptr<Shader>& shader) {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buf);
   glDrawElements(GL_TRIANGLES, _vector.size(), GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexArrayBuffer::end(Ptr<Shader> shader)
+void IndexArrayBuffer::end(const Ptr<Shader>& shader)
 {}
 
 } /* hx3d */

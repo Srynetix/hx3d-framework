@@ -55,6 +55,7 @@ set(
   "${ENGINE_SRC}/graphics/cameras/orthographic_camera.cpp"
   "${ENGINE_SRC}/graphics/buffers/attribute.cpp"
   "${ENGINE_SRC}/graphics/buffers/attribute_array_buffer.cpp"
+  "${ENGINE_SRC}/graphics/buffers/attribute_stream_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/multi_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/index_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/particles/particle.cpp"

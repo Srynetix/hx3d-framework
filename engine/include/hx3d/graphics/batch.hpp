@@ -82,7 +82,7 @@ public:
 
   @param shader Shader (Ptr)
   */
-  void setShader(Ptr<Shader> shader);
+  void setShader(const Ptr<Shader>& shader);
 
   /**
   Get the current batching shader.

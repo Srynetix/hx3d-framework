@@ -30,7 +30,7 @@ void Polygon::setPoints(const std::vector<glm::vec2>& points) {
   }
 
   std::vector<unsigned int> hull;
-  unsigned int outCount;
+  unsigned int outCount = 0;
   unsigned int indexHull = rightMost;
 
   for (;;) {

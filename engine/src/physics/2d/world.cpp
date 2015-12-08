@@ -5,8 +5,8 @@
 namespace hx3d {
 namespace physics2d {
 
-World::World(glm::vec2 globalGravity, unsigned int iterations, float dt):
-  _iterations(iterations), _deltaTime(dt)
+World::World(const glm::vec2 globalGravity, const unsigned int iterations, const float physRatio):
+  _iterations(iterations), _physRatio(physRatio)
   {
     _attractors.emplace_back(Make<GlobalAttractor>(globalGravity));
   }
@@ -22,7 +22,7 @@ void World::addCollider(const Ptr<Collider>& collider) {
 void World::removeCollider(const Ptr<Collider>& collider) {
 }
 
-void World::step() {
+void World::step(float dt) {
 
   _contacts.clear();
 
@@ -44,7 +44,7 @@ void World::step() {
 
   // Integrate
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
-    integrateForces(_colliders[i], _deltaTime);
+    integrateForces(_colliders[i], dt);
   }
 
   for (unsigned int i = 0; i < _contacts.size(); ++i) {
@@ -58,7 +58,7 @@ void World::step() {
   }
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
-    integrateVelocity(_colliders[i], _deltaTime);
+    integrateVelocity(_colliders[i], dt);
   }
 
   for (unsigned int i = 0; i < _contacts.size(); ++i) {
@@ -73,7 +73,7 @@ void World::step() {
   }
 }
 
-void World::render(Batch& batch, float unitCoef) {
+void World::render(Batch& batch) {
 
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
     const Ptr<Attractor>& attractor = _attractors[i];
@@ -82,10 +82,10 @@ void World::render(Batch& batch, float unitCoef) {
       const Ptr<ZoneAttractor>& zone = std::dynamic_pointer_cast<ZoneAttractor>(attractor);
       Sprite sprite;
       sprite.setTexture(Texture::Blank);
-      sprite.transform.position.x = zone->position.x * unitCoef;
-      sprite.transform.position.y = zone->position.y * unitCoef;
-      sprite.transform.size.x = zone->width * unitCoef;
-      sprite.transform.size.y = zone->height * unitCoef;
+      sprite.transform.position.x = zone->position.x * _physRatio;
+      sprite.transform.position.y = zone->position.y * _physRatio;
+      sprite.transform.size.x = zone->width * _physRatio;
+      sprite.transform.size.y = zone->height * _physRatio;
       sprite.transform.position.z = -0.5f;
 
       sprite.setTint(Color(240, 20, 201));
@@ -96,10 +96,10 @@ void World::render(Batch& batch, float unitCoef) {
       const Ptr<PointAttractor>& point = std::dynamic_pointer_cast<PointAttractor>(attractor);
       Sprite sprite;
       sprite.setTexture(Texture::Blank);
-      sprite.transform.position.x = point->position.x * unitCoef;
-      sprite.transform.position.y = point->position.y * unitCoef;
-      sprite.transform.size.x = point->radius * 2 * unitCoef;
-      sprite.transform.size.y = point->radius * 2 * unitCoef;
+      sprite.transform.position.x = point->position.x * _physRatio;
+      sprite.transform.position.y = point->position.y * _physRatio;
+      sprite.transform.size.x = point->radius * 2 * _physRatio;
+      sprite.transform.size.y = point->radius * 2 * _physRatio;
       sprite.transform.position.z = -0.25f;
 
       sprite.setTint(Color(20, 240, 201));
@@ -112,23 +112,23 @@ void World::render(Batch& batch, float unitCoef) {
 
     Sprite sprite;
     sprite.setTexture(Texture::Blank);
-    sprite.transform.position.x = c->position.x * unitCoef;
-    sprite.transform.position.y = c->position.y * unitCoef;
+    sprite.transform.position.x = c->position.x * _physRatio;
+    sprite.transform.position.y = c->position.y * _physRatio;
 
     if (c->shape == Collider::Shape::Polygon) {
       const Ptr<Polygon>& b = std::dynamic_pointer_cast<Polygon>(c);
       if (b->box) {
         float w = b->vertices[1].x * 2;
         float h = b->vertices[2].y * 2;
-        sprite.transform.size.x = w * unitCoef;
-        sprite.transform.size.y = h * unitCoef;
+        sprite.transform.size.x = w * _physRatio;
+        sprite.transform.size.y = h * _physRatio;
       }
     }
 
     else if (c->shape == Collider::Shape::Circle) {
       const Ptr<Circle>& b = std::dynamic_pointer_cast<Circle>(c);
-      sprite.transform.size.x = (b->radius / 2) * unitCoef;
-      sprite.transform.size.y = (b->radius / 2) * unitCoef;
+      sprite.transform.size.x = (b->radius / 2) * _physRatio;
+      sprite.transform.size.y = (b->radius / 2) * _physRatio;
     }
 
     sprite.transform.rotation.z = c->orientation;
@@ -140,6 +140,10 @@ void World::render(Batch& batch, float unitCoef) {
 
     batch.draw(sprite);
   }
+}
+
+float World::getPhysRatio() const {
+  return _physRatio;
 }
 
 ///////////////

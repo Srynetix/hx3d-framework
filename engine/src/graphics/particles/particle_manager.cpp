@@ -25,11 +25,11 @@ namespace hx3d {
 ParticleManager::ParticleManager()
 {}
 
-void ParticleManager::addEmitter(Ptr<ParticleEmitter> emitter) {
+void ParticleManager::addEmitter(const Ptr<ParticleEmitter>& emitter) {
   emitters.push_back(emitter);
 }
 
-void ParticleManager::update(float delta) {
+void ParticleManager::update(const float delta) {
   for (Ptr<ParticleEmitter>& emitter: emitters) {
     emitter->update(delta);
   }

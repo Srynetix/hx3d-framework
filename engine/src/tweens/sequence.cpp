@@ -25,7 +25,7 @@ namespace tweens {
 
 Sequence::Sequence() {}
 
-void Sequence::addDelay(float delay) {
+void Sequence::addDelay(const float delay) {
   Ptr<BaseTween> tween = Make<Delay>(delay);
   tweens.push(tween);
 }
@@ -35,15 +35,15 @@ void Sequence::addCallback(std::function<void()> func) {
   tweens.push(tween);
 }
 
-void Sequence::add(Ptr<BaseTween> tween) {
+void Sequence::add(const Ptr<BaseTween>& tween) {
   tweens.push(tween);
 }
 
-void Sequence::update(float delta) {
+void Sequence::update(const float delta) {
   if (_ended)
     return;
 
-  Ptr<BaseTween> tween = tweens.front();
+  const Ptr<BaseTween>& tween = tweens.front();
   if (tween->hasEnded()) {
     tweens.pop();
   } else {

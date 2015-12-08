@@ -41,10 +41,10 @@ public:
 
   @param refreshDelay Refresh delay
   */
-  Waveform(int refreshDelay);
+  Waveform(const int refreshDelay);
   ~Waveform();
 
-  virtual void update(Sint16* stream, int length, float delta) override;
+  virtual void update(const Sint16* stream, const int length, const float delta) override;
 };
 
 } /* audio */

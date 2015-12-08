@@ -26,13 +26,13 @@ namespace tweens {
 
 TweenManager::TweenManager() {}
 
-void TweenManager::add(Ptr<BaseTween> tween) {
+void TweenManager::add(const Ptr<BaseTween>& tween) {
   tweens.push_back(tween);
 }
 
-void TweenManager::update(float delta) {
+void TweenManager::update(const float delta) {
   for (auto i = tweens.begin(); i != tweens.end();) {
-    Ptr<BaseTween> tween = *i;
+    const Ptr<BaseTween>& tween = *i;
     if (tween->hasEnded()) {
       tweens.erase(i);
     } else {

@@ -34,7 +34,7 @@ GLuint Buffer<T>::getId() {
 }
 
 template <class T>
-void Buffer<T>::set(std::vector<T> values) {
+void Buffer<T>::set(const std::vector<T>& values) {
   _vector.clear();
   _vector.resize(values.size());
 
@@ -42,7 +42,7 @@ void Buffer<T>::set(std::vector<T> values) {
 }
 
 template <class T>
-void Buffer<T>::add(std::vector<T> values) {
+void Buffer<T>::add(const std::vector<T>& values) {
   size_t prevSize = _vector.size();
   _vector.resize(prevSize + values.size());
 
@@ -65,12 +65,12 @@ std::vector<T>& Buffer<T>::getVector() {
 }
 
 template <class T>
-T Buffer<T>::getValue(unsigned int i) {
+T Buffer<T>::getValue(const unsigned int i) {
   return _vector[i];
 }
 
 template <class T>
-void Buffer<T>::setValue(unsigned int i, T value) {
+void Buffer<T>::setValue(const unsigned int i, const T value) {
   _vector[i] = value;
 }
 

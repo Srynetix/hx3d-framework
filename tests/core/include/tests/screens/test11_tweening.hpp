@@ -61,7 +61,7 @@ public:
     sprite.updateColor();
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

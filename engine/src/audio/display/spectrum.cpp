@@ -32,11 +32,11 @@
 namespace hx3d {
 namespace audio {
 
-Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount):
+Spectrum::Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount):
   Spectrum(minFreq, maxFreq, barCount, 50)
   {}
 
-Spectrum::Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount, int refreshDelay):
+Spectrum::Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount, const int refreshDelay):
   Display(refreshDelay),
   _minFreq(minFreq),
   _maxFreq(maxFreq),
@@ -74,7 +74,7 @@ void Spectrum::onInitialization() {
   }
 }
 
-void Spectrum::update(Sint16* stream, int length, float delta) {
+void Spectrum::update(const Sint16* stream, const int length, const float delta) {
 
   if (!_initialized || length == 0)
     return;
@@ -146,7 +146,7 @@ void Spectrum::update(Sint16* stream, int length, float delta) {
   _timer.update(delta);
 }
 
-float Spectrum::getNormalizedFrequencyAmplitude(unsigned int frequency, unsigned int range) {
+float Spectrum::getNormalizedFrequencyAmplitude(const unsigned int frequency, const unsigned int range) {
   unsigned int maxFrequency = _barFrequencies[_barCount - 1];
 
   if (frequency > maxFrequency) {
@@ -183,28 +183,28 @@ unsigned int Spectrum::getBarCount() {
 
 ////////////////////////////////
 
-int Spectrum::nextCenterFreq(int centerFreq, float octaves) {
+int Spectrum::nextCenterFreq(const int centerFreq, const float octaves) {
   return centerFreq * std::pow(2, 1.f / octaves);
 }
-int Spectrum::prevCenterFreq(int centerFreq, float octaves) {
+int Spectrum::prevCenterFreq(const int centerFreq, const float octaves) {
   return centerFreq / std::pow(2, 1.f / octaves);
 }
 
-int Spectrum::lowerLimit(int centerFreq, float octaves) {
+int Spectrum::lowerLimit(const int centerFreq, const float octaves) {
   return centerFreq / std::pow(2, 1.f / (2.f * octaves));
 }
-int Spectrum::upperLimit(int centerFreq, float octaves) {
+int Spectrum::upperLimit(const int centerFreq, const float octaves) {
   return centerFreq * std::pow(2, 1.f / (2.f * octaves));
 }
 
-int Spectrum::lowerLimitSample(int centerFreq, float octaves, int samplesLength) {
+int Spectrum::lowerLimitSample(const int centerFreq, const float octaves, const int samplesLength) {
   return lowerLimit(centerFreq, octaves) / (Core::Audio()->getFrequencyRate() / samplesLength);
 }
-int Spectrum::upperLimitSample(int centerFreq, float octaves, int samplesLength) {
+int Spectrum::upperLimitSample(const int centerFreq, const float octaves, const int samplesLength) {
   return upperLimit(centerFreq, octaves) / (Core::Audio()->getFrequencyRate() / samplesLength);
 }
 
-float Spectrum::averageFreq(std::vector<float>& values, int low, int hi) {
+float Spectrum::averageFreq(const std::vector<float>& values, const int low, const int hi) {
   if (low == hi)
     return 0;
 
@@ -212,7 +212,7 @@ float Spectrum::averageFreq(std::vector<float>& values, int low, int hi) {
   int count = 1;
 
   for (int i = low; i < hi; ++i) {
-    float val = values[i];
+    const float val = values[i];
     if (val != 0.f) {
       sum += val;
       ++count;
@@ -222,7 +222,7 @@ float Spectrum::averageFreq(std::vector<float>& values, int low, int hi) {
   return sum/count;
 }
 
-float Spectrum::calculateOctave(unsigned int lowFreq, unsigned int hiFreq, unsigned int bars) {
+float Spectrum::calculateOctave(const unsigned int lowFreq, const unsigned int hiFreq, const unsigned int bars) {
   return (bars - 1) / (math::log2(hiFreq / (float)lowFreq));
 }
 

@@ -46,7 +46,7 @@ public:
   @param channel  Channel
   @param effect   Effect
   */
-  void registerEffect(int channel, Effect& effect);
+  void registerEffect(const int channel, Effect& effect);
 
   /**
   Clear all the effects for a channel.
@@ -54,7 +54,7 @@ public:
 
   @param channel Channel
   */
-  void clearEffects(int channel);
+  void clearEffects(const int channel);
 
   /**
   Get the audio device frequency rate.

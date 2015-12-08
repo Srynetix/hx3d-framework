@@ -37,7 +37,7 @@ public:
   @param maxFreq    Max. frequency
   @param barsCount  Bars count
   */
-  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount);
+  Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount);
 
   /**
   Create an empty spectrum with a custom refresh delay.
@@ -48,10 +48,10 @@ public:
   @param barsCount    Bars count
   @param refreshDelay Refresh delay
   */
-  Spectrum(unsigned int minFreq, unsigned int maxFreq, unsigned int barCount, int refreshDelay);
+  Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount, const int refreshDelay);
   ~Spectrum();
 
-  virtual void update(Sint16* stream, int length, float delta) override;
+  virtual void update(const Sint16* stream, const int length, const float delta) override;
   virtual void onInitialization() override;
 
   /**
@@ -62,7 +62,7 @@ public:
   @param range      Range
   @return Normalized amplitude
   */
-  float getNormalizedFrequencyAmplitude(unsigned int frequency, unsigned int range);
+  float getNormalizedFrequencyAmplitude(const unsigned int frequency, const unsigned int range);
 
   /*
   Get the bar count.
@@ -89,7 +89,7 @@ private:
   @param octaves    Octave value
   @return Next center frequency
   */
-  int nextCenterFreq(int centerFreq, float octaves);
+  int nextCenterFreq(const int centerFreq, const float octaves);
 
   /**
   Get the center frequency for the previous bar, using an octave value.
@@ -98,7 +98,7 @@ private:
   @param octaves    Octave value
   @return Previous center frequency
   */
-  int prevCenterFreq(int centerFreq, float octaves);
+  int prevCenterFreq(const int centerFreq, const float octaves);
 
   /**
   Get the lower frequency limit for the current bar, using an octave value.
@@ -107,7 +107,7 @@ private:
   @param octaves    Octave value
   @return Lower frequency limit
   */
-  int lowerLimit(int centerFreq, float octaves);
+  int lowerLimit(const int centerFreq, const float octaves);
 
   /**
   Get the lower frequency limit sample index for the current bar,
@@ -118,7 +118,7 @@ private:
   @param octaves    Octave value
   @return Lower frequency limit sample index
   */
-  int lowerLimitSample(int centerFreq, float octaves, int samplesLength);
+  int lowerLimitSample(const int centerFreq, const float octaves, const int samplesLength);
 
   /**
   Get the upper frequency limit for the current bar, using an octave value.
@@ -127,7 +127,7 @@ private:
   @param octaves    Octave value
   @return Upper frequency limit
   */
-  int upperLimit(int centerFreq, float octaves);
+  int upperLimit(const int centerFreq, const float octaves);
 
   /**
   Get the upper frequency limit sample index for the current bar,
@@ -138,7 +138,7 @@ private:
   @param octaves    Octave value
   @return Upper frequency limit sample index
   */
-  int upperLimitSample(int centerFreq, float octaves, int samplesLength);
+  int upperLimitSample(const int centerFreq, const float octaves, const int samplesLength);
 
   /**
   Calculate the average frequency between a low and hi index interval.
@@ -148,7 +148,7 @@ private:
   @param hi     High frequency index
   @return Average frequency
   */
-  float averageFreq(std::vector<float>& values, int low, int hi);
+  float averageFreq(const std::vector<float>& values, const int low, const int hi);
 
   /**
   Calculate the octave value, using a low frequency limit and a
@@ -159,7 +159,7 @@ private:
   @param bars     Bar count
   @return Octave value
   */
-  float calculateOctave(unsigned int lowFreq, unsigned int hiFreq, unsigned int bars);
+  float calculateOctave(const unsigned int lowFreq, const unsigned int hiFreq, const unsigned int bars);
 };
 
 } /* audio */

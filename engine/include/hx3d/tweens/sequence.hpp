@@ -39,12 +39,12 @@ public:
   Sequence();
 
   template <class T>
-  void addTween(T& mod, T to, float duration, math::Interpolation interp);
-  void addDelay(float delay);
+  void addTween(T& mod, const T to, const float duration, const math::Interpolation interp);
+  void addDelay(const float delay);
   void addCallback(std::function<void()> func);
-  void add(Ptr<BaseTween> tween);
+  void add(const Ptr<BaseTween>& tween);
 
-  virtual void update(float delta) override;
+  virtual void update(const float delta) override;
 
   std::queue<Ptr<BaseTween>> tweens;
 };

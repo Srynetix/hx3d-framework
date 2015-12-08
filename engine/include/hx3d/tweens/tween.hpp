@@ -29,8 +29,8 @@ namespace tweens {
 template <class T>
 class Tween: public BaseTween {
 public:
-  Tween(T& mod, T end, float duration, math::Interpolation interp);
-  virtual void update(float delta) override;
+  Tween(T& mod, const T end, const float duration, const math::Interpolation interp);
+  virtual void update(const float delta) override;
 
 private:
   T* mod;

@@ -42,7 +42,7 @@ public:
 
   @param pathToFile Path to audio file.
   */
-  explicit Music(std::string pathToFile);
+  explicit Music(const std::string pathToFile);
   ~Music();
 
   /**
@@ -50,7 +50,7 @@ public:
 
   @param pathToFile Path to audio file
   */
-  void initialize(std::string pathToFile);
+  void initialize(const std::string pathToFile);
 
   /**
   Play the music.

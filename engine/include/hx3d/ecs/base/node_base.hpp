@@ -50,7 +50,7 @@ public:
 
   @param name Name
   */
-  NodeBase(std::string name);
+  NodeBase(const std::string name);
 
   /**
   Create a new child Node, using the SceneGraph.
@@ -60,7 +60,7 @@ public:
   @param args Arguments
   */
   template <class T, class... Args>
-  Ptr<T> createChild(std::string name, Args... args);
+  Ptr<T> createChild(const std::string name, Args... args);
 
   /**
   Get one child.
@@ -69,14 +69,14 @@ public:
   @param name Name
   */
   template <class T>
-  Ptr<T> getChild(std::string name);
+  Ptr<T> getChild(const std::string name);
 
   /**
   Remove a child, using the SceneGraph.
 
   @param name Name
   */
-  void removeChild(std::string name);
+  void removeChild(const std::string name);
 
   /**
   Get the game object full transform.
@@ -116,7 +116,7 @@ public:
 
   @param delta Delta time
   */
-  virtual void update(float delta);
+  virtual void update(const float delta);
 
   ///////////
 
@@ -136,7 +136,7 @@ protected:
 
   @param name Name
   */
-  bool childNameExists(std::string name);
+  bool childNameExists(const std::string name);
 };
 
 } /* ecs */

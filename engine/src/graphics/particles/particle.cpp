@@ -32,14 +32,15 @@ void Particle::reset() {
   life = baseLife = 0.f;
   dead = false;
   rotation = 0.f;
+  rotationSpeed = 0.f;
   color = Color::White;
 }
 
-void Particle::setTexture(Ptr<Texture> texture) {
+void Particle::setTexture(const Ptr<Texture>& texture) {
   sprite.setTexture(texture);
 }
 
-void Particle::update(float delta) {
+void Particle::update(const float delta) {
   life -= delta;
 
   if (life <= 0.f) {
@@ -50,13 +51,17 @@ void Particle::update(float delta) {
   else {
     float percentage = life / baseLife;
     color.a = math::interpolate(0, 255, percentage, math::Interpolation::Linear);
+    float z_pos = color.a / 255.f; // between 0 && 1
     sprite.setTint(color);
 
     position.x -= velocity.x * delta;
     position.y -= velocity.y * delta;
+    position.z = z_pos;
 
     velocity.x -= gravity.x * delta;
     velocity.y -= gravity.y * delta;
+
+    rotation += rotationSpeed * delta;
   }
 }
 

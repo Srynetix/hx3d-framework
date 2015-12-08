@@ -55,14 +55,14 @@ public:
   @param entity Entity (Ptr)
   @param delta Delta time
   */
-  virtual void process(Ptr<EntityType> entity, float delta) = 0;
+  virtual void process(const Ptr<EntityType>& entity, const float delta) = 0;
 
   /**
   Check if an entity can be processed (using the required family).
 
   @param bits Entity bits
   */
-  bool canProcess(unsigned int bits);
+  bool canProcess(const unsigned int bits);
 
   /**
   Get the engine instance.

@@ -170,7 +170,6 @@ private:
   Batch batch;
 
   float currentTime;
-  float angle;
   float caseW;
   float caseH;
   float duration;

@@ -35,7 +35,7 @@ Batch::Batch():
   _shader(nullptr)
 {}
 
-void Batch::setShader(Ptr<Shader> shader) {
+void Batch::setShader(const Ptr<Shader>& shader) {
   _shader = shader;
 }
 

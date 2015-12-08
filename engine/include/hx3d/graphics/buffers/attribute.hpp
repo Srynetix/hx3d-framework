@@ -42,7 +42,7 @@ public:
   @param type   Attribute type (GL_FLOAT, etc.)
   @param size   Attribute size (1, 2, 3, 4)
   */
-  Attribute(std::string name, GLenum type, GLuint size);
+  Attribute(const std::string name, const GLenum type, const GLuint size);
 
   const std::string getName() const;
   const GLenum getType() const;

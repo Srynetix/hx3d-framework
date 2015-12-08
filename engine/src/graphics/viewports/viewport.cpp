@@ -32,7 +32,7 @@ Viewport::Viewport():
 
 Viewport::~Viewport() {}
 
-void Viewport::setScreenPosition(float x, float y) {
+void Viewport::setScreenPosition(const float x, const float y) {
   _screenX = x;
   _screenY = y;
 }
@@ -49,7 +49,7 @@ void Viewport::apply() {
   apply(false);
 }
 
-void Viewport::apply(bool centerCamera) {
+void Viewport::apply(const bool centerCamera) {
   glViewport(_screenX, _screenY, _screenWidth, _screenHeight);
 
   _camera->viewportWidth = _worldWidth;
@@ -61,18 +61,18 @@ void Viewport::apply(bool centerCamera) {
   _camera->update();
 }
 
-void Viewport::update(int screenWidth, int screenHeight) {
+void Viewport::update(const int screenWidth, const int screenHeight) {
   update(screenWidth, screenHeight, false);
 }
 
-void Viewport::update(int screenWidth, int screenHeight, bool centerCamera) {
+void Viewport::update(const int screenWidth, const int screenHeight, const bool centerCamera) {
   _screenWidth = screenWidth;
   _screenHeight = screenHeight;
 
   internalUpdate(centerCamera);
 }
 
-glm::vec2 Viewport::screenToWorld(glm::vec2 screenPoint) {
+glm::vec2 Viewport::screenToWorld(const glm::vec2 screenPoint) {
   glm::vec2 worldPoint = glm::vec2(0);
   float ratioX = (_screenWidth / _worldWidth);
   float ratioY = (_screenHeight / _worldHeight);

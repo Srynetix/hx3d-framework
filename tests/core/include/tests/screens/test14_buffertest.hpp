@@ -98,7 +98,7 @@ public:
     camera(0.1f, 3500.f),
     fps(Core::Assets()->get<Font>("default"))
   {
-    camera.translate(glm::vec3(0.f, 0.f, -2500.f));
+    camera.translate(glm::vec3(0.f, 0.f, -1000.f));
     camera.rotate(180.f, glm::vec3(0, 1, 0));
 
     mesh.setGeometry(Make<SGeo>(160000));
@@ -122,7 +122,7 @@ public:
     fps.setContent(format("FPS: %2.2f", 1.f/delta));
   }
 
-  void render() {
+  virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();

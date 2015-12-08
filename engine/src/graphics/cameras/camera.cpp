@@ -27,7 +27,7 @@
 
 namespace hx3d {
 
-Camera::Camera(float width, float height, float near, float far):
+Camera::Camera(const float width, const float height, const float near, const float far):
   position(0.f),
   direction(0.f, 0.f, -1.f),
   up(0.f, 1.f, 0.f),
@@ -63,16 +63,16 @@ void Camera::lookAt(glm::vec3 target) {
   }
 }
 
-void Camera::translate(glm::vec3 vec) {
+void Camera::translate(const glm::vec3 vec) {
   position += vec;
 }
 
-void Camera::rotate(float angle, glm::vec3 axis) {
+void Camera::rotate(const float angle, const glm::vec3 axis) {
   direction = math::rotate(direction, glm::radians(angle), axis);
   up = math::rotate(up, angle, axis);
 }
 
-void Camera::rotateAround(glm::vec3 center, float angle, glm::vec3 axis) {
+void Camera::rotateAround(const glm::vec3 center, const float angle, const glm::vec3 axis) {
   glm::vec3 tmp(center);
   tmp -= position;
   translate(tmp);

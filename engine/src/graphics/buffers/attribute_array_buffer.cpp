@@ -28,11 +28,11 @@ AttributeArrayBuffer::AttributeArrayBuffer():
   ArrayBuffer<float>(), _attribute()
 {}
 
-AttributeArrayBuffer::AttributeArrayBuffer(Attribute attribute):
+AttributeArrayBuffer::AttributeArrayBuffer(const Attribute attribute):
   ArrayBuffer<float>(), _attribute(attribute)
 {}
 
-AttributeArrayBuffer::AttributeArrayBuffer(Attribute attribute, std::vector<float> values):
+AttributeArrayBuffer::AttributeArrayBuffer(const Attribute attribute, const std::vector<float> values):
   AttributeArrayBuffer(attribute)
 {
   set(values);
@@ -40,7 +40,7 @@ AttributeArrayBuffer::AttributeArrayBuffer(Attribute attribute, std::vector<floa
 
 AttributeArrayBuffer::~AttributeArrayBuffer() {}
 
-void AttributeArrayBuffer::create(Attribute attribute) {
+void AttributeArrayBuffer::create(const Attribute attribute) {
   _attribute = attribute;
 }
 
@@ -57,10 +57,10 @@ void AttributeArrayBuffer::upload() {
   }
 }
 
-void AttributeArrayBuffer::begin(Ptr<Shader> shader) {
+void AttributeArrayBuffer::begin(const Ptr<Shader>& shader) {
 
   if (_vector.size() > 0) {
-    GLint loc = shader->getAttribute(_attribute.getName());
+    const GLint loc = shader->getAttribute(_attribute.getName());
 
     glBindBuffer(GL_ARRAY_BUFFER, _buf);
     glEnableVertexAttribArray(loc);
@@ -70,9 +70,9 @@ void AttributeArrayBuffer::begin(Ptr<Shader> shader) {
   }
 }
 
-void AttributeArrayBuffer::end(Ptr<Shader> shader) {
+void AttributeArrayBuffer::end(const Ptr<Shader>& shader) {
   if (_vector.size() > 0) {
-    GLint loc = shader->getAttribute(_attribute.getName());
+    const GLint loc = shader->getAttribute(_attribute.getName());
 
     glDisableVertexAttribArray(loc);
   }

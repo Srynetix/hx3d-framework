@@ -24,10 +24,10 @@ namespace hx3d {
 namespace audio {
 
 Display::Display(): Display(50) {}
-Display::Display(int refreshDelay): _refreshDelay(refreshDelay), _initialized(false) {}
+Display::Display(const int refreshDelay): _refreshDelay(refreshDelay), _initialized(false) {}
 Display::~Display() {}
 
-void Display::initialize(unsigned int width, unsigned int height) {
+void Display::initialize(const unsigned int width, const unsigned int height) {
   _image.create(width, height);
   _image.buildTexture();
   _timer.initialize(_refreshDelay);
@@ -39,7 +39,7 @@ void Display::initialize(unsigned int width, unsigned int height) {
   _initialized = true;
 }
 
-void Display::setRefreshDelay(int refreshDelay) {
+void Display::setRefreshDelay(const int refreshDelay) {
   _refreshDelay = refreshDelay;
   _timer.initialize(_refreshDelay);
 }

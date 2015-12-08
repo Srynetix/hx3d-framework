@@ -46,7 +46,7 @@ public:
   @param x X coordinate
   @param y Y coordinate
   */
-  void setScreenPosition(float x, float y);
+  void setScreenPosition(const float x, const float y);
 
   /**
   Set the viewport camera.
@@ -70,7 +70,7 @@ public:
 
   @param centerCamera Center camera ?
   */
-  void apply(bool centerCamera);
+  void apply(const bool centerCamera);
 
   /**
   Update the viewport with a new screen width and height without centering
@@ -79,7 +79,7 @@ public:
   @param screenWidth  New width
   @param screenHeight New height
   */
-  void update(int screenWidth, int screenHeight);
+  void update(const int screenWidth, const int screenHeight);
   /**
   Update the viewport with a new screen width and height with or without
   centering the camera.
@@ -88,7 +88,7 @@ public:
   @param screenHeight New height
   @param centerCamera Center camera ?
   */
-  void update(int screenWidth, int screenHeight, bool centerCamera);
+  void update(const int screenWidth, const int screenHeight, const bool centerCamera);
 
   /**
   Convert a screen point to a world point.
@@ -96,7 +96,7 @@ public:
   @param screenPoint Screen point
   @return World point
   */
-  glm::vec2 screenToWorld(glm::vec2 screenPoint);
+  glm::vec2 screenToWorld(const glm::vec2 screenPoint);
 
   /**
   Get the world size.
@@ -118,7 +118,7 @@ protected:
 
   @param centerCamera Center camera ?
   */
-  virtual void internalUpdate(bool centerCamera) = 0;
+  virtual void internalUpdate(const bool centerCamera) = 0;
 
 };
 
