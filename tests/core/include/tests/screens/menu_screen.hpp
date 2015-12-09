@@ -58,7 +58,6 @@ private:
   hx3d::Ptr<hx3d::Shader> pixShader;
 
   hx3d::OrthographicCamera camera;
-  hx3d::FitViewport viewport;
 
   hx3d::Sprite logoSprite;
   hx3d::Sprite sprite;

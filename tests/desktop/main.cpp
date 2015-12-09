@@ -11,6 +11,8 @@ using namespace hx3d;
 TEST_F(Tests, Screens) {
   ApplicationConfig config;
   config.title = "Tests";
+  config.width = 1440;
+  config.height = 900;
 
   SDL2Application app(Make<TestGame>(), config);
   app.start();

@@ -32,12 +32,8 @@ MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
   pixShader(Core::Assets()->get<Shader>("pix2D")),
 
-  viewport(640, 360, camera),
   text(font),
-  instructions(font),
-
-  buttonWidth(64),
-  buttonHeight(32)
+  instructions(font)
 {
   sprite.setTexture(Core::Assets()->get<Texture>("box"));
   sprite.setTint(Color(0, 0, 64));
@@ -47,17 +43,19 @@ MenuScreen::MenuScreen():
   batch.setShader(defaultShader);
   batch.setCamera(camera);
 
-  glm::vec2 worldSize = viewport.getWorldSize();
+  glm::vec2 worldSize = Core::App()->getSize();
+  buttonWidth = worldSize.x / 10;
+  buttonHeight = worldSize.y / 10;
 
   sprite.transform.size = glm::vec3(buttonWidth, buttonHeight, 0);
-  text.transform.scale = glm::vec3(0.5f);
+  text.transform.scale = glm::vec3(1.f);
 
   instructions.setContent("touch test to launch. then ESC or Back to go back. ESC or Back here to quit.");
-  instructions.transform.scale = glm::vec3(0.5f);
-  instructions.transform.position = glm::vec3(worldSize.x - 300, 20, 0);
+  instructions.transform.scale = glm::vec3(1.f);
+  instructions.transform.position = glm::vec3(worldSize.x - 600, 40, 0);
 
   logoSprite.transform.scale = glm::vec3(0.25, 0.25, 0);
-  logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 100, 0);
+  logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
@@ -82,14 +80,14 @@ MenuScreen::MenuScreen():
 }
 
 void MenuScreen::resize(int width, int height) {
-  viewport.update(width, height, true);
 }
 
 void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
   float screen_x = touchPosition.x * Core::App()->getWidth();
   float screen_y = touchPosition.y * Core::App()->getHeight();
 
-  glm::vec2 vpc = viewport.screenToWorld(glm::vec2(screen_x, screen_y));
+  // glm::vec2 vpc = viewport.screenToWorld(glm::vec2(screen_x, screen_y));
+  glm::vec2 vpc = {screen_x, screen_y};
   if (vpc.x < 0 || vpc.y < 0)
     return;
 
@@ -122,7 +120,8 @@ void MenuScreen::update(float delta) {
 void MenuScreen::render() {
 
   Framebuffer::clear(Color::Black);
-  glm::vec2 worldSize = viewport.getWorldSize();
+  // glm::vec2 worldSize = viewport.getWorldSize();
+  glm::vec2 worldSize = Core::App()->getSize();
 
   batch.setShader(defaultShader);
   batch.begin();

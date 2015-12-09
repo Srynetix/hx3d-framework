@@ -128,12 +128,14 @@ void SDL2Application::create(int width, int height, std::string title) {
   }
 #endif
 
+  Log.Info("Screen: %d x %d", _width, _height);
+
   glViewport(0, 0, _width, _height);
 
   // glEnable(GL_CULL_FACE);
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);
-  
+
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
