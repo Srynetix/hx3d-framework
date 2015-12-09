@@ -28,6 +28,9 @@ class iOSBuilder(Builder):
     def clean(self):
         Utils.rmdir(self.path)
         Utils.rmdir("{}/ios/assets".format(config["game_name"]))
+        Utils.rmdir("{}/ios/build".format(config["game_name"]))
+        Utils.rmdir("tests/ios/assets")
+        Utils.rmdir("tests/ios/build")
 
     # Engine
     def prepare_engine(self):
@@ -51,7 +54,18 @@ class iOSBuilder(Builder):
 
     # Tests
     def build_tests(self):
-        pass
+        game_name = config["game_name"]
+
+        # Assets
+        Utils.copydir("engine/assets", "tests/ios/assets")
+        Utils.copydir("tests/assets".format(game_name), "tests/ios/assets")
+
+        # Game
+        Utils.execCommand("cd tests/ios && xcodebuild -configuration Debug")
+
+    def install_tests(self):
+        Utils.execCommand("ios-deploy -b tests/ios/build/Debug-iphoneos/*.app")
+
     def debug_tests(self):
         pass
     def execute_tests(self):

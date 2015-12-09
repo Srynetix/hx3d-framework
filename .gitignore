@@ -18,6 +18,9 @@ tests/android/obj
 tests/android/ext/hx3d/
 tests/android/jni/include
 
+tests/ios/assets
+tests/ios/build
+
 .DS_Store
 /CMakeLists.txt
 
