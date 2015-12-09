@@ -229,11 +229,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../dependencies/lib/ios",
+					"$(SRCROOT)/../../_build_ios/engine/Debug-iphoneos",
+					"$(SRCROOT)/../../_build_ios/tests/Debug-iphoneos",
 					"$(SRCROOT)/lib",
 					"$(PROJECT_DIR)/lib",
-					/Users/denis/Hey/hx3d/dependencies/lib/ios,
-					"/Users/denis/Hey/hx3d/_build_ios/engine/Debug-iphoneos",
-					"/Users/denis/Hey/hx3d/_build_ios/tests/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -263,11 +262,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../dependencies/lib/ios",
+					"$(SRCROOT)/../../_build_ios/engine/Debug-iphoneos",
+					"$(SRCROOT)/../../_build_ios/tests/Debug-iphoneos",
 					"$(SRCROOT)/lib",
 					"$(PROJECT_DIR)/lib",
-					/Users/denis/Hey/hx3d/dependencies/lib/ios,
-					"/Users/denis/Hey/hx3d/_build_ios/engine/Debug-iphoneos",
-					"/Users/denis/Hey/hx3d/_build_ios/tests/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";

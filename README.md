@@ -3,8 +3,10 @@
 hx3d is a simple and easy to understand 2D/3D game framework made in C++.  
 It is inspired by the well-known Java framework LibGDX plus some books and tutorials on the subject.
 
-It currently uses SDL 2 as a window backend, with SDL_image for texture loading.  
+hx3d is somewhat modular. For now, rendering is done with SDL2, but one can easily change the implementation.
 All the rendering is done with OpenGL 3+ / OpenGLES 2.0.
+
+The "cross-platform" part works good thanks to SDL2.
 
 # Table of contents
 
@@ -29,12 +31,19 @@ To import them, just clone them in the "dependencies" folder.
 You can use the `clone_dependencies.sh` script.
 
 - SDL2 *2.0.3*
-- SDL2_image *2.0.0*
 - SDL2_mixer *2.0.0*
-- SDL2_net *2.0.0*
 - Freetype *2.6*
 - Freetype-GL *git*
-- Box2D *2.3.1*
+- stb_image *git*
+
+If you want to build for Android, you will need the **Android SDK** and **NDK**.  
+For iOS, you will need Mac OS (obviously), and **ios-deploy** to deploy on your device.  
+
+You can install *ios-deploy* with `npm`:
+
+```bash
+npm install -g ios-deploy
+```
 
 ##### For testing #####
 - Google Test *1.7.0*
@@ -74,7 +83,7 @@ You can use the `clone_dependencies.sh` script.
   - [x] Basic font drawing
   - [x] Individual glyph drawing
 - **Physics**
-  - [ ] *2D physics (Box2D) (in progress)*
+  - [ ] *Custom 2D physics (in progress)*
   - [ ] 3D physics (Bullet ?)
 - **Scene Graph & ECS**
   - [x] Entity Component System
@@ -95,15 +104,15 @@ You can use the `clone_dependencies.sh` script.
 
 - Linux
 - Android
+- Mac OS X
+- iOS
 
 #### In process ####
 
-- Mac OS X
 - Windows
 
 #### Will be available later ####
 
-- iOS
 - Emscripten ?
 
 ## <a name="building"></a> Building ##
@@ -122,6 +131,7 @@ You must provide the target. The existing targets are:
 - `android`
 - `windows`
 - `macos`
+- `ios`
 
 Then it supports multiple options:
 
