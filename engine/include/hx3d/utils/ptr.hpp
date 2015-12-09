@@ -25,18 +25,20 @@
 
 #include <memory>
 
-template <class T>
-using Ptr = std::shared_ptr<T>;
+namespace hx3d {
+  template <class T>
+  using Ptr = std::shared_ptr<T>;
 
-template <class T>
-using UPtr = std::unique_ptr<T>;
+  template <class T>
+  using UPtr = std::unique_ptr<T>;
 
-template <class T>
-using EnableSharedThis = std::enable_shared_from_this<T>;
+  template <class T>
+  using EnableSharedThis = std::enable_shared_from_this<T>;
 
-template <class T, class... Args>
-Ptr<T> Make(Args&&... args) {
-  return std::make_shared<T>(args...);
+  template <class T, class... Args>
+  Ptr<T> Make(Args&&... args) {
+    return std::make_shared<T>(args...);
+  }
 }
 
 #endif

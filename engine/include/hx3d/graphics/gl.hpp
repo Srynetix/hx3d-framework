@@ -45,13 +45,13 @@
 #elif __APPLE__
 
   #include "TargetConditionals.h"
-  
+
     #if TARGET_IPHONE_SIMULATOR
 
       #include <OpenGLES/ES2/gl.h>
 
     #elif TARGET_OS_IPHONE
-
+    
       #include <OpenGLES/ES2/gl.h>
 
     #elif TARGET_OS_MAC

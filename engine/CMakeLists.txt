@@ -37,8 +37,7 @@ set(
   COMMON_LIBRARIES
 
   "-lfreetype-gl\
-  -lfreetype\
-  -lBox2D"
+  -lfreetype"
 )
 
 set(
@@ -92,6 +91,21 @@ set(
   -landroid"
 )
 
+set(
+  IOS_LIBRARIES
+
+  ${COMMON_LIBRARIES}
+  "-lSDL2\
+  -lSDL2_mixer\
+  -framework CoreGraphics\
+  -framework AudioToolbox\
+  -framework CoreAudio\
+  -framework QuartzCore\
+  -framework OpenGLES\
+  -framework UIKit\
+  -framework Foundation"
+)
+
 if (WIN32)
   set(DESKTOP_LIBRARIES ${WINDOWS_LIBRARIES})
 elseif(MACOSX)
@@ -120,11 +134,14 @@ include(./EngineFiles.cmake)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NEEDED_CXX_FLAGS}")
 set(LIBRARY_NAME "${PROJECT_NAME}")
 
-add_library(${LIBRARY_NAME} SHARED ${COMMON_FILES})
-
 if (ANDROID)
+  add_library(${LIBRARY_NAME} SHARED ${COMMON_FILES})
   target_link_libraries(${LIBRARY_NAME} ${ANDROID_LIBRARIES})
+elseif(IOS)
+  add_library(${LIBRARY_NAME} STATIC ${COMMON_FILES})
+  target_link_libraries(${LIBRARY_NAME} ${IOS_LIBRARIES})
 else()
+  add_library(${LIBRARY_NAME} SHARED ${COMMON_FILES})
   target_link_libraries(${LIBRARY_NAME} ${DESKTOP_LIBRARIES})
 endif()
 

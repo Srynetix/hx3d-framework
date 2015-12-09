@@ -26,8 +26,31 @@
 #ifdef __ANDROID__
   #include <android/log.h>
   #define LOG(msg) __android_log_print(ANDROID_LOG_VERBOSE, "hx3d", msg, 1)
+#elif __APPLE__
+  #include "TargetConditionals.h"
+  #ifndef TARGET_OS_IPHONE
+    #define LOG(msg) std::cout << msg << std::endl
+  #endif
 #else
   #define LOG(msg) std::cout << msg << std::endl
+#endif
+
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#ifdef TARGET_OS_IPHONE
+#include <CoreFoundation/CoreFoundation.h>
+#if __cplusplus
+extern "C" {
+#endif
+  void NSLog(CFStringRef format, ...);
+  void NSLogv(CFStringRef format, va_list args);
+#if __cplusplus
+}
+#endif
+
+#define LOG(msg) NSLog(CFStringCreateWithCString(kCFAllocatorDefault, msg, kCFStringEncodingUTF8))
+
+#endif
 #endif
 
 namespace hx3d {

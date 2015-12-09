@@ -80,7 +80,18 @@ private:
     @param path Path to file
     */
     static std::string readAsString(std::string path);
-  #endif
+#elif __APPLE__
+  
+#include "TargetConditionals.h"
+#ifdef TARGET_OS_IPHONE
+  
+  static Ptr<File> loadAsciiFileiOS(std::string path);
+  static Ptr<File> loadBinaryFileiOS(std::string path);
+  
+  static std::string readAsString(std::string path);
+  
+#endif
+#endif
 
   /**
   Load an ascii file from a path on a desktop system.

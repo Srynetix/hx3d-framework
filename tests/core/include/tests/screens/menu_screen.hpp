@@ -53,9 +53,9 @@ public:
   virtual void render() override;
 
 private:
-  Ptr<hx3d::Font> font;
-  Ptr<hx3d::Shader> defaultShader;
-  Ptr<hx3d::Shader> pixShader;
+  hx3d::Ptr<hx3d::Font> font;
+  hx3d::Ptr<hx3d::Shader> defaultShader;
+  hx3d::Ptr<hx3d::Shader> pixShader;
 
   hx3d::OrthographicCamera camera;
   hx3d::FitViewport viewport;

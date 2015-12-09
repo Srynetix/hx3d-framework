@@ -25,21 +25,34 @@ class iOSBuilder(Builder):
     def __init__(self, options, game):
         super().__init__("ios", options, game)
 
-    def install(self):
-        pass
-
-    def prepare(self):
-        command = \
-            "cmake \
-            -GNinja \
-            -DCMAKE_TOOLCHAIN_FILE=cmake/iOS.cmake \
-            -DIOS_PLATFORM={} \
-            ..".format(config["ios_platform"])
-
-        self.prepare_internal(command)
-
-    def build(self):
-        self.build_internal()
-
     def clean(self):
         Utils.rmdir(self.path)
+        Utils.rmdir("{}/ios/assets".format(config["game_name"]))
+
+    # Engine
+    def prepare_engine(self):
+        self.prepare_internal("cmake -G Xcode -DCMAKE_TOOLCHAIN_FILE=cmake/iOS.cmake -DIOS_PLATFORM={} ..".format(config["ios_platform"]))
+    def build_engine(self):
+        Utils.execCommand("cd {} && xcodebuild -target ALL_BUILD".format(self.path))
+
+    # Game
+    def build_game(self):
+        game_name = config["game_name"]
+
+        # Assets
+        Utils.copydir("engine/assets", "{}/ios/assets".format(game_name))
+        Utils.copydir("{}/assets".format(game_name), "{}/ios/assets".format(game_name))
+
+        # Game
+        Utils.execCommand("cd {}/ios && xcodebuild -configuration Debug".format(game_name))
+
+    def install_game(self):
+        Utils.execCommand("ios-deploy -b {}/ios/build/Debug-iphoneos/*.app".format(config["game_name"]))
+
+    # Tests
+    def build_tests(self):
+        pass
+    def debug_tests(self):
+        pass
+    def execute_tests(self):
+        pass

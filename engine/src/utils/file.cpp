@@ -24,6 +24,7 @@
 #include <sstream>
 #include <fstream>
 
+#include "hx3d/core/platforms.hpp"
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
@@ -41,16 +42,20 @@ File::~File() {
 ///////////////////////////////////
 
 Ptr<File> File::loadAsciiFile(std::string path) {
-  #ifdef __ANDROID__
+  #if defined(__ANDROID__)
     return loadAsciiFileAndroid(path);
+  #elif defined(__IOS__)
+    return loadAsciiFileiOS("assets/" + path);
   #else
     return loadAsciiFileDesktop("assets/" + path);
   #endif
 }
 
 Ptr<File> File::loadBinaryFile(std::string path) {
-  #ifdef __ANDROID__
+  #if defined(__ANDROID__)
     return loadBinaryFileAndroid(path);
+  #elif defined(__IOS__)
+    return loadBinaryFileiOS("assets/" + path);
   #else
     return loadBinaryFileDesktop("assets/" + path);
   #endif
@@ -79,6 +84,8 @@ Ptr<File> File::loadAsciiFileDesktop(std::string path) {
     return fileptr;
   }
 
+  Log.Error("Bad path: %s", path.c_str());
+
   return nullptr;
 }
 
@@ -100,8 +107,35 @@ Ptr<File> File::loadBinaryFileDesktop(std::string path) {
     return fileptr;
   }
 
+  Log.Error("Bad path: %s", path.c_str());
+
   return nullptr;
 }
+
+}
+
+// iOS ///////////////////////////////////////
+
+#ifdef __APPLE__
+
+#include "TargetConditionals.h"
+#ifdef TARGET_OS_IPHONE
+
+  #include <CoreFoundation/CoreFoundation.h>
+
+namespace hx3d {
+
+  Ptr<File> File::loadAsciiFileiOS(std::string path) {
+    return loadAsciiFileDesktop(path);
+  }
+
+  Ptr<File> File::loadBinaryFileiOS(std::string path) {
+    return loadBinaryFileDesktop(path);
+  }
+}
+
+#endif
+#endif
 
 // Android ///////////////////////////////////
 
@@ -111,6 +145,8 @@ Ptr<File> File::loadBinaryFileDesktop(std::string path) {
   #include <android/log.h>
   #include <android/asset_manager.h>
   #include <android/asset_manager_jni.h>
+
+namespace hx3d {
 
   std::string File::readAsString(std::string path) {
     // Environnement et classe de l'activité
@@ -188,7 +224,6 @@ Ptr<File> File::loadBinaryFileDesktop(std::string path) {
 
     return file;
   }
+}
 
 #endif
-
-} /* hx3d */
