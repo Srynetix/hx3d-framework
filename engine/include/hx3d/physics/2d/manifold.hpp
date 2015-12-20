@@ -24,11 +24,10 @@ public:
 
   ///////////
 
-  Manifold(Ptr<Collider> a, Ptr<Collider> b);
+  Manifold(const Ptr<Collider>& a, const Ptr<Collider>& b);
+
   bool solve();
-
   void initialize();
-
   void applyImpulse();
 
   void positionalCorrection();

@@ -27,6 +27,8 @@
 namespace hx3d {
 namespace math {
 
+const float kEpsilon = 0.0001;
+
 /**
 Rotate a vector of an angle on one/multiple axis.
 
@@ -41,24 +43,14 @@ glm::vec2 cross(float v, glm::vec2 vec);
 float cross(glm::vec2 vec1, glm::vec2 vec2);
 
 glm::vec2 normalize(glm::vec2 vec);
-
 float squareLength(glm::vec2 vec);
 
-/**
-Convert a Box2D vector to GLM vector.
+float angleBetweenVecs(const glm::vec2 vec1, const glm::vec2 vec2);
 
-@param vector Box2D vector
-@return GLM vector
-*/
-glm::vec2 convert(b2Vec2 vector);
-
-/**
-Convert a GLM vector to Box2D vector.
-
-@param vector GLM vector
-@return Box2D vector
-*/
-b2Vec2 convert(glm::vec2 vector);
+template <class T>
+inline bool epsEqual(T v1, T v2) {
+  return std::abs(v1 - v2) <= kEpsilon;
+}
 
 } /* math */
 } /* hx3d */

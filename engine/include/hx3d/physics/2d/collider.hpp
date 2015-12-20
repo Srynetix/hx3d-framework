@@ -78,6 +78,8 @@ public:
   float torque;
   float orientation;
 
+  bool fixedRotation;
+
   Type type;
   Shape shape;
 

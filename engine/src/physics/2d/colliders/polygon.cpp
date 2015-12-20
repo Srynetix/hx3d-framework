@@ -117,11 +117,9 @@ void Polygon::setOrientation(float angle) {
   float s = std::sin(angle);
 
   u[0][0] = c;
-  u[0][1] = -s;
-  u[1][0] = s;
+  u[1][0] = -s;
+  u[0][1] = s;
   u[1][1] = c;
-
-  orientation = angle;
 }
 
 void Polygon::computeMass(float density) {
@@ -138,17 +136,16 @@ void Polygon::computeMass(float density) {
   float inv3 = 1.f / 3.f;
 
   for (unsigned int i = 0; i < vertexCount; ++i) {
+    unsigned int j = i + 1 < vertexCount ? i + 1 : 0;
     glm::vec2 p1 = vertices[i];
-    glm::vec2 p2 = vertices[(i + 1) % vertexCount];
+    glm::vec2 p2 = vertices[j];
 
     float D = math::cross(p1, p2);
     float triangleArea = 0.5f * D;
 
     area += triangleArea;
 
-    float weight = triangleArea * inv3;
-    centroid += p1 * weight;
-    centroid += p2 * weight;
+    centroid += triangleArea * inv3 * (p1 + p2);
 
     float intx2 = p1.x * p1.x + p2.x * p1.x + p2.x * p2.x;
     float inty2 = p1.y * p1.y + p2.y * p1.y + p2.y * p2.y;

@@ -57,6 +57,7 @@ def main():
     parser.add_argument('-i','--install', action="store_true", help='Install')
     parser.add_argument('-t', '--test', action="store_true", help='Test')
     parser.add_argument('-e','--execute', action="store_true", help="Execute")
+    parser.add_argument('-p','--profile', action="store_true", help="Profile")
     args = parser.parse_args()
 
     if Utils.direxists("game"):

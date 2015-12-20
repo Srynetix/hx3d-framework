@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Array geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,17 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#ifndef HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/base_geometry.hpp"
 
 namespace hx3d {
 
-class StarGeometry: public Geometry {
-
+class Geometry: public BaseGeometry {
 public:
-  StarGeometry();
+  Geometry();
+  virtual void draw(Ptr<Shader> shader) override;
 };
 
 } /* hx3d */

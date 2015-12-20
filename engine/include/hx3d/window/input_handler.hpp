@@ -23,6 +23,8 @@
 
 #include "hx3d/window/events.hpp"
 
+#include <glm/glm.hpp>
+
 namespace hx3d {
 
 class InputHandler {

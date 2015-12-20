@@ -1,3 +1,27 @@
+/*
+    Copyright (C) 2013 Randy Gaul http://RandyGaul.net
+    Thanks to RandyGaul for his tutorial and source.
+
+    Copyright (C) 2015 Denis BOURGE
+    I've adapted RandyGaul's code to use with glm and my own code.
+    Then I've added some features, as the multi-gravity system.
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
 #ifndef HX3D_PHYSICS_2D_WORLD
 #define HX3D_PHYSICS_2D_WORLD
 
@@ -15,7 +39,7 @@ namespace physics2d {
 
 class World {
 public:
-  World(const glm::vec2 globalGravity = {0, -9.81}, const unsigned int iterations = 5, const float physRatio = 30.f);
+  World(const glm::vec2 globalGravity = {0, -9.81}, const unsigned int iterations = 10, const float physRatio = 10.f);
 
   void addAttractor(const Ptr<Attractor>& attractor);
   void addCollider(const Ptr<Collider>& collider);

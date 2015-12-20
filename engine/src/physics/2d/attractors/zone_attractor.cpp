@@ -42,7 +42,7 @@ bool ZoneAttractor::overlaps(const Ptr<Collider>& collider) {
 }
 
 void ZoneAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
-  collider->gravityForce += velocity * (dt / 2);
+  collider->gravityForce += velocity;
 }
 
 } /* physics2d */

@@ -5,7 +5,7 @@
 #include "hx3d/utils/assets.hpp"
 
 #include "hx3d/core/core.hpp"
-#include "hx3d/window/events.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 using namespace hx3d;
 
@@ -21,6 +21,7 @@ void TestGame::create() {
   Core::Assets()->create<Texture>("stickman", "textures/stickman.png");
 
   Core::Assets()->create<Shader>("pix2D", "shaders/pix2D");
+  Core::Assets()->create<Shader>("custom2D", "shaders/custom2D");
 
   Core::Events()->emulateTouchWithMouse(true);
 

@@ -23,7 +23,7 @@ bool PointAttractor::overlaps(const Ptr<Collider>& collider) {
 void PointAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
   glm::vec2 dir = math::normalize(position - collider->position);
   dir *= velocity;
-  collider->gravityForce += dir * (dt / 2);
+  collider->gravityForce += dir;
 }
 
 }

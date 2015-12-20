@@ -35,6 +35,7 @@ Collider::Collider(Shape shapeType, const Type colliderType):
   angularVelocity(0),
   torque(0),
   orientation(0),
+  fixedRotation(false),
   type(colliderType),
   shape(shapeType)
   {}

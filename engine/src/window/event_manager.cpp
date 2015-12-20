@@ -1,5 +1,5 @@
 /*
-    Event management.
+    Event manager.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/window/events.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 
@@ -184,5 +184,6 @@ void EventManager::setInputHandler(Ptr<InputHandler> handler) {
 void EventManager::setInputHandler(InputHandler* handler) {
   _currentHandler = handler;
 }
+
 
 } /* hx3d */

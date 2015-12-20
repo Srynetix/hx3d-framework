@@ -21,7 +21,7 @@
 #ifndef HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 #define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/geometry.hpp"
 
 namespace hx3d {
 

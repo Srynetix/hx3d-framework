@@ -15,7 +15,7 @@ set(
   "${ENGINE_SRC}/window/application.cpp"
   "${ENGINE_SRC}/window/application_config.cpp"
   "${ENGINE_SRC}/window/game.cpp"
-  "${ENGINE_SRC}/window/events.cpp"
+  "${ENGINE_SRC}/window/event_manager.cpp"
   "${ENGINE_SRC}/window/screen.cpp"
 
   "${ENGINE_SRC}/window/sdl2/sdl2_application.cpp"
@@ -44,6 +44,7 @@ set(
   "${ENGINE_SRC}/graphics/texture.cpp"
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/batch.cpp"
+  "${ENGINE_SRC}/graphics/geometry.cpp"
   "${ENGINE_SRC}/graphics/mesh.cpp"
   "${ENGINE_SRC}/graphics/framebuffer.cpp"
   "${ENGINE_SRC}/graphics/transform.cpp"
@@ -64,6 +65,7 @@ set(
   "${ENGINE_SRC}/graphics/geometries/sprite_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/cube_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/origin_geometry.cpp"
+  "${ENGINE_SRC}/graphics/geometries/base_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/star_geometry.cpp"
 
   "${ENGINE_SRC}/gui/system.cpp"

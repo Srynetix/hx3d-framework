@@ -1,5 +1,7 @@
 #include "hx3d/physics/2d/colliders/circle.hpp"
 
+#include <glm/gtc/constants.hpp>
+
 namespace hx3d {
 namespace physics2d {
 namespace colliders {
@@ -12,11 +14,14 @@ Circle::Circle(float radius, const Type colliderType):
 }
 
 void Circle::setOrientation(float angle) {
-  orientation = angle;
 }
 
 void Circle::computeMass(float density) {
-  massData.setMass(density);
+  float mass = glm::pi<float>() * radius * radius * density;
+  massData.setMass(mass);
+
+  float inertia = mass * radius * radius;
+  massData.setInertia(inertia);
 }
 
 } /* colliders */

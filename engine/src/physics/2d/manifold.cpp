@@ -7,7 +7,7 @@
 namespace hx3d {
 namespace physics2d {
 
-Manifold::Manifold(Ptr<Collider> a, Ptr<Collider> b): a(a), b(b) {
+Manifold::Manifold(const Ptr<Collider>& a, const Ptr<Collider>& b): a(a), b(b) {
   penetration = 0.f;
   normal = {0, 0};
   mixedRestitution = 0.f;
@@ -21,7 +21,7 @@ bool Manifold::solve() {
   if (a->shape == Collider::Shape::Circle && b->shape == Collider::Shape::Circle)
     value = checkCollisions(*this, std::dynamic_pointer_cast<Circle>(a), std::dynamic_pointer_cast<Circle>(b));
   else if (a->shape == Collider::Shape::Circle && b->shape == Collider::Shape::Polygon)
-    value = checkCollisions(*this, std::dynamic_pointer_cast<Polygon>(b), std::dynamic_pointer_cast<Circle>(a));
+    value = checkCollisions(*this, std::dynamic_pointer_cast<Circle>(a), std::dynamic_pointer_cast<Polygon>(b));
   else if (a->shape == Collider::Shape::Polygon && b->shape == Collider::Shape::Circle)
     value = checkCollisions(*this, std::dynamic_pointer_cast<Polygon>(a), std::dynamic_pointer_cast<Circle>(b));
   else if (a->shape == Collider::Shape::Polygon && b->shape == Collider::Shape::Polygon)
@@ -41,14 +41,14 @@ void Manifold::initialize() {
 
     glm::vec2 rv = b->velocity + math::cross(b->angularVelocity, rb) - a->velocity - math::cross(a->angularVelocity, ra);
 
-    if (math::squareLength(rv) < 5) {
+    if (math::squareLength(rv) < (0.025 + math::kEpsilon)) {
       mixedRestitution = 0;
     }
   }
 }
 
 void Manifold::applyImpulse() {
-  if (a->massData.invMass + b->massData.invMass == 0) {
+  if (math::epsEqual(a->massData.invMass + b->massData.invMass, 0.f)) {
     infiniteMassCorrection();
     return;
   }
@@ -63,10 +63,10 @@ void Manifold::applyImpulse() {
     if (contactVelocity > 0)
       return;
 
-    float raCross = std::max(math::cross(ra, normal), 0.f);
-    float rbCross = std::max(math::cross(rb, normal), 0.f);
+    float raCross = math::cross(ra, normal);
+    float rbCross = math::cross(rb, normal);
 
-    float invMassSum = a->massData.invMass + b->massData.invMass + std::sqrt(raCross) * a->massData.invInertia + std::sqrt(rbCross) * b->massData.invInertia;
+    float invMassSum = a->massData.invMass + b->massData.invMass + (raCross * raCross) * a->massData.invInertia + (rbCross * rbCross) * b->massData.invInertia;
 
     float j = -(1.f + mixedRestitution) * contactVelocity;
     j /= invMassSum;
@@ -85,23 +85,24 @@ void Manifold::applyImpulse() {
     jt /= invMassSum;
     jt /= (float)contacts.size();
 
-    if (jt == 0.f)
+    if (math::epsEqual(jt, 0.f))
       return;
 
-    // glm::vec2 tangentImpulse;
-    // if (std::abs(jt) < j * mixedStaticFriction)
-      // tangentImpulse = t * jt;
-    // else
-      // tangentImpulse = t * -j * mixedDynamicFriction;
+    glm::vec2 tangentImpulse;
+    if (std::abs(jt) < j * mixedStaticFriction)
+      tangentImpulse = t * jt;
+    else
+      tangentImpulse = t * -j * mixedDynamicFriction;
 
-    // a->applyImpulse(-tangentImpulse, ra);
-    // b->applyImpulse(tangentImpulse, rb);
+    a->applyImpulse(-tangentImpulse, ra);
+    b->applyImpulse(tangentImpulse, rb);
   }
 }
 
 void Manifold::positionalCorrection() {
   const float kSlop = 0.05f;
   const float percent = 0.4f;
+
   glm::vec2 correction = (std::max(penetration - kSlop, 0.f) / (a->massData.invMass + b->massData.invMass)) * normal * percent;
 
   a->position -= correction * a->massData.invMass;

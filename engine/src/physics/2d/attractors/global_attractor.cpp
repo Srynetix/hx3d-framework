@@ -14,7 +14,7 @@ bool GlobalAttractor::overlaps(const Ptr<Collider>& collider) {
 }
 
 void GlobalAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
-  collider->gravityForce += velocity * (dt / 2);
+  collider->gravityForce += velocity;
 }
 
 }

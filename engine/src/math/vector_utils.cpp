@@ -49,23 +49,30 @@ float cross(glm::vec2 vec1, glm::vec2 vec2) {
 }
 
 glm::vec2 normalize(glm::vec2 vec) {
-  if (vec.x == 0.f && vec.y == 0.f) {
-    return vec;
+  float length = glm::length(vec);
+  if (length > kEpsilon) {
+    float inv = 1.f / length;
+    return {vec.x * inv, vec.y * inv};
   }
 
-  return glm::normalize(vec);
+  return vec;
 }
 
 float squareLength(glm::vec2 vec) {
   return vec.x * vec.x + vec.y * vec.y;
 }
 
-glm::vec2 convert(b2Vec2 vector) {
-  return glm::vec2(vector.x, vector.y);
-}
+float angleBetweenVecs(const glm::vec2 vec1, const glm::vec2 vec2) {
+  float angle = 0.f;
+  float a = glm::dot(vec1, vec2);
 
-b2Vec2 convert(glm::vec2 vector) {
-  return b2Vec2(vector.x, vector.y);
+  if (vec2.x < 0) {
+    angle = -std::acos(a);
+  } else {
+    angle = std::acos(a);
+  }
+
+  return angle;
 }
 
 } /* math */

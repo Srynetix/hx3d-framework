@@ -2,8 +2,6 @@
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
-
-#include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/graphics/geometries/cube_geometry.hpp"
 
 using namespace hx3d;

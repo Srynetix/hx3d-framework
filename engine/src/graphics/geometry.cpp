@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,19 +18,28 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-
 #include "hx3d/graphics/geometry.hpp"
 
 namespace hx3d {
 
-class StarGeometry: public Geometry {
+Geometry::Geometry(): BaseGeometry() {}
 
-public:
-  StarGeometry();
-};
+void Geometry::draw(Ptr<Shader> shader) {
+
+  for (auto& a: _attributes) {
+    a.second.begin(shader);
+  }
+
+  if (_indices.size() == 0) {
+    glDrawArrays(GL_TRIANGLES, 0, _attributes["Position"].size());
+  } else {
+    _indices.begin(shader);
+    _indices.end(shader);
+  }
+
+  for (auto& a: _attributes) {
+    a.second.end(shader);
+  }
+}
 
 } /* hx3d */
-
-#endif

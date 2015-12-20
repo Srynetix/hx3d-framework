@@ -29,39 +29,16 @@ namespace hx3d {
 
 class BaseGeometry {
 public:
-  BaseGeometry() {
-    addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
-    addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
-    addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
-  }
+  BaseGeometry();
 
-  void addAttribute(std::string name, Attribute attribute) {
-    _attributes[name].create(attribute);
-  }
+  void addAttribute(std::string name, Attribute attribute);
+  void setAttribute(std::string name, std::vector<float> values);
+  AttributeArrayBuffer& getAttribute(std::string name);
 
-  void setAttribute(std::string name, std::vector<float> values) {
-    _attributes[name].set(values);
-  }
+  void setIndices(std::vector<GLushort> values);
+  IndexArrayBuffer& getIndices();
 
-  AttributeArrayBuffer& getAttribute(std::string name) {
-    return _attributes[name];
-  }
-
-  void setIndices(std::vector<GLushort> values) {
-    _indices.set(values);
-  }
-
-  IndexArrayBuffer& getIndices() {
-    return _indices;
-  }
-
-  void uploadAll() {
-    for (auto& a: _attributes) {
-      a.second.upload();
-    }
-
-    _indices.upload();
-  }
+  void uploadAll();
 
   virtual void draw(Ptr<Shader> shader) = 0;
 

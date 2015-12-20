@@ -21,7 +21,7 @@
 #ifndef HX3D_WINDOW_SDL2_SDL2EVENTS
 #define HX3D_WINDOW_SDL2_SDL2EVENTS
 
-#include "hx3d/window/events.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 

@@ -32,6 +32,7 @@ class Builder:
         self._clean = options.clean
         self._debug = options.debug
         self._test = options.test
+        self._profile = options.profile
 
     # Engine
     def prepare_engine(self):

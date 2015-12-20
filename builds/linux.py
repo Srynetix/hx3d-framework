@@ -45,7 +45,8 @@ class LinuxBuilder(Builder):
         Utils.execCommand("cd {}/{} && {} ./{}".format(self.path, game_name, debugger_name, game_name))
     def execute_game(self):
         game_name = config["game_name"]
-        Utils.execCommand("cd {}/{} && ./{}".format(self.path, game_name, game_name))
+        profCmd = "apitrace trace --api gl" if self._profile else ""
+        Utils.execCommand("cd {}/{} && {} ./{}".format(self.path, game_name, profCmd, game_name))
 
     # Tests
     def build_tests(self):
@@ -55,4 +56,5 @@ class LinuxBuilder(Builder):
         debugger_name = config["debugger_name"]
         Utils.execCommand("cd {}/tests && {} ./tests".format(self.path, debugger_name))
     def execute_tests(self):
-        Utils.execCommand("cd {}/tests && ./tests".format(self.path))
+        profCmd = "apitrace trace --api gl" if self._profile else ""
+        Utils.execCommand("cd {}/tests && {} ./tests".format(self.path, profCmd))

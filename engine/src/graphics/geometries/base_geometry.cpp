@@ -1,5 +1,5 @@
 /*
-    Array geometry.
+    Base geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,36 +18,42 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
-
 #include "hx3d/graphics/geometries/base_geometry.hpp"
 
 namespace hx3d {
 
-class Geometry: public BaseGeometry {
-public:
-  Geometry(): BaseGeometry() {}
+BaseGeometry::BaseGeometry() {
+  addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
+  addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
+  addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
+}
 
-  virtual void draw(Ptr<Shader> shader) override {
+void BaseGeometry::addAttribute(std::string name, Attribute attribute) {
+  _attributes[name].create(attribute);
+}
 
-    for (auto& a: _attributes) {
-      a.second.begin(shader);
-    }
+void BaseGeometry::setAttribute(std::string name, std::vector<float> values) {
+  _attributes[name].set(values);
+}
 
-    if (_indices.size() == 0) {
-      glDrawArrays(GL_TRIANGLES, 0, _attributes["Position"].size());
-    } else {
-      _indices.begin(shader);
-      _indices.end(shader);
-    }
+AttributeArrayBuffer& BaseGeometry::getAttribute(std::string name) {
+  return _attributes[name];
+}
 
-    for (auto& a: _attributes) {
-      a.second.end(shader);
-    }
+void BaseGeometry::setIndices(std::vector<GLushort> values) {
+  _indices.set(values);
+}
+
+IndexArrayBuffer& BaseGeometry::getIndices() {
+  return _indices;
+}
+
+void BaseGeometry::uploadAll() {
+  for (auto& a: _attributes) {
+    a.second.upload();
   }
-};
+
+  _indices.upload();
+}
 
 } /* hx3d */
-
-#endif

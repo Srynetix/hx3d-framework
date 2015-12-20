@@ -2,6 +2,8 @@
 
 #include "hx3d/graphics/sprite.hpp"
 
+#include "hx3d/math/vector_utils.hpp"
+
 namespace hx3d {
 namespace physics2d {
 
@@ -20,6 +22,7 @@ void World::addCollider(const Ptr<Collider>& collider) {
 }
 
 void World::removeCollider(const Ptr<Collider>& collider) {
+  // TODO
 }
 
 void World::step(float dt) {
@@ -84,9 +87,9 @@ void World::render(Batch& batch) {
       sprite.setTexture(Texture::Blank);
       sprite.transform.position.x = zone->position.x * _physRatio;
       sprite.transform.position.y = zone->position.y * _physRatio;
+      sprite.transform.position.z = -0.25f;
       sprite.transform.size.x = zone->width * _physRatio;
       sprite.transform.size.y = zone->height * _physRatio;
-      sprite.transform.position.z = -0.5f;
 
       sprite.setTint(Color(240, 20, 201));
       batch.draw(sprite);
@@ -98,9 +101,9 @@ void World::render(Batch& batch) {
       sprite.setTexture(Texture::Blank);
       sprite.transform.position.x = point->position.x * _physRatio;
       sprite.transform.position.y = point->position.y * _physRatio;
+      sprite.transform.position.z = -0.25f;
       sprite.transform.size.x = point->radius * 2 * _physRatio;
       sprite.transform.size.y = point->radius * 2 * _physRatio;
-      sprite.transform.position.z = -0.25f;
 
       sprite.setTint(Color(20, 240, 201));
       batch.draw(sprite);
@@ -140,6 +143,45 @@ void World::render(Batch& batch) {
 
     batch.draw(sprite);
   }
+
+  for (unsigned int i = 0; i < _contacts.size(); ++i) {
+    const Manifold& m = _contacts[i];
+
+    for (unsigned int j = 0; j < m.contacts.size(); ++j) {
+      const glm::vec2& contact = m.contacts[j];
+
+      Sprite sprite;
+      sprite.setTexture(Texture::Blank);
+      sprite.setTint(Color::Green);
+      sprite.transform.position.x = contact.x * _physRatio;
+      sprite.transform.position.y = contact.y * _physRatio;
+      sprite.transform.position.z = 0.5f;
+      sprite.transform.size.x = 5;
+      sprite.transform.size.y = 5;
+
+      batch.draw(sprite);
+    }
+  }
+
+  for (unsigned int i = 0; i < _contacts.size(); ++i) {
+    const Manifold& m = _contacts[i];
+
+    for (unsigned int j = 0; j < m.contacts.size(); ++j) {
+      const glm::vec2& contact = m.contacts[j];
+
+      Sprite sprite;
+      sprite.setTexture(Texture::Blank);
+      sprite.setTint(Color(255, 0, 255));
+      sprite.transform.size.x = 3;
+      sprite.transform.size.y = 20;
+      sprite.transform.position.x = contact.x * _physRatio;
+      sprite.transform.position.y = contact.y * _physRatio;
+      sprite.transform.position.z = 0.75f;
+      sprite.transform.rotation.z = math::angleBetweenVecs(glm::vec2(0, 1), m.normal);
+
+      batch.draw(sprite);
+    }
+  }
 }
 
 float World::getPhysRatio() const {
@@ -156,9 +198,11 @@ void World::integrateForces(const Ptr<Collider>& c, float dt) {
     Attractor::applyForce(c, attractor, dt);
   }
 
-  c->velocity += c->gravityForce;
-  c->velocity += (c->force * c->massData.invMass) * (dt / 2.f);
-  // c->angularVelocity += c->torque * c->massData.invInertia * (dt / 2.f);
+  // c->velocity += c->gravityForce;
+  c->velocity += ((c->force * c->massData.invMass) + (c->gravityForce * 2.f)) * (dt / 2.f);
+  if (!c->fixedRotation) {
+    c->angularVelocity += c->torque * c->massData.invInertia * (dt / 2.f);
+  }
 }
 
 void World::integrateVelocity(const Ptr<Collider>& c, float dt) {
@@ -168,23 +212,24 @@ void World::integrateVelocity(const Ptr<Collider>& c, float dt) {
   c->position += c->velocity * dt;
 
   // Calcul de l'angle
+  //
+  // glm::vec2 nP = glm::vec2(0, -1);
+  // glm::vec2 nG = glm::normalize(c->gravityForce);
+  // float angle = 0.f;
+  // float a = glm::dot(nP, nG);
+  //
+  // if (nG.x < 0) {
+  //   angle = -std::acos(a);
+  // } else {
+  //   angle = std::acos(a);
+  // }
+  //
+  // c->setOrientation(angle);
 
-  glm::vec2 nP = glm::vec2(0, -1);
-  glm::vec2 nG = glm::normalize(c->gravityForce);
-  float angle = 0.f;
-  float a = glm::dot(nP, nG);
-
-  if (nG.x < 0) {
-    angle = -std::acos(a);
-  } else {
-    angle = std::acos(a);
+  if (!c->fixedRotation) {
+    c->orientation += c->angularVelocity * dt;
+    c->setOrientation(c->orientation);
   }
-
-
-  c->setOrientation(angle);
-
-  // c->orientation += c->angularVelocity * dt;
-  // c->setOrientation(c->orientation);
 
   integrateForces(c, dt);
 }

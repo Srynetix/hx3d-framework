@@ -25,3 +25,6 @@ tests/ios/build
 /CMakeLists.txt
 
 __pycache__/
+
+.kdev4/
+*.kdev4

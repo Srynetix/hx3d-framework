@@ -19,6 +19,8 @@ public:
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
 
+    float physRatio = pWorld.getPhysRatio();
+
     text.transform.position.x = 100;
     text.transform.position.y = 100;
     text.transform.position.z = 0.9f;
@@ -33,31 +35,31 @@ public:
     leftWall = Make<Polygon>(Collider::Type::Static);
     rightWall = Make<Polygon>(Collider::Type::Static);
 
-    ground->setAsBox(Core::App()->getWidth() / 30.f, 50 / 30.f);
+    ground->setAsBox(Core::App()->getWidth() / physRatio, 50 / physRatio);
     ground->useDefinition(cDef);
-    ground->position.x = (Core::App()->getWidth() / 2) / 30.f;
+    ground->position.x = (Core::App()->getWidth() / 2) / physRatio;
     ground->position.y = 0;
 
-    top->setAsBox(Core::App()->getWidth() / 30.f, 50 / 30.f);
+    top->setAsBox(Core::App()->getWidth() / physRatio, 50 / physRatio);
     top->useDefinition(cDef);
-    top->position.x = (Core::App()->getWidth() / 2) / 30.f;
-    top->position.y = Core::App()->getHeight() / 30.f;
+    top->position.x = (Core::App()->getWidth() / 2) / physRatio;
+    top->position.y = Core::App()->getHeight() / physRatio;
 
-    leftWall->setAsBox(50 / 30.f, Core::App()->getHeight() / 30.f);
+    leftWall->setAsBox(50 / physRatio, Core::App()->getHeight() / physRatio);
     leftWall->useDefinition(cDef);
     leftWall->position.x = 0;
-    leftWall->position.y = (Core::App()->getHeight() / 2) / 30.f;
+    leftWall->position.y = (Core::App()->getHeight() / 2) / physRatio;
 
-    rightWall->setAsBox(50 / 30.f, Core::App()->getHeight() / 30.f);
+    rightWall->setAsBox(50 / physRatio, Core::App()->getHeight() / physRatio);
     rightWall->useDefinition(cDef);
-    rightWall->position.x = Core::App()->getWidth() / 30.f;
-    rightWall->position.y = (Core::App()->getHeight() / 2) / 30.f;
+    rightWall->position.x = Core::App()->getWidth() / physRatio;
+    rightWall->position.y = (Core::App()->getHeight() / 2) / physRatio;
 
     me = Make<physics2d::Polygon>();
-    me->setAsBox(25 / 30.f, 50 / 30.f);
+    me->setAsBox(25 / physRatio, 50 / physRatio);
     me->useDefinition(cDef);
-    me->position.x = (Core::App()->getWidth() / 4) / 30.f;
-    me->position.y = (Core::App()->getHeight() / 2) / 30.f;
+    me->position.x = (Core::App()->getWidth() / 4) / physRatio;
+    me->position.y = (Core::App()->getHeight() / 2) / physRatio;
 
     pWorld.addCollider(ground);
     pWorld.addCollider(top);
@@ -65,51 +67,51 @@ public:
     pWorld.addCollider(rightWall);
     pWorld.addCollider(me);
 
-    timer.initialize(2000, [this, &cDef](){
-
+    timer.initialize(500, [this, physRatio, cDef](){
       glm::vec2 pos = {math::random(Core::App()->getWidth() / 4, Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4), Core::App()->getHeight() - 200};
+      Log.Info("Pos: %f %f / ph: ", pos.x, pos.y);
 
-      Ptr<physics2d::Polygon> box = Make<physics2d::Polygon>();
-      box->setAsBox(50 / 30.f, 50 / 30.f);
-      box->useDefinition(cDef);
-      box->position.x = pos.x / 30.f;
-      box->position.y = pos.y / 30.f;
-      pWorld.addCollider(box);
-      colliders.push_back(box);
+      Ptr<physics2d::Polygon> bo = Make<physics2d::Polygon>();
+      bo->setAsBox(50 / physRatio, 50 / physRatio);
+      bo->useDefinition(cDef);
+      bo->position.x = pos.x / physRatio;
+      bo->position.y = pos.y / physRatio;
+      pWorld.addCollider(bo);
+      // colliders.push_back(box);
 
       timer.reset();
     });
 
     zone = Make<physics2d::ZoneAttractor>();
-    zone->position.x = (Core::App()->getWidth() / 2) / 30.f;
+    zone->position.x = (Core::App()->getWidth() / 2) / physRatio;
     zone->position.y = 0;
-    zone->width = (Core::App()->getWidth()) / 30.f;
-    zone->height = 150 / 30.f;
+    zone->width = (Core::App()->getWidth()) / physRatio;
+    zone->height = 150 / physRatio;
     zone->velocity = {-10, 60};
     // zone->velocity = {0, 0};
 
     leftZone = Make<physics2d::ZoneAttractor>();
     leftZone->position.x = 0;
-    leftZone->position.y = (Core::App()->getHeight() / 2) / 30.f;
-    leftZone->width = 100 / 30.f;
-    leftZone->height = Core::App()->getHeight() / 30.f;
+    leftZone->position.y = (Core::App()->getHeight() / 2) / physRatio;
+    leftZone->width = 150 / physRatio;
+    leftZone->height = Core::App()->getHeight() / physRatio;
     leftZone->velocity = {0, 5};
     // leftZone->velocity = {-20, 0};
     leftZone->priority = 1;
 
     topZone = Make<physics2d::ZoneAttractor>();
-    topZone->position.x = (Core::App()->getWidth() / 2 - 100) / 30.f;
-    topZone->position.y = Core::App()->getHeight() / 30.f;
-    topZone->width = (Core::App()->getWidth() - 100) / 30.f;
-    topZone->height = 100 / 30.f;
-    topZone->velocity = {5, 0};
+    topZone->position.x = (Core::App()->getWidth() / 2 - 100) / physRatio;
+    topZone->position.y = Core::App()->getHeight() / physRatio;
+    topZone->width = (Core::App()->getWidth() - 100) / physRatio;
+    topZone->height = 150 / physRatio;
+    topZone->velocity = {10, 0};
     // topZone->velocity = {0, 20};
     topZone->priority = 2;
 
     point = Make<physics2d::PointAttractor>();
-    point->position.x = (Core::App()->getWidth() / 2) / 30.f;
-    point->position.y = (Core::App()->getHeight() / 2) / 30.f;
-    point->radius = 150 / 30.f;
+    point->position.x = (Core::App()->getWidth() / 2) / physRatio;
+    point->position.y = (Core::App()->getHeight() / 2) / physRatio;
+    point->radius = 150 / physRatio;
     point->velocity = {5.f, 5.f};
     point->priority = 3;
 
@@ -162,7 +164,6 @@ private:
 
   Batch batch;
 
-  std::vector<Ptr<physics2d::Collider>> colliders;
   Ptr<physics2d::ZoneAttractor> zone;
   Ptr<physics2d::ZoneAttractor> leftZone;
   Ptr<physics2d::ZoneAttractor> topZone;

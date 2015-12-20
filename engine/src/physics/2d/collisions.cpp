@@ -9,17 +9,23 @@ namespace physics2d {
     return a >= b * 0.95f + a * 0.01f;
   }
 
-  float findAxisLeastPenetration(unsigned int& face, Ptr<Polygon>& a, Ptr<Polygon>& b) {
+  float findAxisLeastPenetration(unsigned int* face, Ptr<Polygon>& a, Ptr<Polygon>& b) {
     float bestDistance = -FLT_MAX;
     unsigned int bestIndex = 0;
 
     for (unsigned int i = 0; i < a->vertexCount; ++i) {
-      glm::vec2 nw = a->u * a->normals[i];
+      glm::vec2 n = a->normals[i];
+      glm::vec2 nw = a->u * n;
 
       glm::mat2 buT = glm::transpose(b->u);
-      glm::vec2 n = buT * nw;
+      n = buT * nw;
+
       glm::vec2 s = b->getSupport(-n);
-      glm::vec2 v = buT * (a->u * a->vertices[i] + a->position - b->position);
+
+      glm::vec2 v = a->vertices[i];
+      v = a->u * v + a->position;
+      v -= b->position;
+      v = buT * v;
 
       float d = glm::dot(n, s - v);
       if (d > bestDistance) {
@@ -28,11 +34,11 @@ namespace physics2d {
       }
     }
 
-    face = bestIndex;
+    *face = bestIndex;
     return bestDistance;
   }
 
-  void findIncidentFace(std::vector<glm::vec2>& v, Ptr<Polygon> ref, Ptr<Polygon> inc, int refIndex) {
+  void findIncidentFace(std::vector<glm::vec2>& v, const Ptr<Polygon>& ref, const Ptr<Polygon>& inc, int refIndex) {
     glm::vec2 refNormal = ref->normals[refIndex];
     refNormal = ref->u * refNormal;
     refNormal = glm::transpose(inc->u) * refNormal;
@@ -48,9 +54,7 @@ namespace physics2d {
     }
 
     v[0] = inc->u * inc->vertices[incidentFace] + inc->position;
-
-    incidentFace = ((incidentFace + 1) >= inc->vertexCount) ? 0 : incidentFace + 1;
-    v[1] = inc->u * inc->vertices[incidentFace] + inc->position;
+    v[1] = inc->u * inc->vertices[(incidentFace + 1) % inc->vertexCount] + inc->position;
   }
 
   int clip(const glm::vec2 n, const float c, std::vector<glm::vec2>& face) {
@@ -71,6 +75,8 @@ namespace physics2d {
     face[0] = out[0];
     face[1] = out[1];
 
+    assert(sp != 3);
+
     return sp;
   }
 
@@ -81,12 +87,12 @@ namespace physics2d {
     m.contacts.clear();
 
     unsigned int faceA = 0;
-    float penetrationA = findAxisLeastPenetration(faceA, a, b);
+    float penetrationA = findAxisLeastPenetration(&faceA, a, b);
     if (penetrationA >= 0.f)
       return false;
 
     unsigned int faceB = 0;
-    float penetrationB = findAxisLeastPenetration(faceB, b, a);
+    float penetrationB = findAxisLeastPenetration(&faceB, b, a);
     if (penetrationB >= 0.f)
       return false;
 
@@ -110,18 +116,16 @@ namespace physics2d {
       flip = true;
     }
 
-    std::vector<glm::vec2> incidentFace(2);
+    std::vector<glm::vec2> incidentFace = {{0, 0}, {0, 0}};
     findIncidentFace(incidentFace, ref, inc, refIndex);
 
     glm::vec2 v1 = ref->vertices[refIndex];
-
-    refIndex = (refIndex + 1 == ref->vertexCount) ? 0 : refIndex + 1;
-    glm::vec2 v2 = ref->vertices[refIndex];
+    glm::vec2 v2 = ref->vertices[(refIndex + 1) % ref->vertexCount];
 
     v1 = ref->u * v1 + ref->position;
     v2 = ref->u * v2 + ref->position;
 
-    glm::vec2 sidePlaneNormal = glm::normalize(v2 - v1);
+    glm::vec2 sidePlaneNormal = math::normalize(v2 - v1);
     glm::vec2 refFaceNormal = {sidePlaneNormal.y, -sidePlaneNormal.x};
 
     float refC = glm::dot(refFaceNormal, v1);
@@ -134,10 +138,7 @@ namespace physics2d {
     if (clip(sidePlaneNormal, posSide, incidentFace) < 2)
       return false;
 
-    m.normal = refFaceNormal;
-    if (flip) {
-      m.normal *= -1;
-    }
+    m.normal = flip ? -refFaceNormal : refFaceNormal;
 
     unsigned int cp = 0;
     float separation = glm::dot(refFaceNormal, incidentFace[0]) - refC;
@@ -152,13 +153,12 @@ namespace physics2d {
     }
 
     separation = glm::dot(refFaceNormal, incidentFace[1]) - refC;
-
     if (separation <= 0.f) {
       m.contacts.push_back(incidentFace[1]);
       cp++;
 
       m.penetration += -separation;
-      m.penetration /= cp;
+      m.penetration /= (float)cp;
     }
 
     return true;
@@ -194,6 +194,15 @@ namespace physics2d {
   }
 
   bool checkCollisions(Manifold& m, Ptr<Polygon> a, Ptr<Circle> b) {
+    if (checkCollisions(m, b, a)) {
+      m.normal = -m.normal;
+      return true;
+    }
+
+    return false;
+  }
+
+  bool checkCollisions(Manifold& m, Ptr<Circle> a, Ptr<Polygon> b) {
     return false;
   }
 

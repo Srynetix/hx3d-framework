@@ -20,7 +20,7 @@
 
 #include "hx3d/gui/widget.hpp"
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/geometry.hpp"
 
 namespace hx3d {
 namespace gui {
