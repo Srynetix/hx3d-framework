@@ -15,7 +15,9 @@ using namespace hx3d;
 class BaseTestScreen: public Screen, public InputHandler {
 public:
   BaseTestScreen()
-  {
+  {}
+
+  virtual void resize(int width, int height) override {
     Core::Events()->setInputHandler(this);
   }
 

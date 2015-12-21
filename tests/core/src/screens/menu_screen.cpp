@@ -75,11 +75,10 @@ MenuScreen::MenuScreen():
   };
 
   buttonCount = worldSize.y / buttonHeight;
-
-  Core::Events()->setInputHandler(this);
 }
 
 void MenuScreen::resize(int width, int height) {
+  Core::Events()->setInputHandler(this);
 }
 
 void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
