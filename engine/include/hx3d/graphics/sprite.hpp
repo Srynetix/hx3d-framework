@@ -24,6 +24,7 @@
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
 
@@ -42,7 +43,7 @@ public:
 
   @param texture Texture (Ptr)
   */
-  void setTexture(Ptr<Texture> texture);
+  void setTexture(const Ptr<Texture>& texture);
 
   /**
   Set the sprite texture from a framebuffer color buffer.
@@ -50,6 +51,13 @@ public:
   @param buffer Framebuffer
   */
   void setTexture(Framebuffer& buffer);
+
+  /**
+  Set the sprite texture from a texture region.
+
+  @param region TextureRegion
+  */
+  void setTexture(TextureRegion& region);
 
   /**
   Get the sprite texture.

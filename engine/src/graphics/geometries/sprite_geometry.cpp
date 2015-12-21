@@ -20,6 +20,8 @@
 
 #include "hx3d/graphics/geometries/sprite_geometry.hpp"
 
+#include "hx3d/graphics/texture.hpp"
+
 namespace hx3d {
 
 SpriteGeometry::SpriteGeometry(): Geometry() {
@@ -60,8 +62,6 @@ void SpriteGeometry::activateFramebufferMode() {
     0, 1,
     1, 1
   });
-
-  uploadAll();
 }
 
 void SpriteGeometry::activateTextureMode() {
@@ -71,8 +71,20 @@ void SpriteGeometry::activateTextureMode() {
     1, 1,
     0, 1
   });
-  
-  uploadAll();
+}
+
+void SpriteGeometry::setFromRegion(TextureRegion& region) {
+
+  // Calculate texture points;
+  unsigned int width = region.getTexture()->getWidth();
+  unsigned int height = region.getTexture()->getHeight();
+
+  setAttribute("Texture", std::vector<float> {
+    region.getMinX() / (float)width, region.getMinY() / float(height),
+    region.getMaxX() / (float)width, region.getMinY() / float(height),
+    region.getMaxX() / (float)width, region.getMaxY() / float(height),
+    region.getMinX() / (float)width, region.getMaxY() / float(height)
+  });
 }
 
 } /* hx3d */

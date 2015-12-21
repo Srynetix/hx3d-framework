@@ -36,6 +36,8 @@ Collider::Collider(Shape shapeType, const Type colliderType):
   torque(0),
   orientation(0),
   fixedRotation(false),
+  mask(0),
+  category(0),
   type(colliderType),
   shape(shapeType)
   {}
@@ -44,6 +46,9 @@ Collider::~Collider() {}
 
 void Collider::useDefinition(const Definition& def) {
   position = def.unitCoef * def.position;
+  material = def.material;
+  mask = def.mask;
+  category = def.category;
 }
 
 void Collider::applyForce(const glm::vec2& amount) {
@@ -56,7 +61,7 @@ void Collider::applyImpulse(const glm::vec2& amount, const glm::vec2& contact) {
 }
 
 void Collider::setDensity(float density) {
-  if (type == Type::Static) {
+  if (type == Type::Static || type == Type::Kinematic) {
     massData.setMass(0);
     massData.setInertia(0);
   } else {

@@ -31,7 +31,7 @@ bool Manifold::solve() {
 }
 
 void Manifold::initialize() {
-  mixedRestitution = std::min(a->material.restitution, b->material.restitution);
+  mixedRestitution = (a->material.restitution + b->material.restitution) / 2;
   mixedStaticFriction = std::sqrt(a->material.staticFriction * b->material.staticFriction);
   mixedDynamicFriction = std::sqrt(a->material.dynamicFriction * b->material.dynamicFriction);
 

@@ -31,6 +31,7 @@
 #include "hx3d/physics/2d/attractors/global_attractor.hpp"
 #include "hx3d/physics/2d/attractors/point_attractor.hpp"
 #include "hx3d/physics/2d/attractors/zone_attractor.hpp"
+#include "hx3d/physics/2d/collision_listener.hpp"
 
 #include "hx3d/graphics/batch.hpp"
 
@@ -42,6 +43,7 @@ public:
   World(const glm::vec2 globalGravity = {0, -9.81}, const unsigned int iterations = 10, const float physRatio = 10.f);
 
   void addAttractor(const Ptr<Attractor>& attractor);
+  void addListener(const Ptr<CollisionListener>& listener);
   void addCollider(const Ptr<Collider>& collider);
   void removeCollider(const Ptr<Collider>& collider);
 
@@ -50,13 +52,17 @@ public:
 
   float getPhysRatio() const;
 
+  const Ptr<GlobalAttractor> getGlobalGravity();
+
 private:
   unsigned int _iterations;
   float _physRatio;
 
   std::vector<Ptr<Attractor>> _attractors;
   std::vector<Ptr<Collider>> _colliders;
+  std::vector<Ptr<CollisionListener>> _listeners;
   std::vector<Manifold> _contacts;
+
 
   void integrateForces(const Ptr<Collider>& c, float dt);
   void integrateVelocity(const Ptr<Collider>& c, float dt);

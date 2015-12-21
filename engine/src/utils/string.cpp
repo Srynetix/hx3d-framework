@@ -26,7 +26,7 @@ namespace hx3d {
 
 std::string format(const std::string fmt, ...) {
 
-    int size = ((int)fmt.size()) * 2 + 50;   // Use a rubric appropriate for your code
+    int size = ((int)fmt.size()) * 2 + 65536;   // Use a rubric appropriate for your code
     std::string str;
     va_list ap;
     while (1) {     // Maximum two passes on a POSIX system...
@@ -49,7 +49,7 @@ std::string format(const std::string fmt, ...) {
 
 std::string format(const std::string fmt, va_list args) {
 
-  int size = ((int)fmt.size()) * 2 + 50;   // Use a rubric appropriate for your code
+  int size = ((int)fmt.size()) * 2 + 65536;   // Use a rubric appropriate for your code
   std::string str;
   while (1) {     // Maximum two passes on a POSIX system...
       str.resize(size);

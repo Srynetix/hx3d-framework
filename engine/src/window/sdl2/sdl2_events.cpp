@@ -161,7 +161,7 @@ void SDL2EventManager::poll() {
     }
 
     else if (event.type == SDL_FINGERUP || event.type == SDL_FINGERDOWN) {
-      TouchEvent::Type type(event.type == SDL_FINGERUP ? TouchEvent::Type::Touched : TouchEvent::Type::Released);
+      TouchEvent::Type type(event.type == SDL_FINGERDOWN ? TouchEvent::Type::Touched : TouchEvent::Type::Released);
 
       _touchPosition = glm::vec2(event.tfinger.x, event.tfinger.y);
       _touchMovement = glm::vec2(0);

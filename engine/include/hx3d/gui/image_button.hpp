@@ -1,7 +1,5 @@
 /*
-    GUI system.
-    Manage a GUI instance.
-
+    Image button.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -20,31 +18,33 @@
     USA
 */
 
-#ifndef HX3D_GUI_SYSTEM
-#define HX3D_GUI_SYSTEM
+#ifndef HX3D_GUI_IMAGE_BUTTON
+#define HX3D_GUI_IMAGE_BUTTON
 
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/graphics/sprite.hpp"
 
 namespace hx3d {
 namespace gui {
 
-class System {
+class ImageButton: public Sprite {
+  public:
+    ImageButton() {}
 
-public:
-  System();
+    void setOnClickCallback(std::function<void()> func) {
+      this->func = func;
+    }
 
-  /**
-  Return the main system content.
+    void onClick(glm::vec2 position) {
+      if (transform.contains(position)) {
+        if (func) func();
+      }
+    }
 
-  @return Widget (Ptr)
-  */
-  Ptr<Widget> getContent();
-
-private:
-  Ptr<Widget> _content;
+  private:
+    std::function<void()> func;
 };
 
 } /* gui */
 } /* hx3d */
 
-#endif
+#endif /* HX3D_GUI_IMAGE_BUTTON */

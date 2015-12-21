@@ -31,4 +31,26 @@ TextureRegion::TextureRegion(Ptr<Texture> texture, float minX, float maxX, float
   _uv(0.f)
   {}
 
+TextureRegion::TextureRegion() {}
+
+const Ptr<Texture>& TextureRegion::getTexture() {
+  return _texture;
+}
+
+float TextureRegion::getMinX() {
+  return _minX;
+}
+
+float TextureRegion::getMaxX() {
+  return _maxX;
+}
+
+float TextureRegion::getMinY() {
+  return _minY;
+}
+
+float TextureRegion::getMaxY() {
+  return _maxY;
+}
+
 } /* hx3d */

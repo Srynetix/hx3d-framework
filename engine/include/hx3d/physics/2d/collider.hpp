@@ -36,7 +36,8 @@ class Collider {
 public:
   enum class Type {
     Static,
-    Dynamic
+    Dynamic,
+    Kinematic
   };
 
   enum class Shape {
@@ -51,6 +52,9 @@ public:
 
     glm::vec2 position;
     Material material;
+
+    unsigned int mask;
+    unsigned int category;
   };
 
   Collider(Shape shapeType, const Type colliderType = Type::Dynamic);
@@ -79,6 +83,9 @@ public:
   float orientation;
 
   bool fixedRotation;
+
+  unsigned int mask;
+  unsigned int category;
 
   Type type;
   Shape shape;

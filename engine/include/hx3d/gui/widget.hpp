@@ -22,6 +22,7 @@
 #define HX3D_GUI_WIDGET
 
 #include "hx3d/graphics/mesh.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 namespace gui {
@@ -45,6 +46,11 @@ public:
   virtual void draw(Ptr<Shader> shader) override;
 
 private:
+
+  bool _checkBounds(glm::vec2 position) {
+    return transform.contains(position);
+  }
+
   Ptr<Widget> _parent;
   std::vector<Ptr<Widget>> _children;
 };

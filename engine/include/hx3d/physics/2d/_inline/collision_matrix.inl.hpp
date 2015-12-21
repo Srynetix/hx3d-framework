@@ -25,4 +25,6 @@ void CollisionMatrix::addMask(std::string name, std::string category, Categories
 }
 
 template <class... Categories>
-void CollisionMatrix::addMask(std::string name, std::string category, typename std::enable_if<sizeof...(Categories) == 0>::type* test) {}
+void CollisionMatrix::addMask(std::string name, std::string category, typename std::enable_if<sizeof...(Categories) == 0>::type* test) {
+  addOneMask(name, category);
+}

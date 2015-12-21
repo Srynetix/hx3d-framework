@@ -57,6 +57,8 @@ public:
   */
   glm::vec3 realSize();
 
+  bool contains(glm::vec2 point);
+
   /**
   Show the transform information. (Debug)
   */

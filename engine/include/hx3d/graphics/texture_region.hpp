@@ -39,7 +39,7 @@ class TextureRegion {
 public:
   /**
   Create a texture region from a texture and rectangle coordinates.
-  
+
   @param texture  Texture (Ptr)
   @param minX     Left coordinate
   @param maxX     Width
@@ -47,6 +47,13 @@ public:
   @param maxY     Height
   */
   TextureRegion(Ptr<Texture> texture, float minX, float maxX, float minY, float maxY);
+  TextureRegion();
+
+  const Ptr<Texture>& getTexture();
+  float getMinX();
+  float getMaxX();
+  float getMinY();
+  float getMaxY();
 
 private:
   Ptr<Texture> _texture;

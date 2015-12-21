@@ -77,6 +77,19 @@ glm::vec3 Transform::realSize() {
   return size * scale;
 }
 
+bool Transform::contains(glm::vec2 point) {
+  float width = scale.x * size.x;
+  float height = scale.y * size.y;
+
+  float minX = position.x - width / 2;
+  float maxX = position.x + width / 2;
+  float minY = position.y - height / 2;
+  float maxY = position.y + height / 2;
+
+  return ((minX <= point.x && maxX >= point.x) &&
+    (minY <= point.y && maxY >= point.y));
+}
+
 void Transform::show() {
   Log.Info("-- Transform");
   Log.Info("\t Pos: [%f, %f, %f]", position.x, position.y, position.z);

@@ -22,6 +22,7 @@
 #define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 
 #include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
 
@@ -32,6 +33,7 @@ public:
 
   void activateFramebufferMode();
   void activateTextureMode();
+  void setFromRegion(TextureRegion& region);
 };
 
 } /* hx3d */

@@ -1,7 +1,5 @@
 /*
-    GUI system.
-    Manage a GUI instance.
-
+    Collision listener.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -20,31 +18,19 @@
     USA
 */
 
-#ifndef HX3D_GUI_SYSTEM
-#define HX3D_GUI_SYSTEM
-
-#include "hx3d/gui/widget.hpp"
+#ifndef HX3D_PHYSICS_2D_COLLISION_LISTENER
+#define HX3D_PHYSICS_2D_COLLISION_LISTENER
 
 namespace hx3d {
-namespace gui {
+namespace physics2d {
 
-class System {
-
+class CollisionListener {
 public:
-  System();
+  virtual void doCollide(Manifold& m) {}
 
-  /**
-  Return the main system content.
-
-  @return Widget (Ptr)
-  */
-  Ptr<Widget> getContent();
-
-private:
-  Ptr<Widget> _content;
 };
 
-} /* gui */
+} /* physics2d */
 } /* hx3d */
 
-#endif
+#endif /* HX3D_PHYSICS_2D_COLLISION_LISTENER */

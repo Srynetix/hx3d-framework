@@ -31,7 +31,7 @@ Mesh() {
   setTint(Color::White);
 }
 
-void Sprite::setTexture(Ptr<Texture> texture) {
+void Sprite::setTexture(const Ptr<Texture>& texture) {
   _texture = texture;
 
   transform.size.x = _texture->getWidth();
@@ -53,6 +53,18 @@ void Sprite::setTexture(Framebuffer& buffer) {
   /* Reverse the framebuffer ! */
   Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
   spriteGeo->activateFramebufferMode();
+
+  _geometry->uploadAll();
+}
+
+void Sprite::setTexture(TextureRegion& region) {
+  _texture = region.getTexture();
+
+  transform.size.x = region.getMaxX() - region.getMinX();
+  transform.size.y = region.getMaxY() - region.getMinY();
+
+  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  spriteGeo->setFromRegion(region);
 
   _geometry->uploadAll();
 }

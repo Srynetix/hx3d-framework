@@ -21,6 +21,10 @@ void World::addCollider(const Ptr<Collider>& collider) {
   _colliders.push_back(collider);
 }
 
+void World::addListener(const Ptr<CollisionListener>& listener) {
+  _listeners.push_back(listener);
+}
+
 void World::removeCollider(const Ptr<Collider>& collider) {
   // TODO
 }
@@ -40,8 +44,21 @@ void World::step(float dt) {
       Manifold m(a, b);
       m.solve();
 
-      if (m.contacts.size() > 0)
+      if (m.contacts.size() > 0) {
+
+        for (auto& listener: _listeners) {
+          listener->doCollide(m);
+        }
+
+        if ((m.a->mask & m.b->category) || (m.b->mask & m.a->category)) {
+          // Collision
+        } else {
+          if (m.a->category != 0 && m.b->category != 0)
+            continue;
+        }
+
         _contacts.push_back(m);
+      }
     }
   }
 
@@ -188,6 +205,10 @@ float World::getPhysRatio() const {
   return _physRatio;
 }
 
+const Ptr<GlobalAttractor> World::getGlobalGravity() {
+  return std::dynamic_pointer_cast<GlobalAttractor>(_attractors[0]);
+}
+
 ///////////////
 
 void World::integrateForces(const Ptr<Collider>& c, float dt) {
@@ -206,7 +227,7 @@ void World::integrateForces(const Ptr<Collider>& c, float dt) {
 }
 
 void World::integrateVelocity(const Ptr<Collider>& c, float dt) {
-  if (c->massData.invMass == 0.f)
+  if (c->type != Collider::Type::Kinematic && c->massData.invMass == 0.f)
     return;
 
   c->position += c->velocity * dt;

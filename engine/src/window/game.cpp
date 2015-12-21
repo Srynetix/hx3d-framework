@@ -24,6 +24,7 @@
 #include "hx3d/window/application.hpp"
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 
@@ -71,6 +72,9 @@ namespace hx3d {
   }
 
   void Game::setScreen(Ptr<Screen> screen) {
+
+    Core::Events()->setInputHandler(nullptr);
+
     if (_screen)
       _screen->hide();
 
