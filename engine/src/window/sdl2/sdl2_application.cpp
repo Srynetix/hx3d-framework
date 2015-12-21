@@ -132,8 +132,6 @@ void SDL2Application::create(int width, int height, std::string title) {
 
   glViewport(0, 0, _width, _height);
 
-  // glEnable(GL_CULL_FACE);
-  glEnable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);
 
   glEnable(GL_BLEND);
@@ -155,7 +153,7 @@ void SDL2Application::create(int width, int height, std::string title) {
   Core::Assets()->create<Shader>("text", "shaders/text");
   Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
 
-  /*********************/
+  /**********************/
 
   _game->create();
 

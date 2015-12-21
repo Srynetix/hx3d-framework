@@ -15,7 +15,7 @@ void TestGame::create() {
     *   Core::Assets()->create<Texture>("texture_name", "textures/here.png")
     */
 
-  Core::Assets()->create<Texture>("box", "textures/box.jpg");
+  Core::Assets()->create<Texture>("box", "textures/box.png");
   Core::Assets()->create<Texture>("logo", "textures/logo.png");
   Core::Assets()->create<Texture>("fire", "textures/fire.png");
   Core::Assets()->create<Texture>("stickman", "textures/stickman.png");

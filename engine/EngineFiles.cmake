@@ -44,6 +44,7 @@ set(
   "${ENGINE_SRC}/graphics/texture.cpp"
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/batch.cpp"
+  "${ENGINE_SRC}/graphics/error.cpp"
   "${ENGINE_SRC}/graphics/geometry.cpp"
   "${ENGINE_SRC}/graphics/mesh.cpp"
   "${ENGINE_SRC}/graphics/framebuffer.cpp"

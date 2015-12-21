@@ -28,7 +28,7 @@
   #define LOG(msg) __android_log_print(ANDROID_LOG_VERBOSE, "hx3d", msg, 1)
 #elif __APPLE__
   #include "TargetConditionals.h"
-  #ifndef TARGET_OS_IPHONE
+  #ifdef TARGET_OS_IPHONE
     #include <CoreFoundation/CoreFoundation.h>
     extern "C" {
       void NSLog(CFStringRef format, ...);
@@ -36,6 +36,8 @@
     }
 
     #define LOG(msg) NSLog(CFStringCreateWithCString(kCFAllocatorDefault, msg, kCFStringEncodingUTF8))
+  #else
+    #define LOG(msg) std::cout << msg << std::endl
   #endif
 #else
   #define LOG(msg) std::cout << msg << std::endl

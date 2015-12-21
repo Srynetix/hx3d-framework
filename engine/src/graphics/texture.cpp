@@ -21,6 +21,7 @@
 #include "hx3d/graphics/texture.hpp"
 
 #include "hx3d/graphics/font.hpp"
+#include "hx3d/graphics/error.hpp"
 
 #include "hx3d/utils/file.hpp"
 #include "hx3d/utils/log.hpp"
@@ -48,6 +49,8 @@ namespace hx3d {
     // Base filter = Nearest
     setFilter(FilterType::Min, FilterValue::Nearest);
     setFilter(FilterType::Max, FilterValue::Nearest);
+    setFilter(FilterType::WrapX, FilterValue::ClampToEdge);
+    setFilter(FilterType::WrapY, FilterValue::ClampToEdge);
 
     glBindTexture(GL_TEXTURE_2D, 0);
   }
@@ -66,42 +69,8 @@ namespace hx3d {
   }
 
   bool Texture::load(std::string pathToImage) {
-    // SDL_Surface* image = nullptr;
-    //
-    // Ptr<File> file = File::loadBinaryFile(pathToImage);
-    //
-    // SDL_RWops* imageOps = SDL_RWFromConstMem(file->data, file->size);
-    // image = IMG_Load_RW(imageOps, 1);
-    //
-    // if (image == nullptr) {
-    //   Log.Error("Invalid image: %s", pathToImage.c_str());
-    //   return false;
-    // }
-    //
-    // SDL_Surface* formatted = SDL_ConvertSurfaceFormat(image, SDL_PIXELFORMAT_ABGR8888, 0);
-    // SDL_FreeSurface(image);
-    //
-    // _width = formatted->w;
-    // _height = formatted->h;
-    //
-    // glGenTextures(1, &_id);
-    // glBindTexture(GL_TEXTURE_2D, _id);
-    //
-    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, formatted->pixels);
-    //
-    // // Base filter = Nearest
-    // setFilter(FilterType::Min, FilterValue::Nearest);
-    // setFilter(FilterType::Max, FilterValue::Nearest);
-    //
-    // glBindTexture(GL_TEXTURE_2D, 0);
-    //
-    // Log.Info("Texture %s loaded.", pathToImage.c_str());
-    //
-    // SDL_FreeSurface(formatted);
-    // return true;
-
     const Ptr<File>& file = File::loadBinaryFile(pathToImage);
-    
+
     int bpp = 0;
     unsigned char* file_content = reinterpret_cast<unsigned char*>(file->data);
     unsigned char* content = stbi_load_from_memory(file_content, file->size, (int*)&_width, (int*)&_height, &bpp, 0);
@@ -114,6 +83,8 @@ namespace hx3d {
     // Base filter = Nearest
     setFilter(FilterType::Min, FilterValue::Nearest);
     setFilter(FilterType::Max, FilterValue::Nearest);
+    setFilter(FilterType::WrapX, FilterValue::ClampToEdge);
+    setFilter(FilterType::WrapY, FilterValue::ClampToEdge);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -132,7 +103,7 @@ namespace hx3d {
       type == FilterType::Max ? GL_TEXTURE_MAG_FILTER :
 
       type == FilterType::WrapX ? GL_TEXTURE_WRAP_S :
-      type == FilterType::WrapY ? GL_TEXTURE_WRAP_S : GL_INVALID_ENUM;
+      type == FilterType::WrapY ? GL_TEXTURE_WRAP_T : GL_INVALID_ENUM;
 
     filterValue =
       value == FilterValue::Linear ? GL_LINEAR :
@@ -178,6 +149,8 @@ namespace hx3d {
     // Base filter = Nearest
     texture->setFilter(FilterType::Min, FilterValue::Nearest);
     texture->setFilter(FilterType::Max, FilterValue::Nearest);
+    texture->setFilter(FilterType::WrapX, FilterValue::ClampToEdge);
+    texture->setFilter(FilterType::WrapY, FilterValue::ClampToEdge);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     return texture;
@@ -219,6 +192,8 @@ namespace hx3d {
     // Base filter = Nearest
     texture->setFilter(FilterType::Min, FilterValue::Nearest);
     texture->setFilter(FilterType::Max, FilterValue::Nearest);
+    texture->setFilter(FilterType::WrapX, FilterValue::ClampToEdge);
+    texture->setFilter(FilterType::WrapY, FilterValue::ClampToEdge);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     Blank = texture;

@@ -24,6 +24,9 @@ tests/ios/build
 .DS_Store
 /CMakeLists.txt
 
+*.xcodeproj/project.xcworkspace/*
+*.xcodeproj/xcuserdata/*
+
 __pycache__/
 
 .kdev4/
