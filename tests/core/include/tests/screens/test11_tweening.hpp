@@ -35,6 +35,7 @@ public:
     fps.transform.position.x = 10;
     fps.transform.position.y = Core::App()->getHeight() - 20;
     fps.transform.position.z = 0.5f;
+    fps.setCenterAlignment(false);
 
     Ptr<tweens::Parallel> start = Make<tweens::Parallel>();
     start->addTween(sprite.transform.position.x, (float)Core::App()->getWidth() / 2.f, 10.f, math::Interpolation::OutQuad);

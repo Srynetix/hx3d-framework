@@ -18,6 +18,7 @@ public:
 
     text.setFont(Core::Assets()->get<Font>("default"));
     text.transform.position = glm::vec3(20, 20, 0.5);
+    text.setCenterAlignment(false);
   }
 
   virtual void update(float delta) override {

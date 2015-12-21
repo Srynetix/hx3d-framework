@@ -64,6 +64,9 @@ public:
   @param font Font (Ptr)
   */
   void setFont(Ptr<Font> font);
+  void setCharacterSize(int size);
+
+  void setCenterAlignment(bool value);
 
   /**
   Set the text content.
@@ -86,8 +89,12 @@ public:
   @return Font (Ptr)
   */
   Ptr<Font> getFont();
+  int getCharacterSize();
+  float getLength();
+  bool isCenterAligned();
 
   virtual void draw(Ptr<Shader> shader) override;
+
 
 protected:
 
@@ -95,9 +102,13 @@ protected:
   Initialize the text.
   */
   void init();
+  float calculateLength();
 
   Ptr<Font> _font;
   std::string _content;
+  float _length;
+  int _characterSize;
+  bool _centerAligned;
 };
 
 } /* gui */

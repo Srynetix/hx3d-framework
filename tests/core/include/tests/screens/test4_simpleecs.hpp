@@ -57,8 +57,9 @@ public:
     sprite.setTint(Color::White);
 
     text.setContent("This cube is rotating thanks to a RotatingComponent and a RotatingSystem.");
-    text.transform.position = glm::vec3(Core::App()->getWidth() / 2 - 550 / 2, Core::App()->getHeight() / 4, 0);
+    text.transform.position = glm::vec3(Core::App()->getWidth() / 2, Core::App()->getHeight() / 4, 0);
 
+    rotText.setCenterAlignment(false);
     rotText.transform.position = glm::vec3(20, Core::App()->getHeight() - 20, 0);
   }
 

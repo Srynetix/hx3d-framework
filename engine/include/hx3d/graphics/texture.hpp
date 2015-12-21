@@ -158,7 +158,7 @@ public:
 
   @param font Font (Ptr)
   */
-  static void use(Ptr<Font> font);
+  static void use(Ptr<Font> font, int characterSize);
 
   /**
   Clear the current texture for drawing.

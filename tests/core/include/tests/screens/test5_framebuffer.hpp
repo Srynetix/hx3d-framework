@@ -35,9 +35,8 @@ public:
     );
 
     text.setContent("WOOOOOOOOOHOOOOOOOOO !!");
-    text.transform.scale = glm::vec3(2);
     text.transform.position = glm::vec3(
-      Core::App()->getWidth() / 2 - 200,
+      Core::App()->getWidth() / 2,
       Core::App()->getHeight() / 2 - 200,
       0
     );

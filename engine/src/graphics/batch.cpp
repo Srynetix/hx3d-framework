@@ -71,14 +71,21 @@ void Batch::draw(Mesh& mesh) {
 
 void Batch::draw(gui::Text& text) {
 
-  Texture::use(text.getFont());
+  Texture::use(text.getFont(), text.getCharacterSize());
 
   Ptr<Shader> prevShader = _shader;
 
   setShader(text.getFont()->shader);
   begin();
 
+  float oldX = text.transform.position.x;
+
+  if (text.isCenterAligned())
+    text.transform.position.x -= text.getLength() / 2;
+
   glm::mat4 model = text.transform.compute();
+  text.transform.position.x = oldX;
+
   _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
 
   text.draw(_shader);
@@ -90,14 +97,21 @@ void Batch::draw(gui::Text& text) {
 }
 
 void Batch::draw(gui::Text& text, math::Function function) {
-  Texture::use(text.getFont());
+  Texture::use(text.getFont(), text.getCharacterSize());
 
   Ptr<Shader> prevShader = _shader;
 
   setShader(text.getFont()->shader);
   begin();
 
+  float oldX = text.transform.position.x;
+
+  if (text.isCenterAligned())
+    text.transform.position.x -= text.getLength() / 2;
+
   glm::mat4 model = text.transform.compute();
+  text.transform.position.x = oldX;
+
   _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
 
   text.functionDraw(_shader, function);

@@ -28,20 +28,41 @@
 #include "hx3d/utils/file.hpp"
 #include "hx3d/utils/log.hpp"
 
+#include <utility>
+
 namespace hx3d {
 
 Font::Font(std::string fontPath, int characterSize):
-  shader(Core::Assets()->get<Shader>("text")), font(nullptr) {
-
-  atlas = texture_atlas_new(512, 512, 1);
+  shader(Core::Assets()->get<Shader>("text")) {
   file = File::loadBinaryFile(fontPath);
 
-  font = texture_font_new_from_memory(atlas, characterSize, file->data, file->size);
-  if (font == nullptr) {
-    Log.Error("Error while loading font `%s`.", fontPath.c_str());
-  } else {
-    Log.Info("Font `%s` loaded.", fontPath.c_str());
+  defaultSize = characterSize;
+  createFontSize(characterSize);
+}
+
+Font::~Font() {
+  // Cleanup fonts and atlases
+}
+
+void Font::createFontSize(int size) {
+  if (data.find(size) == data.end()) {
+    texture_atlas_t* atlas = texture_atlas_new(512, 512, 1);
+    texture_font_t* font = texture_font_new_from_memory(atlas, size, file->data, file->size);
+
+    Data d;
+    d.atlas = atlas;
+    d.font = font;
+
+    data.emplace(std::make_pair(size, d));
   }
+}
+
+Font::Data& Font::getFontData(int size) {
+  if (data.find(size) == data.end()) {
+    createFontSize(size);
+  }
+
+  return data[size];
 }
 
 } /* hx3d */

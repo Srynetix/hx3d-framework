@@ -43,8 +43,10 @@ public:
 
     text.transform.position.x = 20;
     text.transform.position.y = 20;
+    text.setCenterAlignment(false);
     fps.transform.position.x = 20;
     fps.transform.position.y = Core::App()->getHeight() - 20;
+    fps.setCenterAlignment(false);
 
     waveform.transform.position.x = Core::App()->getWidth() / 4;
     waveform.transform.position.y = Core::App()->getHeight() / 2;

@@ -48,11 +48,9 @@ MenuScreen::MenuScreen():
   buttonHeight = worldSize.y / 10;
 
   sprite.transform.size = glm::vec3(buttonWidth, buttonHeight, 0);
-  text.transform.scale = glm::vec3(1.f);
 
   instructions.setContent("touch test to launch. then ESC or Back to go back. ESC or Back here to quit.");
-  instructions.transform.scale = glm::vec3(1.f);
-  instructions.transform.position = glm::vec3(worldSize.x - 600, 40, 0);
+  instructions.transform.position = glm::vec3(worldSize.x / 2.f, 40, 0);
 
   logoSprite.transform.scale = glm::vec3(0.25, 0.25, 0);
   logoSprite.transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
@@ -75,6 +73,8 @@ MenuScreen::MenuScreen():
   };
 
   buttonCount = worldSize.y / buttonHeight;
+
+  text.setCharacterSize(16);
 }
 
 void MenuScreen::resize(int width, int height) {
@@ -133,7 +133,7 @@ void MenuScreen::render() {
     int posY = worldSize.y - index * buttonHeight - (buttonHeight / 2);
 
     sprite.transform.position = glm::vec3(posX, posY, 0);
-    text.transform.position = glm::vec3(sprite.transform.position.x - buttonWidth / 4, sprite.transform.position.y, 0.5f);
+    text.transform.position = glm::vec3(sprite.transform.position.x, sprite.transform.position.y, 0.5f);
 
     text.setContent(screens[i].name);
 

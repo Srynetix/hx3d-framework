@@ -127,8 +127,9 @@ namespace hx3d {
     glBindTexture(GL_TEXTURE_2D, texture->_id);
   }
 
-  void Texture::use(Ptr<Font> font) {
-    glBindTexture(GL_TEXTURE_2D, font->atlas->id);
+  void Texture::use(Ptr<Font> font, int characterSize) {
+    Font::Data& data = font->getFontData(characterSize);
+    glBindTexture(GL_TEXTURE_2D, data.atlas->id);
   }
 
   void Texture::disable() {

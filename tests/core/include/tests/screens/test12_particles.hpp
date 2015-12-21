@@ -20,12 +20,14 @@ public:
     fps.transform.position.x = 10;
     fps.transform.position.y = Core::App()->getHeight() - 20;
     fps.transform.position.z = 0.5f;
+    fps.setCenterAlignment(false);
 
     particleCount.setFont(Core::Assets()->get<Font>("default"));
     particleCount.setContent("Particles: ");
     particleCount.transform.position.x = 10;
     particleCount.transform.position.y = Core::App()->getHeight() - 40;
     particleCount.transform.position.z = 0.5f;
+    particleCount.setCenterAlignment(false);
 
     emitter = Make<ParticleEmitter>(500);
     emitter->setTexture(Core::Assets()->get<Texture>("fire"));

@@ -42,19 +42,47 @@ Text::Text(Ptr<Widget> parent, Ptr<Font> font):
 
 void Text::init() {
   setTint(Color::White);
-  transform.size = glm::vec3(1);
+  if (_font) {
+    setFont(_font);
+  }
+
+  _centerAligned = true;
 }
 
 void Text::setFont(Ptr<Font> font) {
   _font = font;
+  _characterSize = font->defaultSize;
+  _length = calculateLength();
+}
+
+void Text::setCharacterSize(int size) {
+  _characterSize = size;
+  _length = calculateLength();
 }
 
 void Text::setContent(std::string content) {
   _content = content;
+  _length = calculateLength();
 }
 
 Ptr<Font> Text::getFont() {
   return _font;
+}
+
+int Text::getCharacterSize() {
+  return _characterSize;
+}
+
+float Text::getLength() {
+  return _length;
+}
+
+void Text::setCenterAlignment(bool value) {
+  _centerAligned = value;
+}
+
+bool Text::isCenterAligned() {
+  return _centerAligned;
 }
 
 void Text::draw(Ptr<Shader> shader) {
@@ -62,19 +90,21 @@ void Text::draw(Ptr<Shader> shader) {
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
 
+  Font::Data& fontData = _font->getFontData(_characterSize);
+
   for (unsigned int i = 0; i < _content.size(); ++i) {
-    texture_glyph_t *glyph = texture_font_get_glyph(_font->font, _content[i]);
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
     if (glyph != nullptr) {
       float kerning = 0.f;
       if (i > 0) {
         kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
       }
 
-      pen.x += transform.size.x * kerning;
-      float x0 = pen.x + transform.size.x * glyph->offset_x;
-      float y0 = pen.y + transform.size.y * glyph->offset_y;
-      float x1 = x0 + transform.size.x * glyph->width;
-      float y1 = y0 - transform.size.y * glyph->height;
+      pen.x += kerning;
+      float x0 = pen.x + glyph->offset_x;
+      float y0 = pen.y + glyph->offset_y;
+      float x1 = x0 + glyph->width;
+      float y1 = y0 - glyph->height;
       float s0 = glyph->s0;
       float t0 = glyph->t0;
       float s1 = glyph->s1;
@@ -98,19 +128,45 @@ void Text::draw(Ptr<Shader> shader) {
 
       Mesh::draw(shader);
 
-      pen.x += transform.size.x * glyph->advance_x;
+      pen.x += glyph->advance_x;
     }
   }
+}
+
+float Text::calculateLength() {
+  if (_font == nullptr)
+    return 0;
+
+  glm::vec2 pen(0, 0);
+  std::wstring wtext(_content.begin(), _content.end());
+
+  Font::Data& fontData = _font->getFontData(_characterSize);
+  for (unsigned int i = 0; i < _content.size(); ++i) {
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
+    if (glyph != nullptr) {
+      float kerning = 0.f;
+      if (i > 0) {
+        kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
+      }
+
+      pen.x += kerning;
+      pen.x += glyph->advance_x;
+    }
+  }
+
+  return pen.x;
 }
 
 void Text::functionDraw(Ptr<Shader> shader, math::Function function) {
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
 
+  Font::Data& fontData = _font->getFontData(_characterSize);
+
   function.reset();
 
   for (unsigned int i = 0; i < _content.size(); ++i) {
-    texture_glyph_t *glyph = texture_font_get_glyph(_font->font, _content[i]);
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
     if (glyph != nullptr) {
       float kerning = 0.f;
       if (i > 0) {

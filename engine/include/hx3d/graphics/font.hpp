@@ -23,6 +23,7 @@
 
 #include <freetype-gl/freetype-gl.h>
 #include <string>
+#include <map>
 
 #include "hx3d/utils/resource.hpp"
 #include "hx3d/utils/ptr.hpp"
@@ -34,6 +35,12 @@ class File;
 
 class Font: public Resource {
 public:
+
+  struct Data {
+    texture_font_t* font;
+    texture_atlas_t* atlas;
+  };
+
   /**
   Build a font from a path and a character size.
 
@@ -41,12 +48,17 @@ public:
   @param characterSize  Character size
   */
   Font(std::string fontPath, int characterSize);
+  ~Font();
+
+  void createFontSize(int size);
+  Data& getFontData(int size);
 
   Ptr<Shader> shader;
   Ptr<File> file;
 
-  texture_font_t* font;
-  texture_atlas_t* atlas;
+  std::map<int, Data> data;
+
+  int defaultSize;
 };
 
 } /* hx3d */
