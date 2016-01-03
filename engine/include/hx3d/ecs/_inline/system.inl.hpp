@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Node with entity information.
+    Entity Component System: Base System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,28 +18,13 @@
     USA
 */
 
-#ifndef HX3D_ECS_ZNODE
-#define HX3D_ECS_ZNODE
-
-#include "hx3d/ecs/base/node_base.hpp"
-
 namespace hx3d {
 namespace ecs {
 
-class ZNode: public NodeBase<true> {
-public:
-  /**
-  Create a named Node.
-  Should not be used directly.
-  To create a Node, use a SceneGraph.
-  See @link#SceneGraphBase::create or @link#SceneGraphBase::createAtRoot.
+template <class... Types>
+void System::setRequiredFamily() {
+  _requiredFamily = ComponentBits::getFamily<Types...>();
+}
 
-  @param name Name
-  */
-  ZNode(const std::string name): NodeBase(name) {}
-};
-
-} /* ecs */
-} /* hx3d */
-
-#endif
+}
+}

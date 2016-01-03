@@ -28,35 +28,43 @@
 namespace hx3d {
 
 /**
-Format a string using `printf` notation.
+@brief Format a string using `printf` notation.
 
 @param fmt Text
 @param ... Arguments
+
+@return Formatted string
 */
 std::string format(const std::string fmt, ...);
 
 /**
-Format a string using `printf` notation (va_list version).
+@brief Format a string using `printf` notation (va_list version).
 
 @param fmt Text
 @param ... Arguments
+
+@return Formatted string
 */
 std::string format(const std::string fmt, va_list args);
 
 /**
-Split a string using a delimiter and a container.
+@brief Split a string using a delimiter and a container.
 
 @param s      String
 @param delim  Delimiter
 @param elems  Container
+
+@return Splitted string
 */
 std::vector<std::string>& split(const std::string &s, char delim, std::vector<std::string> &elems);
 
 /**
-Split a string using a delimiter.
+@brief Split a string using a delimiter.
 
 @param s      String
 @param delim  Delimiter
+
+@return Splitted string
 */
 std::vector<std::string> split(const std::string &s, char delim);
 

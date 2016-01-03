@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Base ID.
+    Algorithm utils.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,21 +18,25 @@
     USA
 */
 
-#include "hx3d/ecs/base/id_base.hpp"
+#ifndef HX3D_UTILS_ALGORITHM
+#define HX3D_UTILS_ALGORITHM
+
+#include <algorithm>
 
 namespace hx3d {
-namespace ecs {
+namespace algo {
 
-IDBase::IDBase(const unsigned int id): _id(id) {}
-IDBase::~IDBase() {}
-
-unsigned int IDBase::getId() const {
-  return _id;
+template <class Container, class Function>
+void apply(Container& container, Function func) {
+  std::for_each(container.begin(), container.end(), func);
 }
 
-void IDBase::setId(unsigned int id) {
-  _id = id;
+template <class Source, class Dest>
+void clone(Source& src, Dest& dst) {
+  std::copy(src.begin(), src.end(), std::inserter(dst, dst.begin()));
 }
 
-} /* ecs */
+}
 } /* hx3d */
+
+#endif /* HX3D_UTILS_ALGORITHM */

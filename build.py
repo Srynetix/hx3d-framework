@@ -30,6 +30,7 @@ from builds.android import AndroidBuilder
 from builds.windows import WindowsBuilder
 from builds.macos   import MacOSBuilder
 from builds.ios     import iOSBuilder
+from builds.doc     import DocBuilder
 
 def create_cmakelists(game_build, args):
     content = "cmake_minimum_required(VERSION 2.8)\nproject(hx3d)\n\nadd_subdirectory(engine)\n"
@@ -48,10 +49,10 @@ Main
 def main():
     colorama.init(autoreset=True)
 
-    available_systems = ["linux", "windows", "android", "macos", "ios"]
+    available_systems = ["linux", "windows", "android", "macos", "ios", "doc"]
 
     parser = argparse.ArgumentParser(description='Build the project')
-    parser.add_argument('system', help='System')
+    parser.add_argument('system', help='System/Documentation')
     parser.add_argument('-c','--clean', action="store_true", help='Clean')
     parser.add_argument('-d','--debug', action="store_true", help='Debug')
     parser.add_argument('-i','--install', action="store_true", help='Install')
@@ -81,6 +82,8 @@ def main():
         MacOSBuilder(args, game_build).run()
     elif args.system == "ios":
         iOSBuilder(args, game_build).run()
+    elif args.system == "doc":
+        DocBuilder(args, game_build).run()
     else:
         print("Unsupported. Available systems: ", available_systems)
 

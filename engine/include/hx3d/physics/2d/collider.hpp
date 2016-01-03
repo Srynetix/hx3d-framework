@@ -22,6 +22,7 @@
 #define HX3D_PHYSICS_2D_COLLIDER
 
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/object_map.hpp"
 
 #include "hx3d/physics/2d/mass.hpp"
 #include "hx3d/physics/2d/material.hpp"
@@ -94,6 +95,7 @@ public:
   Mass massData;
 
   Ptr<Attractor> currentAttractor;
+  ObjectMap userData;
 };
 
 /////////////

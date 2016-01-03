@@ -28,17 +28,23 @@
 namespace hx3d {
 namespace audio {
 
+/**
+@brief Single music management.
+
+Permit to play/stop one music.
+*/
 class Music {
 
 public:
   /**
-  Create an uninitialized music.
-  See @link#initialize.
+  @brief Create an uninitialized music.
+
+  @see initialize.
   */
   Music();
 
   /**
-  Create an initialized music using a path.
+  @brief Load a music from a path.
 
   @param pathToFile Path to audio file.
   */
@@ -46,29 +52,31 @@ public:
   ~Music();
 
   /**
-  initialize a music with a path.
+  @brief Initialize a music with a path.
 
   @param pathToFile Path to audio file
   */
   void initialize(const std::string pathToFile);
 
   /**
-  Play the music.
+  @brief Play the music.
   */
   void play();
 
   /**
-  Stop the music.
+  @brief Stop the music.
   */
   void stop();
 
   /**
-  Test if the music is playing.
+  @brief Test if the music is playing.
   */
   bool isPlaying();
 
 private:
+  /// @brief SDL_Mixer music
   Mix_Music* _music;
+  /// @brief File pointer
   Ptr<File> _file;
 };
 

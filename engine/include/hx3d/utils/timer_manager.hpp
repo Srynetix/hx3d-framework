@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Scene Graph for Node with entity information.
+    Timer manager.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,31 +18,32 @@
     USA
 */
 
-#ifndef HX3D_ECS_ZGRAPH
-#define HX3D_ECS_ZGRAPH
+#ifndef HX3D_UTILS_TIMER_MANAGER
+#define HX3D_UTILS_TIMER_MANAGER
 
-#include "hx3d/ecs/base/scene_graph_base.hpp"
-
-// Helpers
-#include "hx3d/ecs/z_node.hpp"
-#include "hx3d/ecs/z_system.hpp"
+#include "hx3d/utils/callback_timer.hpp"
+#include <map>
+#include <vector>
 
 namespace hx3d {
-namespace ecs {
 
-class ZGraph: public SceneGraphBase<true> {
-public:
-  /**
-  Get the z-engine.
+class TimerManager {
+  public:
+    TimerManager();
 
-  @return ZEngine (Ptr)
-  */
-  Ptr<ZEngine> getEngine() {
-    return _engine;
-  }
+    void addNamedTimer(std::string name, CallbackTimer& timer);
+    void createNamedTimer(std::string name, float delay, std::function<void()> callback);
+
+    void addTemporaryTimer(CallbackTimer& timer);
+    void createTemporaryTimer(float delay, std::function<void()> callback);
+
+    void update(float delta);
+
+  private:
+    std::map<std::string, CallbackTimer> _registered;
+    std::vector<CallbackTimer> _temporaries;
 };
 
-} /* ecs */
 } /* hx3d */
 
-#endif
+#endif /* HX3D_UTILS_TIMER_MANAGER */

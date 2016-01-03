@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Base System.
+    Entity Component System: Base Node.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,15 +18,28 @@
     USA
 */
 
-template <class EntityType>
-SystemBase<EntityType>::SystemBase(): _requiredFamily(0) {}
+#include "hx3d/ecs/scene_graph.hpp"
 
-template <class EntityType>
-bool SystemBase<EntityType>::canProcess(const unsigned int bits) {
-  return (_requiredFamily & bits) == _requiredFamily;
+namespace hx3d {
+namespace ecs {
+
+template <class T, class... Args>
+Ptr<T> Node::createChild(SceneGraph& sg, const std::string name, Args... args) {
+  return sg.template createNodeChild<T>(this->shared_from_this(), name, args...);
 }
 
-template <class EntityType>
-EngineBase<EntityType>* SystemBase<EntityType>::getEngine() {
-  return _engine;
+
+template <class T>
+Ptr<T> Node::getChild(const std::string name) {
+  for (const Ptr<Node>& obj: _children) {
+    if (obj->_name == name) {
+      return std::dynamic_pointer_cast<T>(obj);
+    }
+  }
+
+  Log.Error("Node: child `%s` does not exists.", name.c_str());
+  return nullptr;
 }
+
+} /* ecs */
+} /* hx3d */

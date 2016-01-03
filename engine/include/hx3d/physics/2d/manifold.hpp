@@ -15,6 +15,7 @@ public:
   Ptr<Collider> b;
 
   float penetration;
+  bool disabled;
   glm::vec2 normal;
   std::vector<glm::vec2> contacts;
 
@@ -32,7 +33,11 @@ public:
 
   void positionalCorrection();
   void infiniteMassCorrection();
+
+  friend bool operator<(const Manifold& m1, const Manifold& m2);
 };
+
+bool operator<(const Manifold& m1, const Manifold& m2);
 
 }
 }

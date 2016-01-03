@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Entity Node System.
+    Entity Component System: Base System.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,20 +18,20 @@
     USA
 */
 
-#ifndef HX3D_ECS_ZSYSTEM
-#define HX3D_ECS_ZSYSTEM
-
-#include "hx3d/ecs/base/system_base.hpp"
-
-#include "hx3d/ecs/z_node.hpp"
+#include "hx3d/ecs/system.hpp"
 
 namespace hx3d {
 namespace ecs {
 
-class ZSystem: public SystemBase<ZNode> {
-};
+System::System(): _requiredFamily(0) {}
 
-} /* ecs */
-} /* hx3d */
+bool System::canProcess(const unsigned int bits) {
+  return (_requiredFamily & bits) == _requiredFamily;
+}
 
-#endif
+Engine* System::getEngine() {
+  return _engine;
+}
+
+}
+}

@@ -24,7 +24,7 @@ include(../cmake/system_check.cmake)
 
 set(
   NEEDED_CXX_FLAGS
-  "-std=c++11\
+  "-std=c++14\
   -fdiagnostics-color=always\
   -Wall\
   -g"

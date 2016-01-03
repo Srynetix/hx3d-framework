@@ -29,6 +29,7 @@ set(
   "${ENGINE_SRC}/utils/file.cpp"
   "${ENGINE_SRC}/utils/matrix_queue.cpp"
   "${ENGINE_SRC}/utils/resource.cpp"
+  "${ENGINE_SRC}/utils/timer_manager.cpp"
   "${ENGINE_SRC}/utils/callback_timer.cpp"
 
   "${ENGINE_SRC}/math/function.cpp"
@@ -90,9 +91,12 @@ set(
   "${ENGINE_SRC}/physics/2d/collider.cpp"
   "${ENGINE_SRC}/physics/2d/collisions.cpp"
 
-  "${ENGINE_SRC}/ecs/base/id_base.cpp"
   "${ENGINE_SRC}/ecs/component.cpp"
   "${ENGINE_SRC}/ecs/entity.cpp"
+  "${ENGINE_SRC}/ecs/engine.cpp"
+  "${ENGINE_SRC}/ecs/scene_graph.cpp"
+  "${ENGINE_SRC}/ecs/system.cpp"
+  "${ENGINE_SRC}/ecs/node.cpp"
 
   "${ENGINE_SRC}/tweens/base_tween.cpp"
   "${ENGINE_SRC}/tweens/callback.cpp"

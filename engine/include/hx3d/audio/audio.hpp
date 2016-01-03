@@ -21,26 +21,32 @@
 #ifndef HX3D_AUDIO_AUDIO
 #define HX3D_AUDIO_AUDIO
 
-#include <SDL2/SDL_mixer.h>
-
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+
+/**
+  @brief Audio components
+*/
 namespace audio {
 
 class Effect;
+
+/**
+  @brief Audio device management.
+
+  Permit to register and clear effects.
+*/
 class AudioDevice {
 public:
-  /**
-  Initialize the audio system.
-  */
   AudioDevice();
   ~AudioDevice();
 
   ///////////////////////////////
 
   /**
-  Register an effect on a channel.
+  @brief Register an effect on a channel.
+
   Use Audio::PostChannel to put on the post channel.
 
   @param channel  Channel
@@ -49,7 +55,8 @@ public:
   void registerEffect(const int channel, Effect& effect);
 
   /**
-  Clear all the effects for a channel.
+  @brief Clear all the effects for a channel.
+
   Use Audio::PostChannel to put on the post channel.
 
   @param channel Channel
@@ -57,28 +64,38 @@ public:
   void clearEffects(const int channel);
 
   /**
-  Get the audio device frequency rate.
+  @brief Get the audio device frequency rate.
 
   @return Frequency rate
   */
   unsigned int getFrequencyRate();
 
   /**
-  Get the audio device sample size.
+  @brief Get the audio device sample size.
+
   It is used for WAV chunk loading.
 
   @return Sample size
   */
   unsigned int getSampleSize();
 
+  /**
+  @brief Post Channel Identifier
+  */
   static int PostChannel;
 
 private:
+  /// @brief Device audio rate
   int _audioRate;
+  /// @brief Device audio channels
   int _audioChannels;
-  Uint16 _audioFormat;
+  /// @brief Current audio format
+  unsigned short _audioFormat;
+  /// @brief Bits number
   int _bits;
+  /// @brief Audio sample size
   int _sampleSize;
+  /// @brief Audio buffer size
   int _bufferSize;
 };
 

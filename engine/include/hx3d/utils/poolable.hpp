@@ -18,10 +18,6 @@
     USA
 */
 
-/**
-  ID Indexed Poolable !
-*/
-
 #ifndef HX3D_UTILS_POOLABLE
 #define HX3D_UTILS_POOLABLE
 

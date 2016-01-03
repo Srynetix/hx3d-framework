@@ -13,6 +13,7 @@ Manifold::Manifold(const Ptr<Collider>& a, const Ptr<Collider>& b): a(a), b(b) {
   mixedRestitution = 0.f;
   mixedDynamicFriction = 0.f;
   mixedStaticFriction = 0.f;
+  disabled = false;
 }
 
 bool Manifold::solve() {
@@ -31,6 +32,8 @@ bool Manifold::solve() {
 }
 
 void Manifold::initialize() {
+  if (disabled) return;
+
   mixedRestitution = (a->material.restitution + b->material.restitution) / 2;
   mixedStaticFriction = std::sqrt(a->material.staticFriction * b->material.staticFriction);
   mixedDynamicFriction = std::sqrt(a->material.dynamicFriction * b->material.dynamicFriction);
@@ -48,6 +51,8 @@ void Manifold::initialize() {
 }
 
 void Manifold::applyImpulse() {
+  if (disabled) return;
+
   if (math::epsEqual(a->massData.invMass + b->massData.invMass, 0.f)) {
     infiniteMassCorrection();
     return;
@@ -100,6 +105,8 @@ void Manifold::applyImpulse() {
 }
 
 void Manifold::positionalCorrection() {
+  if (disabled) return;
+
   const float kSlop = 0.05f;
   const float percent = 0.4f;
 
@@ -110,8 +117,14 @@ void Manifold::positionalCorrection() {
 }
 
 void Manifold::infiniteMassCorrection() {
+  if (disabled) return;
+  
   a->velocity = {0, 0};
   b->velocity = {0, 0};
+}
+
+bool operator<(const Manifold& m1, const Manifold& m2) {
+  return m1.penetration < m2.penetration;
 }
 
 } /* physics2d */

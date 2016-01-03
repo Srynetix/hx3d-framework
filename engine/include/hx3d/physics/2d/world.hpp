@@ -35,6 +35,8 @@
 
 #include "hx3d/graphics/batch.hpp"
 
+#include <set>
+
 namespace hx3d {
 namespace physics2d {
 
@@ -63,9 +65,14 @@ private:
   std::vector<Ptr<CollisionListener>> _listeners;
   std::vector<Manifold> _contacts;
 
+  std::set<Manifold> _inContact;
+  std::set<Manifold> _inPrevContact;
 
   void integrateForces(const Ptr<Collider>& c, float dt);
   void integrateVelocity(const Ptr<Collider>& c, float dt);
+
+  bool prevContactExists(Manifold& m);
+  void checkOldContacts();
 };
 
 }

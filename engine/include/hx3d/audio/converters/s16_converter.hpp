@@ -26,6 +26,9 @@
 namespace hx3d {
 namespace audio {
 
+/**
+@brief Convert an audio stream to the signed short format
+*/
 class S16Converter: public Effect {
 public:
   S16Converter();
@@ -35,11 +38,11 @@ public:
   virtual void onDone(const int channel) override;
 
   /**
-  Get the stream in signed short format.
+  @brief Get the stream in signed short format.
 
   @return Signed short stream
   */
-  Sint16* getS16Stream();
+  short* getS16Stream();
 };
 
 } /* audio */

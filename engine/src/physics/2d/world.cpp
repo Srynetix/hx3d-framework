@@ -3,6 +3,7 @@
 #include "hx3d/graphics/sprite.hpp"
 
 #include "hx3d/math/vector_utils.hpp"
+#include "hx3d/utils/algorithm.hpp"
 
 namespace hx3d {
 namespace physics2d {
@@ -26,12 +27,13 @@ void World::addListener(const Ptr<CollisionListener>& listener) {
 }
 
 void World::removeCollider(const Ptr<Collider>& collider) {
-  // TODO
+  _colliders.erase(std::remove(_colliders.begin(), _colliders.end(), collider), _colliders.end());
 }
 
 void World::step(float dt) {
 
   _contacts.clear();
+  _inContact.clear();
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
     const Ptr<Collider>& a = _colliders[i];
@@ -46,21 +48,43 @@ void World::step(float dt) {
 
       if (m.contacts.size() > 0) {
 
-        for (auto& listener: _listeners) {
-          listener->doCollide(m);
+        // Ajout dans les contacts
+        _inContact.insert(m);
+
+        if (prevContactExists(m)) {
+
+          // IN
+          algo::apply(_listeners, [&m](auto& listener) {
+            listener->duringCollision(m);
+          });
+
+        } else {
+
+          // BEGIN
+          algo::apply(_listeners, [&m](auto& listener) {
+            listener->beginCollision(m);
+          });
+
         }
 
         if ((m.a->mask & m.b->category) || (m.b->mask & m.a->category)) {
           // Collision
         } else {
           if (m.a->category != 0 && m.b->category != 0)
-            continue;
+            m.disabled = true;
         }
 
         _contacts.push_back(m);
       }
     }
   }
+
+  // Différence entre les deux sets => END
+  checkOldContacts();
+
+  // Sauvegarde des contacts
+  _inPrevContact.clear();
+  algo::clone(_inContact, _inPrevContact);
 
   // Integrate
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
@@ -253,6 +277,41 @@ void World::integrateVelocity(const Ptr<Collider>& c, float dt) {
   }
 
   integrateForces(c, dt);
+}
+
+bool World::prevContactExists(Manifold& m) {
+  bool result = false;
+  for (auto& ma: _inPrevContact) {
+    if (ma.a == m.a && ma.b == m.b)
+    {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+}
+
+void World::checkOldContacts() {
+  std::set<Manifold> diffSet;
+  for (auto& manif: _inPrevContact) {
+    bool inside = false;
+    for (auto& curr: _contacts) {
+      if (curr.a == manif.a && curr.b == manif.b) {
+        inside = true;
+      }
+    }
+
+    if (!inside) {
+      diffSet.insert(manif);
+    }
+  }
+
+  algo::apply(diffSet, [this](auto manif) {
+    algo::apply(_listeners, [&manif](auto& listener) {
+      listener->endCollision(manif);
+    });
+  });
 }
 
 } /* physics2d */

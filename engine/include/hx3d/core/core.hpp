@@ -21,6 +21,9 @@
 #ifndef HX3D_CORE_CORE
 #define HX3D_CORE_CORE
 
+/**
+  @brief hx3d framework namespace
+*/
 namespace hx3d {
 
 class Application;
@@ -34,65 +37,76 @@ namespace audio {
 }
 
 /**
-Centralized framework management.
+@brief Centralized framework management.
+
 Permit to manage assets, events and game management at one place.
 */
 class Core {
 
 public:
+
+  /**
+  @brief System types
+  */
   enum class SystemType {
+    /// @brief Android system
     Android,
+    /// @brief iPhone/iPad system
     iOS,
+    /// @brief Linux system
     Linux,
+    /// @brief Windows system
     Windows,
+    /// @brief MacOS system
     MacOS,
+    /// @brief Unknown system
     Unknown
   };
 
   /**
-  Get the application instance
+  @brief Get the application instance
 
   @return Application
   */
   static Application* App();
 
   /**
-  Get the game instance
+  @brief Get the game instance
 
   @return Game
   */
   static Game* CurrentGame();
 
   /**
-  Get the asset manager.
+  @brief Get the asset manager.
 
   @return Asset manager
   */
   static AssetManager* Assets();
 
   /**
-  Get the event manager.
+  @brief Get the event manager.
 
   @return Event manager
   */
   static EventManager* Events();
 
   /**
-  Get the net instance.
+  @brief Get the net instance.
 
   @return Net
   */
   static Net* Network();
 
   /**
-  Get the audio instance.
+  @brief Get the audio device instance.
 
   @return Audio
   */
   static audio::AudioDevice* Audio();
 
   /**
-  Initialize the core system.
+  @brief Initialize the core system.
 
   @param app    Application (Ptr)
   @param game   Game (Ptr)
@@ -101,11 +115,11 @@ public:
   static void initialize(Application* app, Game* game, EventManager* events);
 
   /**
-  Shutdown the core system.
+  @brief Shutdown the core system.
   */
   static void shutdown();
 
-  /// Current system type
+  /// @brief Current system type
   static SystemType CurrentSystem;
 
   friend class Application;
@@ -120,13 +134,21 @@ private:
   @return Core instance.
   */
   static Core* get();
+
+  /// @brief Core instance
   static Core* _instance;
 
+  /// @brief Current application
   Application* _application;
+  /// @brief Current game
   Game* _game;
+  /// @brief Current asset manager
   AssetManager* _assets;
+  /// @brief Current event manager
   EventManager* _events;
+  /// @brief Current net device
   Net* _net;
+  /// @brief Current audio device
   audio::AudioDevice* _audio;
 };
 

@@ -1,5 +1,7 @@
 /*
     FFT calculation.
+    Source: http://rosettacode.org/wiki/Fast_Fourier_transform#C.2B.2B
+
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or

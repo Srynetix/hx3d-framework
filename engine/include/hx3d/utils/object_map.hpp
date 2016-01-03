@@ -1,5 +1,5 @@
 /*
-    Entity Component System: Base ID.
+    Object map.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,41 +18,33 @@
     USA
 */
 
-#ifndef HX3D_ECS_IDBASE
-#define HX3D_ECS_IDBASE
+#ifndef HX3D_UTILS_OBJECT_MAP
+#define HX3D_UTILS_OBJECT_MAP
+
+#include "hx3d/utils/ptr.hpp"
+
+#include <map>
 
 namespace hx3d {
-namespace ecs {
 
-class IDBase {
-public:
-  /**
-  Create an IDBase with an id.
+class ObjectMap {
+  public:
+    ObjectMap() {}
 
-  @param id ID
-  */
-  IDBase(const unsigned int id);
-  virtual ~IDBase();
+    template <class T>
+    T* get(std::string name) {
+      return static_cast<T*>(_objects[name]);
+    }
 
-  /**
-  Set the ID.
+    template <class T>
+    void set(std::string name, T* object) {
+      _objects[name] = (void*)object;
+    }
 
-  @param id New id
-  */
-  void setId(const unsigned int id);
-
-  /**
-  Get the ID
-
-  @return ID
-  */
-  unsigned int getId() const;
-
-protected:
-  unsigned int _id;
+  private:
+    std::map<std::string, void*> _objects;
 };
 
-} /* ecs */
 } /* hx3d */
 
-#endif
+#endif /* HX3D_UTILS_OBJECT_MAP */

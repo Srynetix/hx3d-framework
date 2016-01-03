@@ -26,7 +26,9 @@ namespace physics2d {
 
 class CollisionListener {
 public:
-  virtual void doCollide(Manifold& m) {}
+  virtual void beginCollision(Manifold& m) {}
+  virtual void duringCollision(Manifold& m) {}
+  virtual void endCollision(Manifold& m) {}
 
 };
 

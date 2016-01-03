@@ -28,19 +28,19 @@ S16Converter::~S16Converter() {}
 
 void S16Converter::onFunction(const int channel, const void* stream, const int length) {
   if (!_stream)
-    _stream = new Sint16[length/2];
+    _stream = new short[length/2];
   _length = length/2;
 
-  Sint16* my_stream = (Sint16*)_stream;
+  short* my_stream = (short*)_stream;
+  char* str = (char*)stream;
 
-  Sint8* str = (Sint8*)stream;
   for (int i = 0; i < length; i += 2) {
-    Sint8 a = str[i+1];
-    Sint8 b = str[i];
-    Uint8 ua = a < 0 ? 127 - a : a;
-    Uint8 ub = b < 0 ? 127 - b : b;
-    Uint16 us = (ua << 8 | ub);
-    Sint16 s = us > 32767 ? -(us - 32767) : us;
+    char a = str[i+1];
+    char b = str[i];
+    unsigned char ua = a < 0 ? 127 - a : a;
+    unsigned char ub = b < 0 ? 127 - b : b;
+    unsigned short us = (ua << 8 | ub);
+    short s = us > 32767 ? -(us - 32767) : us;
 
     my_stream[i/2] = s;
   }
@@ -51,8 +51,8 @@ void S16Converter::onFunction(const int channel, const void* stream, const int l
 void S16Converter::onDone(const int channel)
 {}
 
-Sint16* S16Converter::getS16Stream() {
-  return (Sint16*)_stream;
+short* S16Converter::getS16Stream() {
+  return (short*)_stream;
 }
 
 } /* audio */

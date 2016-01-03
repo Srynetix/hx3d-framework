@@ -21,19 +21,39 @@
 #ifndef HX3D_ECS_ENTITY
 #define HX3D_ECS_ENTITY
 
-#include "hx3d/ecs/base/id_base.hpp"
-
 namespace hx3d {
 namespace ecs {
 
-class Entity: public IDBase {
+/**
+@brief Base element, attachable with components.
+@see Engine
+*/
+class Entity {
 public:
   /**
-  Construct an entity with a unique id.
-  
+  @brief Construct an entity with a unique id.
+
   @param id ID
   */
   Entity(const unsigned int id);
+
+  /**
+  @brief Get the entity ID
+
+  @return Entity ID
+  */
+  unsigned int getId() const;
+
+  /**
+  @brief Change the entity ID
+
+  @param id New ID
+  */
+  void setId(const unsigned int id);
+
+private:
+  /// @brief Entity ID
+  unsigned int _id;
 };
 
 } /* ecs */

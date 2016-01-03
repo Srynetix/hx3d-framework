@@ -23,12 +23,17 @@
 
 #include "hx3d/utils/log.hpp"
 
+#include <SDL2/SDL_mixer.h>
+
 namespace hx3d {
 namespace audio {
 
 int AudioDevice::PostChannel = MIX_CHANNEL_POST;
 
 AudioDevice::AudioDevice() {
+
+  Log.Info("Audio device initialization.");
+
   int flags = Mix_Init(~0);
   std::string types;
 
@@ -45,7 +50,6 @@ AudioDevice::AudioDevice() {
 
   Log.Info("Supported audio types: \n%s", types.c_str());
 
-  /** Open device */
   _bufferSize = 4096;
 
   Mix_OpenAudio(44100, AUDIO_S16SYS, 1, _bufferSize);
@@ -82,7 +86,6 @@ void AudioDevice::registerEffect(const int channel, Effect& effect) {
 void AudioDevice::clearEffects(const int channel) {
   Mix_UnregisterAllEffects(channel);
 }
-
 
 unsigned int AudioDevice::getFrequencyRate() {
   return _audioRate;

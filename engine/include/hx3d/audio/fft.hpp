@@ -1,5 +1,7 @@
 /*
     FFT calculation.
+    Source: http://rosettacode.org/wiki/Fast_Fourier_transform#C.2B.2B
+
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -28,11 +30,15 @@
 namespace hx3d {
 namespace audio {
 
+/**
+@brief FFT calculation helpers and methods.
+*/
 class FFT {
 public:
 
   /**
-  Cooley–Tukey FFT (in-place, divide-and-conquer)
+  @brief Cooley–Tukey FFT (in-place, divide-and-conquer)
+
   Higher memory requirements and redundancy although more intuitive
 
   @param vector Complex valarray
@@ -40,7 +46,8 @@ public:
   static void fft(std::valarray<Complex>& vector);
 
   /**
-  Cooley-Tukey FFT (in-place, breadth-first, decimation-in-frequency)
+  @brief Cooley-Tukey FFT (in-place, breadth-first, decimation-in-frequency)
+
   Better optimized but less intuitive
 
   @param vector Complex valarray

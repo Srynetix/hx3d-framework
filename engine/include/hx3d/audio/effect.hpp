@@ -21,19 +21,23 @@
 #ifndef HX3D_AUDIO_EFFECT
 #define HX3D_AUDIO_EFFECT
 
-#include <SDL2/SDL_mixer.h>
-
 namespace hx3d {
 namespace audio {
 
+/**
+@brief Audio effect manipulation
+
+You can inherit the effect to use a custom function/filter on a channel.
+*/
 class Effect {
 public:
   Effect();
   virtual ~Effect();
 
   /**
-  Effect function.
-  See @link#Audio::registerEffect.
+  @brief Audio effect function.
+
+  @see AudioDevice#registerEffect
 
   @param channel Audio channel
   @param stream  Audio stream
@@ -42,43 +46,52 @@ public:
   virtual void onFunction(const int channel, const void* stream, const int length);
 
   /**
-  Effect done function.
-  See @link#Audio::registerEffect.
+  @brief Audio effect done function.
+
+  @see AudioDevice#registerEffect
 
   @param channel Audio channel
   */
   virtual void onDone(const int channel);
 
   /**
-  Get the audio channel related to the effect.
+  @brief Get the audio channel related to the effect.
 
   @return Audio channel
   */
   int getChannel();
 
   /**
-  Get the audio stream.
+  @brief Get the audio stream.
 
   @return Audio stream
   */
   void* getStream();
 
   /**
-  Get the sample size.
+  @brief Get the sample size.
 
   @return Sample size
   */
   int getSampleSize();
 
   /**
-  Test if the effect has started.
+  @brief Test if the effect has started.
   */
   bool hasProcessed();
 
 protected:
+
+  /// @brief Has the effect started ?
   bool _processed;
+
+  /// @brief Audio channel
   int _channel;
+
+  /// @brief Sound stream
   void* _stream;
+
+  /// @brief Sound length
   int _length;
 };
 

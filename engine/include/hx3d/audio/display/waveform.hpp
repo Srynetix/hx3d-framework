@@ -26,18 +26,23 @@
 namespace hx3d {
 namespace audio {
 
+/**
+@brief Audio waveform displaying.
+*/
 class Waveform: public Display {
 public:
 
   /**
-  Create an empty waveform with a refresh delay of 50.
-  See @link#create to construct the texture.
+  @brief Create an empty waveform with a refresh delay of 50.
+
+  @see initialize to construct the texture.
   */
   Waveform();
 
   /**
-  Create an empty waveform with a custom refresh delay.
-  See @link#create to construct the texture.
+  @brief Create an empty waveform with a custom refresh delay.
+
+  @see initialize to construct the texture.
 
   @param refreshDelay Refresh delay
   */

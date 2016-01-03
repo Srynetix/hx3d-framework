@@ -21,16 +21,16 @@
 #ifndef HX3D_ECS_COMPONENT
 #define HX3D_ECS_COMPONENT
 
+#include "hx3d/utils/bitset.hpp"
+
 #include <map>
 #include <typeindex>
-
-#include "hx3d/utils/bitset.hpp"
 
 namespace hx3d {
 namespace ecs {
 
 /**
-Base component
+@brief Base entity component.
 */
 class Component {
 public:
@@ -39,37 +39,53 @@ public:
 };
 
 /**
-Unique bit attribution for each component
+@brief Unique bit attribution for each component
 */
 class ComponentBits {
 public:
   /**
-    Get the bits for the current component type T.
+    @brief Get the bits for the current component type T.
 
     @param T Component type (must be a Component child type)
+
+    @return Bits
   */
   template <class T>
   static unsigned int get(typename std::enable_if<std::is_base_of<Component, T>::value>::type* test = nullptr);
 
   /**
-    Get the bits corresponding to the suite of Types.
+    @brief Get the bits corresponding to the suite of Types.
 
     @param Types Suite of Component types
+
+    @return Bits
     */
   template <class... Types>
   static unsigned int getFamily();
 
 private:
+  /// @brief Component bits
   static std::map<std::type_index, unsigned int> _componentBits;
+  /// @brief Current bit value
   static unsigned int _currentBit;
 
   /**
-    Build a bitset corresponding to the suite of Types.
+    @brief Build a bitset corresponding to the suite of Types.
 
     @param Types Suite of Component types
+
+    @return Bitset
     */
   template <class T, class... Types>
   static Bitset getFamilyInternal();
+
+  /**
+    @brief Build a bitset corresponding to the suite of Types (no parameters).
+
+    @param Types Suite of Component types
+
+    @return Bitset
+    */
   template <class... Types>
   static Bitset getFamilyInternal(typename std::enable_if<sizeof...(Types) == 0>::type* test = nullptr);
 };

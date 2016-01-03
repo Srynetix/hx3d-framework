@@ -21,29 +21,37 @@
 #ifndef HX3D_AUDIO_DISPLAY
 #define HX3D_AUDIO_DISPLAY
 
-#include <SDL2/SDL_types.h>
-
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"
 
-#include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/timer.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace audio {
 
+/**
+  @brief Audio effect display.
+
+  Inherit from Sprite.
+
+  @see Spectrum
+  @see Waveform
+*/
 class Display: public hx3d::Sprite {
 
 public:
   /**
-  Create an empty display with a refresh delay of 50.
-  See @link#initialize to construct the texture.
+  @brief Create an empty display with a refresh delay of 50.
+
+  @see initialize to construct the texture.
   */
   Display();
 
   /**
-  Create an empty display with a custom refresh delay.
-  See @link#initialize to construct the texture.
+  @brief Create an empty display with a custom refresh delay.
+
+  @see initialize to construct the texture.
 
   @param refreshDelay Refresh delay
   */
@@ -51,7 +59,7 @@ public:
   virtual ~Display();
 
   /**
-  Initialize the display.
+  @brief Initialize the display.
 
   @param width  Width
   @param height Height
@@ -59,14 +67,14 @@ public:
   void initialize(const unsigned int width, const unsigned int height);
 
   /**
-  Set the refresh delay.
+  @brief Set the refresh delay.
 
   @param refreshDelay Refresh delay
   */
   void setRefreshDelay(const int refreshDelay);
 
   /**
-  Update the display.
+  @brief Update the display.
 
   @param stream Stream of amplitudes (between -32767 and 32767)
   @param length Length of the stream
@@ -75,23 +83,27 @@ public:
   virtual void update(const Sint16* stream, const int length, const float delta) = 0;
 
   /**
-  Use this to execute code after initialization.
-  See @link#Spectrum::onInitialization.
+  @brief Use this to execute code after initialization.
+
+  @see Spectrum::onInitialization.
   */
   virtual void onInitialization();
 
-  /* Not needed */
   void setTexture(const Ptr<Texture>&) = delete;
   void setTexture(const Ptr<Framebuffer>&) = delete;
 
 protected:
+  /// @brief Drawing image
   Image _image;
+  /// @brief Refresh timer
   Timer _timer;
+  /// @brief Refresh delay
   int _refreshDelay;
+  /// @brief Is the display initialized ?
   bool _initialized;
 
   /**
-  Draw white borders.
+  @brief Draw white borders.
   */
   void drawBorders();
 };
