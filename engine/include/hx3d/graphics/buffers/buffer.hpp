@@ -22,14 +22,22 @@
 #define HX3D_GRAPHICS_BUFFERS_BUFFER
 
 #include <vector>
-#include <algorithm>
 
 #include "hx3d/graphics/gl.hpp"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Data buffer helpers.
+*/
+namespace buffers {
+
+/**
+@brief OpenGL data buffer.
+*/
 template <class T>
 class Buffer {
 
@@ -38,57 +46,58 @@ public:
   virtual ~Buffer();
 
   /**
-  Set the buffer values.
+  @brief Set the buffer values.
 
   @param values Values
   */
   void set(const std::vector<T>& values);
 
   /**
-  Add buffer values.
+  @brief Add buffer values.
 
   @param values Values
   */
   void add(const std::vector<T>& values);
 
   /**
-  Get the buffer values.
+  @brief Get the buffer values.
 
   @return Values
   */
   T* data();
 
   /**
-  Get the buffer ID.
+  @brief Get the buffer ID.
 
   @return ID
   */
   GLuint getId();
 
   /**
-  Get the buffer size.
+  @brief Get the buffer size.
 
   @return Buffer size
   */
   unsigned int size();
 
   /**
-  Get the vector.
+  @brief Get the vector.
 
   @return Vector
   */
   std::vector<T>& getVector();
 
   /**
-  Get a value.
+  @brief Get a value.
 
   @param i Position
+
   @return Value
   */
   T getValue(unsigned int i);
 
   /**
-  Set a value.
+  @brief Set a value.
 
   @param i Position
   @param value Value
@@ -96,17 +105,21 @@ public:
   void setValue(const unsigned int i, const T value);
 
   /**
-  Clear all values.
+  @brief Clear all values.
   */
   void clear();
 
 protected:
+  /// @brief Data
   std::vector<T> _vector;
+  /// @brief Internal ID
   GLuint _buf;
 };
 
-#include "hx3d/graphics/buffers/_inline/buffer.inl.hpp"
-
+} /* buffers */
+} /* graphics */
 } /* hx3d */
+
+#include "hx3d/graphics/buffers/_inline/buffer.inl.hpp"
 
 #endif

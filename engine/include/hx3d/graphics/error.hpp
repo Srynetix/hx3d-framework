@@ -22,11 +22,19 @@
 #define HX3D_GRAPHICS_ERROR
 
 namespace hx3d {
+namespace graphics {
 
-  void checkGLError(const char* file, int line);
+/**
+@brief Display the last unchecked OpenGL errors.
 
+@param file Current file
+@param line Current line
+*/
+void checkGLError(const char* file, int line);
+
+} /* graphics */
 } /* hx3d*/
 
-#define GL_ERROR_CHECK(x) x; checkGLError(__FILE__, __LINE__);
+#define GL_ERROR_CHECK(x) x; hx3d::graphics::checkGLError(__FILE__, __LINE__);
 
 #endif /* HX3D_GRAPHICS_ERROR */

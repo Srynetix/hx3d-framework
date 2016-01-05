@@ -5,6 +5,8 @@
 #include "hx3d/math/vector_utils.hpp"
 #include "hx3d/utils/algorithm.hpp"
 
+using namespace hx3d::graphics;
+
 namespace hx3d {
 namespace physics2d {
 
@@ -54,14 +56,14 @@ void World::step(float dt) {
         if (prevContactExists(m)) {
 
           // IN
-          algo::apply(_listeners, [&m](auto& listener) {
+          algo::apply(_listeners, [&m](Ptr<CollisionListener>& listener) {
             listener->duringCollision(m);
           });
 
         } else {
 
           // BEGIN
-          algo::apply(_listeners, [&m](auto& listener) {
+          algo::apply(_listeners, [&m](Ptr<CollisionListener>& listener) {
             listener->beginCollision(m);
           });
 
@@ -117,7 +119,7 @@ void World::step(float dt) {
   }
 }
 
-void World::render(Batch& batch) {
+void World::render(graphics::Batch& batch) {
 
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
     const Ptr<Attractor>& attractor = _attractors[i];
@@ -307,8 +309,8 @@ void World::checkOldContacts() {
     }
   }
 
-  algo::apply(diffSet, [this](auto manif) {
-    algo::apply(_listeners, [&manif](auto& listener) {
+  algo::apply(diffSet, [this](Manifold manif) {
+    algo::apply(_listeners, [&manif](Ptr<CollisionListener> listener) {
       listener->endCollision(manif);
     });
   });

@@ -28,12 +28,15 @@
 
 namespace hx3d {
 
+/**
+@brief Manage poolable elements.
+*/
 template <class T>
 class Pool {
 public:
 
   /**
-  Construct a pool with a size and arguments.
+  @brief Construct a pool with a size and arguments.
 
   @param size Size
   @param args Arguments
@@ -43,21 +46,21 @@ public:
   ~Pool();
 
   /**
-  Fetch a free poolable element.
+  @brief Fetch a free poolable element.
 
   @return Poolable element
   */
   const Ptr<T>& take();
 
   /**
-  Release a poolable element.
+  @brief Release a poolable element.
 
   @param ptr Poolable (Ptr)
   */
   void release(const Ptr<T>& ptr);
 
   /**
-  Get the locked elements.
+  @brief Get the locked elements.
 
   @return Set of elements
   */

@@ -1,5 +1,5 @@
 /*
-    Geometry.
+    Algorithms.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,28 +18,18 @@
     USA
 */
 
-#include "hx3d/graphics/geometry.hpp"
-
 namespace hx3d {
+namespace algo {
 
-Geometry::Geometry(): BaseGeometry() {}
-
-void Geometry::draw(Ptr<Shader> shader) {
-
-  for (auto& a: _attributes) {
-    a.second.begin(shader);
-  }
-
-  if (_indices.size() == 0) {
-    glDrawArrays(GL_TRIANGLES, 0, _attributes["Position"].size());
-  } else {
-    _indices.begin(shader);
-    _indices.end(shader);
-  }
-
-  for (auto& a: _attributes) {
-    a.second.end(shader);
-  }
+template <class Container, class Function>
+void apply(Container& container, Function func) {
+  std::for_each(container.begin(), container.end(), func);
 }
 
+template <class Source, class Dest>
+void clone(Source& src, Dest& dst) {
+  std::copy(src.begin(), src.end(), std::inserter(dst, dst.begin()));
+}
+
+} /* algo */
 } /* hx3d */

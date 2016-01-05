@@ -26,25 +26,29 @@
 
 namespace hx3d {
 
+/**
+@brief Bitset helper in an unsigned int
+*/
 class Bitset {
 public:
   Bitset();
 
   /**
-  Set a bit to true.
+  @brief Set a bit to true.
 
   @param bit Bit
   */
   void set(unsigned int bit);
 
   /**
-  Get the bits.
-  
+  @brief Get the bits.
+
   @return Bits
   */
   unsigned int getBits();
 
 private:
+  /// @brief Current bits
   unsigned int _bits;
 
 };

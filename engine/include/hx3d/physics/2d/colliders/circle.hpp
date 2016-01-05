@@ -25,15 +25,30 @@
 
 namespace hx3d {
 namespace physics2d {
+
+/**
+@brief 2D collider types
+*/
 namespace colliders {
 
+/**
+@brief Circle shaped collider
+*/
 struct Circle: public Collider {
-  float radius;
 
+  /**
+  @brief Create a circle
+
+  @param radius       Radius
+  @param colliderType Collider type
+  */
   Circle(float radius, const Type colliderType = Type::Dynamic);
 
   virtual void setOrientation(float angle) override;
   virtual void computeMass(float density) override;
+
+  /// @brief Radius
+  float radius;
 };
 
 } /* colliders */

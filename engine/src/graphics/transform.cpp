@@ -23,6 +23,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Transform::Transform():
   position(0, 0, 0),
@@ -99,4 +100,5 @@ void Transform::show() {
   Log.Info("-- END Transform");
 }
 
+} /* graphics */
 } /* hx3d */

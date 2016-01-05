@@ -18,8 +18,16 @@
     USA
 */
 
+namespace hx3d {
+namespace graphics {
+namespace buffers {
+
 template <class T>
 ArrayBuffer<T>::ArrayBuffer(): Buffer<T>() {}
 
 template <class T>
 ArrayBuffer<T>::~ArrayBuffer() {}
+
+} /* buffers */
+} /* graphics */
+} /* hx3d */

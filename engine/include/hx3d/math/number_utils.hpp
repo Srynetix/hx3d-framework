@@ -25,7 +25,8 @@ namespace hx3d {
 namespace math {
 
 /**
-Simple clamp.
+@brief Simple clamp.
+
 Block the value between min and max.
 
 @param value  Value
@@ -36,8 +37,10 @@ Block the value between min and max.
 float clamp(float value, float min, float max);
 
 /**
-Modulo clamp.
+@brief Modulo clamp.
+
 Block the value between min and max.
+
 If the value is > to max, it goes back to min.
 If the value is < to min, it goes back to max.
 
@@ -49,7 +52,7 @@ If the value is < to min, it goes back to max.
 float mclamp(float value, float min, float max);
 
 /**
-Modulo.
+@brief Modulo.
 Handles negative values !
 
 @param a First value
@@ -59,7 +62,7 @@ Handles negative values !
 int modulo(int a, int b);
 
 /**
-Calculate the log2.
+@brief Calculate the log2.
 
 @param a Value
 @return Log2

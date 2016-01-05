@@ -1,5 +1,5 @@
 /*
-    Application listener.
+    Particle manager.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,59 +18,34 @@
     USA
 */
 
-#ifndef HX3D_WINDOW_APPLICATIONLISTENER
-#define HX3D_WINDOW_APPLICATIONLISTENER
+#include "hx3d/graphics/particle_manager.hpp"
 
 namespace hx3d {
+namespace graphics {
 
-/**
-Application listener.
-*/
-class ApplicationListener {
-public:
+ParticleManager::ParticleManager()
+{}
 
-  /**
-  On application creation.
-  */
-  virtual void create() = 0;
+void ParticleManager::addEmitter(const Ptr<ParticleEmitter>& emitter) {
+  emitters.push_back(emitter);
+}
 
-  /**
-  On application render.
-  */
-  virtual void render() = 0;
+void ParticleManager::update(const float delta) {
+  for (Ptr<ParticleEmitter>& emitter: emitters) {
+    emitter->update(delta);
+  }
+}
 
-  /**
-  On application update.
+void ParticleManager::draw(Batch& batch) {
 
-  @param delta Delta time
-  */
-  virtual void update(float delta) = 0;
+  glDisable(GL_DEPTH_TEST);
 
-  /**
-  On application pause.
-  */
-  virtual void pause() = 0;
+  for (Ptr<ParticleEmitter>& emitter: emitters) {
+    emitter->draw(batch);
+  }
 
-  /**
-  On application resume.
-  */
-  virtual void resume() = 0;
+  glEnable(GL_DEPTH_TEST);
+}
 
-  /**
-  On application resize.
-
-  @param width  New width
-  @param height New height
-  */
-  virtual void resize(int width, int height) = 0;
-
-  /**
-  On application disposal.
-  */
-  virtual void dispose() = 0;
-};
-
-
+} /* graphics */
 } /* hx3d */
-
-#endif /* HX3D_WINDOW_APPLICATIONLISTENER */

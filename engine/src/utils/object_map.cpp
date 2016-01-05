@@ -1,5 +1,5 @@
 /*
-    Particle manager.
+    Object map.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,42 +18,10 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_PARTICLES_PARTICLEMANAGER
-#define HX3D_GRAPHICS_PARTICLES_PARTICLEMANAGER
-
-#include "hx3d/graphics/particles/particle_emitter.hpp"
+#include "hx3d/utils/object_map.hpp"
 
 namespace hx3d {
 
-class ParticleManager {
-public:
-  ParticleManager();
-
-  /**
-  Add an emitter.
-
-  @param emitter Particle emitter
-  */
-  void addEmitter(const Ptr<ParticleEmitter>& emitter);
-
-  /**
-  Update the particle manager.
-
-  @param delta Delta time
-  */
-  void update(const float delta);
-
-  /**
-  Draw the particles.
-
-  @param batch Batch
-  */
-  void draw(Batch& batch);
-
-private:
-  std::vector<Ptr<ParticleEmitter>> emitters;
-};
+ObjectMap::ObjectMap() {}
 
 } /* hx3d */
-
-#endif

@@ -23,21 +23,29 @@
 
 namespace hx3d {
 
+/**
+@brief Reutilisable elements. Recycling is good for your memory.
+*/
 class Poolable {
 public:
-
-  Poolable(): _id(0) {}
-
-  void setId(const unsigned int id) {
-    _id = id;
-  }
-
-  unsigned int getId() const {
-    return _id;
-  }
+  Poolable();
 
   /**
-  Reset.
+  @brief Change the poolable ID
+
+  @param id New ID
+  */
+  void setId(const unsigned int id);
+
+  /**
+  @brief Get the poolable ID
+
+  @return Poolable ID
+  */
+  unsigned int getId() const;
+
+  /**
+  @brief Reset the element
   */
   virtual void reset() = 0;
 

@@ -24,17 +24,21 @@
 #include <glm/vec4.hpp>
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Four [0..255] components defined color 
+*/
 class Color {
 
 public:
   /**
-  Create a white color.
+  @brief Create a white color.
   */
   Color();
 
   /**
-  Create a color with an alpha of 255.
+  @brief Create a color with an alpha of 255.
 
   @param r Red
   @param g Green
@@ -43,7 +47,7 @@ public:
   Color(unsigned char r, unsigned char g, unsigned char b);
 
   /**
-  Create a color with a custom alpha.
+  @brief Create a color with a custom alpha.
 
   @param r Red
   @param g Green
@@ -53,15 +57,16 @@ public:
   Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
   /**
-  Affect a color into another.
+  @brief Affect a color into another.
 
   @param color Anothe color
+
   @return Color
   */
   Color& operator=(const Color& color);
 
   /**
-  Convert the color to a float format (between 0 and 1).
+  @brief Convert the color to a float format (between 0 and 1).
 
   @return Color (vec4)
   */
@@ -70,36 +75,47 @@ public:
   /////////////////
 
   /**
-  Convert HSV color to RGB format.
+  @brief Convert HSV color to RGB format.
 
   @param hsv HSV color
+
   @return RGB color
   */
   static Color hsvToRgb(Color hsv);
 
   /**
-  Convert RGB color to HSV format.
+  @brief Convert RGB color to HSV format.
 
   @param rgb RGB color
+
   @return HSV color
   */
   static Color rgbToHsv(Color rgb);
 
+  /// @brief Red component
   unsigned char r;
+  /// @brief Green component
   unsigned char g;
+  /// @brief Blue component
   unsigned char b;
+  /// @brief Alpha component
   unsigned char a;
 
   //////////////////
 
+  /// @brief White color
   static Color White;
+  /// @brief Black color
   static Color Black;
-
+  /// @brief Red color
   static Color Red;
+  /// @brief Green color
   static Color Green;
+  /// @brief Blue color
   static Color Blue;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

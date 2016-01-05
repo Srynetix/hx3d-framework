@@ -30,11 +30,18 @@
 #include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D/3D camera.
+
+@see OrthographicCamera
+@see PerspectiveCamera
+*/
 class Camera {
 public:
   /**
-  Create a camera with a viewport width and height.
+  @brief Create a camera with a viewport width and height.
 
   @param width  Viewport width
   @param height Viewport height
@@ -44,21 +51,21 @@ public:
   Camera(const float width, const float height, const float near, const float far);
 
   /**
-  Look at target.
+  @brief Look at target.
 
   @param target Target
   */
   void lookAt(glm::vec3 target);
 
   /**
-  Translate the camera.
+  @brief Translate the camera.
 
   @param vec Quantity
   */
   void translate(const glm::vec3 vec);
 
   /**
-  Rotate the camera on one/multiple axes.
+  @brief Rotate the camera on one/multiple axes.
 
   @param angle Angle in degrees
   @param axis  Direction(s)
@@ -66,7 +73,7 @@ public:
   void rotate(const float angle, const glm::vec3 axis);
 
   /**
-  Rotate the camera around one point, on one/multiple axes.
+  @brief Rotate the camera around one point, on one/multiple axes.
 
   @param center Point
   @param angle  Angle in degrees
@@ -75,27 +82,36 @@ public:
   void rotateAround(const glm::vec3 center, const float angle, const glm::vec3 axis);
 
   /**
-  Update the camera.
+  @brief Update the camera.
   */
   virtual void update() = 0;
 
   //////////////////
 
+  /// @brief Camera position
   glm::vec3 position;
+  /// @brief Camera direction
   glm::vec3 direction;
+  /// @brief Camera up vector
   glm::vec3 up;
 
+  /// @brief Projection matrix
   glm::mat4 projection;
+  /// @brief View matrix
   glm::mat4 view;
 
+  /// @brief Near pane
   float near;
+  /// @brief Far pane
   float far;
 
+  /// @brief Viewport width
   float viewportWidth;
+  /// @brief Viewport height
   float viewportHeight;
-
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

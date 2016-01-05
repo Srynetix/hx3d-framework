@@ -38,7 +38,7 @@ Music::~Music() {
 void Music::initialize(const std::string pathToFile) {
   _file = File::loadBinaryFile(pathToFile);
 
-  SDL_RWops* musicOps = SDL_RWFromConstMem(_file->data, _file->size);
+  SDL_RWops* musicOps = SDL_RWFromConstMem(_file->getData(), _file->getSize());
   _music = Mix_LoadMUS_RW(musicOps, 1);
 }
 

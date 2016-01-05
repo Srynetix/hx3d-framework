@@ -8,6 +8,7 @@ UNIT_TESTS
 "${CORE_SRC}/ecs/scene_graph_tests.cpp"
 "${CORE_SRC}/math/number_utils.cpp"
 "${CORE_SRC}/utils/log_test.cpp"
+"${CORE_SRC}/utils/property_test.cpp"
 
 # Put your other tests here
 #       "${CORE_SRC}/other.cpp"

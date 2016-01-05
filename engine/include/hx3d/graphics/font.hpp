@@ -25,24 +25,32 @@
 #include <string>
 #include <map>
 
+#include "hx3d/graphics/shader.hpp"
 #include "hx3d/utils/resource.hpp"
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/file.hpp"
 
 namespace hx3d {
+namespace graphics {
 
-class Shader;
-class File;
-
+/**
+@brief Font management.
+*/
 class Font: public Resource {
 public:
 
+  /**
+  @brief Internal font data
+  */
   struct Data {
+    /// @brief Internal font
     texture_font_t* font;
+    /// @brief Internal atlas
     texture_atlas_t* atlas;
   };
 
   /**
-  Build a font from a path and a character size.
+  @brief Build a font from a path and a character size.
 
   @param fontPath       Path to font
   @param characterSize  Character size
@@ -50,17 +58,52 @@ public:
   Font(std::string fontPath, int characterSize);
   ~Font();
 
+  /**
+  @brief Generate a font in cache.
+
+  @param size Font size
+  */
   void createFontSize(int size);
+
+  /**
+  @brief Get internal font data from a size.
+
+  If it does not exists, creates it with @link createFontSize @endlink.
+
+  @param size Font size
+
+  @return Internal font data
+  */
   Data& getFontData(int size);
 
+  /**
+  @brief Get the default font size
+
+  @return Default font size
+  */
+  unsigned int getDefaultSize() const;
+
+  /**
+  @brief Get the font shader
+
+  @return Shader (Ptr)
+  */
+  const Ptr<Shader>& getShader();
+
+private:
+  /// @brief Font shader
   Ptr<Shader> shader;
+  /// @brief Font file
   Ptr<File> file;
 
+  /// @brief Internal font data map
   std::map<int, Data> data;
 
-  int defaultSize;
+  /// @brief Default font size
+  unsigned int defaultSize;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

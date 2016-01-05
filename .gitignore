@@ -4,6 +4,7 @@ _build_windows/
 _build_macos/
 _build_ios/
 
+site/
 dependencies/
 game/
 doc/

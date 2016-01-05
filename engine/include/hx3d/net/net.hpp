@@ -25,6 +25,14 @@
 
 namespace hx3d {
 
+/**
+@brief Network management components
+*/
+namespace net {
+
+/**
+@brief Network management
+*/
 class Net {
 
 public:
@@ -35,6 +43,7 @@ public:
   ~Net();
 };
 
+} /* net */
 } /* hx3d */
 
 #endif

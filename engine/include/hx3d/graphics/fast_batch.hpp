@@ -22,7 +22,11 @@
 #define HX3D_GRAPHICS_FAST_BATCH
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Real batching using real-time VBO generation
+*/
 class FastBatch {
 public:
     FastBatch(unsigned int size): size(size), vboId(0), vboIndicesId(0), current(0), currentIdx(0), maxIdx(0), drawing(false) {
@@ -170,6 +174,7 @@ public:
     std::vector<GLushort> indices;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif /* HX3D_GRAPHICS_FAST_BATCH */

@@ -20,8 +20,8 @@ public:
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);
 
-    cube.setGeometry(Make<CubeGeometry>());
-    star.setGeometry(Make<StarGeometry>());
+    cube.setGeometry(Make<geom::CubeGeometry>());
+    star.setGeometry(Make<geom::StarGeometry>());
 
     angle = 0.f;
   }
@@ -107,13 +107,13 @@ public:
   }
 
 private:
-  hx3d::PerspectiveCamera camera;
+  PerspectiveCamera camera;
 
-  hx3d::Batch batch;
+  Batch batch;
 
-  hx3d::Mesh cube;
-  hx3d::Mesh star;
-  hx3d::Sprite sprite;
+  Mesh cube;
+  Mesh star;
+  Sprite sprite;
 
   float angle;
 };

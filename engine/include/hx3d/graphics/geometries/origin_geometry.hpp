@@ -23,15 +23,22 @@
 #ifndef HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
 #define HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
+/**
+@brief Three centered axis VBO geometry
+*/
 class OriginGeometry: public Geometry {
 public:
   OriginGeometry();
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

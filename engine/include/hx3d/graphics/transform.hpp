@@ -27,7 +27,11 @@
 #include <glm/gtx/transform.hpp>
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D/3D transform.
+*/
 class Transform {
 
 public:
@@ -35,14 +39,15 @@ public:
   Transform& operator=(const Transform& transform);
 
   /**
-  Build the model matrix using the position, scale, size and rotation.
+  @brief Build the model matrix using the position, scale, size and rotation.
 
   @return Matrix (mat4)
   */
   glm::mat4 compute();
 
   /**
-  Add a transform to another.
+  @brief Add a transform to another.
+
   In use for parent/child transform calculation.
 
   @param transform Other transform
@@ -51,25 +56,37 @@ public:
   Transform add(const Transform& transform);
 
   /**
-  Get the real size (size * scale).
+  @brief Get the real size (size * scale).
 
   @return Real size
   */
   glm::vec3 realSize();
 
+  /**
+  @brief Check a point in the transform
+
+  @param point 2D point
+
+  @return True/False
+  */
   bool contains(glm::vec2 point);
 
   /**
-  Show the transform information. (Debug)
+  @brief Show the transform information. (Debug)
   */
   void show();
 
+  /// @brief Position
   glm::vec3 position;
+  /// @brief Scale
   glm::vec3 scale;
+  /// @brief Size
   glm::vec3 size;
+  /// @brief Rotation
   glm::vec3 rotation;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

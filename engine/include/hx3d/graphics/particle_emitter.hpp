@@ -18,77 +18,92 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_PARTICLES_PARTICLEEMITTER
-#define HX3D_GRAPHICS_PARTICLES_PARTICLEEMITTER
+#ifndef HX3D_GRAPHICS_PARTICLEEMITTER
+#define HX3D_GRAPHICS_PARTICLEEMITTER
 
-#include "hx3d/graphics/particles/particle.hpp"
+#include "hx3d/graphics/particle.hpp"
 #include "hx3d/utils/pool.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Emit particles with parameters
+*/
 class ParticleEmitter {
 public:
 
   /**
-  Construct an emitter with a max particle number.
+  @brief Construct an emitter with a max particle number.
 
   @param maxParticles Max particle count
   */
   ParticleEmitter(const unsigned int maxParticles);
 
   /**
-  Emit particles.
+  @brief Emit particles.
 
   @param qty Quantity
   */
   void emit(const unsigned int qty);
 
   /**
-  Update the emitter.
+  @brief Update the emitter.
 
   @param delta Delta time
   */
   void update(const float delta);
 
   /**
-  Draw the particles.
+  @brief Draw the particles.
 
   @param batch Batch
   */
   void draw(Batch& batch);
 
   /**
-  Set the emitter texture.
+  @brief Set the emitter texture.
 
   @param texture Texture (Ptr)
   */
   void setTexture(const Ptr<Texture>& texture);
 
   /**
-  Get the active particle count.
+  @brief Get the active particle count.
 
   @return Active particle count
   */
   unsigned int getParticleCount();
 
+  /// @brief Emitter position
   glm::vec3 position;
+  /// @brief Emitter size
   glm::vec3 emitter_size;
+  /// @brief Particles size
   glm::vec3 particle_size;
+  /// @brief Particles gravity
   glm::vec3 gravity;
+  /// @brief Particles velocity
   glm::vec3 velocity;
+  /// @brief Particles Z-rotation speed
   float rotationSpeed;
+  /// @brief Particles life
   float life;
 
 private:
   /**
-  Emit one particle.
+  @brief Emit one particle.
   */
   void emitOne();
 
+  /// @brief Particles pool
   Pool<Particle> particles;
+
+  /// @brief Particles texture
   Ptr<Texture> texture;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

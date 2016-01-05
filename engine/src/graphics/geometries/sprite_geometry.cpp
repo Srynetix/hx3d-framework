@@ -23,6 +23,8 @@
 #include "hx3d/graphics/texture.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
 SpriteGeometry::SpriteGeometry(): Geometry() {
 
@@ -87,4 +89,6 @@ void SpriteGeometry::setFromRegion(TextureRegion& region) {
   });
 }
 
+} /* geom */
+} /* graphics */
 } /* hx3d */

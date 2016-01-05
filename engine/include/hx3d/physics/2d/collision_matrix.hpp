@@ -27,23 +27,26 @@
 namespace hx3d {
 namespace physics2d {
 
+/**
+@brief Collision matrix with masks and category
+*/
 class CollisionMatrix {
 public:
   CollisionMatrix();
 
   /**
-  Add a category.
+  @brief Add a category.
 
   @param name Name
   */
   void addCategory(std::string name);
 
   /**
-  Add a mask for a category from multiple categories.
+  @brief Add a mask for a category from multiple categories.
 
-  @param name   Category
-  @param name   First category
-  @param others Other categories
+  @param name     Category name
+  @param category First category
+  @param others   Other categories
   */
   template <class... Categories>
   void addMask(std::string name, std::string category, Categories... others);
@@ -51,26 +54,33 @@ public:
   void addMask(std::string name, std::string category, typename std::enable_if<sizeof...(Categories) == 0>::type* test = nullptr);
 
   /**
-  Get a category bit from a name.
+  @brief Get a category bit from a name.
 
   @param category Category name
+
+  @return Category bit
   */
   unsigned int getCategory(std::string category);
   /**
-  Get a mask bit from a name.
+  @brief Get a mask bit from a name.
 
   @param category Category name
+
+  @return Category mask
   */
   unsigned int getMask(std::string category);
 
 private:
+  /// @brief Categories
   std::map<std::string, unsigned int> _categories;
+  /// @brief Masks
   std::map<std::string, unsigned int> _masks;
 
+  /// @brief Current category
   unsigned int _currentCategory;
 
   /**
-  Add one mask for a category.
+  @brief Add one mask for a category.
 
   @param name     Category
   @param category Other category

@@ -30,14 +30,16 @@
 
 namespace hx3d {
 
+/**
+@brief Asset management
+*/
 class AssetManager {
 
 public:
 
   /**
-  Create an asset with arguments.
+  @brief Create an asset with arguments.
 
-  @param T    Asset type
   @param name Asset name
   @param args Arguments
   */
@@ -45,9 +47,8 @@ public:
   void create(std::string name, Args... args);
 
   /**
-  Add an asset.
+  @brief Add an asset.
 
-  @param T      Asset type
   @param name   Asset name
   @param asset  Asset (Ptr)
   */
@@ -55,15 +56,17 @@ public:
   void add(std::string name, Ptr<Asset> asset);
 
   /**
-  Get an asset.
+  @brief Get an asset.
 
-  @param T      Asset type
   @param name   Asset name
+
+  @return Asset (Ptr)
   */
   template <class Asset>
   Ptr<Asset> get(std::string name);
 
 private:
+  /// @brief Assets map
   std::map<std::type_index, std::map<std::string, Ptr<Resource>>> _assets;
 };
 

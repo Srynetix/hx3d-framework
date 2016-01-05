@@ -22,7 +22,11 @@
 #define HX3D_WINDOW_SCREEN
 
 namespace hx3d {
+namespace window {
 
+/**
+@brief Single screen management
+*/
 class Screen {
 
 public:
@@ -30,35 +34,35 @@ public:
   virtual ~Screen();
 
   /**
-  On screen show.
+  @brief On screen show.
   */
   virtual void show();
   /**
-  On screen hide.
+  @brief On screen hide.
   */
   virtual void hide();
 
   /**
-  On screen pause.
+  @brief On screen pause.
   */
   virtual void pause();
   /**
-  On screen resume.
+  @brief On screen resume.
   */
   virtual void resume();
 
   /**
-  On screen update.
+  @brief On screen update.
 
   @param delta Delta time
   */
   virtual void update(float delta);
   /**
-  On screen render.
+  @brief On screen render.
   */
   virtual void render();
   /**
-  On screen resize.
+  @brief On screen resize.
 
   @param width  New width
   @param height New height
@@ -66,11 +70,12 @@ public:
   virtual void resize(int width, int height);
 
   /**
-  On screen disposal.
+  @brief On screen disposal.
   */
   virtual void dispose();
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_SCREEN */

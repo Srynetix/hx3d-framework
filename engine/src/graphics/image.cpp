@@ -24,6 +24,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Image::Image(): _width(0), _height(0), _buffer(nullptr), _texture(nullptr) {}
 
@@ -112,4 +113,5 @@ unsigned int Image::getHeight() {
   return _height;
 }
 
+} /* graphics */
 } /* hx3d */

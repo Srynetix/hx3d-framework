@@ -25,58 +25,70 @@
 
 #include "hx3d/gui/widget.hpp"
 
+#include "hx3d/graphics/font.hpp"
 #include "hx3d/math/function.hpp"
 
 namespace hx3d {
-
-class Font;
-
 namespace gui {
 
+/**
+@brief Text GUI element
+*/
 class Text: public Widget {
 
 public:
 
   /**
-  Create a text without font.
-  See @link#setFont.
+  @brief Create a text without font.
+  See @link setFont @endlink.
   */
   Text();
 
   /**
-  Create a text from a font.
+  @brief Create a text from a font.
 
   @param font Font (Ptr)
   */
   Text(Ptr<Font> font);
 
   /**
-  Create a text from a parent widget and a font.
+  @brief Create a text from a parent widget and a font.
 
   @param parent Widget (Ptr)
-  @param Font   Font (Ptr)
+  @param font   Font (Ptr)
   */
   Text(Ptr<Widget> parent, Ptr<Font> font);
 
   /**
-  Set the font.
+  @brief Set the font.
 
   @param font Font (Ptr)
   */
   void setFont(Ptr<Font> font);
+
+  /**
+  @brief Set the character size
+
+  @param size Size
+  */
   void setCharacterSize(int size);
 
+  /**
+  @brief Set the center alignment
+
+  @param value True/False
+  */
   void setCenterAlignment(bool value);
 
   /**
-  Set the text content.
+  @brief Set the text content.
 
   @param content Content
   */
   void setContent(std::string content);
 
   /**
-  Draw the text following a function.
+  @brief Draw the text following a function.
 
   @param shader Shader (Ptr)
   @param function  Function
@@ -84,30 +96,56 @@ public:
   void functionDraw(Ptr<Shader> shader, math::Function function);
 
   /**
-  Get the text font.
+  @brief Get the text font.
 
   @return Font (Ptr)
   */
   Ptr<Font> getFont();
+
+  /**
+  @brief Get the character size
+
+  @return Character size
+  */
   int getCharacterSize();
+
+  /**
+  @brief Get the text length
+
+  @return Text length
+  */
   float getLength();
+
+  /**
+  @brief Is the text center aligned ?
+
+  @return True/False
+  */
   bool isCenterAligned();
 
   virtual void draw(Ptr<Shader> shader) override;
 
-
 protected:
 
   /**
-  Initialize the text.
+  @brief Initialize the text.
   */
   void init();
+
+  /**
+  @brief Calculate the text length
+  */
   float calculateLength();
 
+  /// @brief Text font
   Ptr<Font> _font;
+  /// @brief Text content
   std::string _content;
+  /// @brief Text length
   float _length;
+  /// @brief Character size
   int _characterSize;
+  /// @brief Is the text center aligned ?
   bool _centerAligned;
 };
 

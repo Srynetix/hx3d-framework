@@ -23,10 +23,11 @@
 #include "hx3d/graphics/geometries/sprite_geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Sprite::Sprite():
 Mesh() {
-  _geometry = Make<SpriteGeometry>();
+  _geometry = Make<geom::SpriteGeometry>();
 
   setTint(Color::White);
 }
@@ -38,7 +39,7 @@ void Sprite::setTexture(const Ptr<Texture>& texture) {
   transform.size.y = _texture->getHeight();
 
   /* Set the correct texture coordinates, in case of previous framebuffer. */
-  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->activateTextureMode();
 
   _geometry->uploadAll();
@@ -51,7 +52,7 @@ void Sprite::setTexture(Framebuffer& buffer) {
   transform.size.y = _texture->getHeight();
 
   /* Reverse the framebuffer ! */
-  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->activateFramebufferMode();
 
   _geometry->uploadAll();
@@ -63,7 +64,7 @@ void Sprite::setTexture(TextureRegion& region) {
   transform.size.x = region.getMaxX() - region.getMinX();
   transform.size.y = region.getMaxY() - region.getMinY();
 
-  Ptr<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
+  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->setFromRegion(region);
 
   _geometry->uploadAll();
@@ -94,4 +95,5 @@ void Sprite::draw(Ptr<Shader> shader) {
   Mesh::draw(shader);
 }
 
+} /* graphics */
 } /* hx3d */

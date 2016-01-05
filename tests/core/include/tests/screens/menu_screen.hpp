@@ -36,7 +36,11 @@
 #include <functional>
 #include <vector>
 
-class MenuScreen: public hx3d::Screen, public hx3d::InputHandler {
+using namespace hx3d;
+using namespace hx3d::graphics;
+using namespace hx3d::window;
+
+class MenuScreen: public Screen, public InputHandler {
 public:
 
   struct ScreenInfo {
@@ -53,18 +57,18 @@ public:
   virtual void render() override;
 
 private:
-  hx3d::Ptr<hx3d::Font> font;
-  hx3d::Ptr<hx3d::Shader> defaultShader;
-  hx3d::Ptr<hx3d::Shader> pixShader;
+  Ptr<Font> font;
+  Ptr<Shader> defaultShader;
+  Ptr<Shader> pixShader;
 
-  hx3d::OrthographicCamera camera;
+  OrthographicCamera camera;
 
-  hx3d::Sprite logoSprite;
-  hx3d::Sprite sprite;
-  hx3d::Batch batch;
+  Sprite logoSprite;
+  Sprite sprite;
+  Batch batch;
 
-  hx3d::gui::Text text;
-  hx3d::gui::Text instructions;
+  gui::Text text;
+  gui::Text instructions;
 
   std::vector<ScreenInfo> screens;
 

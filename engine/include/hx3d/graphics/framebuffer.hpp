@@ -27,18 +27,23 @@
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 class Texture;
+
+/**
+@brief Render-to-texture buffer.
+*/
 class Framebuffer {
 
 public:
   /**
-  Create a framebuffer at screen size.
+  @brief Create a framebuffer at screen size.
   */
   Framebuffer();
 
   /**
-  Create a framebuffer.
+  @brief Create a framebuffer.
 
   @param width  Width
   @param height Height
@@ -46,7 +51,7 @@ public:
   Framebuffer(unsigned int width, unsigned int height);
 
   /**
-  Get the framebuffer color buffer.
+  @brief Get the framebuffer color buffer.
 
   @return Texture (Ptr)
   */
@@ -55,44 +60,50 @@ public:
   /////////////////
 
   /**
-  Fetch the default framebuffer of the application.
+  @brief Fetch the default framebuffer of the application.
   */
   static void fetchDefaultFramebuffer();
 
   /**
-  Use the framebuffer as current framebuffer.
-  
+  @brief Use the framebuffer as current framebuffer.
+
   @param buf Framebuffer
   */
   static void use(Framebuffer& buf);
 
   /**
-  Use the default framebuffer.
+  @brief Use the default framebuffer.
   */
   static void useDefault();
 
   /**
-  Clear the framebuffer.
+  @brief Clear the framebuffer.
   */
   static void clear(Color color);
 
 private:
+  /// @brief Framebuffer width
   unsigned int _width;
+  /// @brief Framebuffer height
   unsigned int _height;
 
+  /// @brief Framebuffer ID
   GLuint _id;
+  /// @brief Color buffer
   Ptr<Texture> _colorBuffer;
+  /// @brief Depth buffer
   GLuint _depthBuffer;
 
+  /// @brief Default framebuffer ID
   static GLint _defaultID;
 
   /**
-  Create an empty framebuffer.
+  @brief Create an empty framebuffer.
   */
   void create();
 
   /**
-  Create a render buffer.
+  @brief Create a render buffer.
 
   @param id     Buffer id
   @param format Buffer format
@@ -100,6 +111,7 @@ private:
   void createRenderBuffer(GLuint& id, GLenum format);
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

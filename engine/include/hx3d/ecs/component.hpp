@@ -46,7 +46,7 @@ public:
   /**
     @brief Get the bits for the current component type T.
 
-    @param T Component type (must be a Component child type)
+    @param test T must be a Component
 
     @return Bits
   */
@@ -55,8 +55,6 @@ public:
 
   /**
     @brief Get the bits corresponding to the suite of Types.
-
-    @param Types Suite of Component types
 
     @return Bits
     */
@@ -72,20 +70,10 @@ private:
   /**
     @brief Build a bitset corresponding to the suite of Types.
 
-    @param Types Suite of Component types
-
     @return Bitset
     */
   template <class T, class... Types>
   static Bitset getFamilyInternal();
-
-  /**
-    @brief Build a bitset corresponding to the suite of Types (no parameters).
-
-    @param Types Suite of Component types
-
-    @return Bitset
-    */
   template <class... Types>
   static Bitset getFamilyInternal(typename std::enable_if<sizeof...(Types) == 0>::type* test = nullptr);
 };

@@ -23,6 +23,7 @@
 #include "hx3d/graphics/texture.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Mesh::Mesh() {}
 
@@ -45,11 +46,11 @@ void Mesh::setTint(Color tint) {
   updateColor();
 }
 
-void Mesh::setGeometry(Ptr<BaseGeometry> geometry) {
+void Mesh::setGeometry(Ptr<geom::BaseGeometry> geometry) {
   _geometry = geometry;
 }
 
-Ptr<BaseGeometry>& Mesh::getGeometry() {
+Ptr<geom::BaseGeometry>& Mesh::getGeometry() {
   return _geometry;
 }
 
@@ -79,4 +80,5 @@ Color& Mesh::getTint() {
   return _tint;
 }
 
+} /* graphics */
 } /* hx3d */

@@ -26,68 +26,49 @@
 
 #include "hx3d/graphics/texture_region.hpp"
 
-#include <rapidjson/document.h>
+#include <map>
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Multi-elements texture atlas.
+
+One texture in memory, multiple objects !
+*/
 class TextureAtlas: public Resource {
   public:
-    TextureAtlas(std::string pathToAtlas) {
-      loadFromJSON(pathToAtlas);
-    }
+    /**
+    @brief Load an atlas from a path.
 
-    TextureRegion& getRegion(std::string name) {
-      return _regions[name];
-    }
+    @param pathToAtlas Path to atlas
+    */
+    TextureAtlas(std::string pathToAtlas);
+
+    /**
+    @brief Get a region following a name.
+
+    @param name Region name
+
+    @return TextureRegion
+    */
+    TextureRegion& getRegion(std::string name);
 
   private:
-    void loadFromJSON(std::string pathToAtlas) {
-      auto file = File::loadAsciiFile(pathToAtlas);
-      std::string content = file->toString();
+    /**
+    @brief Load an atlas from a JSON file.
 
-      rapidjson::Document d;
-      d.Parse(content.c_str());
+    @param pathToAtlas Path to atlas
+    */
+    void loadFromJSON(std::string pathToAtlas);
 
-      std::string image = d["image"].GetString();
-      std::string type = d["type"].GetString();
-
-      Log.Info("Loading texture atlas `%s`...", pathToAtlas.c_str());
-      Log.Info("\tImage: %s", image.c_str());
-      Log.Info("\tType: %s", type == "pure" ? "Pure" : "Animated");
-
-      if (type == "pure") {
-        _texture = Make<Texture>(image);
-
-        const rapidjson::Value& frames = d["frames"];
-        for (auto it = frames.Begin(); it != frames.End(); ++it) {
-          const rapidjson::Value& val = *it;
-          std::string name = val["name"].GetString();
-          int x = std::atoi(val["x"].GetString());
-          int y = std::atoi(val["y"].GetString());
-          int w = std::atoi(val["w"].GetString());
-          int h = std::atoi(val["h"].GetString());
-
-          TextureRegion region(
-            _texture,
-            x,
-            x + w,
-            y,
-            y + h
-          );
-
-          _regions.emplace(std::make_pair(name, region));
-        }
-
-      } else {
-        Log.Error("/!\\ Animated atlas not supported yet.");
-        return;
-      }
-    }
-
+    /// @brief Texture
     Ptr<Texture> _texture;
+    /// @brief Regions
     std::map<std::string, TextureRegion> _regions;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif /* HX3D_GRAPHICS_TEXTURE_ATLAS */

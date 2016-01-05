@@ -57,10 +57,11 @@ public:
   /**
   @brief Create a new child Node, using the SceneGraph.
 
-  @param T    Node type
   @param sg   SceneGraph
   @param name Name
   @param args Arguments
+
+  @return Node
   */
   template <class T, class... Args>
   Ptr<T> createChild(SceneGraph& sg, const std::string name, Args... args);
@@ -68,8 +69,9 @@ public:
   /**
   @brief Get one child.
 
-  @param T    Node type
   @param name Name
+
+  @return Node
   */
   template <class T>
   Ptr<T> getChild(const std::string name);
@@ -87,7 +89,7 @@ public:
 
   @return Full transform;
   */
-  Transform getFullTransform();
+  graphics::Transform getFullTransform();
 
   /**
   @brief Get the game object full path from the root.
@@ -106,7 +108,7 @@ public:
   /**
   @brief Get the recursive child count.
 
-  @param Child count
+  @return Child count
   */
   unsigned int getChildCount();
 
@@ -115,7 +117,7 @@ public:
 
   @param batch Batch
   */
-  virtual void draw(Batch& batch);
+  virtual void draw(graphics::Batch& batch);
 
   /**
   @brief Update the node.
@@ -127,7 +129,7 @@ public:
   ///////////
 
   /// @brief Current transform
-  Transform transform;
+  graphics::Transform transform;
 
   friend class SceneGraph;
 
@@ -143,6 +145,8 @@ protected:
   @brief Test if the object have a child.
 
   @param name Name
+
+  @return True/False
   */
   bool childNameExists(const std::string name);
 };

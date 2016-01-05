@@ -25,48 +25,85 @@
 #ifndef HX3D_WINDOW_GAME
 #define HX3D_WINDOW_GAME
 
-#include "hx3d/window/application_listener.hpp"
 #include "hx3d/window/screen.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace window {
 
-class Game: public ApplicationListener {
+/**
+@brief Game main class: multiple screens management
+*/
+class Game {
 public:
   Game();
 
-  virtual void render() override;
-  virtual void update(float delta) override;
-  virtual void resize(int width, int height) override;
-
-  virtual void pause() override;
-  virtual void resume() override;
-
-  virtual void dispose() override;
+  /**
+  @brief Initialize the game
+  */
+  virtual void create();
 
   /**
-  Set the current screen.
+  @brief Render the current scren
+  */
+  virtual void render();
+
+  /**
+  @brief Update the current screen
+
+  @param delta Delta time
+  */
+  virtual void update(float delta);
+
+  /**
+  @brief Resize the current screen
+
+  @param width  New width
+  @param height New height
+  */
+  virtual void resize(int width, int height);
+
+  /**
+  @brief Pause the current screen
+  */
+  virtual void pause();
+
+  /**
+  @brief Resume the current screen
+  */
+  virtual void resume();
+
+  /**
+  @brief Clean the current screen
+  */
+  virtual void dispose();
+
+  /**
+  @brief Stop the game.
+  */
+  virtual void stop();
+
+  /**
+  @brief Set the current screen.
 
   @param screen Screen (Ptr)
   */
   void setScreen(Ptr<Screen> screen);
 
   /**
-  Test if the game is running.
+  @brief Test if the game is running.
+
+  @return True/False
   */
   bool isRunning();
-
-  /**
-  Stop the game.
-  */
-  void stop();
 
 private:
   bool _running;
   Ptr<Screen> _screen;
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_GAME */

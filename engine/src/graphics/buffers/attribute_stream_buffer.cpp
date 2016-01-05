@@ -23,6 +23,8 @@
 #include "hx3d/graphics/shader.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
 AttributeStreamBuffer::AttributeStreamBuffer():
   ArrayBuffer<float>(), _attribute(), _stream_size(0)
@@ -75,4 +77,6 @@ void AttributeStreamBuffer::end(const Ptr<Shader>& shader) {
   }
 }
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */

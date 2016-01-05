@@ -21,6 +21,7 @@
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
+namespace window {
 
 EventManager::EventManager() {
   _keysPressed = new bool[static_cast<unsigned int>(KeyEvent::Key::None) + 1]{false};
@@ -185,5 +186,5 @@ void EventManager::setInputHandler(InputHandler* handler) {
   _currentHandler = handler;
 }
 
-
+} /* window */
 } /* hx3d */

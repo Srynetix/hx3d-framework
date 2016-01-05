@@ -27,6 +27,7 @@
 #include <SDL2/SDL_events.h>
 
 namespace hx3d {
+namespace window {
 
 void SDL2EventManager::poll() {
   SDL_Event event;
@@ -269,4 +270,5 @@ void SDL2EventManager::poll() {
   }
 }
 
+} /* window */
 } /* hx3d */

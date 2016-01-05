@@ -27,11 +27,18 @@
 
 namespace hx3d {
 
+/**
+@brief Logging implementation: to log, use hx3d::Log.
+*/
 class LogImpl {
 
+  /// @brief Log status
   enum class Status {
+    /// @brief Informative message
     Info,
+    /// @brief Shader message
     Shader,
+    /// @brief Error message
     Error
   };
 
@@ -40,28 +47,28 @@ public:
   virtual ~LogImpl();
 
   /**
-  Display the log on the console.
-  
+  @brief Display the log on the console.
+
   @param value True/False
   */
   void DisplayOnConsole(bool value);
 
   /**
-  Write an info message.
+  @brief Write an info message.
 
   @param fmt Text
   @param ... Arguments
   */
   void Info(const std::string fmt, ...);
   /**
-  Write a shader message.
+  @brief Write a shader message.
 
   @param fmt Text
   @param ... Arguments
   */
   void Shader(const std::string fmt, ...);
   /**
-  Write an error message.
+  @brief Write an error message.
 
   @param fmt Text
   @param ... Arguments
@@ -72,7 +79,7 @@ private:
   bool _consoleOutput;
 
   /**
-  Write a message.
+  @brief Write a message.
 
   @param text   Text
   @param status Status
@@ -80,6 +87,7 @@ private:
   void write(std::string text, Status status);
 };
 
+/// @brief Current log implementation
 static hx3d::LogImpl Log;
 
 } /* hx3d */

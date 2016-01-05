@@ -29,15 +29,36 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Tweens management and update
+*/
 class TweenManager {
 public:
   TweenManager();
 
+  /**
+  @brief Add an existing tween.
+
+  @param tween Base Tween (Ptr)
+  */
   void add(const Ptr<BaseTween>& tween);
+
+  /**
+  @brief Update all tweens.
+
+  @param delta Delta time
+  */
   void update(const float delta);
 
+  /**
+  @brief Get the tweens count.
+
+  @return Count
+  */
   unsigned int getTweenCount();
 
+private:
+  /// @brief Tweens
   std::vector<Ptr<BaseTween>> tweens;
 };
 

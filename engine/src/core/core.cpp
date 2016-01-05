@@ -18,6 +18,12 @@
     USA
 */
 
+/**
+@mainpage hx3d Framework - Open Source & Easy to understand 2D/3D framework.
+
+Hello.
+*/
+
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/events.hpp"
 
@@ -51,7 +57,7 @@ Core* Core::_instance(nullptr);
 
 Core::Core() {
   _assets = new AssetManager();
-  _net = new Net();
+  _net = new net::Net();
   _audio = new audio::AudioDevice();
 }
 
@@ -64,11 +70,11 @@ Core::~Core() {
     delete _audio;
 }
 
-Application* Core::App() {
+window::Application* Core::App() {
   return get()->_application;
 }
 
-Game* Core::CurrentGame() {
+window::Game* Core::CurrentGame() {
   return get()->_game;
 }
 
@@ -76,11 +82,11 @@ AssetManager* Core::Assets() {
   return get()->_assets;
 }
 
-EventManager* Core::Events() {
+window::EventManager* Core::Events() {
   return get()->_events;
 }
 
-Net* Core::Network() {
+net::Net* Core::Network() {
   return get()->_net;
 }
 
@@ -90,7 +96,7 @@ audio::AudioDevice* Core::Audio() {
 
 /////////////////////////
 
-void Core::initialize(Application* app, Game* game, EventManager* events) {
+void Core::initialize(window::Application* app, window::Game* game, window::EventManager* events) {
   _instance = new Core();
   _instance->_application = app;
   _instance->_game = game;

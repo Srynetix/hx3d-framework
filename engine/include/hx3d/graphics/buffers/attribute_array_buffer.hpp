@@ -25,42 +25,47 @@
 #include "hx3d/graphics/buffers/attribute.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
+/**
+@brief Attribute specialized array buffer.
+*/
 class AttributeArrayBuffer: public ArrayBuffer<float> {
 
 public:
   /**
-  Construct an empty attribute array buffer.
+  @brief Construct an empty attribute array buffer.
 
-  See @link#create to initialize it.
+  See @link create @endlink to initialize it.
   */
   AttributeArrayBuffer();
-  ~AttributeArrayBuffer();
 
   /**
-  Construct an empty but initialized attribute array buffer.
+  @brief Construct an empty but initialized attribute array buffer.
 
   @param attribute Attribute
   */
   AttributeArrayBuffer(const Attribute attribute);
 
   /**
-  Construct an initialized attribute array buffer with values.
+  @brief Construct an initialized attribute array buffer with values.
 
   @param attribute      Attribute
   @param values         Values
   */
   AttributeArrayBuffer(const Attribute attribute, const std::vector<float> values);
+  ~AttributeArrayBuffer();
 
   /**
-  Initialize the attribute array buffer.
+  @brief Initialize the attribute array buffer.
 
   @param attribute      Attribute
   */
   void create(const Attribute attribute);
 
   /**
-  Get the attribute.
+  @brief Get the attribute.
 
   @return Attribute
   */
@@ -72,9 +77,12 @@ public:
   virtual void end(const Ptr<Shader>& shader) override;
 
 protected:
+  /// @brief Attribute
   Attribute _attribute;
 };
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */
 
 #endif

@@ -28,6 +28,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 GLint Framebuffer::_defaultID = 0;
 
@@ -109,4 +110,5 @@ void Framebuffer::createRenderBuffer(GLuint& id, GLenum format) {
   glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
+} /* graphics */
 } /* hx3d */

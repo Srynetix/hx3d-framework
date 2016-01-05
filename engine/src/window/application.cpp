@@ -21,6 +21,7 @@
 #include "hx3d/window/application.hpp"
 
 namespace hx3d {
+namespace window {
 
 Application::Application(const Ptr<Game>& game, ApplicationConfig config):
   _game(game), _running(false),
@@ -50,5 +51,5 @@ float Application::getElapsedTime() {
   return _elapsedTime;
 }
 
-
+} /* window */
 } /* hx3d */

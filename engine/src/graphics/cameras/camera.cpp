@@ -26,6 +26,7 @@
 #include "hx3d/math/vector_utils.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Camera::Camera(const float width, const float height, const float near, const float far):
   position(0.f),
@@ -84,4 +85,5 @@ void Camera::rotateAround(const glm::vec3 center, const float angle, const glm::
 
 ////////////////////
 
+} /* graphics */
 } /* hx3d */

@@ -21,6 +21,8 @@
 #include "hx3d/graphics/geometries/base_geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
 BaseGeometry::BaseGeometry() {
   addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
@@ -56,4 +58,6 @@ void BaseGeometry::uploadAll() {
   _indices.upload();
 }
 
+} /* geom */
+} /* graphics */
 } /* hx3d */

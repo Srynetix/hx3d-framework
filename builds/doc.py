@@ -30,4 +30,4 @@ class DocBuilder(Builder):
     def build_game(self):
         Utils.execCommand("doxygen")
     def execute_game(self):
-        Utils.execCommand("{} doc/html/index.html".format(BROWSER))
+        Utils.execCommand("{} site/doc/html/index.html".format(BROWSER))

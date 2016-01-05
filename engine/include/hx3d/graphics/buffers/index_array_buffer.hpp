@@ -24,18 +24,23 @@
 #include "hx3d/graphics/buffers/array_buffer.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
+/**
+@brief Indexed array buffer
+*/
 class IndexArrayBuffer: public ArrayBuffer<GLushort> {
 
 public:
   /**
-  Build an empty index buffer.
+  @brief Build an empty index buffer.
   */
   IndexArrayBuffer();
   ~IndexArrayBuffer();
 
   /**
-  Build an index buffer with values.
+  @brief Build an index buffer with values.
 
   @param values Values
   */
@@ -46,6 +51,8 @@ public:
   virtual void end(const Ptr<Shader>& shader) override;
 };
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */
 
 #endif

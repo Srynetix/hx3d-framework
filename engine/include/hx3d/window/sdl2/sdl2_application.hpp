@@ -26,17 +26,18 @@
 #include <SDL2/SDL.h>
 
 namespace hx3d {
+namespace window {
 
 class Game;
 
 /**
-Application management
+@brief SDL2 application implementation
 */
 class SDL2Application: public Application {
 
 public:
   /**
-  Create a window.
+  @brief Create a SDL2 window.
 
   @param game   Game instance (Ptr)
   @param config Configuration
@@ -51,7 +52,7 @@ private:
   SDL_GLContext _context;
 
   /**
-  Create and initialize the window.
+  @brief Create and initialize the window.
 
   @param width  Window width
   @param height Window height
@@ -60,23 +61,24 @@ private:
   void create(int width, int height, std::string title);
 
   /**
-  Display the window and run the game loop.
+  @brief Display the window and run the game loop.
   */
   void display();
 
   /**
-  Render the window to the screen.
+  @brief Render the window to the screen.
   */
   void render();
 
   /**
-  Update the window content
+  @brief Update the window content
 
   @param delta Delta time
   */
   void update(float delta);
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_SDL2_SDL2APPLICATION */

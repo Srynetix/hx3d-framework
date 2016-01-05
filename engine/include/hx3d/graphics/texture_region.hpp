@@ -18,10 +18,6 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Finish the class.
 */
 
 #ifndef HX3D_GRAPHICS_TEXTUREREGION
@@ -32,13 +28,18 @@
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 class Texture;
+
+/**
+@brief Defines a rectangle in a texture.
+*/
 class TextureRegion {
 
 public:
   /**
-  Create a texture region from a texture and rectangle coordinates.
+  @brief Create a texture region from a texture and rectangle coordinates.
 
   @param texture  Texture (Ptr)
   @param minX     Left coordinate
@@ -47,24 +48,64 @@ public:
   @param maxY     Height
   */
   TextureRegion(Ptr<Texture> texture, float minX, float maxX, float minY, float maxY);
+
+  /**
+  @brief Create an empty texture region
+  */
   TextureRegion();
 
+  /**
+  @brief Get the texture
+
+  @return Texture (Ptr)
+  */
   const Ptr<Texture>& getTexture();
+
+  /**
+  @brief Get the left coordinate
+
+  @return Min X
+  */
   float getMinX();
+
+  /**
+  @brief Get the right coordinate
+
+  @return Max X
+  */
   float getMaxX();
+
+  /**
+  @brief Get the bottom coordinate
+
+  @return Min Y
+  */
   float getMinY();
+
+  /**
+  @brief Get the top coordinate
+
+  @return Max Y
+  */
   float getMaxY();
 
 private:
+  /// @brief Texture
   Ptr<Texture> _texture;
+  /// @brief Left coordinate
   float _minX;
+  /// @brief Right coordinate
   float _maxX;
+  /// @brief Bottom coordinate
   float _minY;
+  /// @brief Top coordinate
   float _maxY;
 
+  /// @brief Converted UV coordinates
   glm::vec2 _uv;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

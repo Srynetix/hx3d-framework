@@ -21,6 +21,8 @@
 #include "hx3d/graphics/buffers/index_array_buffer.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
 IndexArrayBuffer::IndexArrayBuffer():
   ArrayBuffer<GLushort>()
@@ -52,4 +54,6 @@ void IndexArrayBuffer::begin(const Ptr<Shader>& shader) {
 void IndexArrayBuffer::end(const Ptr<Shader>& shader)
 {}
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */

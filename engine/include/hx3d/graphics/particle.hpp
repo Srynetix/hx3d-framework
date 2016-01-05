@@ -1,0 +1,98 @@
+/*
+    Particle.
+    Copyright (C) 2015 Denis BOURGE
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+    USA
+*/
+
+#ifndef HX3D_GRAPHICS_PARTICLE
+#define HX3D_GRAPHICS_PARTICLE
+
+#include "hx3d/utils/poolable.hpp"
+#include "hx3d/utils/ptr.hpp"
+
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/batch.hpp"
+
+namespace hx3d {
+namespace graphics {
+
+/**
+@brief Poolable 2D/3D particle.
+*/
+class Particle: public Poolable {
+public:
+  Particle();
+
+  /**
+  @brief Set the texture.
+
+  @param texture Texture (Ptr)
+  */
+  void setTexture(const Ptr<Texture>& texture);
+
+  /**
+  @brief Update the particle.
+
+  @param delta Delta time
+  */
+  void update(const float delta);
+
+  /**
+  @brief Draw the particle.
+
+  @param batch Batch
+  */
+  void draw(Batch& batch);
+
+  virtual void reset() override;
+
+  /////////////////
+
+private:
+  /// @brief Position
+  glm::vec3 position;
+  /// @brief Size
+  glm::vec3 size;
+  /// @brief Velocity
+  glm::vec3 velocity;
+  /// @brief Gravity
+  glm::vec3 gravity;
+  /// @brief Z-Rotation
+  float rotation;
+  /// @brief Z-Rotation speed
+  float rotationSpeed;
+
+  /// @brief Base life
+  float baseLife;
+  /// @brief Current life
+  float life;
+  /// @brief Color
+  Color color;
+
+  /// @brief Internal sprite
+  Sprite sprite;
+  /// @brief Is the particle dead ?
+  bool dead;
+
+  friend class ParticleEmitter;
+};
+
+} /* graphics */
+} /* hx3d */
+
+#endif

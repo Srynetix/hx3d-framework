@@ -27,7 +27,7 @@ Node::Node(const std::string name):
   Entity(0), _name(name), _parent(nullptr)
 {}
 
-Transform Node::getFullTransform() {
+graphics::Transform Node::getFullTransform() {
   if (_parent == nullptr) {
     return transform;
   }
@@ -65,7 +65,7 @@ std::string Node::getPath() {
   return path;
 }
 
-void Node::draw(Batch& batch) {}
+void Node::draw(graphics::Batch& batch) {}
 
 void Node::update(const float delta) {}
 

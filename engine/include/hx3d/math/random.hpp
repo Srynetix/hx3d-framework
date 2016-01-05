@@ -25,14 +25,17 @@ namespace hx3d {
 namespace math {
 
 /**
-Generate a random float between 0.0 and 1.0.
+@brief Generate a random float between 0.0 and 1.0.
 
 @return Random float between 0.0 and 1.0
 */
 float randfloat();
 
 /**
-Generate a random integer between min and max.
+@brief Generate a random integer between min and max.
+
+@param min Min value
+@param max Max value
 
 @return Random integer between min and max.
 */

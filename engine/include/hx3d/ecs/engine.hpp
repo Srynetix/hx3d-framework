@@ -73,7 +73,6 @@ public:
   /**
   @brief Get the component for an entity.
 
-  @param T      Component type
   @param entity Entity (Ptr)
 
   @return Component
@@ -84,7 +83,6 @@ public:
   /**
   @brief Add a component for an entity.
 
-  @param T          Component type
   @param entity     Entity (Ptr)
   @param component  Component (Ptr)
   */
@@ -94,7 +92,6 @@ public:
   /**
   @brief Create a component for an entity with variable args.
 
-  @param T      Component type
   @param entity Entity (Ptr)
   @param args   Arguments
   */
@@ -106,7 +103,6 @@ public:
   /**
   @brief Add a system to the engine.
 
-  @param T    System type
   @param sys  System (Ptr)
   */
   template <class T>
@@ -115,7 +111,6 @@ public:
   /**
   @brief Create a system into the engine.
 
-  @param T    System type
   @param args Arguments
   */
   template <class T, class... Args>
@@ -151,7 +146,6 @@ public:
   /**
   @brief Register a callback for a certain component type when it's added.
 
-  @param T        Component type
   @param callback Callback function
   */
   template <class T>
@@ -160,7 +154,6 @@ public:
   /**
   @brief Register a callback for a certain component type when it's removed.
 
-  @param T        Component type
   @param callback Callback function
   */
   template <class T>
@@ -211,7 +204,6 @@ private:
   /**
   @brief Add a component to an entity (internal).
 
-  @param T          Component type
   @param entityId   Entity ID
   @param component  Component (Ptr)
   */

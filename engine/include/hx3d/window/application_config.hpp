@@ -24,12 +24,17 @@
 #include <string>
 
 namespace hx3d {
+namespace window {
 
+/**
+@brief Application configuration
+*/
 class ApplicationConfig {
 
 public:
   /**
-  Default application config.
+  @brief Default application config.
+
   Size: 1280 x 720
   Fullscreen: Off
   Title: Game
@@ -37,16 +42,20 @@ public:
   */
   ApplicationConfig();
 
-  /* Common parameters */
+  /// @brief FPS limit
   unsigned int fpsLimit;
 
-  /* Desktop parameters */
+  /// @brief Application width
   int width;
+  /// @brief Application height
   int height;
+  /// @brief Application title
   std::string title;
+  /// @brief Is the application fullscreen ?
   bool fullscreen;
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_APPLICATION_CONFIG */

@@ -29,8 +29,13 @@
 #include "hx3d/window/events.hpp"
 
 namespace hx3d {
+namespace window {
 
 class InputHandler;
+
+/**
+@brief Manage real-time inputs
+*/
 class EventManager {
 
 public:
@@ -38,131 +43,160 @@ public:
     virtual ~EventManager();
 
     /**
-    Poll the event queue.
+    @brief Poll the event queue.
     */
     virtual void poll() = 0;
 
     /**
-    Test the window state.
+    @brief Test the window state.
 
     @param type Type
+
+    @return True/False
     */
     bool isWindowState(WindowEvent::Type type);
 
     /**
-    Test if a mouse button have been clicked.
+    @brief Test if a mouse button have been clicked.
 
     @param button Button
+
+    @return True/False
     */
     bool isMouseButtonClicked(MouseButtonEvent::Button button);
     /**
-    Test if a mouse button have been relased.
+    @brief Test if a mouse button have been relased.
 
     @param button Button
+
+    @return True/False
     */
     bool isMouseButtonReleased(MouseButtonEvent::Button button);
     /**
-    Test if a mouse button have just been clicked.
+    @brief Test if a mouse button have just been clicked.
 
     @param button Button
+
+    @return True/False
     */
     bool isMouseButtonJustClicked(MouseButtonEvent::Button button);
     /**
-    Test if a mouse button have just been released.
+    @brief Test if a mouse button have just been released.
 
     @param button Button
+
+    @return True/False
     */
     bool isMouseButtonJustReleased(MouseButtonEvent::Button button);
 
     /**
-    Test if the mouse wheel have been turned in a direction.
+    @brief Test if the mouse wheel have been turned in a direction.
 
     @param direction Direction
+
+    @return True/False
     */
     bool isMouseWheelTurned(MouseWheelEvent::Direction direction);
 
     /**
-    Test if the screen have been touched.
+    @brief Test if the screen have been touched.
+
+    @return True/False
     */
     bool isScreenTouched();
     /**
-    Test if the screen have been released.
+    @brief Test if the screen have been released.
+
+    @return True/False
     */
     bool isScreenReleased();
     /**
-    Test if the screen have been just touched.
+    @brief Test if the screen have been just touched.
+
+    @return True/False
     */
     bool isScreenJustTouched();
     /**
-    Test if the screen have been just released.
+    @brief Test if the screen have been just released.
+
+    @return True/False
     */
     bool isScreenJustReleased();
 
     /**
-    Test if the key have been pressed.
+    @brief Test if the key have been pressed.
 
     @param key Key
+
+    @return True/False
     */
     bool isKeyPressed(KeyEvent::Key key);
     /**
-    Test if the key have been released.
+    @brief Test if the key have been released.
 
     @param key Key
+
+    @return True/False
     */
     bool isKeyReleased(KeyEvent::Key key);
     /**
-    Test if the key have just been pressed.
+    @brief Test if the key have just been pressed.
 
     @param key Key
+
+    @return True/False
     */
     bool isKeyJustPressed(KeyEvent::Key key);
     /**
-    Test if the key have just been released.
+    @brief Test if the key have just been released.
 
     @param key Key
+
+    @return True/False
     */
     bool isKeyJustReleased(KeyEvent::Key key);
 
     /**
-    Get the current mouse position.
+    @brief Get the current mouse position.
 
     @return Mouse position
     */
     glm::vec2 getMousePosition();
     /**
-    Get the current mouse movement.
+    @brief Get the current mouse movement.
 
     @return Mouse movement
     */
     glm::vec2 getMouseMovement();
     /**
-    Get the current mouse wheel movement.
+    @brief Get the current mouse wheel movement.
 
     @return Mouse wheel movement
     */
     glm::vec2 getMouseWheelMovement();
 
     /**
-    Get the current touch position.
+    @brief Get the current touch position.
 
     @return Touch position
     */
     glm::vec2 getTouchPosition();
     /**
-    Get the current touch movement.
+    @brief Get the current touch movement.
 
     @return Touch movement
     */
     glm::vec2 getTouchMovement();
     /**
-    Get the current touch pressure.
+    @brief Get the current touch pressure.
 
     @return Touch pressure
     */
     float getTouchPressure();
 
     /**
-    Emulate the touch system with the mouse.
+    @brief Emulate the touch system with the mouse.
+
     This will emulate the touch position and the touch movement.
     When clicked, the touch pressure will be at 1.0.
 
@@ -171,46 +205,62 @@ public:
     void emulateTouchWithMouse(bool value);
 
     /**
-    Define an input handler.
+    @brief Define an input handler.
 
     @param handler Input handler (Raw ptr)
     */
     void setInputHandler(InputHandler* handler);
 
     /**
-    Define an input handler.
+    @brief Define an input handler.
 
     @param handler Input handler (Ptr)
     */
     void setInputHandler(Ptr<InputHandler> handler);
 
   protected:
+    /// @brief Keys released
     bool* _keysReleased;
+    /// @brief Keys pressed
     bool* _keysPressed;
 
+    /// @brief Mouse buttons clicked
     bool* _mouseButtonClicked;
+    /// @brief Mouse buttons released
     bool* _mouseButtonReleased;
 
+    /// @brief Mouse wheels turned
     bool* _mouseWheelTurned;
+    /// @brief Window events
     bool* _windowEvents;
 
+    /// @brief Screen touched ?
     bool _screenTouched;
+    /// @brief Screen released ?
     bool _screenReleased;
 
+    /// @brief Mouse position
     glm::vec2 _mousePosition;
+    /// @brief Mouse movement
     glm::vec2 _mouseMovement;
+    /// @brief Mouse wheel movement
     glm::vec2 _mouseWheelMovement;
 
+    /// @brief Touch position
     glm::vec2 _touchPosition;
+    /// @brief Touch movement
     glm::vec2 _touchMovement;
-
+    /// @brief Touch pressure
     float _touchPressure;
 
+    /// @brief Is touch simulated with mouse ?
     bool _touchSimulation;
 
+    /// @brief Current input handler
     InputHandler* _currentHandler;
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_EVENT_MANAGER */

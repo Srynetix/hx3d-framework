@@ -1,5 +1,5 @@
 /*
-    Particle manager.
+    Vector utils.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,32 +18,15 @@
     USA
 */
 
-#include "hx3d/graphics/particles/particle_manager.hpp"
+#include "hx3d/math/constants.hpp"
 
-namespace hx3d {
+namespace hx3d  {
+namespace math {
 
-ParticleManager::ParticleManager()
-{}
-
-void ParticleManager::addEmitter(const Ptr<ParticleEmitter>& emitter) {
-  emitters.push_back(emitter);
+template <class T>
+bool epsEqual(T v1, T v2) {
+  return std::abs(v1 - v2) <= kEpsilon;
 }
 
-void ParticleManager::update(const float delta) {
-  for (Ptr<ParticleEmitter>& emitter: emitters) {
-    emitter->update(delta);
-  }
-}
-
-void ParticleManager::draw(Batch& batch) {
-
-  glDisable(GL_DEPTH_TEST);
-
-  for (Ptr<ParticleEmitter>& emitter: emitters) {
-    emitter->draw(batch);
-  }
-
-  glEnable(GL_DEPTH_TEST);
-}
-
+} /* math */
 } /* hx3d */

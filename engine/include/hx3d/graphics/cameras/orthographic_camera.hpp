@@ -26,16 +26,20 @@
 #include "hx3d/graphics/cameras/camera.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D orthographic camera w/ Z-buffer.
+*/
 class OrthographicCamera: public Camera {
 public:
   /**
-  Create an orthographic camera with the screen size.
+  @brief Create an orthographic camera with the screen size.
   */
   OrthographicCamera();
 
   /**
-  Create an orthographic camera with a viewport width and height.
+  @brief Create an orthographic camera with a viewport width and height.
 
   @param width  Viewport width
   @param height Viewport height
@@ -43,7 +47,7 @@ public:
   OrthographicCamera(const float width, const float height);
 
   /**
-  Set the orthographic size.
+  @brief Set the orthographic size.
 
   @param width  Viewport width
   @param height Viewport height
@@ -52,9 +56,11 @@ public:
 
   virtual void update() override;
 
+  /// @brief Camera zoom
   float zoom;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

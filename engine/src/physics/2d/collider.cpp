@@ -28,7 +28,7 @@ namespace physics2d {
 Collider::Definition::Definition():
   unitCoef(1.f/30.f) {}
 
-Collider::Collider(Shape shapeType, const Type colliderType):
+Collider::Collider(const Shape shapeType, const Type colliderType):
   position(0, 0),
   velocity(0, 0),
   force(0, 0),

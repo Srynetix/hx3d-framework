@@ -26,9 +26,15 @@
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 class Shader;
 
+namespace buffers {
+
+/**
+@brief OpenGL GPU uploadable buffer
+*/
 template <class T>
 class ArrayBuffer: public Buffer<T> {
 
@@ -37,27 +43,29 @@ public:
   virtual ~ArrayBuffer();
 
   /**
-  Upload the data to the GPU.
+  @brief Upload the data to the GPU.
   */
   virtual void upload() = 0;
 
   /**
-  Begin the use with a shader.
+  @brief Begin the use with a shader.
 
   @param shader Shader (Ptr)
   */
   virtual void begin(const Ptr<Shader>& shader) = 0;
 
   /**
-  End the use with a shader.
+  @brief End the use with a shader.
 
-  @parm shader Shader (Ptr)
+  @param shader Shader (Ptr)
   */
   virtual void end(const Ptr<Shader>& shader) = 0;
 };
 
-#include "hx3d/graphics/buffers/_inline/array_buffer.inl.hpp"
-
+} /* buffers */
+} /* graphics */
 } /* hx3d */
+
+#include "hx3d/graphics/buffers/_inline/array_buffer.inl.hpp"
 
 #endif

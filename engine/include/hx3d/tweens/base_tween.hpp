@@ -22,17 +22,35 @@
 #define HX3D_TWEENS_BASETWEEN
 
 namespace hx3d {
+
+/**
+@brief Inbetweening animations
+*/
 namespace tweens {
 
+/**
+@brief Base abstract tween
+*/
 class BaseTween {
 public:
   BaseTween();
 
+  /**
+  @brief Test if the tween has ended
+
+  @return True/False
+  */
   bool hasEnded();
 
+  /**
+  @brief Update the tween
+
+  @param delta Delta time
+  */
   virtual void update(const float delta) = 0;
 
 protected:
+  /// @brief Has the theen ended ?
   bool _ended;
 };
 

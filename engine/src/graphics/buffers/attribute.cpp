@@ -21,6 +21,8 @@
 #include "hx3d/graphics/buffers/attribute.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
 Attribute::Attribute():
   Attribute("", GL_INVALID_ENUM, 0) {}
@@ -43,4 +45,6 @@ const GLuint Attribute::getSize() const {
   return _size;
 }
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */

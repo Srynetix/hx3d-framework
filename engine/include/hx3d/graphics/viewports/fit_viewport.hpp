@@ -27,12 +27,17 @@
 #include "hx3d/graphics/viewports/viewport.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace viewports {
 
+/**
+@brief Fit the screen resolution.
+*/
 class FitViewport: public Viewport {
 
 public:
   /**
-  Create a fit viewport using a world width, height and a camera.
+  @brief Create a fit viewport using a world width, height and a camera.
 
   @param worldWidth   World width
   @param worldHeight  World height
@@ -44,6 +49,8 @@ public:
 
 };
 
+} /* viewports */
+} /* graphics */
 } /* hx3d */
 
 #endif

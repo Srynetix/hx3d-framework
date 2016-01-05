@@ -18,11 +18,12 @@
     USA
 */
 
-#include "hx3d/graphics/particles/particle.hpp"
+#include "hx3d/graphics/particle.hpp"
 
 #include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Particle::Particle() {
   reset();
@@ -73,4 +74,5 @@ void Particle::draw(Batch& batch) {
   batch.draw(sprite);
 }
 
+} /* graphics */
 } /* hx3d */

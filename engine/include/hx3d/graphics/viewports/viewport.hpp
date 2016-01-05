@@ -29,11 +29,20 @@
 
 #include <glm/vec2.hpp>
 
+#include "hx3d/graphics/cameras/camera.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace graphics {
 
-class Camera;
+/**
+@brief Viewport types.
+*/
+namespace viewports {
+
+/**
+@brief Camera viewport.
+*/
 class Viewport {
 
 public:
@@ -41,7 +50,7 @@ public:
   virtual ~Viewport();
 
   /**
-  Set the viewport position.
+  @brief Set the viewport position.
 
   @param x X coordinate
   @param y Y coordinate
@@ -49,31 +58,31 @@ public:
   void setScreenPosition(const float x, const float y);
 
   /**
-  Set the viewport camera.
+  @brief Set the viewport camera.
 
   @param camera Camera
   */
   void setCamera(Camera& camera);
   /**
-  Get the viewport camera.
+  @brief Get the viewport camera.
 
   @return Camera (Ptr)
   */
   Camera* getCamera();
 
   /**
-  Apply the viewport on the screen without centering the camera.
+  @brief Apply the viewport on the screen without centering the camera.
   */
   void apply();
   /**
-  Apply the viewport on the screen with or without centering the camera.
+  @brief Apply the viewport on the screen with or without centering the camera.
 
   @param centerCamera Center camera ?
   */
   void apply(const bool centerCamera);
 
   /**
-  Update the viewport with a new screen width and height without centering
+  @brief Update the viewport with a new screen width and height without centering
   the camera.
 
   @param screenWidth  New width
@@ -81,7 +90,7 @@ public:
   */
   void update(const int screenWidth, const int screenHeight);
   /**
-  Update the viewport with a new screen width and height with or without
+  @brief Update the viewport with a new screen width and height with or without
   centering the camera.
 
   @param screenWidth  New width
@@ -91,37 +100,46 @@ public:
   void update(const int screenWidth, const int screenHeight, const bool centerCamera);
 
   /**
-  Convert a screen point to a world point.
+  @brief Convert a screen point to a world point.
 
   @param screenPoint Screen point
+
   @return World point
   */
   glm::vec2 screenToWorld(const glm::vec2 screenPoint);
 
   /**
-  Get the world size.
+  @brief Get the world size.
   */
   glm::vec2 getWorldSize();
 
 protected:
+  /// @brief Camera
   Camera* _camera;
+  /// @brief World width
   float _worldWidth;
+  /// @brief World height
   float _worldHeight;
 
+  /// @brief X offset
   int _screenX;
+  /// @brief Y offset
   int _screenY;
+  /// @brief Screen width
   int _screenWidth;
+  /// @brief Screen height
   int _screenHeight;
 
   /**
-  Update the viewport with or without centering the camera (internal).
+  @brief Update the viewport with or without centering the camera (internal).
 
   @param centerCamera Center camera ?
   */
   virtual void internalUpdate(const bool centerCamera) = 0;
-
 };
 
+} /* viewports */
+} /* graphics */
 } /* hx3d */
 
 #endif

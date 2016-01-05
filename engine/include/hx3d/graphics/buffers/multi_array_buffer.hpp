@@ -32,7 +32,12 @@
 #include <map>
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
+/**
+@brief Multi-component array buffer for optimization purpose
+*/
 class MultiArrayBuffer: public ArrayBuffer<float> {
 
 public:
@@ -40,7 +45,7 @@ public:
   ~MultiArrayBuffer();
 
   /**
-  Add an empty initialized attribute array buffer.
+  @brief Add an empty initialized attribute array buffer.
 
   @param name      Name
   @param attribute Attribute
@@ -48,7 +53,7 @@ public:
   void addAttribute(const std::string name, const Attribute attribute);
 
   /**
-  Set the wanted attribute array buffer content.
+  @brief Set the wanted attribute array buffer content.
 
   @param name Attribute name
   @param data Values
@@ -56,7 +61,7 @@ public:
   void setAttribute(const std::string name, const std::vector<float> data);
 
   /**
-  Get the wanted attribute array buffer.
+  @brief Get the wanted attribute array buffer.
 
   @param name Attribute name
   @return Attribute array buffer
@@ -64,7 +69,7 @@ public:
   AttributeArrayBuffer& getAttribute(const std::string name);
 
   /**
-  Generate the vector using the attributes.
+  @brief Generate the vector using the attributes.
   */
   void generate();
 
@@ -74,12 +79,28 @@ public:
   virtual void end(const Ptr<Shader>& shader) override;
 
 private:
+  /// @brief Attributes map
   std::map<std::string, AttributeArrayBuffer> _attributes;
 
+  /**
+  @brief Get an attribute.
+
+  @param i Attribute
+
+  @return AttributeArrayBuffer
+  */
   AttributeArrayBuffer& getMapAttribute(const unsigned int i);
+
+  /**
+  @brief Get the total number of attributes
+
+  @return Number of attributes
+  */
   unsigned int attributeTotalSize();
 };
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */
 
 #endif

@@ -27,15 +27,22 @@
 namespace hx3d {
 namespace gui {
 
+/**
+@brief GUI text button
+*/
 class Button: public Text {
 public:
+  /**
+  @brief Create a text button.
+
+  @param parent Parent widget
+  @param font   Font
+  */
   Button(Ptr<Widget> parent, Ptr<Font> font);
 
-  virtual void draw(Ptr<Shader> shader);
+  virtual void draw(Ptr<Shader> shader) override;
 
   void functionDraw(Ptr<Shader> shader, math::Function function) = delete;
-
-private:
 };
 
 } /* gui */

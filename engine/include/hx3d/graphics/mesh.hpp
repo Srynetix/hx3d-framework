@@ -21,58 +21,82 @@
 #ifndef HX3D_GRAPHICS_MESH
 #define HX3D_GRAPHICS_MESH
 
-#include "hx3d/graphics/geometries/base_geometry.hpp"
 #include "hx3d/graphics/color.hpp"
+
+#include "hx3d/graphics/geometries/base_geometry.hpp"
 #include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 
+
 namespace hx3d {
+namespace graphics {
 
 class Shader;
+class Color;
+
+/**
+@brief Displayable 2D/3D element.
+*/
 class Mesh {
 
 public:
   Mesh();
 
   /**
-  Draw the mesh using a shader.
+  @brief Draw the mesh using a shader.
 
   @param shader Shader (Ptr)
   */
   virtual void draw(Ptr<Shader> shader);
 
   /**
-  Set the mesh tint.
+  @brief Set the mesh tint.
+
   Automatically update the color.
-  See @link#updateColor.
+  See @link updateColor @endlink.
 
   @param tint Color
   */
   void setTint(Color tint);
 
   /**
-  Get the mesh tint.
+  @brief Get the mesh tint.
 
   @return Tint
   */
   Color& getTint();
 
   /**
-  Update the mesh color from the tint.
+  @brief Update the mesh color from the tint.
   */
   void updateColor();
 
-  void setGeometry(Ptr<BaseGeometry> geometry);
-  Ptr<BaseGeometry>& getGeometry();
+  /**
+  @brief Set the mesh geometry.
 
+  @param geometry BaseGeometry (Ptr)
+  */
+  void setGeometry(Ptr<geom::BaseGeometry> geometry);
+
+  /**
+  @brief Get the mesh geometry
+
+  @return BaseGeometry (Ptr)
+  */
+  Ptr<geom::BaseGeometry>& getGeometry();
+
+  /// @brief Mesh transformation
   Transform transform;
 
 protected:
+  /// @brief Tint color
   Color _tint;
-  Ptr<BaseGeometry> _geometry;
+  /// @brief Current geometry
+  Ptr<geom::BaseGeometry> _geometry;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

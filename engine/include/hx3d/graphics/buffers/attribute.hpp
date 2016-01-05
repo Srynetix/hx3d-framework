@@ -26,17 +26,22 @@
 #include <string>
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
+/**
+@brief OpenGL buffer attribute.
+*/
 class Attribute {
 public:
 
-  /*
-  Construct an empty attribute.
+  /**
+  @brief Construct an empty attribute.
   */
   Attribute();
 
-  /*
-  Construct a buffer attribute.
+  /**
+  @brief Construct a buffer attribute.
 
   @param name   Attribute name (in the shader)
   @param type   Attribute type (GL_FLOAT, etc.)
@@ -44,16 +49,38 @@ public:
   */
   Attribute(const std::string name, const GLenum type, const GLuint size);
 
+  /**
+  @brief Get the attribute name
+
+  @return Name
+  */
   const std::string getName() const;
+
+  /**
+  @brief Get the attribute type
+
+  @return Type
+  */
   const GLenum getType() const;
+
+  /**
+  @brief Get the attribute size
+
+  @return Size
+  */
   const GLuint getSize() const;
 
 private:
+  /// @brief Name
   std::string _name;
+  /// @brief Type
   GLenum _type;
+  /// @brief Size
   GLuint _size;
 };
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */
 
 #endif

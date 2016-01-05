@@ -26,13 +26,26 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Delay tween.
+
+Make a pause in a sequence.
+*/
 class Delay: public BaseTween {
 public:
+  /**
+  @brief Create a delay tween using a specified time in seconds.
+
+  @param delayAsSeconds Delay as seconds
+  */
   Delay(const float delayAsSeconds);
+
   virtual void update(const float delta) override;
 
 private:
+  /// @brief Delay
   float _delay;
+  /// @brief Current time
   float _currentTime;
 };
 

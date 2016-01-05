@@ -26,6 +26,8 @@
 #include "hx3d/graphics/shader.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
 MultiArrayBuffer::MultiArrayBuffer():
   ArrayBuffer<float>()
@@ -110,7 +112,7 @@ void MultiArrayBuffer::end(const Ptr<Shader>& shader)
 
 //////////////////////////
 
-AttributeArrayBuffer& MultiArrayBuffer::getMapAttribute(unsigned int i) {
+AttributeArrayBuffer& MultiArrayBuffer::getMapAttribute(const unsigned int i) {
 
   unsigned int count = 0;
   for (auto it = _attributes.begin(); it != _attributes.end(); ++it, ++count) {
@@ -132,4 +134,6 @@ unsigned int MultiArrayBuffer::attributeTotalSize() {
   return totalsize;
 }
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */

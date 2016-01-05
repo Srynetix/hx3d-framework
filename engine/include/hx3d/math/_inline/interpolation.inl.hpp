@@ -20,6 +20,8 @@
 
 #include "hx3d/graphics/color.hpp"
 
+using hx3d::graphics::Color;
+
 namespace hx3d {
 namespace math {
 

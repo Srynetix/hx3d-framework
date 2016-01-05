@@ -27,11 +27,15 @@
 namespace hx3d {
 namespace math {
 
+/**
+@brief Math function definition
+*/
 class Function {
 
 public:
   /**
-  Create a function from an initial time value, speed and a math function.
+  @brief Create a function from an initial time value, speed and a math function.
+
   The math function takes 3 parameters:
   - X coordinate (inout)
   - Y coordinate (inout)
@@ -44,27 +48,31 @@ public:
   Function(float init, float speed, std::function<void(float&, float&, float)> func);
 
   /**
-  Reset the function time.
+  @brief Reset the function time.
   */
   void reset();
 
   /**
-  Step the function time.
+  @brief Step the function time.
   */
   void step();
 
   /**
-  Sample the current coordinates from the math function.
-  
+  @brief Sample the current coordinates from the math function.
+
   @return Coordinates (vec2)
   */
   glm::vec2 sample();
 
 private:
+  /// @brief Init X value
   float _init;
+  /// @brief Speed value
   float _speed;
+  /// @brief Current time
   float _t;
 
+  /// @brief Function
   std::function<void(float&, float&, float)> _func;
 };
 

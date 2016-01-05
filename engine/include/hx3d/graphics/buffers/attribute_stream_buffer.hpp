@@ -1,5 +1,5 @@
 /*
-    Attribute array buffer.
+    Attribute stream buffer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -25,34 +25,41 @@
 #include "hx3d/graphics/buffers/attribute.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
+/**
+@brief Attribute specialized streamed array buffer
+*/
 class AttributeStreamBuffer: public ArrayBuffer<float> {
 
 public:
   /**
-  Construct an empty attribute array buffer.
+  @brief Construct an empty attribute array buffer.
 
-  See @link#create to initialize it.
+  See @link create @endlink to initialize it.
   */
   AttributeStreamBuffer();
+
+  /**
+  @brief Construct an empty but initialized attribute array buffer.
+
+  @param attribute    Attribute
+  @param stream_size  Stream size
+  */
+  AttributeStreamBuffer(const Attribute attribute, const unsigned int stream_size);
   ~AttributeStreamBuffer();
 
   /**
-  Construct an empty but initialized attribute array buffer.
-
-  @param attribute Attribute
-  */
-  AttributeStreamBuffer(const Attribute attribute, const unsigned int stream_size);
-
-  /**
-  Initialize the attribute array buffer.
+  @brief Initialize the attribute array buffer.
 
   @param attribute      Attribute
+  @param stream_size    Stream size
   */
   void create(const Attribute attribute, const unsigned int stream_size);
 
   /**
-  Get the attribute.
+  @brief Get the attribute.
 
   @return Attribute
   */
@@ -64,10 +71,14 @@ public:
   virtual void end(const Ptr<Shader>& shader) override;
 
 protected:
+  /// @brief Attribute
   Attribute _attribute;
+  /// @brief Stream size
   unsigned int _stream_size;
 };
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */
 
 #endif

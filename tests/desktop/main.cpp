@@ -7,6 +7,7 @@
 #include "tests/tests.hpp"
 
 using namespace hx3d;
+using namespace hx3d::window;
 
 TEST_F(Tests, Screens) {
   ApplicationConfig config;

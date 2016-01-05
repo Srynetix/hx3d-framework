@@ -1,5 +1,5 @@
 /*
-    Matrix queue.
+    Object map.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,62 +18,16 @@
     USA
 */
 
-#ifndef HX3D_UTILS_MATRIXQUEUE
-#define HX3D_UTILS_MATRIXQUEUE
-
-#include <glm/mat4x4.hpp>
-#include <queue>
-
 namespace hx3d {
 
-class MatrixQueue {
+template <class T>
+T* ObjectMap::get(std::string name) {
+  return static_cast<T*>(_objects[name]);
+}
 
-public:
-  MatrixQueue();
-
-  /**
-  Remove the first matrix.
-  */
-  void pop();
-
-  /**
-  Get the first matrix.
-
-  @return Matrix (mat4)
-  */
-  glm::mat4 get();
-
-  /**
-  Set the first matrix.
-
-  @param mat Matrix (mat4)
-  */
-  void set(glm::mat4 mat);
-
-  /**
-  Push a new identity matrix at the top.
-  */
-  void push();
-
-  /**
-  Get the first matrix.
-
-  @return Matrix (mat4)
-  */
-  operator glm::mat4();
-
-  /**
-  Set the first matrix.
-
-  @param mat Matrix (mat4)
-  @return Matrix (mat4)
-  */
-  MatrixQueue operator=(const glm::mat4& mat);
-
-private:
-  std::queue<glm::mat4> _matrices;
-};
+template <class T>
+void ObjectMap::set(std::string name, T* object) {
+  _objects[name] = (void*)object;
+}
 
 } /* hx3d */
-
-#endif

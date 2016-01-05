@@ -23,6 +23,8 @@
 #include "hx3d/graphics/shader.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace buffers {
 
 AttributeArrayBuffer::AttributeArrayBuffer():
   ArrayBuffer<float>(), _attribute()
@@ -78,4 +80,6 @@ void AttributeArrayBuffer::end(const Ptr<Shader>& shader) {
   }
 }
 
+} /* buffers */
+} /* graphics */
 } /* hx3d */

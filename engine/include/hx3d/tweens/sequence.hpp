@@ -34,18 +34,49 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Sequential suite of tweens
+*/
 class Sequence: public BaseTween {
 public:
   Sequence();
 
+  /**
+  @brief Create a tween.
+
+  @param mod      Base value to edit
+  @param to       End value
+  @param duration Duration
+  @param interp   Interpolation function
+  */
   template <class T>
   void addTween(T& mod, const T to, const float duration, const math::Interpolation interp);
+
+  /**
+  @brief Create a delay tween.
+
+  @param delay Delay as seconds
+  */
   void addDelay(const float delay);
+
+  /**
+  @brief Create a callback tween.
+
+  @param func Function
+  */
   void addCallback(std::function<void()> func);
+
+  /**
+  @brief Add an existing tween.
+
+  @param tween Base Tween (Ptr)
+  */
   void add(const Ptr<BaseTween>& tween);
 
   virtual void update(const float delta) override;
 
+private:
+  /// @brief Tweens
   std::queue<Ptr<BaseTween>> tweens;
 };
 

@@ -23,6 +23,8 @@
 namespace hx3d {
 namespace audio {
 
+using ::hx3d::graphics::Color;
+
 Display::Display(): Display(50) {}
 Display::Display(const int refreshDelay): _refreshDelay(refreshDelay), _initialized(false) {}
 Display::~Display() {}

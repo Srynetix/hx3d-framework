@@ -32,18 +32,43 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Parallel suite of tweens.
+*/
 class Parallel: public BaseTween {
 public:
   Parallel();
 
+  /**
+  @brief Create a tween.
+
+  @param mod      Base value to edit
+  @param to       End value
+  @param duration Duration
+  @param interp   Interpolation function
+  */
   template <class T>
   void addTween(T& mod, const T to, const float duration, const math::Interpolation interp);
+
+  /**
+  @brief Create a repeating callback.
+
+  @param func     Function
+  @param duration Duration
+  */
   void addRepeatingCallback(std::function<void()> func, const float duration);
+
+  /**
+  @brief Add an existing tween.
+
+  @param tween Base Tween (Ptr)
+  */
   void add(const Ptr<BaseTween>& tween);
 
   virtual void update(const float delta) override;
 
 private:
+  /// @brief Tweens
   std::vector<Ptr<BaseTween>> tweens;
 };
 

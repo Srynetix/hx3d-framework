@@ -39,6 +39,14 @@ File::~File() {
   }
 }
 
+char* File::getData() const {
+  return data;
+}
+
+size_t File::getSize() const {
+  return size;
+}
+
 ///////////////////////////////////
 
 Ptr<File> File::loadAsciiFile(std::string path) {

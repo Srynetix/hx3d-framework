@@ -25,19 +25,28 @@
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
+
+/**
+@brief 2D/3D GUI components
+*/
 namespace gui {
 
-class Widget: public Mesh, public EnableSharedThis<Widget> {
+using namespace ::hx3d::graphics;
+
+/**
+@brief Base GUI element
+*/
+class Widget: public graphics::Mesh, public EnableSharedThis<Widget> {
 public:
   /**
-  Construct a widget from a parent widget.
+  @brief Construct a widget from a parent widget.
 
   @param parent Widget (Ptr)
   */
   Widget(Ptr<Widget> parent);
 
   /**
-  Add a widget to the list.
+  @brief Add a widget to the list.
 
   @param widget Widget (Ptr)
   */
@@ -46,12 +55,9 @@ public:
   virtual void draw(Ptr<Shader> shader) override;
 
 private:
-
-  bool _checkBounds(glm::vec2 position) {
-    return transform.contains(position);
-  }
-
+  /// @brief Parent widget
   Ptr<Widget> _parent;
+  /// @brief Children widgets
   std::vector<Ptr<Widget>> _children;
 };
 

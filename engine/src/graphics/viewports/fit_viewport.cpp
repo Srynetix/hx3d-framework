@@ -28,6 +28,8 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace viewports {
 
 FitViewport::FitViewport(const float worldWidth, const float worldHeight, Camera& camera) {
   _worldWidth = worldWidth;
@@ -59,4 +61,6 @@ void FitViewport::internalUpdate(const bool centerCamera) {
   apply(centerCamera);
 }
 
-}
+} /* viewports */
+} /* graphics */
+} /* hx3d */

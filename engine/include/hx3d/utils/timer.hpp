@@ -25,56 +25,65 @@
 
 namespace hx3d {
 
+/**
+@brief Simple timer.
+*/
 class Timer {
 
 public:
 
   /**
-  Create an uninitialized timer.
-  See @link#initialize.
+  @brief Create an uninitialized timer.
+  See @link initialize @endlink.
   */
   Timer();
 
   /**
-  Create a timer with a delay as milliseconds.
+  @brief Create a timer with a delay as milliseconds.
 
   @param delay Delay
   */
   Timer(long delay);
 
   /**
-  Initialize the timer with a delay.
+  @brief Initialize the timer with a delay.
 
   @param delay Delay
   */
   void initialize(long delay);
 
   /**
-  Reset the timer.
+  @brief Reset the timer.
   */
   void reset();
 
   /**
-  Get the remaining time as milliseconds.
+  @brief Get the remaining time as milliseconds.
 
   @return milliseconds
   */
   long remaining();
 
   /**
-  Test if the timer has ended.
+  @brief Test if the timer has ended.
+
+  @return True/False
   */
   bool hasEnded();
 
   /**
-  Update the timer.
+  @brief Update the timer.
   */
   void update(float delta);
 
 private:
-    long _delay;
-    float _elapsed;
-    bool _alreadyEnded;
+
+  /// @brief Timer delay
+  long _delay;
+  /// @brief Time elapsed
+  float _elapsed;
+  /// @brief Has already ended ?
+  bool _alreadyEnded;
 };
 
 } /* hx3d */

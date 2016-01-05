@@ -41,7 +41,7 @@ std::string format(const std::string fmt, ...);
 @brief Format a string using `printf` notation (va_list version).
 
 @param fmt Text
-@param ... Arguments
+@param args Arguments
 
 @return Formatted string
 */
@@ -54,7 +54,7 @@ std::string format(const std::string fmt, va_list args);
 @param delim  Delimiter
 @param elems  Container
 
-@return Splitted string
+@return Split string
 */
 std::vector<std::string>& split(const std::string &s, char delim, std::vector<std::string> &elems);
 
@@ -64,7 +64,7 @@ std::vector<std::string>& split(const std::string &s, char delim, std::vector<st
 @param s      String
 @param delim  Delimiter
 
-@return Splitted string
+@return Split string
 */
 std::vector<std::string> split(const std::string &s, char delim);
 

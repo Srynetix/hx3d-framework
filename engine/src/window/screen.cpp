@@ -21,6 +21,7 @@
 #include "hx3d/window/screen.hpp"
 
 namespace hx3d {
+namespace window {
 
 Screen::Screen() {}
 Screen::~Screen() {}
@@ -37,4 +38,5 @@ void Screen::resize(int width, int height) {}
 
 void Screen::dispose() {}
 
+} /* window */
 } /* hx3d */

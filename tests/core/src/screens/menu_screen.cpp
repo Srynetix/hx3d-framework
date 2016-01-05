@@ -26,8 +26,6 @@ Screens list.
 #include "tests/screens/test14_buffertest.hpp"
 #include "tests/screens/test15_timers.hpp"
 
-using namespace hx3d;
-
 MenuScreen::MenuScreen():
   font(Core::Assets()->get<Font>("default")),
   defaultShader(Core::Assets()->get<Shader>("base")),

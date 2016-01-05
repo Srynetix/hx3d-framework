@@ -26,21 +26,40 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Templated tween definition
+*/
 template <class T>
 class Tween: public BaseTween {
 public:
+  /**
+  @brief Create a tween.
+
+  @param mod      Base value to edit
+  @param end      End value
+  @param duration Duration
+  @param interp   Interpolation function
+  */
   Tween(T& mod, const T end, const float duration, const math::Interpolation interp);
+
   virtual void update(const float delta) override;
 
 private:
+  /// @brief Value to edit
   T* mod;
+  /// @brief Base value
   T base;
+  /// @brief End value
   T end;
 
+  /// @brief Duration
   float duration;
+  /// @brief Current time
   float currentTime;
+  /// @brief Interpolation function
   math::Interpolation interp;
 
+  /// @brief Has done its first update ?
   bool _firstUpdate;
 };
 

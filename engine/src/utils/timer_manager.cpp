@@ -49,7 +49,7 @@ void TimerManager::createTemporaryTimer(float delay, std::function<void()> callb
 }
 
 void TimerManager::update(float delta) {
-  algo::apply(_registered, [delta](auto& pair) {
+  algo::apply(_registered, [delta](std::pair<std::string,CallbackTimer> pair) {
     auto& reg = pair.second;
     reg.update(delta);
   });

@@ -26,11 +26,16 @@
 #include "hx3d/graphics/cameras/camera.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 3D perspective camera.
+*/
 class PerspectiveCamera: public Camera {
 public:
   /**
-  Create a perspective camera with the screen size and the near and far.
+  @brief Create a perspective camera with the screen size and the near and far.
+
   The default field of view is 70.
 
   @param near Near
@@ -39,18 +44,19 @@ public:
   PerspectiveCamera(const float near, const float far);
 
   /**
-  Create a perspective camera with a viewport width and height.
+  @brief Create a perspective camera with a viewport width and height.
+
   The default field of view is 70.
 
   @param width  Viewport width
   @param height Viewport height
-  @paran near   Near
+  @param near   Near
   @param far    Far
   */
   PerspectiveCamera(const float width, const float height, const float near, const float far);
 
   /**
-  Create a perspective camera with a viewport width and height,
+  @brief Create a perspective camera with a viewport width and height,
   and a custom field of view.
 
   @param width  Viewport width
@@ -63,9 +69,11 @@ public:
 
   virtual void update() override;
 
+  /// @brief Field of view (FOV)
   float fieldOfView;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

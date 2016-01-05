@@ -24,12 +24,31 @@
 namespace hx3d {
 namespace physics2d {
 
+/**
+@brief Collision listener on begin/during/end.
+*/
 class CollisionListener {
 public:
-  virtual void beginCollision(Manifold& m) {}
-  virtual void duringCollision(Manifold& m) {}
-  virtual void endCollision(Manifold& m) {}
+  /**
+  @brief On collision begin.
 
+  @param m Manifold
+  */
+  virtual void beginCollision(Manifold& m) {}
+
+  /**
+  @brief During collision.
+
+  @param m Manifold
+  */
+  virtual void duringCollision(Manifold& m) {}
+
+  /**
+  @brief On collision end.
+
+  @param m Manifold
+  */
+  virtual void endCollision(Manifold& m) {}
 };
 
 } /* physics2d */

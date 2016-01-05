@@ -32,12 +32,18 @@
 #include <map>
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief Shader definition class.
+
+Manage vertex and fragment shader.
+*/
 class Shader: public Resource {
 
 public:
   /**
-  Create a shader from a path.
+  @brief Create a shader from a path.
   The path must be without extension, e.g. shaders/test.
 
   This class will load the fragment and the vertex shader,
@@ -48,7 +54,7 @@ public:
   explicit Shader(std::string pathToShader);
 
   /**
-  Create a shader from a vertex shader and a fragment shader in text form.
+  @brief Create a shader from a vertex shader and a fragment shader in text form.
 
   @param vert   Vertex shader code
   @param frag   Fragment shader code
@@ -57,42 +63,42 @@ public:
   ~Shader();
 
   /**
-  Get the program ID.
+  @brief Get the program ID.
 
   @return Program ID.
   */
   GLuint getProgramID() const;
 
   /**
-  Send a single float to the shader.
+  @brief Send a single float to the shader.
 
   @param uniform  Uniform name
   @param value    Value
   */
   void setUniform1f(std::string uniform, float value);
   /**
-  Send a vec2 to the shader.
+  @brief Send a vec2 to the shader.
 
   @param uniform  Uniform name
   @param vector   Values
   */
   void setUniform2f(std::string uniform, glm::vec2 vector);
   /**
-  Send a vec3 to the shader.
+  @brief Send a vec3 to the shader.
 
   @param uniform  Uniform name
   @param vector   Values
   */
   void setUniform3f(std::string uniform, glm::vec3 vector);
   /**
-  Send a vec4 to the shader.
+  @brief Send a vec4 to the shader.
 
   @param uniform  Uniform name
   @param vector   Values
   */
   void setUniform4f(std::string uniform, glm::vec4 vector);
   /**
-  Send a mat4 to the shader.
+  @brief Send a mat4 to the shader.
 
   @param uniform  Uniform name
   @param matrix   Values
@@ -100,96 +106,108 @@ public:
   void setUniformMatrix4f(std::string uniform, glm::mat4 matrix);
 
   /**
-  Get the wanted attribute id.
+  @brief Get the wanted attribute id.
 
   @param name Name
+
+  @return Attribute ID
   */
   GLint getAttribute(std::string name);
   /**
-  Get the wanted uniform id.
+  @brief Get the wanted uniform id.
 
   @param name Name
+
+  @return Attribute ID
   */
   GLint getUniform(std::string name);
 
   ///////////////////////
 
   /**
-  Use the shader as the current shader.
+  @brief Use the shader as the current shader.
 
   @param shader Shader (Ptr)
   */
   static void use(Ptr<Shader> shader);
 
   /**
-  Clear the current shader.
+  @brief Clear the current shader.
   */
   static void disable();
 
   /**
-  Analyse the shaders (debug mode).
+  @brief Analyse the shaders (debug mode).
 
   @param value True/False
   */
   static void setProgramAnalyzing(bool value);
 
 protected:
-
-  /* No copy or affectation */
   Shader(const Shader& shader) = delete;
   Shader& operator=(const Shader& shader) = delete;
 
   /**
-  Compile the vertex and fragment shaders.
+  @brief Compile the vertex and fragment shaders.
 
   @param vert Vertex shader code
   @param frag Fragment shader code
+
   @return All good / Error
   */
   bool compile(const std::string& vert, const std::string& frag);
 
   /**
-  Compile one shader using it's id, type and content.
+  @brief Compile one shader using it's id, type and content.
 
   @param shaderId ID
   @param type     Shader type
   @param content  Shader code
+
   @return All good / Error
   */
   bool compile(GLuint &shaderId, GLenum type, const std::string& content);
 
   /**
-  Create the shader program.
+  @brief Create the shader program.
 
   @return All good / Error
   */
   bool createProgram();
 
   /**
-  Analyze the shader attributes (debug mode).
+  @brief Analyze the shader attributes (debug mode).
   */
   void analyzeAttributes();
   /**
-  Analyze the shader uniforms (debug mode).
+  @brief Analyze the shader uniforms (debug mode).
   */
   void analyzeUniforms();
   /**
-  Get the parameter type (debug mode).
+  @brief Get the parameter type (debug mode).
+
+  @param type Type
 
   @return Parameter type
   */
   std::string getParameterType(GLenum type);
 
+  /// @brief Vertex shader ID
   GLuint _vertexID;
+  /// @brief Fragment shader ID
   GLuint _fragmentID;
+  /// @brief Shader program ID
   GLuint _programID;
 
+  /// @brief Active attributes map
   std::map<std::string, GLint> _activeAttributes;
+  /// @brief Active uniforms map
   std::map<std::string, GLint> _activeUniforms;
-
+  /// @brief Are the programs analyzed ?
   static bool _programsAnalyzed;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

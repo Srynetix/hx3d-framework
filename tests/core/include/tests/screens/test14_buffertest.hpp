@@ -6,7 +6,7 @@
 
 using namespace hx3d;
 
-class SGeo: public Geometry {
+class SGeo: public geom::Geometry {
 public:
   SGeo(unsigned int tris) {
     std::vector<float> positions;

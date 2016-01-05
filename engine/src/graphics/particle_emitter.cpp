@@ -18,11 +18,12 @@
     USA
 */
 
-#include "hx3d/graphics/particles/particle_emitter.hpp"
+#include "hx3d/graphics/particle_emitter.hpp"
 
 #include "hx3d/math/random.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 ParticleEmitter::ParticleEmitter(const unsigned int maxParticles):
   rotationSpeed(0.f), particles(maxParticles), texture(nullptr)
@@ -85,4 +86,5 @@ void ParticleEmitter::emitOne() {
   p->baseLife = p->life = life;
 }
 
+} /* graphics */
 } /* hx3d */

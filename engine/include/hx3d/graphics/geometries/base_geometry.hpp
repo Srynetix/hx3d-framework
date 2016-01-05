@@ -25,28 +25,84 @@
 #include "hx3d/graphics/buffers/index_array_buffer.hpp"
 #include "hx3d/graphics/shader.hpp"
 
-namespace hx3d {
+using namespace hx3d::graphics::buffers;
 
+namespace hx3d {
+namespace graphics {
+
+/**
+@brief Mesh geometry types
+*/
+namespace geom {
+
+/**
+@brief Base geometry.
+Must be inherited.
+*/
 class BaseGeometry {
 public:
   BaseGeometry();
 
+  /**
+  @brief Add an attribute
+
+  @param name Name
+  @param attribute Attribute definition
+  */
   void addAttribute(std::string name, Attribute attribute);
+
+  /**
+  @brief Set an attribute with values
+
+  @param name Name
+  @param values Values
+  */
   void setAttribute(std::string name, std::vector<float> values);
+
+  /**
+  @brief Get an attribute array buffer
+
+  @param name Name
+
+  @return Attribute array buffer
+  */
   AttributeArrayBuffer& getAttribute(std::string name);
 
+  /**
+  @brief Set the indices
+
+  @param values Values
+  */
   void setIndices(std::vector<GLushort> values);
+
+  /**
+  @brief Get the index array buffer
+
+  @return Index array buffer
+  */
   IndexArrayBuffer& getIndices();
 
+  /**
+  @brief Upload all the buffers to the GPU
+  */
   void uploadAll();
 
+  /**
+  @brief Draw the geometry
+
+  @param shader Shader
+  */
   virtual void draw(Ptr<Shader> shader) = 0;
 
 protected:
+  /// @brief Attributes map
   std::map<std::string, AttributeArrayBuffer> _attributes;
+  /// @brief Index array buffer
   IndexArrayBuffer _indices;
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

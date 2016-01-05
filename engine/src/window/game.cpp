@@ -27,62 +27,66 @@
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
+namespace window {
 
-  Game::Game():
-  _running(true), _screen(nullptr)
-  {}
+Game::Game():
+_running(true), _screen(nullptr)
+{}
 
-  void Game::dispose() {
-    if (_screen)
-      _screen->hide();
+void Game::create() {}
+
+void Game::dispose() {
+  if (_screen)
+    _screen->hide();
+}
+
+void Game::pause() {
+  if (_screen)
+    _screen->pause();
+}
+
+void Game::resume() {
+  if (_screen)
+    _screen->resume();
+}
+
+void Game::render() {
+  if (_screen)
+    _screen->render();
+}
+
+void Game::update(float delta) {
+  if (_screen)
+    _screen->update(delta);
+}
+
+void Game::resize(int width, int height) {
+  if (_screen)
+    _screen->resize(width, height);
+}
+
+bool Game::isRunning() {
+  return _running;
+}
+
+void Game::stop() {
+  dispose();
+  _running = false;
+}
+
+void Game::setScreen(Ptr<Screen> screen) {
+
+  Core::Events()->setInputHandler(nullptr);
+
+  if (_screen)
+    _screen->hide();
+
+  _screen = screen;
+  if (_screen) {
+    _screen->show();
+    _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
   }
+}
 
-  void Game::pause() {
-    if (_screen)
-      _screen->pause();
-  }
-
-  void Game::resume() {
-    if (_screen)
-      _screen->resume();
-  }
-
-  void Game::render() {
-    if (_screen)
-      _screen->render();
-  }
-
-  void Game::update(float delta) {
-    if (_screen)
-      _screen->update(delta);
-  }
-
-  void Game::resize(int width, int height) {
-    if (_screen)
-      _screen->resize(width, height);
-  }
-
-  bool Game::isRunning() {
-    return _running;
-  }
-
-  void Game::stop() {
-    dispose();
-    _running = false;
-  }
-
-  void Game::setScreen(Ptr<Screen> screen) {
-
-    Core::Events()->setInputHandler(nullptr);
-
-    if (_screen)
-      _screen->hide();
-
-    _screen = screen;
-    if (_screen) {
-      _screen->show();
-      _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
-    }
-  }
-
+} /* window */
 } /* hx3d */

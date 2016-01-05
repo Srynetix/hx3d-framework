@@ -28,6 +28,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 PerspectiveCamera::PerspectiveCamera(const float near, const float far):
   PerspectiveCamera(Core::App()->getWidth(), Core::App()->getHeight(), near, far)
@@ -56,4 +57,5 @@ void PerspectiveCamera::update() {
   view = glm::lookAt(position, position + direction, up);
 }
 
+} /* graphics */
 } /* hx3d */

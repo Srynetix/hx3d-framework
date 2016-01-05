@@ -29,16 +29,21 @@
 
 namespace hx3d {
 
+/**
+@brief Windowing and event components
+*/
+namespace window {
+
 class Game;
 
 /**
-Application management
+@brief Application management
 */
 class Application {
 
 public:
   /**
-  Create a window.
+  @brief Create a window.
 
   @param game   Game instance (Ptr)
   @param config Configuration
@@ -47,40 +52,40 @@ public:
   virtual ~Application();
 
   /**
-  Start the window.
+  @brief Start the window.
   */
   virtual void start() = 0;
 
   /**
-  Get the window width
+  @brief Get the window width
 
   @return Window width
   */
   int getWidth();
 
   /**
-  Get the window height
+  @brief Get the window height
 
   @return Window height
   */
   int getHeight();
 
   /**
-  Get the window size (ivec2)
+  @brief Get the window size (ivec2)
 
   @return Window size
   */
   glm::ivec2 getSize();
 
   /**
-  Get the current frames per second (FPS)
+  @brief Get the current frames per second (FPS)
 
   @return Current FPS
   */
   float getFPS();
 
-  /*
-  Get the elapsed time in seconds since the application start.
+  /**
+  @brief Get the elapsed time in seconds since the application start.
   Reset after one hour.
 
   @return Elapsed time
@@ -88,18 +93,28 @@ public:
   float getElapsedTime();
 
 protected:
-    Ptr<Game> _game;
-    bool _running;
 
-    int _width;
-    int _height;
-    unsigned int _fpsLimit;
-    std::string _title;
+  /// @brief Game pointer
+  Ptr<Game> _game;
+  /// @brief Is the application running ?
+  bool _running;
 
-    float _currentFPS;
-    float _elapsedTime;
+  /// @brief Application width
+  int _width;
+  /// @brief Application height
+  int _height;
+  /// @brief FPS limit
+  unsigned int _fpsLimit;
+  /// @brief Application title
+  std::string _title;
+
+  /// @brief Current FPS
+  float _currentFPS;
+  /// @brief Elapsed time since the beginning
+  float _elapsedTime;
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_APPLICATION */

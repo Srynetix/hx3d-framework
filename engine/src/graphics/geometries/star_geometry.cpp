@@ -21,6 +21,8 @@
 #include "hx3d/graphics/geometries/star_geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
 StarGeometry::StarGeometry(): Geometry() {
 
@@ -112,4 +114,6 @@ StarGeometry::StarGeometry(): Geometry() {
   uploadAll();
 }
 
+} /* geom */
+} /* graphics */
 } /* hx3d */

@@ -26,6 +26,8 @@
 #include "hx3d/graphics/gl.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace viewports {
 
 Viewport::Viewport():
   _camera(nullptr), _worldWidth(0), _worldHeight(0), _screenX(0), _screenY(0), _screenWidth(0), _screenHeight(0) {}
@@ -86,4 +88,6 @@ glm::vec2 Viewport::getWorldSize() {
   return glm::vec2(_worldWidth, _worldHeight);
 }
 
+} /* viewports */
+} /* graphics */
 } /* hx3d */

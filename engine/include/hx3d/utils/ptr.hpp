@@ -26,19 +26,33 @@
 #include <memory>
 
 namespace hx3d {
-  template <class T>
-  using Ptr = std::shared_ptr<T>;
 
-  template <class T>
-  using UPtr = std::unique_ptr<T>;
+/**
+@brief Quick-typing shared ptr
+*/
+template <class T>
+using Ptr = std::shared_ptr<T>;
 
-  template <class T>
-  using EnableSharedThis = std::enable_shared_from_this<T>;
+/**
+@brief Quick-typing unique ptr
+*/
+template <class T>
+using UPtr = std::unique_ptr<T>;
 
-  template <class T, class... Args>
-  Ptr<T> Make(Args&&... args) {
-    return std::make_shared<T>(args...);
-  }
+/**
+@brief Quick-typing enable shared from this
+*/
+template <class T>
+using EnableSharedThis = std::enable_shared_from_this<T>;
+
+/**
+@brief Quick-typing make shared
+*/
+template <class T, class... Args>
+Ptr<T> Make(Args&&... args) {
+  return std::make_shared<T>(args...);
 }
+
+} /* hx3d */
 
 #endif

@@ -16,59 +16,65 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Real batching (ie. 1 VBO for all the meshes for 1 texture)
 */
 
 #ifndef HX3D_GRAPHICS_BATCH
 #define HX3D_GRAPHICS_BATCH
 
 #include "hx3d/graphics/mesh.hpp"
-
 #include "hx3d/gui/text.hpp"
-
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 
+/**
+@brief 2D and 3D graphics components.
+*/
+namespace graphics {
+
 class Shader;
 class Camera;
+
+/**
+@brief Draw meshes and texts on screen.
+*/
 class Batch {
 
 public:
   Batch();
 
   /**
-  Begin the batching.
+  @brief Begin the batching.
   */
   void begin();
 
   /**
-  End the batching.
+  @brief End the batching.
   */
   void end();
 
   /**
-  Draw the mesh.
-  You must have called @link#begin before.
+  @brief Draw the mesh.
+
+  You must have called @link begin @endlink before.
 
   @param mesh Mesh
   */
   void draw(Mesh& mesh);
 
   /**
-  Draw the text.
-  You must have called @link#begin before.
+  @brief Draw the text.
+
+  You must have called @link begin @endlink before.
 
   @param text Text
   */
   void draw(gui::Text& text);
 
   /**
-  Draw the text following a function.
-  You must have called @link#begin before.
+  @brief Draw the text following a function.
+
+  You must have called @link begin @endlink before.
 
   @param text   Text
   @param function  Function
@@ -78,31 +84,34 @@ public:
   ///////////////////
 
   /**
-  Set the shader for the next batching.
+  @brief Set the shader for the next batching.
 
   @param shader Shader (Ptr)
   */
   void setShader(const Ptr<Shader>& shader);
 
   /**
-  Get the current batching shader.
+  @brief Get the current batching shader.
 
   @return Shader (Ptr)
   */
   Ptr<Shader> getShader();
 
   /**
-  Set the camera for the next batching.
+  @brief Set the camera for the next batching.
 
   @param camera Camera
   */
   void setCamera(Camera& camera);
 
 private:
+  /// @brief Camera
   Camera* _camera;
+  /// @brief Shader
   Ptr<Shader> _shader;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

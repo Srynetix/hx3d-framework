@@ -30,6 +30,9 @@
 namespace hx3d {
 namespace math {
 
+/**
+@brief Interpolate using functions
+*/
 enum class Interpolation {
   Linear = 0,
 
@@ -74,11 +77,21 @@ enum class Interpolation {
   InOutElastic
 };
 
+/**
+@brief Interpolate between two values.
+
+@param a    Starting value
+@param b    End value
+@param t    Current time (between 0 and 1)
+@param type Interpolation function
+
+@return Computed value
+*/
 template <class T>
 T interpolate(T a, T b, float t, Interpolation type);
 
 template <>
-inline Color interpolate(Color a, Color b, float t, Interpolation type);
+inline graphics::Color interpolate(graphics::Color a, graphics::Color b, float t, Interpolation type);
 
 } /* math */
 } /* hx3d */

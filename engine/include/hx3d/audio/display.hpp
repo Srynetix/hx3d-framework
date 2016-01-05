@@ -38,7 +38,7 @@ namespace audio {
   @see Spectrum
   @see Waveform
 */
-class Display: public hx3d::Sprite {
+class Display: public graphics::Sprite {
 
 public:
   /**
@@ -89,12 +89,12 @@ public:
   */
   virtual void onInitialization();
 
-  void setTexture(const Ptr<Texture>&) = delete;
-  void setTexture(const Ptr<Framebuffer>&) = delete;
+  void setTexture(const Ptr<graphics::Texture>&) = delete;
+  void setTexture(const Ptr<graphics::Framebuffer>&) = delete;
 
 protected:
   /// @brief Drawing image
-  Image _image;
+  graphics::Image _image;
   /// @brief Refresh timer
   Timer _timer;
   /// @brief Refresh delay

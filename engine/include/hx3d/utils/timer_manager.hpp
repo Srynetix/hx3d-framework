@@ -27,16 +27,50 @@
 
 namespace hx3d {
 
+/**
+@brief Manages multiple callback timers.
+*/
 class TimerManager {
   public:
     TimerManager();
 
+    /**
+    @brief Add an existing named timer.
+
+    @param name   Name
+    @param timer  Timer
+    */
     void addNamedTimer(std::string name, CallbackTimer& timer);
+
+    /**
+    @brief Create a new named timer.
+
+    @param name     Name
+    @param delay    Delay before callback activation
+    @param callback Callback to execute
+    */
     void createNamedTimer(std::string name, float delay, std::function<void()> callback);
 
+    /**
+    @brief Add an existing temporary timer.
+
+    @param timer  Timer
+    */
     void addTemporaryTimer(CallbackTimer& timer);
+
+    /**
+    @brief Create a new temporary timer.
+
+    @param delay    Delay before callback activation
+    @param callback Callback to execute
+    */
     void createTemporaryTimer(float delay, std::function<void()> callback);
 
+    /**
+    @brief Update the timers
+
+    @param delta Delta time
+    */
     void update(float delta);
 
   private:

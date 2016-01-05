@@ -24,19 +24,33 @@
 #include <algorithm>
 
 namespace hx3d {
+
+/**
+@brief Useful algorithm helpers
+*/
 namespace algo {
 
+/**
+@brief Function application helper on a container.
+
+@param container  Container
+@param func       Function
+*/
 template <class Container, class Function>
-void apply(Container& container, Function func) {
-  std::for_each(container.begin(), container.end(), func);
-}
+void apply(Container& container, Function func);
 
+/**
+@brief Clone a container.
+
+@param src Source container
+@param dst Destination container
+*/
 template <class Source, class Dest>
-void clone(Source& src, Dest& dst) {
-  std::copy(src.begin(), src.end(), std::inserter(dst, dst.begin()));
-}
+void clone(Source& src, Dest& dst);
 
-}
+} /* algo */
 } /* hx3d */
+
+#include "hx3d/utils/_inline/algorithm.inl.hpp"
 
 #endif /* HX3D_UTILS_ALGORITHM */

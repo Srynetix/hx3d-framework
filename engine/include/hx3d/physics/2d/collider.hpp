@@ -33,72 +33,152 @@ namespace hx3d {
 namespace physics2d {
 
 struct Attractor;
+
+/**
+@brief Physical collider
+*/
 class Collider {
 public:
+
+  /**
+  @brief Collider type
+  */
   enum class Type {
+    /// @brief Static: no forces or velocity
     Static,
+    /// @brief Dynamic: forces and velocity
     Dynamic,
+    /// @brief Kinematic: no forces but velocity
     Kinematic
   };
 
+  /**
+  @brief Collider shape
+  */
   enum class Shape {
+    /// @brief Circle shape
     Circle,
+    /// @brief Polygon shape
     Polygon
   };
 
+  /**
+  @brief Collider definition
+  */
   struct Definition {
     Definition();
 
+    /// @brief Physical ratio
     float unitCoef;
 
+    /// @brief Position
     glm::vec2 position;
+
+    /// @brief Material
     Material material;
 
+    /// @brief Mask
     unsigned int mask;
+    /// @brief Category
     unsigned int category;
   };
 
-  Collider(Shape shapeType, const Type colliderType = Type::Dynamic);
+  /**
+  @brief Create a collider
 
-  void useDefinition(const Definition& def);
-
+  @param shapeType    Collider shape
+  @param colliderType Collider type
+  */
+  Collider(const Shape shapeType, const Type colliderType = Type::Dynamic);
   virtual ~Collider();
 
+  /**
+  @brief Apply a definition on the collider
+
+  @param def Collider definition
+  */
+  void useDefinition(const Definition& def);
+
+  /**
+  @brief Compute the collider mass
+
+  @param density Density
+  */
   virtual void computeMass(float density) = 0;
+
+  /**
+  @brief Set the collider orientation
+
+  @param angle Angle in radians
+  */
   virtual void setOrientation(float angle) = 0;
 
+  /**
+  @brief Apply a force
+
+  @param amount Amount
+  */
   void applyForce(const glm::vec2& amount);
+
+  /**
+  @brief Apply an impulse
+
+  @param amount   Amount
+  @param contact  Contact point
+  */
   void applyImpulse(const glm::vec2& amount, const glm::vec2& contact);
+
+  /**
+  @brief Set collider density
+
+  @param density Density
+  */
   void setDensity(float density);
 
   ///////////////
 
+  /// @brief Position
   glm::vec2 position;
+  /// @brief Velocity
   glm::vec2 velocity;
-  glm::vec2 gravityForce;
+  /// @brief Force
   glm::vec2 force;
+
+  /// @brief Gravity force
+  glm::vec2 gravityForce;
+  /// @brief Gravity scale
   glm::vec2 gravityScale;
 
+  /// @brief Angular velocity
   float angularVelocity;
+  /// @brief Torque
   float torque;
+  /// @brief Orientation
   float orientation;
 
+  /// @brief Fixed rotation ?
   bool fixedRotation;
 
+  /// @brief Mask
   unsigned int mask;
+  /// @brief Category
   unsigned int category;
 
+  /// @brief Type
   Type type;
+  /// @brief Shape
   Shape shape;
 
+  /// @brief Material
   Material material;
+  /// @brief Mass data
   Mass massData;
 
+  /// @brief Current attractor
   Ptr<Attractor> currentAttractor;
+  /// @brief User data
   ObjectMap userData;
 };
-
-/////////////
 
 } /* physics2d */
 } /* hx3d */

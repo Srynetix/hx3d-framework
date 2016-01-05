@@ -23,6 +23,8 @@
 #include "hx3d/graphics/geometries/origin_geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
 OriginGeometry::OriginGeometry(): Geometry() {
 
@@ -210,4 +212,6 @@ OriginGeometry::OriginGeometry(): Geometry() {
   uploadAll();
 }
 
+} /* geom */
+} /* graphics */
 } /* hx3d */

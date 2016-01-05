@@ -26,19 +26,24 @@
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 class Texture;
+
+/**
+@brief Real-time editable texture.
+*/
 class Image {
 public:
 
   /**
-  Construct an empty image.
-  Use @link#create to create the image.
+  @brief Construct an empty image.
+  Use @link create @endlink to create the image.
   */
   Image();
 
   /**
-  Construct an image with a width and height.
+  @brief Construct an image with a width and height.
 
   @param width Width
   @param height Height
@@ -47,7 +52,7 @@ public:
   ~Image();
 
   /**
-  Initialize an image.
+  @brief Initialize an image.
 
   @param width Width
   @param height Height
@@ -55,7 +60,7 @@ public:
   void create(unsigned int width, unsigned int height);
 
   /**
-  Set a pixel with a color.
+  @brief Set a pixel with a color.
 
   @param x      X coordinate
   @param y      Y coordinate
@@ -64,7 +69,7 @@ public:
   void set(unsigned int x, unsigned int y, Color color);
 
   /**
-  Set a rectangle with a color.
+  @brief Set a rectangle with a color.
 
   @param x      X coordinate
   @param y      Y coordinate
@@ -75,43 +80,44 @@ public:
   void setRect(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Color color);
 
   /**
-  Get a pixel color.
+  @brief Get a pixel color.
 
   @param x X coordinate
   @param y Y coordinate
+
   @return Color
   */
   Color get(unsigned int x, unsigned int y);
 
   /**
-  Get the texture.
+  @brief Get the texture.
 
   @return Texture (Ptr)
   */
   Ptr<Texture> getTexture();
 
   /**
-  Get the image width.
+  @brief Get the image width.
 
   @return Width
   */
   unsigned int getWidth();
 
   /**
-  Get the image height.
+  @brief Get the image height.
 
   @return Height
   */
   unsigned int getHeight();
 
   /**
-  Recreate a texture from the image.
+  @brief Recreate a texture from the image.
   */
   void buildTexture();
 
   /**
-  Update an existing texture zone.
-  
+  @brief Update an existing texture zone.
+
   @param x X coordinate
   @param y Y coordinate
   @param w Width
@@ -122,14 +128,18 @@ public:
   friend class Texture;
 
 private:
+  /// @brief Image width
   unsigned int _width;
+  /// @brief Image height
   unsigned int _height;
-
+  /// @brief Color buffer
   unsigned char* _buffer;
 
+  /// @brief Internal texture
   Ptr<Texture> _texture;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

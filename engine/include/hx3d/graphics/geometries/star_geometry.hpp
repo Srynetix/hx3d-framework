@@ -21,16 +21,23 @@
 #ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
 #define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
+/**
+@brief Star shape VBO geometry
+*/
 class StarGeometry: public Geometry {
 
 public:
   StarGeometry();
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

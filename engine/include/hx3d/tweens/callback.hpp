@@ -28,16 +28,36 @@
 namespace hx3d {
 namespace tweens {
 
+/**
+@brief Callback tween.
+
+Execute a callback at the end of the tween.
+*/
 class Callback: public BaseTween {
 public:
+  /**
+  @brief Create a callback tween using a function.
+
+  @param func Function
+  */
   Callback(std::function<void()> func);
+
+  /**
+  @brief Create a callback tween usign a function and a duration.
+
+  @param func     Function
+  @param duration Duration
+  */
   Callback(std::function<void()> func, const float duration);
 
   virtual void update(const float delta) override;
 
 private:
+  /// @brief Function
   std::function<void()> _func;
+  /// @brief Delay
   float _delay;
+  /// @brief Current time
   float _currentTime;
 };
 

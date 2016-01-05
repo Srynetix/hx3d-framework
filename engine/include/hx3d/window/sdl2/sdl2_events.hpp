@@ -24,13 +24,18 @@
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
+namespace window {
 
+/**
+@brief SDL2 event manager implementation
+*/
 class SDL2EventManager: public EventManager {
 
 public:
   virtual void poll() override;
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_SDL2_SDL2EVENTS */

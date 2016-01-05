@@ -24,91 +24,117 @@
 #include "hx3d/graphics/gl.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D stencil drawing.
+
+Use this to hide/show elements following a shape or to apply a function over a specified shape.
+*/
 class Stencil {
 public:
+  /**
+  @brief Stencil function
+  */
   enum class Function {
+    /// @brief Never hide
     Never = 0,
+    /// @brief Always hide
     Always,
+    /// @brief Hide when it's equal
     Equal,
+    /// @brief Hide when it's not equal
     NotEqual,
+    /// @brief Hide when it's less
     Less,
+    /// @brief Hide when it's greater
     Greater,
+    /// @brief Hide when it's less or equal
     LessOrEqual,
+    /// @brief Hide when it's greater or equal
     GreaterOrEqual
   };
 
+  /**
+  @brief Stencil operation
+  */
   enum class Operation {
+    /// @brief Do nothing
     Keep = 0,
+    /// @brief Remove
     Zero,
+    /// @brief Replace
     Replace,
+    /// @brief Increment
     Increment,
+    /// @brief Increment and wrap
     IncrementWrap,
+    /// @brief Decrement
     Decrement,
+    /// @brief Decrement and wrap
     DecrementWrap,
+    /// @brief Invert
     Invert
   };
 
-  void enable() {
-    glEnable(GL_STENCIL_TEST);
-  }
+  /**
+  @brief Enable stencil mode.
+  */
+  static void enable();
 
-  void disable() {
-    glDisable(GL_STENCIL_TEST);
-  }
+  /**
+  @brief Disable stencil mode.
+  */
+  static void disable();
 
-  void setFunction(Function func, int ref, int mask) {
-    glStencilFunc(convertFunction(func), ref, mask);
-  }
+  /**
+  @brief Set the stencil function.
 
-  void setOperation(Operation sfail, Operation dpfail, Operation dppass) {
-    glStencilOp(convertOperation(sfail), convertOperation(dpfail), convertOperation(dppass));
-  }
+  @param func Function
+  @param ref  Ref
+  @param mask Mask
+  */
+  void setFunction(Function func, int ref, int mask);
 
-  void begin() {
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-    glDepthMask(GL_FALSE);
+  /**
+  @brief Set the stencil operation.
 
-    glStencilMask(0xFF);
+  @param sfail  Operation when the stencil function fail
+  @param dpfail Operation when the depth buffer test fail
+  @param dppass Operation when the depth buffer test pass
+  */
+  void setOperation(Operation sfail, Operation dpfail, Operation dppass);
 
-    glClear(GL_STENCIL_BUFFER_BIT);
-  }
+  /**
+  @brief Begin to use the stencil.
+  */
+  void begin();
 
-  void end() {
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glDepthMask(GL_TRUE);
-
-    glStencilMask(0x00);
-
-    glStencilFunc(GL_EQUAL, 2, 0xFF);
-  }
+  /**
+  @brief End the stencil.
+  */
+  void end();
 
 private:
-  GLenum convertFunction(Function func) {
-    return
-      func == Function::Never ? GL_NEVER :
-      func == Function::Always ? GL_ALWAYS :
-      func == Function::Equal ? GL_EQUAL :
-      func == Function::NotEqual ? GL_NOTEQUAL :
-      func == Function::Less ? GL_LESS :
-      func == Function::Greater ? GL_GREATER :
-      func == Function::LessOrEqual ? GL_LEQUAL :
-      GL_GEQUAL;
-  }
+  /**
+  @brief Convert the function type to OpenGL.
 
-  GLenum convertOperation(Operation op) {
-    return
-      op == Operation::Keep ? GL_KEEP :
-      op == Operation::Zero ? GL_ZERO :
-      op == Operation::Replace ? GL_REPLACE :
-      op == Operation::Increment ? GL_INCR :
-      op == Operation::IncrementWrap ? GL_INCR_WRAP :
-      op == Operation::Decrement ? GL_DECR :
-      op == Operation::DecrementWrap ? GL_DECR_WRAP :
-      GL_INVERT;
-  }
+  @param func Stencil function
+
+  @return GLenum
+  */
+  GLenum convertFunction(Function func);
+  /**
+  @brief Convert the operation type to OpenGL.
+
+  @param op Stencil operation
+
+  @return GLenum
+  */
+  GLenum convertOperation(Operation op);
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

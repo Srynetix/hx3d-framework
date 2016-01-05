@@ -4,7 +4,7 @@
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"
 
-#include "hx3d/graphics/particles/particle_manager.hpp"
+#include "hx3d/graphics/particle_manager.hpp"
 
 using namespace hx3d;
 

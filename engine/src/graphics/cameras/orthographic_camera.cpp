@@ -26,6 +26,7 @@
 #include "hx3d/window/application.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 OrthographicCamera::OrthographicCamera():
   OrthographicCamera(Core::App()->getWidth(), Core::App()->getHeight())
@@ -52,4 +53,5 @@ void OrthographicCamera::setToOrtho(const float width, const float height) {
   update();
 }
 
+} /* graphics */
 } /* hx3d */

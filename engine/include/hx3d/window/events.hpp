@@ -27,15 +27,27 @@
 #define HX3D_WINDOW_EVENTS
 
 namespace hx3d {
+namespace window {
 
+  /**
+  @brief Key event
+  */
   class KeyEvent {
   public:
+    /**
+    @brief Key event type
+    */
     enum class Type {
+      /// @brief Key pressed
       Pressed = 0,
+      /// @brief Key released
       Released,
       None
     };
 
+    /**
+    @brief Key value
+    */
     enum class Key {
       A = 0, B, C, D, E,
       F, G, H, I, J,
@@ -48,54 +60,98 @@ namespace hx3d {
     };
   };
 
+  /**
+  @brief Window event
+  */
   class WindowEvent {
   public:
+    /**
+    @brief Window event type
+    */
     enum class Type {
+      /// @brief Window closed
       Closed = 0,
+      /// @brief Window shown
       Shown,
+      /// @brief Window moved
       Moved,
       None
     };
   };
 
+  /**
+  @brief Mouse button event
+  */
   class MouseButtonEvent {
   public:
+    /**
+    @brief Mouse action type
+    */
     enum class Type {
+      /// @brief Mouse clicked
       Clicked = 0,
+      /// @brief Mouse released
       Released,
       None
     };
 
+    /**
+    @brief Mouse button value
+    */
     enum class Button {
+      /// @brief Left click
       Left = 0,
+      /// @brief Middle click
       Middle,
+      /// @brief Right click
       Right,
+      /// @brief Special 1 click
       Special1,
+      /// @brief Special 2 click
       Special2,
       None
     };
   };
 
+  /**
+  @brief Mouse wheel event
+  */
   class MouseWheelEvent {
   public:
+    /**
+    @brief Mouse wheel direction
+    */
     enum class Direction {
+      /// @brief Left
       Left = 0,
+      /// @brief Right
       Right,
+      /// @brief Up
       Up,
+      /// @brief Down
       Down,
       None
     };
   };
 
+  /**
+  @brief Touch event
+  */
   class TouchEvent {
   public:
+    /**
+    @brief Touch type
+    */
     enum class Type {
+      /// @brief Touched
       Touched = 0,
+      /// @brief Released
       Released,
       None
     };
   };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_EVENTS */

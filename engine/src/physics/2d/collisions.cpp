@@ -2,6 +2,8 @@
 
 #include "hx3d/math/vector_utils.hpp"
 
+#include <cfloat>
+
 namespace hx3d {
 namespace physics2d {
 

@@ -21,16 +21,23 @@
 #ifndef HX3D_GRAPHICS_GEOMETRIES_CUBEGEOMETRY
 #define HX3D_GRAPHICS_GEOMETRIES_CUBEGEOMETRY
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
+/**
+@brief Cube shape VBO geometry
+*/
 class CubeGeometry: public Geometry {
 
 public:
   CubeGeometry();
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

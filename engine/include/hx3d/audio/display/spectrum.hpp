@@ -39,7 +39,7 @@ public:
 
   @param minFreq    Min. frequency
   @param maxFreq    Max. frequency
-  @param barsCount  Bars count
+  @param barCount  Bars count
   */
   Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount);
 
@@ -50,7 +50,7 @@ public:
 
   @param minFreq      Min. frequency
   @param maxFreq      Max. frequency
-  @param barsCount    Bars count
+  @param barCount    Bars count
   @param refreshDelay Refresh delay
   */
   Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount, const int refreshDelay);

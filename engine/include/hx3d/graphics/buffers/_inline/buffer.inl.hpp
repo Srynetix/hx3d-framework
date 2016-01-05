@@ -18,6 +18,10 @@
     USA
 */
 
+namespace hx3d {
+namespace graphics {
+namespace buffers {
+
 template <class T>
 Buffer<T>::Buffer() {
   glGenBuffers(1, &_buf);
@@ -78,3 +82,7 @@ template <class T>
 void Buffer<T>::clear() {
   _vector.clear();
 }
+
+} /* buffers */
+} /* graphics */
+} /* hx3d */

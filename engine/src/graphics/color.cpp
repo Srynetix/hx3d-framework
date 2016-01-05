@@ -21,6 +21,7 @@
 #include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Color::Color():
   r(255), g(255), b(255), a(255) {}
@@ -126,4 +127,5 @@ Color Color::Red = Color(255, 0, 0);
 Color Color::Green = Color(0, 255, 0);
 Color Color::Blue = Color(0, 0, 255);
 
+} /* graphics */
 } /* hx3d */

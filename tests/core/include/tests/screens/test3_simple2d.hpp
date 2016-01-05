@@ -89,11 +89,11 @@ public:
   }
 
 private:
-  hx3d::OrthographicCamera camera;
+  OrthographicCamera camera;
   gui::Text text;
 
-  hx3d::Batch batch;
-  hx3d::Sprite sprite;
+  Batch batch;
+  Sprite sprite;
 
   float angle;
 };

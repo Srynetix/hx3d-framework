@@ -25,28 +25,37 @@
 
 namespace hx3d {
 
+/**
+@brief Simple chronometer. Measures time.
+*/
 class Chronometer {
 
 public:
+    /**
+    @brief Create and start a chronometer.
+    */
     Chronometer();
 
     /**
-    Reset the chronometer.
+    @brief Reset the chronometer.
     */
     void reset();
 
     /**
-    Get the elapsed time as nanoseconds.
+    @brief Get the elapsed time as nanoseconds.
+
     @return Nanoseconds
     */
     long tick();
     /**
-    Get the elapsed time as milliseconds.
+    @brief Get the elapsed time as milliseconds.
+
     @return Milliseconds
     */
     float tickAsMillis();
     /**
-    Get the elapsed time as seconds.
+    @brief Get the elapsed time as seconds.
+
     @return Seconds
     */
     float tickAsSeconds();

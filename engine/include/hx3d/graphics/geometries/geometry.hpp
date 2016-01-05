@@ -24,13 +24,20 @@
 #include "hx3d/graphics/geometries/base_geometry.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
+/**
+@brief VBO drawing geometry w or w/o indices.
+*/
 class Geometry: public BaseGeometry {
 public:
   Geometry();
   virtual void draw(Ptr<Shader> shader) override;
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

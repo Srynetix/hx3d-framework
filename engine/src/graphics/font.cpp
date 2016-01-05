@@ -31,6 +31,7 @@
 #include <utility>
 
 namespace hx3d {
+namespace graphics {
 
 Font::Font(std::string fontPath, int characterSize):
   shader(Core::Assets()->get<Shader>("text")) {
@@ -47,7 +48,7 @@ Font::~Font() {
 void Font::createFontSize(int size) {
   if (data.find(size) == data.end()) {
     texture_atlas_t* atlas = texture_atlas_new(512, 512, 1);
-    texture_font_t* font = texture_font_new_from_memory(atlas, size, file->data, file->size);
+    texture_font_t* font = texture_font_new_from_memory(atlas, size, file->getData(), file->getSize());
 
     Data d;
     d.atlas = atlas;
@@ -65,4 +66,13 @@ Font::Data& Font::getFontData(int size) {
   return data[size];
 }
 
+unsigned int Font::getDefaultSize() const {
+  return defaultSize;
+}
+
+const Ptr<Shader>& Font::getShader() {
+  return shader;
+}
+
+} /* graphics */
 } /* hx3d */

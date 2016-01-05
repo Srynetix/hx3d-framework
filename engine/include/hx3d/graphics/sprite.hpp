@@ -27,56 +27,63 @@
 #include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D texture manipulation.
+*/
 class Sprite: public Mesh {
 
 public:
 
   /**
-  Create a sprite without texture.
-  You must set it after with @link#setTexture.
+  @brief Create a sprite without texture.
+
+  You must set it after with @link setTexture @endlink.
   */
   Sprite();
 
   /**
-  Set the sprite texture.
+  @brief Set the sprite texture.
 
   @param texture Texture (Ptr)
   */
   void setTexture(const Ptr<Texture>& texture);
 
   /**
-  Set the sprite texture from a framebuffer color buffer.
+  @brief Set the sprite texture from a framebuffer color buffer.
 
   @param buffer Framebuffer
   */
   void setTexture(Framebuffer& buffer);
 
   /**
-  Set the sprite texture from a texture region.
+  @brief Set the sprite texture from a texture region.
 
   @param region TextureRegion
   */
   void setTexture(TextureRegion& region);
 
   /**
-  Get the sprite texture.
+  @brief Get the sprite texture.
 
   @return Texture (Ptr)
   */
   Ptr<Texture> getTexture();
 
   /**
-  Scale the texture coordinates following the texture size.
+  @brief Scale the texture coordinates following the texture size.
   */
   void scaleTexture();
 
   virtual void draw(Ptr<Shader> shader) override;
 
 private:
+  /// @brief Current texture
   Ptr<Texture> _texture;
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

@@ -42,8 +42,6 @@ public:
 
   /**
   @brief Set the required component types for the system.
-
-  @param Types Suite of Component types
   */
   template <class... Types>
   void setRequiredFamily();

@@ -21,9 +21,11 @@
 #include "hx3d/window/application_config.hpp"
 
 namespace hx3d {
+namespace window {
 
 ApplicationConfig::ApplicationConfig():
   fpsLimit(60), width(1280), height(720), title("Game"), fullscreen(false)
   {}
 
+} /* window */
 } /* hx3d */

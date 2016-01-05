@@ -27,24 +27,38 @@
 
 namespace hx3d {
 
+/**
+@brief Map of whatever you want. Useful for user data.
+*/
 class ObjectMap {
   public:
-    ObjectMap() {}
+    ObjectMap();
 
-    template <class T>
-    T* get(std::string name) {
-      return static_cast<T*>(_objects[name]);
-    }
+    /**
+    @brief Get a named value
 
+    @param name Key
+
+    @return Value
+    */
     template <class T>
-    void set(std::string name, T* object) {
-      _objects[name] = (void*)object;
-    }
+    T* get(std::string name);
+
+    /**
+    @brief Set a named value
+
+    @param name   Key
+    @param object Value
+    */
+    template <class T>
+    void set(std::string name, T* object);
 
   private:
     std::map<std::string, void*> _objects;
 };
 
 } /* hx3d */
+
+#include "hx3d/utils/_inline/object_map.inl.hpp"
 
 #endif /* HX3D_UTILS_OBJECT_MAP */

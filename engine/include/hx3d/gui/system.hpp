@@ -28,19 +28,23 @@
 namespace hx3d {
 namespace gui {
 
+/**
+@brief GUI system: GUI scene graph & event manager
+*/
 class System {
 
 public:
   System();
 
   /**
-  Return the main system content.
+  @brief Return the main system content.
 
   @return Widget (Ptr)
   */
   Ptr<Widget> getContent();
 
 private:
+  /// @brief Root
   Ptr<Widget> _content;
 };
 

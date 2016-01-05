@@ -28,6 +28,9 @@
 
 namespace hx3d {
 
+/**
+@brief File loading abstraction
+*/
 class File: public Resource {
 
 public:
@@ -35,73 +38,109 @@ public:
   ~File();
 
   /**
-  Return the file content as a string.
+  @brief Return the file content as a string.
 
   @return String
   */
   std::string toString();
 
-  char* data;
-  size_t size;
-
   ////////////////////
 
   /**
-  Load an ascii file from a path.
+  @brief Load an ascii file from a path.
 
   @param path Path to file
+
+  @return File handler
   */
   static Ptr<File> loadAsciiFile(std::string path);
 
   /**
-  Load a binary file from a path.
+  @brief Load a binary file from a path.
 
   @param path Path to file
+
+  @return File handler
   */
   static Ptr<File> loadBinaryFile(std::string path);
 
+  /**
+  @brief Get the file size
+
+  @return Size
+  */
+  size_t getSize() const;
+
+  /**
+  @brief Get the file data as an 8-bit array
+
+  @return 8-bit array
+  */
+  char* getData() const;
+
 private:
+  /// @brief File data in 8-bit array format
+  char* data;
+  /// @brief File size
+  size_t size;
+
   #ifdef __ANDROID__
     /**
-    Load an ascii file from an Android APK.
+    @brief Load an ascii file from an Android APK.
 
     @param path Path to file
     */
     static Ptr<File> loadAsciiFileAndroid(std::string path);
     /**
-    Load a binary file from an Android APK.
+    @brief Load a binary file from an Android APK.
 
     @param path Path to file
     */
     static Ptr<File> loadBinaryFileAndroid(std::string path);
     /**
-    Read the file content as string.
+    @brief Read the file content as string.
 
     @param path Path to file
     */
     static std::string readAsString(std::string path);
-#elif __APPLE__
-  
-#include "TargetConditionals.h"
-#ifdef TARGET_OS_IPHONE
-  
-  static Ptr<File> loadAsciiFileiOS(std::string path);
-  static Ptr<File> loadBinaryFileiOS(std::string path);
-  
-  static std::string readAsString(std::string path);
-  
-#endif
-#endif
+
+  #elif __APPLE__
+
+    #include "TargetConditionals.h"
+    #ifdef TARGET_OS_IPHONE
+
+      /**
+      @brief Load an ascii file for iOS.
+
+      @param path Path to file
+      */
+      static Ptr<File> loadAsciiFileiOS(std::string path);
+
+      /**
+      @brief Load a binary file for iOS.
+
+      @param path Path to file
+      */
+      static Ptr<File> loadBinaryFileiOS(std::string path);
+
+      /**
+      @brief Read the file content as string.
+
+      @param path Path to file
+      */
+      static std::string readAsString(std::string path);
+    #endif
+  #endif
 
   /**
-  Load an ascii file from a path on a desktop system.
+  @brief Load an ascii file from a path on a desktop system.
 
   @param path Path to file
   */
   static Ptr<File> loadAsciiFileDesktop(std::string path);
   /**
-  Load a binary file from a path on a desktop system.
-  
+  @brief Load a binary file from a path on a desktop system.
+
   @param path Path to file
   */
   static Ptr<File> loadBinaryFileDesktop(std::string path);

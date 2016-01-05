@@ -47,7 +47,6 @@ public:
   /**
   @brief Create a game object at the root.
 
-  @param T    Node type
   @param name Name
   @param args Arguments
 
@@ -59,7 +58,6 @@ public:
   /**
   @brief Create a game object at a path.
 
-  @param T    Node type
   @param path Path
   @param name Name
   @param args Arguments
@@ -79,7 +77,6 @@ public:
   /**
   @brief Fetch a game object from a path.
 
-  @param T    Node type
   @param path Path
 
   @return T (Ptr)
@@ -111,7 +108,7 @@ public:
 
   @param batch Batch
   */
-  void draw(Batch& batch);
+  void draw(graphics::Batch& batch);
 
   /**
   @brief Update the nodes.
@@ -147,6 +144,8 @@ protected:
   /**
   @brief Test if the path exists and returns the node.
 
+  @param path Path
+
   @return Node (Ptr)
   */
   Ptr<Node> pathExists(const std::string path);
@@ -154,7 +153,6 @@ protected:
   /**
   @brief Create a child for a container Node.
 
-  @param T          Node type
   @param container  Container node
   @param name       Child name
   @param args       Arguments

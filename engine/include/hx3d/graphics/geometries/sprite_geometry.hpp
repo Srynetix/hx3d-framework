@@ -21,21 +21,39 @@
 #ifndef HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 #define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
+namespace graphics {
+namespace geom {
 
+/**
+@brief Sprite defined VBO geometry
+*/
 class SpriteGeometry: public Geometry {
 
 public:
   SpriteGeometry();
 
+  /**
+  @brief Prepare the sprite for render-to-texture mode.
+  */
   void activateFramebufferMode();
+
+  /**
+  @brief Prepare the sprite for simple texture mode.
+  */
   void activateTextureMode();
+
+  /**
+  @brief Set the geometry for a texture region.
+  */
   void setFromRegion(TextureRegion& region);
 };
 
+} /* geom */
+} /* graphics */
 } /* hx3d */
 
 #endif

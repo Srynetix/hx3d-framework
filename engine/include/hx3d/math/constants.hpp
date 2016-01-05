@@ -26,8 +26,15 @@
 typedef std::complex<double> Complex;
 
 namespace hx3d {
+
+/**
+@brief Math structures and functions
+*/
 namespace math {
 
+/// @brief Float epsilon
+const float kEpsilon = 0.0001;
+/// @brief PI
 const double PI = 3.141592653589793238460;
 
 } /* math */

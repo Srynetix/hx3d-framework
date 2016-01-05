@@ -31,57 +31,81 @@
 #include <string>
 
 namespace hx3d {
+namespace graphics {
 
+/**
+@brief 2D/3D texture management.
+*/
 class Texture: public Resource {
-public:
 
+public:
+  /**
+  @brief Filtering type
+  */
   enum class FilterType {
 
+    /// @brief Min. filter
     Min,
+    /// @brief Max. filter
     Max,
 
+    /// @brief S wrapping filter
     WrapX,
+    /// @brief T wrapping filter
     WrapY
   };
 
+  /**
+  @brief Filtering value
+  */
   enum class FilterValue {
 
     /* Min and Max */
 
+    /// @brief Linear filter
     Linear,
+    /// @brief Nearest filter
     Nearest,
 
     /* Min only */
 
+    /// @brief Linear Mipmap Linear
     LinearMipmapLinear,
+    /// @brief Nearest Mipmap Linear
     NearestMipmapLinear,
+    /// @brief Linear Mipmap Nearest
     LinearMipmapNearest,
+    /// @brief Nearest Mipmap Nearest
     NearestMipmapNearest,
 
     /* WrapX and WrapY */
 
+    /// @brief Clamp texture to edges
     ClampToEdge,
+    /// @brief Repeat mirrored
     MirroredRepeat,
+    /// @brief Repeat
     Repeat
   };
 
+  /// @brief Default blank texture
   static Ptr<Texture> Blank;
 
   /**
-  Construct an empty texture.
-  See @link#load to build the texture.
+  @brief Construct an empty texture.
+  See @link load @endlink to build the texture.
   */
   Texture();
 
   /**
-  Construct a texture from an image path.
+  @brief Construct a texture from an image path.
 
   @param pathToImage Path to image
   */
   Texture(std::string pathToImage);
 
   /**
-  Construct a texture from an memory image.
+  @brief Construct a texture from an memory image.
 
   @param image Image
   */
@@ -89,14 +113,16 @@ public:
   ~Texture();
 
   /**
-  Build the texture from an image.
+  @brief Build the texture from an image.
 
   @param pathToImage Path to image
+
+  @return OK/Error
   */
   bool load(std::string pathToImage);
 
   /**
-  Set the texture filters.
+  @brief Set the texture filters.
 
   @param type   Filter type
   @param value  Filter value
@@ -104,7 +130,7 @@ public:
   void setFilter(FilterType type, FilterValue value);
 
   /**
-  Update a zone in the texture.
+  @brief Update a zone in the texture.
 
   @param x    X coordinate
   @param y    Y coordinate
@@ -115,21 +141,21 @@ public:
   void updateZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Uint8* data);
 
   /**
-  Get the texture width.
+  @brief Get the texture width.
 
   @return Width
   */
   unsigned int getWidth();
 
   /**
-  Get the texture height.
+  @brief Get the texture height.
 
   @return Height
   */
   unsigned int getHeight();
 
   /**
-  Get the texture ID.
+  @brief Get the texture ID.
 
   @return Texture ID
   */
@@ -138,48 +164,54 @@ public:
   //////////////////////////
 
   /**
-  Create a color buffer (used in framebuffers).
+  @brief Create a color buffer (used in framebuffers).
 
   @param width  Texture width
   @param height Texture height
+
   @return Texture (Ptr)
   */
   static Ptr<Texture> createColorBuffer(unsigned int width, unsigned int height);
 
   /**
-  Use the current texture for drawing.
+  @brief Use the current texture for drawing.
 
   @param texture Texture (Ptr)
   */
   static void use(Ptr<Texture> texture);
 
   /**
-  Use the current font atlas for drawing.
+  @brief Use the current font atlas for drawing.
 
-  @param font Font (Ptr)
+  @param font           Font (Ptr)
+  @param characterSize  Character size
   */
   static void use(Ptr<Font> font, int characterSize);
 
   /**
-  Clear the current texture for drawing.
+  @brief Clear the current texture for drawing.
   */
   static void disable();
 
   /**
-  Used to create the Texture::Blank texture.
+  @brief Used to create the Texture::Blank texture.
   */
   static void generateBlankTexture();
 
   friend class Application;
 
 private:
+  /// @brief Texture ID
   GLuint _id;
+  /// @brief Width
   unsigned int _width;
+  /// @brief Height
   unsigned int _height;
 
   //////////////////////
 };
 
+} /* graphics */
 } /* hx3d */
 
 #endif

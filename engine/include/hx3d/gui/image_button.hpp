@@ -26,14 +26,27 @@
 namespace hx3d {
 namespace gui {
 
-class ImageButton: public Sprite {
+/**
+@brief GUI image button.
+*/
+class ImageButton: public graphics::Sprite {
   public:
     ImageButton() {}
 
+    /**
+    @brief Set the on click callback
+
+    @param func Function
+    */
     void setOnClickCallback(std::function<void()> func) {
       this->func = func;
     }
 
+    /**
+    @brief On click check
+
+    @param position Click position
+    */
     void onClick(glm::vec2 position) {
       if (transform.contains(position)) {
         if (func) func();
@@ -41,6 +54,7 @@ class ImageButton: public Sprite {
     }
 
   private:
+    /// @brief Function
     std::function<void()> func;
 };
 

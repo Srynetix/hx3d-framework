@@ -21,6 +21,7 @@
 #include "hx3d/net/net.hpp"
 
 namespace hx3d {
+namespace net {
 
 Net::Net() {
   // SDLNet_Init();
@@ -30,4 +31,5 @@ Net::~Net() {
   // SDLNet_Quit();
 }
 
+} /* net */
 } /* hx3d */

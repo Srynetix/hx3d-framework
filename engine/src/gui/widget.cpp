@@ -20,7 +20,7 @@
 
 #include "hx3d/gui/widget.hpp"
 
-#include "hx3d/graphics/geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
 namespace gui {
@@ -28,7 +28,7 @@ namespace gui {
 Widget::Widget(Ptr<Widget> parent): Mesh(),
   _parent(parent)
  {
-  _geometry = Make<Geometry>();
+  _geometry = Make<graphics::geom::Geometry>();
 
   _geometry->setAttribute("Position", std::vector<float> {
     -0.5f, 0.5f, 0.f,

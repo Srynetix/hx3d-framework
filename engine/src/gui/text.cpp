@@ -51,7 +51,7 @@ void Text::init() {
 
 void Text::setFont(Ptr<Font> font) {
   _font = font;
-  _characterSize = font->defaultSize;
+  _characterSize = font->getDefaultSize();
   _length = calculateLength();
 }
 

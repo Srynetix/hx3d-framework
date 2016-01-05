@@ -21,69 +21,104 @@
 #ifndef HX3D_UTILS_PROPERTY
 #define HX3D_UTILS_PROPERTY
 
+#include <vector>
 #include <functional>
 
 namespace hx3d {
 
+/**
+@brief Property observer (Observer pattern)
+*/
 template <class T>
 class PropertyObserver {
 public:
-    virtual void observe(const T& current, const T& newVal) = 0;
+  /**
+  @brief Observe property modification
+
+  @param current  Current value
+  @param newVal   New value
+  */
+  virtual void observe(const T& current, const T& newVal) = 0;
 };
 
+/**
+@brief Callback-on-change property
+*/
 template <class T>
-class CBProperty {
+class CallbackProperty {
 private:
-    T _value;
-    std::function<void(const T&, const T&)> _func;
+  T _value;
+  std::function<void(const T&, const T&)> _func;
 
 public:
-    CBProperty(const T& value):
-        CBProperty(value, nullptr) {}
-    CBProperty(const T& value, std::function<void(const T&, const T&)> func):
-        _value(value), _func(func) {}
+  /**
+  @brief Create a callback property with value and function.
 
-    operator T const&() const {
-        return _value;
-    }
+  @param value  Base value
+  @param func   Callback function
+  */
+  CallbackProperty(const T& value, std::function<void(const T&, const T&)> func);
 
-    T& operator=(const T& value) {
-        if (_func)
-            _func(_value, value);
+  /**
+  @brief Get the value
 
-        _value = value;
-        return _value;
-    }
+  @return Value
+  */
+  operator T const&() const;
+
+  /**
+  @brief Set the value and start the callback
+
+  @param value New value
+
+  @return Modified value
+  */
+  T& operator=(const T& value);
 };
 
+/**
+@brief Observable property
+*/
 template <class T>
 class Property {
 private:
-    T _value;
-    PropertyObserver<T>* _observer;
+  T _value;
+  std::vector<PropertyObserver<T>*> _observers;
 
 public:
-    Property(const T& value):
-        Property(value, nullptr) {}
-    Property(const T& value, PropertyObserver<T>* observer):
-        _value(value), _observer(observer) {}
+  /**
+  @brief Create an observable property with value
 
-    void setObserver(const PropertyObserver<T>* observer) {
-        _observer = observer;
-    }
+  @param value Base value
+  */
+  Property(const T& value);
 
-    operator T const&() const {
-        return _value;
-    }
+  /**
+  @brief Add an observer
 
-    T& operator=(const T& value) {
-        if (_observer)
-            _observer->observe(_value, value);
-        _value = value;
-        return _value;
-    }
+  @param observer Observer
+  */
+  void addObserver(PropertyObserver<T>* observer);
+
+  /**
+  @brief Get the value
+
+  @return Value
+  */
+  operator T const&() const;
+
+  /**
+  @brief Set the value and call the observers
+
+  @param value New value
+
+  @return Modified value
+  */
+  T& operator=(const T& value);
 };
 
 } /* hx3d */
+
+#include "hx3d/utils/_inline/property.inl.hpp"
 
 #endif /* HX3D_UTILS_PROPERTY */

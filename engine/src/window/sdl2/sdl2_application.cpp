@@ -41,7 +41,10 @@
 
 #include <ctime>
 
+using namespace hx3d::graphics;
+
 namespace hx3d {
+namespace window {
 
 SDL2Application::SDL2Application(const Ptr<Game>& game, ApplicationConfig config):
   Application(game, config)
@@ -207,4 +210,5 @@ void SDL2Application::render() {
     _running = false;
 }
 
+} /* window */
 } /* hx3d */

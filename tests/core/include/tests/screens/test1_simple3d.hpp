@@ -3,8 +3,6 @@
 #include "hx3d/graphics/geometries/cube_geometry.hpp"
 #include "hx3d/graphics/geometries/star_geometry.hpp"
 
-using namespace hx3d;
-
 class Test1: public BaseTestScreen {
 public:
   Test1():
@@ -18,8 +16,8 @@ public:
 
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
 
-    cube.setGeometry(Make<CubeGeometry>());
-    star.setGeometry(Make<StarGeometry>());
+    cube.setGeometry(Make<geom::CubeGeometry>());
+    star.setGeometry(Make<geom::StarGeometry>());
 
     angle = 0.f;
   }
@@ -101,13 +99,13 @@ public:
   }
 
 private:
-  hx3d::PerspectiveCamera camera;
-  hx3d::Batch batch;
+  PerspectiveCamera camera;
+  Batch batch;
 
-  hx3d::Mesh cube;
-  hx3d::Mesh star;
+  Mesh cube;
+  Mesh star;
 
-  hx3d::Sprite sprite;
+  Sprite sprite;
 
   float angle;
 };

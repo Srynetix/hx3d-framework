@@ -25,6 +25,7 @@
 #include "hx3d/graphics/texture.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 TextureRegion::TextureRegion(Ptr<Texture> texture, float minX, float maxX, float minY, float maxY):
   _texture(texture), _minX(minX), _maxX(maxX), _minY(minY), _maxY(maxY),
@@ -53,4 +54,5 @@ float TextureRegion::getMaxY() {
   return _maxY;
 }
 
+} /* graphics */
 } /* hx3d */

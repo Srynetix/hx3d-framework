@@ -26,14 +26,20 @@
 */
 namespace hx3d {
 
-class Application;
-class Game;
 class AssetManager;
-class EventManager;
-class Net;
+
+namespace window {
+  class Application;
+  class Game;
+  class EventManager;
+}
 
 namespace audio {
   class AudioDevice;
+}
+
+namespace net {
+  class Net;
 }
 
 /**
@@ -68,14 +74,14 @@ public:
 
   @return Application
   */
-  static Application* App();
+  static window::Application* App();
 
   /**
   @brief Get the game instance
 
   @return Game
   */
-  static Game* CurrentGame();
+  static window::Game* CurrentGame();
 
   /**
   @brief Get the asset manager.
@@ -89,14 +95,14 @@ public:
 
   @return Event manager
   */
-  static EventManager* Events();
+  static window::EventManager* Events();
 
   /**
   @brief Get the net instance.
 
   @return Net
   */
-  static Net* Network();
+  static net::Net* Network();
 
   /**
   @brief Get the audio device instance.
@@ -112,7 +118,7 @@ public:
   @param game   Game (Ptr)
   @param events Events (Ptr)
   */
-  static void initialize(Application* app, Game* game, EventManager* events);
+  static void initialize(window::Application* app, window::Game* game, window::EventManager* events);
 
   /**
   @brief Shutdown the core system.
@@ -139,15 +145,15 @@ private:
   static Core* _instance;
 
   /// @brief Current application
-  Application* _application;
+  window::Application* _application;
   /// @brief Current game
-  Game* _game;
+  window::Game* _game;
   /// @brief Current asset manager
   AssetManager* _assets;
   /// @brief Current event manager
-  EventManager* _events;
+  window::EventManager* _events;
   /// @brief Current net device
-  Net* _net;
+  net::Net* _net;
   /// @brief Current audio device
   audio::AudioDevice* _audio;
 };

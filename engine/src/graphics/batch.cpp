@@ -29,6 +29,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
 Batch::Batch():
   _camera(nullptr),
@@ -75,7 +76,7 @@ void Batch::draw(gui::Text& text) {
 
   Ptr<Shader> prevShader = _shader;
 
-  setShader(text.getFont()->shader);
+  setShader(text.getFont()->getShader());
   begin();
 
   float oldX = text.transform.position.x;
@@ -101,7 +102,7 @@ void Batch::draw(gui::Text& text, math::Function function) {
 
   Ptr<Shader> prevShader = _shader;
 
-  setShader(text.getFont()->shader);
+  setShader(text.getFont()->getShader());
   begin();
 
   float oldX = text.transform.position.x;
@@ -122,4 +123,5 @@ void Batch::draw(gui::Text& text, math::Function function) {
   Texture::disable();
 }
 
+} /* graphics */
 } /* hx3d */

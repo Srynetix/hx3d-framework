@@ -26,24 +26,93 @@
 #include <glm/glm.hpp>
 
 namespace hx3d {
+namespace window {
 
+/**
+@brief Input management: use with screens !
+*/
 class InputHandler {
 public:
-  virtual void onWindowEvent(WindowEvent::Type type) {}
+  /**
+  @brief When a window event occur
 
-  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {}
-  virtual void onMouseReleased(MouseButtonEvent::Button button, glm::vec2 mousePosition) {}
-  virtual void onMouseWheel(MouseWheelEvent::Direction direction, glm::vec2 wheelMovement) {}
-  virtual void onMouseMotion(glm::vec2 mousePosition, glm::vec2 mouseMovement) {}
+  @param type Window event type
+  */
+  virtual void onWindowEvent(WindowEvent::Type type);
 
-  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) {}
-  virtual void onTouchUp(glm::vec2 touchPosition, float touchPressure) {}
-  virtual void onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovement, float touchPressure) {}
+  /**
+  @brief When a mouse click event occur
 
-  virtual void onKeyPressed(KeyEvent::Key key) {}
-  virtual void onKeyReleased(KeyEvent::Key key) {}
+  @param button         Mouse button
+  @param mousePosition  Mouse position
+  */
+  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition);
+
+  /**
+  @brief When a mouse click release event occur
+
+  @param button         Mouse button
+  @param mousePosition  Mouse position
+  */
+  virtual void onMouseReleased(MouseButtonEvent::Button button, glm::vec2 mousePosition);
+
+  /**
+  @brief When a mouse wheel event occur
+
+  @param direction      Wheel direction
+  @param wheelMovement  Wheel movement
+  */
+  virtual void onMouseWheel(MouseWheelEvent::Direction direction, glm::vec2 wheelMovement);
+
+  /**
+  @brief When a mouse move event occur
+
+  @param mousePosition  Mouse position
+  @param mouseMovement  Mouse movement
+  */
+  virtual void onMouseMotion(glm::vec2 mousePosition, glm::vec2 mouseMovement);
+
+  /**
+  @brief When a touch down event occur
+
+  @param touchPosition  Touch position
+  @param touchPressure  Touch pressure
+  */
+  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure);
+
+  /**
+  @brief When a touch up event occur
+
+  @param touchPosition  Touch position
+  @param touchPressure  Touch pressure
+  */
+  virtual void onTouchUp(glm::vec2 touchPosition, float touchPressure);
+
+  /**
+  @brief When a touch move event occur
+
+  @param touchPosition  Touch position
+  @param touchMovement  Touch movement
+  @param touchPressure  Touch pressure
+  */
+  virtual void onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovement, float touchPressure);
+
+  /**
+  @brief When a key is pressed
+
+  @param key Key
+  */
+  virtual void onKeyPressed(KeyEvent::Key key);
+
+  /**
+  @brief When a key is released
+
+  @param key Key
+  */
+  virtual void onKeyReleased(KeyEvent::Key key);
 };
 
+} /* window */
 } /* hx3d */
 
 #endif /* HX3D_WINDOW_INPUTHANDLER */
