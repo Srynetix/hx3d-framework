@@ -1,6 +1,6 @@
 # README #
 
-** Official hx3d Framework documentation site: [srynetix.github.io](https://srynetix.github.io)**
+**Official hx3d Framework documentation site: [srynetix.github.io](https://srynetix.github.io)**
 
 hx3d is a simple and easy to understand 2D/3D game framework made in C++.  
 It is inspired by the well-known Java framework LibGDX plus some books and tutorials on the subject.
