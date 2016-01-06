@@ -21,7 +21,10 @@
 /**
 @mainpage hx3d Framework - Open Source & Easy to understand 2D/3D framework.
 
-Hello.
+Welcome to the hx3d official documentation !
+
+To go back to the **main page**, go to [srynetix.github.io](https://srynetix.github.io).\n
+To go to the **tutorials**, click [here](https://srynetix.github.io/tutorials.html).
 */
 
 #include "hx3d/core/core.hpp"
