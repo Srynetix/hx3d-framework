@@ -28,6 +28,23 @@ Geometry::Geometry(): BaseGeometry() {}
 
 void Geometry::draw(Ptr<Shader> shader) {
 
+  // Culling
+  switch (_cullingType) {
+    case Culling::Disabled:
+      glDisable(GL_CULL_FACE);
+      break;
+    case Culling::Front:
+      glEnable(GL_CULL_FACE);
+      glCullFace(GL_FRONT);
+      break;
+    case Culling::Back:
+      glEnable(GL_CULL_FACE);
+      glCullFace(GL_BACK);
+      break;
+    default:
+      break;
+  }
+
   for (auto& a: _attributes) {
     a.second.begin(shader);
   }

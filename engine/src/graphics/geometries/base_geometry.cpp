@@ -24,7 +24,7 @@ namespace hx3d {
 namespace graphics {
 namespace geom {
 
-BaseGeometry::BaseGeometry() {
+BaseGeometry::BaseGeometry(): _cullingType(Culling::Disabled) {
   addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
   addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
   addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
@@ -48,6 +48,10 @@ void BaseGeometry::setIndices(std::vector<GLushort> values) {
 
 IndexArrayBuffer& BaseGeometry::getIndices() {
   return _indices;
+}
+
+void BaseGeometry::setFaceCulling(Culling culling) {
+  _cullingType = culling;
 }
 
 void BaseGeometry::uploadAll() {

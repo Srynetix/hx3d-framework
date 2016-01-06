@@ -30,10 +30,10 @@ public:
     cDef.material.staticFriction = 0.f;
     cDef.material.dynamicFriction = 0.f;
 
-    ground = Make<Polygon>(Collider::Type::Static);
-    top = Make<Polygon>(Collider::Type::Static);
-    leftWall = Make<Polygon>(Collider::Type::Static);
-    rightWall = Make<Polygon>(Collider::Type::Static);
+    auto ground = Make<Polygon>(Collider::Type::Static);
+    auto top = Make<Polygon>(Collider::Type::Static);
+    auto leftWall = Make<Polygon>(Collider::Type::Static);
+    auto rightWall = Make<Polygon>(Collider::Type::Static);
 
     ground->setAsBox(Core::App()->getWidth() / physRatio, 50 / physRatio);
     ground->useDefinition(cDef);
@@ -69,7 +69,6 @@ public:
 
     timer.initialize(500, [this, physRatio, cDef](){
       glm::vec2 pos = {math::random(Core::App()->getWidth() / 4, Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4), Core::App()->getHeight() - 200};
-      Log.Info("Pos: %f %f / ph: ", pos.x, pos.y);
 
       Ptr<physics2d::Polygon> bo = Make<physics2d::Polygon>();
       bo->setAsBox(50 / physRatio, 50 / physRatio);
@@ -77,12 +76,11 @@ public:
       bo->position.x = pos.x / physRatio;
       bo->position.y = pos.y / physRatio;
       pWorld.addCollider(bo);
-      // colliders.push_back(box);
 
       timer.reset();
     });
 
-    zone = Make<physics2d::ZoneAttractor>();
+    auto zone = Make<physics2d::ZoneAttractor>();
     zone->position.x = (Core::App()->getWidth() / 2) / physRatio;
     zone->position.y = 0;
     zone->width = (Core::App()->getWidth()) / physRatio;
@@ -90,25 +88,23 @@ public:
     zone->velocity = {-10, 60};
     // zone->velocity = {0, 0};
 
-    leftZone = Make<physics2d::ZoneAttractor>();
+    auto leftZone = Make<physics2d::ZoneAttractor>();
     leftZone->position.x = 0;
     leftZone->position.y = (Core::App()->getHeight() / 2) / physRatio;
     leftZone->width = 150 / physRatio;
     leftZone->height = Core::App()->getHeight() / physRatio;
     leftZone->velocity = {0, 5};
-    // leftZone->velocity = {-20, 0};
     leftZone->priority = 1;
 
-    topZone = Make<physics2d::ZoneAttractor>();
+    auto topZone = Make<physics2d::ZoneAttractor>();
     topZone->position.x = (Core::App()->getWidth() / 2 - 100) / physRatio;
     topZone->position.y = Core::App()->getHeight() / physRatio;
     topZone->width = (Core::App()->getWidth() - 100) / physRatio;
     topZone->height = 150 / physRatio;
     topZone->velocity = {10, 0};
-    // topZone->velocity = {0, 20};
     topZone->priority = 2;
 
-    point = Make<physics2d::PointAttractor>();
+    auto point = Make<physics2d::PointAttractor>();
     point->position.x = (Core::App()->getWidth() / 2) / physRatio;
     point->position.y = (Core::App()->getHeight() / 2) / physRatio;
     point->radius = 150 / physRatio;
@@ -163,15 +159,6 @@ private:
   CallbackTimer timer;
 
   Batch batch;
-
-  Ptr<physics2d::ZoneAttractor> zone;
-  Ptr<physics2d::ZoneAttractor> leftZone;
-  Ptr<physics2d::ZoneAttractor> topZone;
-  Ptr<physics2d::PointAttractor> point;
-  Ptr<physics2d::Polygon> ground;
-  Ptr<physics2d::Polygon> top;
-  Ptr<physics2d::Polygon> leftWall;
-  Ptr<physics2d::Polygon> rightWall;
 
   Ptr<physics2d::Polygon> me;
 };

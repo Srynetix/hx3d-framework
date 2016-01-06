@@ -31,6 +31,18 @@ namespace hx3d {
 namespace graphics {
 
 /**
+@brief Face culling type
+*/
+enum class Culling {
+  /// @brief Clockwise culling: front face
+  Front = 0,
+  /// @brief CounterClockwise culling: back face
+  Back,
+  /// @brief No culling
+  Disabled,
+};
+
+/**
 @brief Mesh geometry types
 */
 namespace geom {
@@ -83,6 +95,13 @@ public:
   IndexArrayBuffer& getIndices();
 
   /**
+  @brief Set the culling type
+
+  @param culling Culling type
+  */
+  void setFaceCulling(Culling culling);
+
+  /**
   @brief Upload all the buffers to the GPU
   */
   void uploadAll();
@@ -99,6 +118,8 @@ protected:
   std::map<std::string, AttributeArrayBuffer> _attributes;
   /// @brief Index array buffer
   IndexArrayBuffer _indices;
+  /// @brief Current culling
+  Culling _cullingType;
 };
 
 } /* geom */

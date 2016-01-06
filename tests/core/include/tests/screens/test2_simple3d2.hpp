@@ -16,6 +16,7 @@ public:
     camera.rotate(180.f, glm::vec3(0, 1, 0));
 
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
+    sprite.getGeometry()->setFaceCulling(Culling::Disabled);
 
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);

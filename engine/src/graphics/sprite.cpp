@@ -28,6 +28,7 @@ namespace graphics {
 Sprite::Sprite():
 Mesh() {
   _geometry = Make<geom::SpriteGeometry>();
+  _geometry->setFaceCulling(Culling::Back);
 
   setTint(Color::White);
 }

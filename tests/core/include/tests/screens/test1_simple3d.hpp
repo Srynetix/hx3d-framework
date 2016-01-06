@@ -15,6 +15,7 @@ public:
     batch.setCamera(camera);
 
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
+    sprite.getGeometry()->setFaceCulling(Culling::Disabled);
 
     cube.setGeometry(Make<geom::CubeGeometry>());
     star.setGeometry(Make<geom::StarGeometry>());
