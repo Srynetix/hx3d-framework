@@ -2,7 +2,7 @@
 
 **Official hx3d Framework documentation site: [srynetix.github.io](https://srynetix.github.io)**
 
-hx3d is a simple and easy to understand 2D/3D game framework made in C++.  
+hx3d is an open-source and easy to understand 2D/3D game framework made in C++.  
 It is inspired by the well-known Java framework LibGDX plus some books and tutorials on the subject.
 
 hx3d is somewhat modular. For now, rendering is done with SDL2, but one can easily change the implementation.
@@ -85,12 +85,12 @@ npm install -g ios-deploy
   - [x] Basic font drawing
   - [x] Individual glyph drawing
 - **Physics**
-  - [ ] *Custom 2D physics (in progress)*
+  - [x] Custom 2D physics
   - [ ] 3D physics (Bullet ?)
 - **Scene Graph & ECS**
   - [x] Entity Component System
   - [x] Scene Graph and Nodes
-  - [x] Hybrid Engine (ZGraph)
+  - [x] Hybrid Engine
 - **Audio**
   - [x] Base audio
   - [x] Frequency amplitude detection
@@ -189,4 +189,5 @@ Just do:
 
 # <a name="new_project"></a> How to create a project #
 
-To create a project, just use the [**hx3d generator**](https://github.com/Srynetix/hx3d-generator).
+To create a project, just use the [**hx3d generator**](https://github.com/Srynetix/hx3d-generator).  
+You can follow the tutorial [**Getting Started**](https://github.com/Srynetix/hx3d-framework/wiki/Getting-Started).
