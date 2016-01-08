@@ -55,7 +55,79 @@ void Batch::begin() {
 }
 
 void Batch::end() {
+
+  glDisable(GL_DEPTH_TEST);
+
+  /**
+  Meshes
+  */
+  for (auto& pair: _meshes) {
+    auto& model = pair.first;
+    Mesh& mesh = pair.second;
+
+    _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    mesh.draw(_shader);
+  }
+
+  /**
+  Function texts
+  */
+  for (auto& pair: _funcTexts) {
+    gui::Text& text = pair.first;
+    auto& func = pair.second;
+
+    Texture::use(text.getFont(), text.getCharacterSize());
+
+    float oldX = text.transform.position.x;
+    if (text.isCenterAligned())
+      text.transform.position.x -= text.getLength() / 2;
+
+    glm::mat4 model = text.transform.compute();
+    text.transform.position.x = oldX;
+
+    auto& shader = text.getFont()->getShader();
+    Shader::use(shader);
+    shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    shader->setUniformMatrix4f("u_projection", _camera->projection);
+    text.functionDraw(shader, func);
+
+    Shader::use(_shader);
+    _shader->setUniformMatrix4f("u_projection", _camera->projection);
+
+    Texture::disable();
+  }
+
+  /**
+  Texts
+  */
+  for (gui::Text& text: _texts) {
+    Texture::use(text.getFont(), text.getCharacterSize());
+
+    float oldX = text.transform.position.x;
+    if (text.isCenterAligned())
+      text.transform.position.x -= text.getLength() / 2;
+
+    glm::mat4 model = text.transform.compute();
+    text.transform.position.x = oldX;
+
+    auto& shader = text.getFont()->getShader();
+    Shader::use(shader);
+    shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    shader->setUniformMatrix4f("u_projection", _camera->projection);
+    text.draw(shader);
+
+    Shader::use(_shader);
+    _shader->setUniformMatrix4f("u_projection", _camera->projection);
+
+    Texture::disable();
+  }
+
+  glEnable(GL_DEPTH_TEST);
+
   Shader::disable();
+  _meshes.clear();
+  _texts.clear();
+  _funcTexts.clear();
 }
 
 void Batch::setCamera(Camera& camera) {
@@ -64,63 +136,30 @@ void Batch::setCamera(Camera& camera) {
 
 void Batch::draw(Mesh& mesh) {
 
-  glm::mat4 model = mesh.transform.compute();
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+  // glm::mat4 model = mesh.transform.compute();
+  // _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+  //
+  // mesh.draw(_shader);
 
-  mesh.draw(_shader);
+  unsigned int pos = 0;
+  for (pos = 0; pos < _meshes.size(); ++pos) {
+    auto& pair = _meshes[pos];
+    Mesh& m = pair.second;
+
+    if (m.transform.position.z > mesh.transform.position.z) {
+      break;
+    }
+  }
+
+  _meshes.insert(_meshes.begin() + pos, std::make_pair(mesh.transform.compute(), std::ref(mesh)));
 }
 
 void Batch::draw(gui::Text& text) {
-
-  Texture::use(text.getFont(), text.getCharacterSize());
-
-  Ptr<Shader> prevShader = _shader;
-
-  setShader(text.getFont()->getShader());
-  begin();
-
-  float oldX = text.transform.position.x;
-
-  if (text.isCenterAligned())
-    text.transform.position.x -= text.getLength() / 2;
-
-  glm::mat4 model = text.transform.compute();
-  text.transform.position.x = oldX;
-
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
-
-  text.draw(_shader);
-
-  setShader(prevShader);
-  begin();
-
-  Texture::disable();
+  _texts.push_back(std::ref(text));
 }
 
 void Batch::draw(gui::Text& text, math::Function function) {
-  Texture::use(text.getFont(), text.getCharacterSize());
-
-  Ptr<Shader> prevShader = _shader;
-
-  setShader(text.getFont()->getShader());
-  begin();
-
-  float oldX = text.transform.position.x;
-
-  if (text.isCenterAligned())
-    text.transform.position.x -= text.getLength() / 2;
-
-  glm::mat4 model = text.transform.compute();
-  text.transform.position.x = oldX;
-
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
-
-  text.functionDraw(_shader, function);
-
-  setShader(prevShader);
-  begin();
-
-  Texture::disable();
+  _funcTexts.push_back(std::make_pair(std::ref(text), function));
 }
 
 } /* graphics */

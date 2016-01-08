@@ -109,6 +109,12 @@ private:
   Camera* _camera;
   /// @brief Shader
   Ptr<Shader> _shader;
+  /// @brief Sorted mesh
+  std::vector<std::pair<glm::mat4, std::reference_wrapper<Mesh>>> _meshes;
+  /// @brief Texts
+  std::vector<std::reference_wrapper<gui::Text>> _texts;
+  /// @brief Function texts
+  std::vector<std::pair<std::reference_wrapper<gui::Text>, math::Function>> _funcTexts;
 };
 
 } /* graphics */

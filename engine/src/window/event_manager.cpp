@@ -20,6 +20,9 @@
 
 #include "hx3d/window/event_manager.hpp"
 
+#include "hx3d/core/core.hpp"
+#include "hx3d/window/application.hpp"
+
 namespace hx3d {
 namespace window {
 
@@ -164,6 +167,11 @@ glm::vec2 EventManager::getMouseWheelMovement() {
 
 glm::vec2 EventManager::getTouchPosition() {
   return _touchPosition;
+}
+
+glm::vec2 EventManager::getScreenConvertedTouchPosition() {
+  auto screen_size = Core::App()->getSize();
+  return {_touchPosition.x * screen_size.x, _touchPosition.y * screen_size.y};
 }
 
 glm::vec2 EventManager::getTouchMovement() {

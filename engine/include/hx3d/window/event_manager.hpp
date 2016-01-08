@@ -182,6 +182,12 @@ public:
     */
     glm::vec2 getTouchPosition();
     /**
+    @brief Get the screen converted touch position.
+
+    @return Screen converted touch position
+    */
+    glm::vec2 getScreenConvertedTouchPosition();
+    /**
     @brief Get the current touch movement.
 
     @return Touch movement

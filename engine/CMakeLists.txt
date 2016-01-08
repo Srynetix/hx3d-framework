@@ -18,17 +18,7 @@
 #     USA
 
 include(../cmake/system_check.cmake)
-
-##################
-## Arguments
-
-set(
-  NEEDED_CXX_FLAGS
-  "-std=c++11\
-  -fdiagnostics-color=always\
-  -Wall\
-  -g"
-)
+include(../cmake/configuration.cmake)
 
 ###################
 ## Needed libraries
@@ -131,7 +121,6 @@ include(./EngineFiles.cmake)
 #################
 ## Compilation
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NEEDED_CXX_FLAGS}")
 set(LIBRARY_NAME "${PROJECT_NAME}")
 
 if (ANDROID)

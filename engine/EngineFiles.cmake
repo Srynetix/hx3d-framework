@@ -51,6 +51,7 @@ set(
 
   # GRAPHICS
 
+  "${ENGINE_SRC}/graphics/animation.cpp"
   "${ENGINE_SRC}/graphics/batch.cpp"
   "${ENGINE_SRC}/graphics/color.cpp"
   "${ENGINE_SRC}/graphics/error.cpp"
