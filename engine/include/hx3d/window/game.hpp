@@ -26,6 +26,9 @@
 #define HX3D_WINDOW_GAME
 
 #include "hx3d/window/screen.hpp"
+#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/cameras/orthographic_camera.hpp"
+#include "hx3d/graphics/batch.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 
@@ -92,6 +95,13 @@ public:
   void setScreen(Ptr<Screen> screen);
 
   /**
+  @brief Activate the stats.
+
+  @param enabled True/False
+  */
+  void activateStats(bool enabled);
+
+  /**
   @brief Test if the game is running.
 
   @return True/False
@@ -101,6 +111,12 @@ public:
 private:
   bool _running;
   Ptr<Screen> _screen;
+  gui::Text _fpsText;
+
+  graphics::OrthographicCamera _camera;
+  graphics::Batch _batch;
+
+  bool _showStats;
 };
 
 } /* window */

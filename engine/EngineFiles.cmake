@@ -59,6 +59,7 @@ set(
   "${ENGINE_SRC}/graphics/framebuffer.cpp"
   "${ENGINE_SRC}/graphics/image.cpp"
   "${ENGINE_SRC}/graphics/mesh.cpp"
+  "${ENGINE_SRC}/graphics/ordered_batch.cpp"
   "${ENGINE_SRC}/graphics/particle_emitter.cpp"
   "${ENGINE_SRC}/graphics/particle_manager.cpp"
   "${ENGINE_SRC}/graphics/particle.cpp"

@@ -15,8 +15,8 @@ TEST_F(Tests, Screens) {
   config.width = 1440;
   config.height = 900;
 
-  SDL2Application app(Make<TestGame>(), config);
-  app.start();
+  SDL2Application app(config);
+  app.start(Make<TestGame>());
 }
 
 int main(int argc, char** argv) {

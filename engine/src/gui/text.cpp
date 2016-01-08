@@ -22,15 +22,17 @@
 
 #include "hx3d/gui/text.hpp"
 
+#include "hx3d/core/core.hpp"
 #include "hx3d/graphics/font.hpp"
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/assets.hpp"
 
 namespace hx3d {
 namespace gui {
 
 Text::Text():
-  Text(nullptr) {}
+  Text(Core::Assets()->get<Font>("default")) {}
 
 Text::Text(Ptr<Font> font):
   Text(nullptr, font) {}

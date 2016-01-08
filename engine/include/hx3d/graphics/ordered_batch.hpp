@@ -1,5 +1,5 @@
 /*
-    Batch.
+    Ordered Batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,8 +18,8 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BATCH
-#define HX3D_GRAPHICS_BATCH
+#ifndef HX3D_GRAPHICS_ORDEREDBATCH
+#define HX3D_GRAPHICS_ORDEREDBATCH
 
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/gui/text.hpp"
@@ -27,21 +27,18 @@
 
 namespace hx3d {
 
-/**
-@brief 2D and 3D graphics components.
-*/
 namespace graphics {
 
 class Shader;
 class Camera;
 
 /**
-@brief Draw meshes and texts on screen.
+@brief Draw ordered meshes and texts on screen.
 */
-class Batch {
+class OrderedBatch {
 
 public:
-  Batch();
+  OrderedBatch();
 
   /**
   @brief Begin the batching.
@@ -109,6 +106,12 @@ private:
   Camera* _camera;
   /// @brief Shader
   Ptr<Shader> _shader;
+  /// @brief Sorted mesh
+  std::vector<std::pair<glm::mat4, Mesh*>> _meshes;
+  /// @brief Texts
+  std::vector<gui::Text> _texts;
+  /// @brief Function texts
+  std::vector<std::pair<gui::Text, math::Function>> _funcTexts;
 };
 
 } /* graphics */

@@ -45,16 +45,17 @@ public:
   /**
   @brief Create a window.
 
-  @param game   Game instance (Ptr)
   @param config Configuration
   */
-  Application(const Ptr<Game>& game, ApplicationConfig config);
+  Application(ApplicationConfig config);
   virtual ~Application();
 
   /**
   @brief Start the window.
+
+  @param game   Game (Ptr)
   */
-  virtual void start() = 0;
+  virtual void start(const Ptr<Game>& game) = 0;
 
   /**
   @brief Get the window width

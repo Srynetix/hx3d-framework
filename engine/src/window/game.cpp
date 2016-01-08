@@ -30,8 +30,15 @@ namespace hx3d {
 namespace window {
 
 Game::Game():
-_running(true), _screen(nullptr)
-{}
+_running(true), _screen(nullptr), _showStats(false)
+{
+  _fpsText.transform.position.x = Core::App()->getWidth() / 2;
+  _fpsText.transform.position.y = 100;
+  _fpsText.transform.position.z = 0.95f;
+  _fpsText.setCharacterSize(20);
+
+  _batch.setCamera(_camera);
+}
 
 void Game::create() {}
 
@@ -53,11 +60,21 @@ void Game::resume() {
 void Game::render() {
   if (_screen)
     _screen->render();
+
+  if (_showStats) {
+    _batch.begin();
+    _batch.draw(_fpsText);
+    _batch.end();
+  }
 }
 
 void Game::update(float delta) {
   if (_screen)
     _screen->update(delta);
+
+  if (_showStats) {
+    _fpsText.setContent(format("D: %2.0f", delta * 1000.f));
+  }
 }
 
 void Game::resize(int width, int height) {
@@ -86,6 +103,10 @@ void Game::setScreen(Ptr<Screen> screen) {
     _screen->show();
     _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
   }
+}
+
+void Game::activateStats(bool enabled) {
+  _showStats = enabled;
 }
 
 } /* window */

@@ -118,7 +118,14 @@ public:
   @param game   Game (Ptr)
   @param events Events (Ptr)
   */
-  static void initialize(window::Application* app, window::Game* game, window::EventManager* events);
+  static void initialize(window::Application* app, window::EventManager* events);
+
+  /**
+  @brief Set the game.
+
+  @param game   Game (Ptr)
+  */
+  static void setGame(window::Game* game);
 
   /**
   @brief Shutdown the core system.

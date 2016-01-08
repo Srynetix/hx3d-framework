@@ -23,8 +23,8 @@
 namespace hx3d {
 namespace window {
 
-Application::Application(const Ptr<Game>& game, ApplicationConfig config):
-  _game(game), _running(false),
+Application::Application(ApplicationConfig config):
+  _running(false),
   _width(config.width), _height(config.height), _fpsLimit(config.fpsLimit), _title(config.title),
   _elapsedTime(0)
   {}

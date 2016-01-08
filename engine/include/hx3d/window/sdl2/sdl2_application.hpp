@@ -39,13 +39,12 @@ public:
   /**
   @brief Create a SDL2 window.
 
-  @param game   Game instance (Ptr)
   @param config Configuration
   */
-  SDL2Application(const Ptr<Game>& game, ApplicationConfig config);
+  SDL2Application(ApplicationConfig config);
   virtual ~SDL2Application();
 
-  virtual void start() override;
+  virtual void start(const Ptr<Game>& game) override;
 
 private:
   SDL_Window* _window;

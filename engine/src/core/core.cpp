@@ -99,11 +99,14 @@ audio::AudioDevice* Core::Audio() {
 
 /////////////////////////
 
-void Core::initialize(window::Application* app, window::Game* game, window::EventManager* events) {
+void Core::initialize(window::Application* app, window::EventManager* events) {
   _instance = new Core();
   _instance->_application = app;
-  _instance->_game = game;
   _instance->_events = events;
+}
+
+void Core::setGame(window::Game* game) {
+  _instance->_game = game;
 }
 
 void Core::shutdown() {

@@ -25,5 +25,6 @@ void TestGame::create() {
 
   Core::Events()->emulateTouchWithMouse(true);
 
+  this->activateStats(true);
   this->setScreen(Make<MenuScreen>());
 }

@@ -46,9 +46,11 @@ using namespace hx3d::graphics;
 namespace hx3d {
 namespace window {
 
-SDL2Application::SDL2Application(const Ptr<Game>& game, ApplicationConfig config):
-  Application(game, config)
-{}
+SDL2Application::SDL2Application(ApplicationConfig config):
+  Application(config)
+{
+  create(_width, _height, _title);
+}
 
 SDL2Application::~SDL2Application() {
 
@@ -66,8 +68,13 @@ SDL2Application::~SDL2Application() {
   //.........
 }
 
-void SDL2Application::start() {
-  create(_width, _height, _title);
+void SDL2Application::start(const Ptr<Game>& game) {
+  _game = game;
+
+  Core::setGame(_game.get());
+  _game->create();
+
+  display();
 }
 
 void SDL2Application::create(int width, int height, std::string title) {
@@ -148,7 +155,7 @@ void SDL2Application::create(int width, int height, std::string title) {
 
   /** Initializations **/
 
-  Core::initialize(this, _game.get(), new SDL2EventManager());
+  Core::initialize(this, new SDL2EventManager());
   Framebuffer::fetchDefaultFramebuffer();
   Texture::generateBlankTexture();
 
@@ -157,11 +164,6 @@ void SDL2Application::create(int width, int height, std::string title) {
   Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
 
   /**********************/
-
-  _game->create();
-
-  _running = true;
-  display();
 }
 
 void SDL2Application::display() {
@@ -171,6 +173,7 @@ void SDL2Application::display() {
   Uint32 frameEnd;
   float deltaTime = 0.f;
 
+  _running = true;
   while (_running) {
 
     frameStart = SDL_GetTicks();
@@ -182,7 +185,7 @@ void SDL2Application::display() {
     frameTime = frameEnd - frameStart;
     deltaTime = frameTime / 1000.f;
 
-    _currentFPS = 1.f / (frameTime / 1000.f);
+    _currentFPS = 1.f / deltaTime;
     _elapsedTime = math::mclamp(_elapsedTime + deltaTime, 0.f, 3600.f);
   }
 }
