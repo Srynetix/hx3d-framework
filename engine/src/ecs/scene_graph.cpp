@@ -65,7 +65,7 @@ void SceneGraph::showIndices() {
   }
 }
 
-void SceneGraph::draw(graphics::Batch& batch) {
+void SceneGraph::draw(graphics::BaseBatch& batch) {
   std::stack<Ptr<Node>> stack;
   stack.push(_root);
 

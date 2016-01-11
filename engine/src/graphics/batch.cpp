@@ -33,18 +33,7 @@
 namespace hx3d {
 namespace graphics {
 
-Batch::Batch():
-  _camera(nullptr),
-  _shader(Core::Assets()->get<Shader>("base"))
-{}
-
-void Batch::setShader(const Ptr<Shader>& shader) {
-  _shader = shader;
-}
-
-Ptr<Shader> Batch::getShader() {
-  return _shader;
-}
+Batch::Batch(): BaseBatch() {}
 
 void Batch::begin() {
   if (_shader == nullptr) {
@@ -58,10 +47,6 @@ void Batch::begin() {
 
 void Batch::end() {
   Shader::disable();
-}
-
-void Batch::setCamera(Camera& camera) {
-  _camera = &camera;
 }
 
 void Batch::draw(Mesh& mesh) {

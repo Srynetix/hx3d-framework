@@ -65,7 +65,7 @@ std::string Node::getPath() {
   return path;
 }
 
-void Node::draw(graphics::Batch& batch) {}
+void Node::draw(graphics::BaseBatch& batch) {}
 
 void Node::update(const float delta) {}
 

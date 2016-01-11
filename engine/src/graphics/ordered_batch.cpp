@@ -34,18 +34,7 @@
 namespace hx3d {
 namespace graphics {
 
-OrderedBatch::OrderedBatch():
-  _camera(nullptr),
-  _shader(Core::Assets()->get<Shader>("base"))
-{}
-
-void OrderedBatch::setShader(const Ptr<Shader>& shader) {
-  _shader = shader;
-}
-
-Ptr<Shader> OrderedBatch::getShader() {
-  return _shader;
-}
+OrderedBatch::OrderedBatch(): BaseBatch() {}
 
 void OrderedBatch::begin() {
   if (_shader == nullptr) {
@@ -131,10 +120,6 @@ void OrderedBatch::end() {
   _meshes.clear();
   _texts.clear();
   _funcTexts.clear();
-}
-
-void OrderedBatch::setCamera(Camera& camera) {
-  _camera = &camera;
 }
 
 void OrderedBatch::draw(Mesh& mesh) {

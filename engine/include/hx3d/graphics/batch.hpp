@@ -21,94 +21,28 @@
 #ifndef HX3D_GRAPHICS_BATCH
 #define HX3D_GRAPHICS_BATCH
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/gui/text.hpp"
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/graphics/base_batch.hpp"
 
 namespace hx3d {
 
-/**
-@brief 2D and 3D graphics components.
-*/
 namespace graphics {
 
 class Shader;
 class Camera;
 
 /**
-@brief Draw meshes and texts on screen.
+@brief Simple base batch implementation. Draw at each draw call.
 */
-class Batch {
+class Batch: public BaseBatch {
 
 public:
   Batch();
 
-  /**
-  @brief Begin the batching.
-  */
-  void begin();
-
-  /**
-  @brief End the batching.
-  */
-  void end();
-
-  /**
-  @brief Draw the mesh.
-
-  You must have called @link begin @endlink before.
-
-  @param mesh Mesh
-  */
-  void draw(Mesh& mesh);
-
-  /**
-  @brief Draw the text.
-
-  You must have called @link begin @endlink before.
-
-  @param text Text
-  */
-  void draw(gui::Text& text);
-
-  /**
-  @brief Draw the text following a function.
-
-  You must have called @link begin @endlink before.
-
-  @param text   Text
-  @param function  Function
-  */
-  void draw(gui::Text& text, math::Function function);
-
-  ///////////////////
-
-  /**
-  @brief Set the shader for the next batching.
-
-  @param shader Shader (Ptr)
-  */
-  void setShader(const Ptr<Shader>& shader);
-
-  /**
-  @brief Get the current batching shader.
-
-  @return Shader (Ptr)
-  */
-  Ptr<Shader> getShader();
-
-  /**
-  @brief Set the camera for the next batching.
-
-  @param camera Camera
-  */
-  void setCamera(Camera& camera);
-
-private:
-  /// @brief Camera
-  Camera* _camera;
-  /// @brief Shader
-  Ptr<Shader> _shader;
+  virtual void begin() override;
+  virtual void end() override;
+  virtual void draw(Mesh& mesh) override;
+  virtual void draw(gui::Text& text) override;
+  virtual void draw(gui::Text& text, math::Function function) override;
 };
 
 } /* graphics */

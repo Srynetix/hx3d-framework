@@ -35,7 +35,7 @@
 #include "hx3d/physics/2d/attractors/zone_attractor.hpp"
 #include "hx3d/physics/2d/collision_listener.hpp"
 
-#include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/base_batch.hpp"
 
 #include <set>
 
@@ -100,7 +100,7 @@ public:
 
   @param batch Batch
   */
-  void render(graphics::Batch& batch);
+  void render(graphics::BaseBatch& batch);
 
   /**
   @brief Get the physical ratio

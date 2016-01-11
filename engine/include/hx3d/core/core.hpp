@@ -115,7 +115,6 @@ public:
   @brief Initialize the core system.
 
   @param app    Application (Ptr)
-  @param game   Game (Ptr)
   @param events Events (Ptr)
   */
   static void initialize(window::Application* app, window::EventManager* events);

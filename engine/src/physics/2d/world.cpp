@@ -119,7 +119,7 @@ void World::step(float dt) {
   }
 }
 
-void World::render(graphics::Batch& batch) {
+void World::render(graphics::BaseBatch& batch) {
 
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
     const Ptr<Attractor>& attractor = _attractors[i];

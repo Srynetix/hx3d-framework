@@ -1,5 +1,5 @@
 /*
-    Ordered Batch.
+    Base Batch Class.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,42 +18,34 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_ORDEREDBATCH
-#define HX3D_GRAPHICS_ORDEREDBATCH
-
 #include "hx3d/graphics/base_batch.hpp"
 
-namespace hx3d {
+#include "hx3d/graphics/cameras/camera.hpp"
 
+#include "hx3d/core/core.hpp"
+#include "hx3d/graphics/shader.hpp"
+
+#include "hx3d/utils/assets.hpp"
+
+namespace hx3d {
 namespace graphics {
 
-class Shader;
-class Camera;
+BaseBatch::BaseBatch():
+  _camera(nullptr),
+  _shader(Core::Assets()->get<Shader>("base"))
+  {}
 
-/**
-@brief Draw ordered meshes and texts on screen.
-*/
-class OrderedBatch: public BaseBatch {
+void BaseBatch::setShader(const Ptr<Shader>& shader) {
+  _shader = shader;
+}
 
-public:
-  OrderedBatch();
+Ptr<Shader> BaseBatch::getShader() {
+  return _shader;
+}
 
-  virtual void begin() override;
-  virtual void end() override;
-  virtual void draw(Mesh& mesh) override;
-  virtual void draw(gui::Text& text) override;
-  virtual void draw(gui::Text& text, math::Function function) override;
-
-private:
-  /// @brief Sorted mesh
-  std::vector<std::pair<glm::mat4, Mesh*>> _meshes;
-  /// @brief Texts
-  std::vector<gui::Text> _texts;
-  /// @brief Function texts
-  std::vector<std::pair<gui::Text, math::Function>> _funcTexts;
-};
+void BaseBatch::setCamera(Camera& camera) {
+  _camera = &camera;
+}
 
 } /* graphics */
 } /* hx3d */
-
-#endif

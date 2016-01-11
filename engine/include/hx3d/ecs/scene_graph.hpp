@@ -22,7 +22,7 @@
 #define HX3D_ECS_SCENEGRAPH
 
 #include "hx3d/utils/ptr.hpp"
-#include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/base_batch.hpp"
 #include "hx3d/ecs/engine.hpp"
 
 #include <string>
@@ -108,7 +108,7 @@ public:
 
   @param batch Batch
   */
-  void draw(graphics::Batch& batch);
+  void draw(graphics::BaseBatch& batch);
 
   /**
   @brief Update the nodes.

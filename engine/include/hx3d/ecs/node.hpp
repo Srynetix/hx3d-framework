@@ -25,7 +25,7 @@
 #include "hx3d/utils/ptr.hpp"
 
 #include "hx3d/graphics/transform.hpp"
-#include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/base_batch.hpp"
 
 namespace hx3d {
 
@@ -117,7 +117,7 @@ public:
 
   @param batch Batch
   */
-  virtual void draw(graphics::Batch& batch);
+  virtual void draw(graphics::BaseBatch& batch);
 
   /**
   @brief Update the node.
