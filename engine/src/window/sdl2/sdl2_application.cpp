@@ -105,7 +105,8 @@ void SDL2Application::create(int width, int height, std::string title) {
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 #ifdef DESKTOP_OPENGL
-  _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+  auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+  _window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
 
   _width = width;
   _height = height;

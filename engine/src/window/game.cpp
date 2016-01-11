@@ -32,8 +32,13 @@ namespace window {
 Game::Game():
 _running(true), _screen(nullptr), _showStats(false)
 {
+  _deltaText.transform.position.x = Core::App()->getWidth() / 2;
+  _deltaText.transform.position.y = 100;
+  _deltaText.transform.position.z = 0.95f;
+  _deltaText.setCharacterSize(20);
+
   _fpsText.transform.position.x = Core::App()->getWidth() / 2;
-  _fpsText.transform.position.y = 100;
+  _fpsText.transform.position.y = _deltaText.transform.position.y + _deltaText.getCharacterSize();
   _fpsText.transform.position.z = 0.95f;
   _fpsText.setCharacterSize(20);
 
@@ -63,6 +68,7 @@ void Game::render() {
 
   if (_showStats) {
     _batch.begin();
+    _batch.draw(_deltaText);
     _batch.draw(_fpsText);
     _batch.end();
   }
@@ -73,7 +79,8 @@ void Game::update(float delta) {
     _screen->update(delta);
 
   if (_showStats) {
-    _fpsText.setContent(format("D: %2.0f", delta * 1000.f));
+    _deltaText.setContent(format("D: %2.0f", delta * 1000.f));
+    _fpsText.setContent(format("FPS: %2.0f", 1/delta));
   }
 }
 

@@ -111,6 +111,7 @@ public:
 private:
   bool _running;
   Ptr<Screen> _screen;
+  gui::Text _deltaText;
   gui::Text _fpsText;
 
   graphics::OrthographicCamera _camera;

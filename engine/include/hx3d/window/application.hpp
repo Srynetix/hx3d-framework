@@ -108,6 +108,8 @@ protected:
   unsigned int _fpsLimit;
   /// @brief Application title
   std::string _title;
+  /// @brief Is the application in fullscreen ?
+  bool _fullscreen;
 
   /// @brief Current FPS
   float _currentFPS;
