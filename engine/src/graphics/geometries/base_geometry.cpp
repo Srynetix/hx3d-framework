@@ -28,6 +28,7 @@ BaseGeometry::BaseGeometry(): _cullingType(Culling::Disabled) {
   addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
   addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
   addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
+  addAttribute("Normal", Attribute("a_normal", GL_FLOAT, 3));
 }
 
 void BaseGeometry::addAttribute(std::string name, Attribute attribute) {

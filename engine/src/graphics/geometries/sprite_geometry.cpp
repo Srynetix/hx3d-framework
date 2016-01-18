@@ -54,6 +54,13 @@ SpriteGeometry::SpriteGeometry(): Geometry() {
     0, 1
   });
 
+  // setAttribute("Normal", std::vector<float> {
+  //   0.f, 0.f, 1.f,
+  //   0.f, 0.f, 1.f,
+  //   0.f, 0.f, 1.f,
+  //   0.f, 0.f, 1.f
+  // });
+
   uploadAll();
 }
 

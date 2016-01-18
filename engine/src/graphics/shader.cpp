@@ -346,6 +346,11 @@ void Shader::setUniform4f(std::string uniform, glm::vec4 vector) {
   glUniform4f(loc, vector.x, vector.y, vector.z, vector.w);
 }
 
+void Shader::setUniformMatrix3f(std::string uniform, glm::mat3 matrix) {
+  int loc = glGetUniformLocation(_programID, uniform.c_str());
+  glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
 void Shader::setUniformMatrix4f(std::string uniform, glm::mat4 matrix) {
   int loc = glGetUniformLocation(_programID, uniform.c_str());
   glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(matrix));

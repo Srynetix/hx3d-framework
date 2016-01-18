@@ -26,11 +26,16 @@
 #define HX3D_WINDOW_GAME
 
 #include "hx3d/window/screen.hpp"
+#include "hx3d/window/application.hpp"
 #include "hx3d/gui/text.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 #include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/transition.hpp"
 
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/core/core.hpp"
 
 namespace hx3d {
 namespace window {
@@ -102,6 +107,13 @@ public:
   void activateStats(bool enabled);
 
   /**
+  @brief Set the current transition.
+
+  @param transition Transition
+  */
+  void setTransition(const Ptr<graphics::Transition>& transition);
+
+  /**
   @brief Test if the game is running.
 
   @return True/False
@@ -116,6 +128,12 @@ private:
 
   graphics::OrthographicCamera _camera;
   graphics::Batch _batch;
+
+  graphics::Framebuffer _currentFB;
+  graphics::Framebuffer _nextFB;
+  Ptr<Screen> _nextScreen;
+
+  Ptr<graphics::Transition> _currentTransition;
 
   bool _showStats;
 };

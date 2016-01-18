@@ -44,11 +44,10 @@ void OrderedBatch::begin() {
 
   Shader::use(_shader);
   _shader->setUniformMatrix4f("u_projection", _camera->projection);
+  _shader->setUniformMatrix4f("u_view", _camera->view);
 }
 
 void OrderedBatch::end() {
-
-  // glDisable(GL_DEPTH_TEST);
 
   /**
   Meshes
@@ -57,7 +56,7 @@ void OrderedBatch::end() {
     auto& model = pair.first;
     Mesh* mesh = pair.second;
 
-    _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    _shader->setUniformMatrix4f("u_model", model);
     mesh->draw(_shader);
   }
 
@@ -79,11 +78,13 @@ void OrderedBatch::end() {
 
     auto& shader = text.getFont()->getShader();
     Shader::use(shader);
-    shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    shader->setUniformMatrix4f("u_model", model);
+    shader->setUniformMatrix4f("u_view", _camera->view);
     shader->setUniformMatrix4f("u_projection", _camera->projection);
     text.functionDraw(shader, func);
 
     Shader::use(_shader);
+    _shader->setUniformMatrix4f("u_view", _camera->view);
     _shader->setUniformMatrix4f("u_projection", _camera->projection);
 
     Texture::disable();
@@ -104,17 +105,17 @@ void OrderedBatch::end() {
 
     auto& shader = text.getFont()->getShader();
     Shader::use(shader);
-    shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+    shader->setUniformMatrix4f("u_model", model);
+    shader->setUniformMatrix4f("u_view", _camera->view);
     shader->setUniformMatrix4f("u_projection", _camera->projection);
     text.draw(shader);
 
     Shader::use(_shader);
+    _shader->setUniformMatrix4f("u_view", _camera->view);
     _shader->setUniformMatrix4f("u_projection", _camera->projection);
 
     Texture::disable();
   }
-
-  // glEnable(GL_DEPTH_TEST);
 
   Shader::disable();
   _meshes.clear();
@@ -123,11 +124,6 @@ void OrderedBatch::end() {
 }
 
 void OrderedBatch::draw(Mesh& mesh) {
-
-  // glm::mat4 model = mesh.transform.compute();
-  // _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
-  //
-  // mesh.draw(_shader);
 
   unsigned int pos = 0;
   for (pos = 0; pos < _meshes.size(); ++pos) {

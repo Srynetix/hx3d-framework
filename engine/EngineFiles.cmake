@@ -56,6 +56,7 @@ set(
   "${ENGINE_SRC}/graphics/batch.cpp"
   "${ENGINE_SRC}/graphics/color.cpp"
   "${ENGINE_SRC}/graphics/error.cpp"
+  "${ENGINE_SRC}/graphics/fade_transition.cpp"
   "${ENGINE_SRC}/graphics/font.cpp"
   "${ENGINE_SRC}/graphics/framebuffer.cpp"
   "${ENGINE_SRC}/graphics/image.cpp"
@@ -71,6 +72,7 @@ set(
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/texture.cpp"
   "${ENGINE_SRC}/graphics/transform.cpp"
+  "${ENGINE_SRC}/graphics/transition.cpp"
 
   "${ENGINE_SRC}/graphics/viewports/fit_viewport.cpp"
   "${ENGINE_SRC}/graphics/viewports/viewport.cpp"

@@ -98,6 +98,13 @@ public:
   */
   void setUniform4f(std::string uniform, glm::vec4 vector);
   /**
+  @brief Send a mat3 to the shader.
+
+  @param uniform  Uniform name
+  @param matrix   Values
+  */
+  void setUniformMatrix3f(std::string uniform, glm::mat3 matrix);
+  /**
   @brief Send a mat4 to the shader.
 
   @param uniform  Uniform name

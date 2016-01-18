@@ -43,6 +43,7 @@ void Batch::begin() {
 
   Shader::use(_shader);
   _shader->setUniformMatrix4f("u_projection", _camera->projection);
+  _shader->setUniformMatrix4f("u_view", _camera->view);
 }
 
 void Batch::end() {
@@ -52,7 +53,7 @@ void Batch::end() {
 void Batch::draw(Mesh& mesh) {
 
   glm::mat4 model = mesh.transform.compute();
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+  _shader->setUniformMatrix4f("u_model", model);
 
   mesh.draw(_shader);
 }
@@ -74,7 +75,7 @@ void Batch::draw(gui::Text& text) {
   glm::mat4 model = text.transform.compute();
   text.transform.position.x = oldX;
 
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+  _shader->setUniformMatrix4f("u_model", model);
 
   text.draw(_shader);
 
@@ -100,7 +101,7 @@ void Batch::draw(gui::Text& text, math::Function function) {
   glm::mat4 model = text.transform.compute();
   text.transform.position.x = oldX;
 
-  _shader->setUniformMatrix4f("u_modelview", _camera->view * model);
+  _shader->setUniformMatrix4f("u_model", model);
 
   text.functionDraw(_shader, function);
 

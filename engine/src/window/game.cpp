@@ -62,9 +62,48 @@ void Game::resume() {
     _screen->resume();
 }
 
+void Game::setTransition(const Ptr<graphics::Transition>& transition) {
+  _currentTransition = transition;
+}
+
 void Game::render() {
-  if (_screen)
-    _screen->render();
+
+  if (!_nextScreen) {
+    if (_screen) {
+      _screen->render();
+    }
+  }
+
+  else {
+    if (_currentTransition) {
+      if (_currentTransition->isFinished()) {
+        _screen->hide();
+        _screen = _nextScreen;
+        _screen->resume();
+        _currentTransition->reset();
+
+        _nextScreen = nullptr;
+      }
+
+      else {
+        graphics::Framebuffer::use(_currentFB);
+        _screen->render();
+
+        graphics::Framebuffer::use(_nextFB);
+        _nextScreen->render();
+
+        graphics::Framebuffer::useDefault();
+        _currentTransition->render(_batch, _currentFB, _nextFB);
+      }
+    }
+
+    else {
+      _screen->hide();
+      _screen = _nextScreen;
+      _screen->resume();
+      _nextScreen = nullptr;
+    }
+  }
 
   if (_showStats) {
     _batch.begin();
@@ -75,8 +114,17 @@ void Game::render() {
 }
 
 void Game::update(float delta) {
-  if (_screen)
+  if (!_nextScreen) {
     _screen->update(delta);
+  }
+
+  else {
+    if (_currentTransition) {
+      if (_currentTransition->isRunning()) {
+        _currentTransition->update(delta);
+      }
+    }
+  }
 
   if (_showStats) {
     _deltaText.setContent(format("D: %2.0f", delta * 1000.f));
@@ -102,13 +150,21 @@ void Game::setScreen(Ptr<Screen> screen) {
 
   Core::Events()->setInputHandler(nullptr);
 
-  if (_screen)
-    _screen->hide();
+  if (screen) {
+    screen->show();
+    screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
 
-  _screen = screen;
-  if (_screen) {
-    _screen->show();
-    _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
+    if (!_screen) {
+      _screen = screen;
+    } else {
+      _nextScreen = screen;
+      _screen->pause();
+      _nextScreen->pause();
+
+      if (_currentTransition) {
+        _currentTransition->start();
+      }
+    }
   }
 }
 

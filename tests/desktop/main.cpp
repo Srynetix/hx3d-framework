@@ -13,8 +13,8 @@ TEST_F(Tests, Screens) {
   ApplicationConfig config;
   config.title = "Tests";
   config.width = 1280;
-  config.height = 1024;
-  config.fullscreen = true;
+  config.height = 720;
+  config.fullscreen = false;
 
   SDL2Application app(config);
   app.start(Make<TestGame>());

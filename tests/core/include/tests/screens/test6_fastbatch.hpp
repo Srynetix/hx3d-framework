@@ -49,6 +49,7 @@ public:
             sprite.transform.position.x = boxW / 2 + i*boxW;
             sprite.transform.position.y = boxH / 2 + j*boxH;
             sprite.transform.rotation.z = glm::radians(angle);
+
             fBatch.draw(sprite);
         }
     }
