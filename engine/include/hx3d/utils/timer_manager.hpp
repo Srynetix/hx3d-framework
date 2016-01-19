@@ -23,6 +23,7 @@
 
 #include "hx3d/utils/callback_timer.hpp"
 #include <map>
+#include <string>
 #include <vector>
 
 namespace hx3d {

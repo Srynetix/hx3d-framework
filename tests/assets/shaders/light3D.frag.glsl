@@ -26,18 +26,18 @@ uniform sampler2D u_texture;
 void main() {
 
   float dist = length(light.position - v_position_world);
-  float cosTheta = clamp(dot(v_normal_camera, v_light_direction), 0, 1);
+  float cosTheta = clamp(dot(v_normal_camera, v_light_direction), 0.0, 1.0);
 
   vec3 E = normalize(v_eye_camera);
   vec3 R = reflect(-v_light_direction, v_normal_camera);
 
-  float cosAlpha = clamp(dot(E, R), 0, 1);
+  float cosAlpha = clamp(dot(E, R), 0.0, 1.0);
 
   vec4 texColor = texture2D(u_texture, v_texture) * v_color;
 
   vec3 ambColor = light.ambient * texColor.rgb;
   vec3 difColor = texColor.rgb * light.color * light.power * cosTheta / (dist*dist);
-  vec3 speColor = light.specular * light.color * light.power * pow(cosAlpha, 5) / (dist*dist);
+  vec3 speColor = light.specular * light.color * light.power * pow(cosAlpha, 5.0) / (dist*dist);
 
   gl_FragColor = vec4(ambColor + difColor + speColor, texColor.a);
 }

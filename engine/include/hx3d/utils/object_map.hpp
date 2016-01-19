@@ -23,6 +23,7 @@
 
 #include "hx3d/utils/ptr.hpp"
 
+#include <string>
 #include <map>
 
 namespace hx3d {
