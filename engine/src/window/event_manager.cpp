@@ -171,7 +171,7 @@ glm::vec2 EventManager::getTouchPosition() {
 
 glm::vec2 EventManager::getScreenConvertedTouchPosition() {
   auto screen_size = Core::App()->getSize();
-  return {_touchPosition.x * screen_size.x, _touchPosition.y * screen_size.y};
+  return {_touchPosition.x * screen_size.x, (1-_touchPosition.y) * screen_size.y};
 }
 
 glm::vec2 EventManager::getTouchMovement() {

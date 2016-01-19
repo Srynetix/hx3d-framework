@@ -10,6 +10,7 @@ public:
   {
     camera.translate(glm::vec3(0.f, 0.f, -5.f));
     camera.rotate(180.f, glm::vec3(0, 1, 0));
+    camera.update();
 
     batch.setShader(Core::Assets()->get<Shader>("base"));
     batch.setCamera(camera);

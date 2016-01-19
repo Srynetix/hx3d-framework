@@ -40,7 +40,6 @@ Transform& Transform::operator=(const Transform& transform) {
   return *this;
 }
 
-
 glm::mat4 Transform::compute() {
   glm::mat4 model = glm::mat4(1.f);
   model = glm::translate(model, glm::vec3(position.x, position.y, position.z));

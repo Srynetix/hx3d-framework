@@ -98,6 +98,7 @@ public:
   {
     camera.translate(glm::vec3(0.f, 0.f, -1000.f));
     camera.rotate(180.f, glm::vec3(0, 1, 0));
+    camera.update();
 
     mesh.setGeometry(Make<SGeo>(160000));
     mesh.transform.size = glm::vec3(2);

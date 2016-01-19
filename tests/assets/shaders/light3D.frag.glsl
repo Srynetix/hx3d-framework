@@ -10,7 +10,6 @@ uniform struct Light {
   float power;
 } light;
 
-uniform mat3 u_inv_n_model;
 uniform mat4 u_model;
 
 varying vec4 v_color;

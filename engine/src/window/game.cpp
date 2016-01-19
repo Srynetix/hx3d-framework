@@ -81,15 +81,18 @@ void Game::render() {
         _screen = _nextScreen;
         _screen->resume();
         _currentTransition->reset();
-
         _nextScreen = nullptr;
+
+        _screen->render();
       }
 
       else {
         graphics::Framebuffer::use(_currentFB);
+        graphics::Framebuffer::clear(graphics::Color::Black);
         _screen->render();
 
         graphics::Framebuffer::use(_nextFB);
+        graphics::Framebuffer::clear(graphics::Color::Black);
         _nextScreen->render();
 
         graphics::Framebuffer::useDefault();
@@ -102,6 +105,8 @@ void Game::render() {
       _screen = _nextScreen;
       _screen->resume();
       _nextScreen = nullptr;
+
+      _screen->render();
     }
   }
 

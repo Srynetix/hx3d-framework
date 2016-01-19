@@ -14,6 +14,7 @@ public:
   {
     camera.translate(glm::vec3(0.f, 0.f, -5.f));
     camera.rotate(180.f, glm::vec3(0, 1, 0));
+    camera.update();
 
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
     sprite.getGeometry()->setFaceCulling(Culling::Disabled);
