@@ -75,7 +75,7 @@ npm install -g ios-deploy
   - [x] Cameras
   - [x] Viewports
   - [x] Particle system
-  - [ ] Animations
+  - [x] Animations
   - [ ] Lights
   - [ ] SVG handling or preprocessing
   - [ ] Mesh loading
@@ -92,7 +92,7 @@ npm install -g ios-deploy
 - **Scene Graph & ECS**
   - [x] Entity Component System
   - [x] Scene Graph and Nodes
-  - [x] Hybrid Engine
+  - [x] Hybrid System
 - **Audio**
   - [x] Base audio
   - [x] Frequency amplitude detection
