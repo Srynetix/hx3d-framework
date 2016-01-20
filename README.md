@@ -1,5 +1,7 @@
 # README #
 
+<img src="https://raw.githubusercontent.com/Srynetix/hx3d-framework/master/engine/assets/textures/logo.png" alt="hx3d Logo" width=200 height=200 />
+
 **Official hx3d Framework documentation site: [srynetix.github.io](https://srynetix.github.io)**
 
 hx3d is an open-source and easy to understand 2D/3D game framework made in C++.  
