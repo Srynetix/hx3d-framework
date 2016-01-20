@@ -1,5 +1,5 @@
 /*
-    Base widget.
+    Utils header.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,50 +18,24 @@
     USA
 */
 
-#ifndef HX3D_GUI_WIDGET
-#define HX3D_GUI_WIDGET
+#ifndef HX3D_MAIN_UTILS
+#define HX3D_MAIN_UTILS
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/utils/algorithm.hpp"
+#include "hx3d/utils/assets.hpp"
+#include "hx3d/utils/bitset.hpp"
+#include "hx3d/utils/callback_timer.hpp"
+#include "hx3d/utils/chronometer.hpp"
+#include "hx3d/utils/file.hpp"
+#include "hx3d/utils/log.hpp"
+#include "hx3d/utils/object_map.hpp"
+#include "hx3d/utils/pool.hpp"
+#include "hx3d/utils/poolable.hpp"
+#include "hx3d/utils/property.hpp"
+#include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/resource.hpp"
+#include "hx3d/utils/string.hpp"
+#include "hx3d/utils/timer_manager.hpp"
+#include "hx3d/utils/timer.hpp"
 
-namespace hx3d {
-
-/**
-@brief 2D/3D GUI components
-*/
-namespace gui {
-
-using namespace ::hx3d::graphics;
-
-/**
-@brief Base GUI element
-*/
-class Widget: public graphics::Mesh {
-public:
-  /**
-  @brief Construct a widget from a parent widget.
-
-  @param parent Widget (Ptr)
-  */
-  Widget(Widget* parent);
-
-  /**
-  @brief Add a widget to the list.
-
-  @param widget Widget (Ptr)
-  */
-  void add(Ptr<Widget> widget);
-
-  virtual void draw(Ptr<Shader> shader) override;
-
-private:
-  /// @brief Parent widget
-  Widget* _parent;
-  /// @brief Children widgets
-  std::vector<Ptr<Widget>> _children;
-};
-
-} /* gui */
-} /* hx3d */
-
-#endif
+#endif /* HX3D_MAIN_UTILS */

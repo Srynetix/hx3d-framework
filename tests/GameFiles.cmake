@@ -5,6 +5,8 @@ set(CORE_SRC ${CORE_ROOT}/src)
 set(
 UNIT_TESTS
 
+"${CORE_SRC}/core/core_test.cpp"
+
 "${CORE_SRC}/ecs/scene_graph_tests.cpp"
 "${CORE_SRC}/math/number_utils.cpp"
 "${CORE_SRC}/utils/log_test.cpp"

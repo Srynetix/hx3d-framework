@@ -96,7 +96,6 @@ set(
 
   # GUI
 
-  "${ENGINE_SRC}/gui/button.cpp"
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/text.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"

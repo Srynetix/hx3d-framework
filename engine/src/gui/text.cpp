@@ -37,7 +37,7 @@ Text::Text():
 Text::Text(Ptr<Font> font):
   Text(nullptr, font) {}
 
-Text::Text(Ptr<Widget> parent, Ptr<Font> font):
+Text::Text(Widget* parent, Ptr<Font> font):
   Widget(parent), _font(font), _content("") {
     init();
 }

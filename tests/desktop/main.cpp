@@ -12,9 +12,9 @@ using namespace hx3d::window;
 TEST_F(Tests, Screens) {
   ApplicationConfig config;
   config.title = "Tests";
-  config.width = 1280;
-  config.height = 720;
-  config.fullscreen = false;
+  config.width = 1920;
+  config.height = 1080;
+  config.fullscreen = true;
 
   SDL2Application app(config);
   app.start(Make<TestGame>());

@@ -25,7 +25,7 @@
 namespace hx3d {
 namespace gui {
 
-Widget::Widget(Ptr<Widget> parent): Mesh(),
+Widget::Widget(Widget* parent): Mesh(),
   _parent(parent)
  {
   _geometry = Make<graphics::geom::Geometry>();
@@ -60,7 +60,7 @@ Widget::Widget(Ptr<Widget> parent): Mesh(),
 }
 
 void Widget::add(Ptr<Widget> widget) {
-  widget->_parent.reset(this);
+  widget->_parent = this;
   _children.push_back(widget);
 }
 

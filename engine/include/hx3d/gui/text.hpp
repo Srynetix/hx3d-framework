@@ -57,7 +57,7 @@ public:
   @param parent Widget (Ptr)
   @param font   Font (Ptr)
   */
-  Text(Ptr<Widget> parent, Ptr<Font> font);
+  Text(Widget* parent, Ptr<Font> font);
 
   /**
   @brief Set the font.

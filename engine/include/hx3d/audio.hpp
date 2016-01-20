@@ -1,5 +1,5 @@
 /*
-    GUI button.
+    Audio header.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,18 @@
     USA
 */
 
-#include "hx3d/gui/button.hpp"
+#ifndef HX3D_MAIN_AUDIO
+#define HX3D_MAIN_AUDIO
 
-namespace hx3d {
-namespace gui {
+#include "hx3d/audio/audio.hpp"
+#include "hx3d/audio/display.hpp"
+#include "hx3d/audio/effect.hpp"
+#include "hx3d/audio/fft.hpp"
+#include "hx3d/audio/music.hpp"
 
-Button::Button(Ptr<Widget> parent, Ptr<Font> font):
-  Text(parent, font) {}
+#include "hx3d/audio/display/spectrum.hpp"
+#include "hx3d/audio/display/waveform.hpp"
 
-void Button::draw(Ptr<Shader> shader) {
-  Text::draw(shader);
-}
+#include "hx3d/audio/converters/s16_converter.hpp"
 
-} /* gui */
-} /* hx3d */
+#endif /* HX3D_MAIN_AUDIO */

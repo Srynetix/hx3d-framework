@@ -21,6 +21,8 @@
 #ifndef HX3D_PHYSICS_2D_COLLISION_LISTENER
 #define HX3D_PHYSICS_2D_COLLISION_LISTENER
 
+#include "hx3d/physics/2d/manifold.hpp"
+
 namespace hx3d {
 namespace physics2d {
 

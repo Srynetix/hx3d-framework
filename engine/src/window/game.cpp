@@ -66,6 +66,21 @@ void Game::setTransition(const Ptr<graphics::Transition>& transition) {
   _currentTransition = transition;
 }
 
+void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
+  _currentViewport = viewport;
+}
+
+const Ptr<graphics::viewports::Viewport>& Game::getViewport() {
+  return _currentViewport;
+}
+
+glm::vec2 Game::getSize() {
+  if (_currentViewport)
+    return _currentViewport->getWorldSize();
+  else
+    return Core::App()->getSize();
+}
+
 void Game::render() {
 
   if (!_nextScreen) {

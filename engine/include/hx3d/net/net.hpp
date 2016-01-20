@@ -21,8 +21,6 @@
 #ifndef HX3D_NET_NET
 #define HX3D_NET_NET
 
-#include <SDL2/SDL_net.h>
-
 namespace hx3d {
 
 /**

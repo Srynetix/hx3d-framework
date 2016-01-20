@@ -16,26 +16,21 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
-
-
-    TODO
-    > Screen transitions using framebuffers
 */
 
 #ifndef HX3D_WINDOW_GAME
 #define HX3D_WINDOW_GAME
 
 #include "hx3d/window/screen.hpp"
-#include "hx3d/window/application.hpp"
 #include "hx3d/gui/text.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 #include "hx3d/graphics/batch.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/viewports/viewport.hpp"
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/transition.hpp"
 
 #include "hx3d/utils/ptr.hpp"
-#include "hx3d/core/core.hpp"
 
 namespace hx3d {
 namespace window {
@@ -114,6 +109,30 @@ public:
   void setTransition(const Ptr<graphics::Transition>& transition);
 
   /**
+  @brief Set the current viewport
+
+  @param viewport Viewport
+  */
+  void setViewport(const Ptr<graphics::viewports::Viewport>& viewport);
+
+  /**
+  @brief Get the current viewport
+
+  @return Viewport
+  */
+  const Ptr<graphics::viewports::Viewport>& getViewport();
+
+  /**
+  @brief Get the current game size.
+
+  If a viewport is enabled, return the viewport size.
+  Else, return the application size.
+
+  @return Game size
+  */
+  glm::vec2 getSize();
+
+  /**
   @brief Test if the game is running.
 
   @return True/False
@@ -123,6 +142,7 @@ public:
 private:
   bool _running;
   Ptr<Screen> _screen;
+  Ptr<Screen> _nextScreen;
   gui::Text _deltaText;
   gui::Text _fpsText;
 
@@ -131,9 +151,9 @@ private:
 
   graphics::Framebuffer _currentFB;
   graphics::Framebuffer _nextFB;
-  Ptr<Screen> _nextScreen;
-
   Ptr<graphics::Transition> _currentTransition;
+
+  Ptr<graphics::viewports::Viewport> _currentViewport;
 
   bool _showStats;
 };

@@ -1,5 +1,5 @@
 /*
-    GUI button.
+    GUI header.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,34 +18,12 @@
     USA
 */
 
-#ifndef HX3D_GUI_BUTTON
-#define HX3D_GUI_BUTTON
+#ifndef HX3D_MAIN_GUI
+#define HX3D_MAIN_GUI
 
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/image_button.hpp"
+#include "hx3d/gui/system.hpp"
 #include "hx3d/gui/text.hpp"
+#include "hx3d/gui/widget.hpp"
 
-namespace hx3d {
-namespace gui {
-
-/**
-@brief GUI text button
-*/
-class Button: public Text {
-public:
-  /**
-  @brief Create a text button.
-
-  @param parent Parent widget
-  @param font   Font
-  */
-  Button(Ptr<Widget> parent, Ptr<Font> font);
-
-  virtual void draw(Ptr<Shader> shader) override;
-
-  void functionDraw(Ptr<Shader> shader, math::Function function) = delete;
-};
-
-} /* gui */
-} /* hx3d */
-
-#endif
+#endif /* HX3D_MAIN_GUI */

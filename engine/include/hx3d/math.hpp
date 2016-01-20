@@ -1,5 +1,5 @@
 /*
-    Base widget.
+    Math header.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,50 +18,14 @@
     USA
 */
 
-#ifndef HX3D_GUI_WIDGET
-#define HX3D_GUI_WIDGET
+#ifndef HX3D_MAIN_MATH
+#define HX3D_MAIN_MATH
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/math/constants.hpp"
+#include "hx3d/math/function.hpp"
+#include "hx3d/math/interpolation.hpp"
+#include "hx3d/math/number_utils.hpp"
+#include "hx3d/math/random.hpp"
+#include "hx3d/math/vector_utils.hpp"
 
-namespace hx3d {
-
-/**
-@brief 2D/3D GUI components
-*/
-namespace gui {
-
-using namespace ::hx3d::graphics;
-
-/**
-@brief Base GUI element
-*/
-class Widget: public graphics::Mesh {
-public:
-  /**
-  @brief Construct a widget from a parent widget.
-
-  @param parent Widget (Ptr)
-  */
-  Widget(Widget* parent);
-
-  /**
-  @brief Add a widget to the list.
-
-  @param widget Widget (Ptr)
-  */
-  void add(Ptr<Widget> widget);
-
-  virtual void draw(Ptr<Shader> shader) override;
-
-private:
-  /// @brief Parent widget
-  Widget* _parent;
-  /// @brief Children widgets
-  std::vector<Ptr<Widget>> _children;
-};
-
-} /* gui */
-} /* hx3d */
-
-#endif
+#endif /* HX3D_MAIN_MATH */
