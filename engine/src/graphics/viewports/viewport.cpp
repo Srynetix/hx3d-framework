@@ -30,7 +30,7 @@ namespace graphics {
 namespace viewports {
 
 Viewport::Viewport():
-  _camera(nullptr), _worldWidth(0), _worldHeight(0), _screenX(0), _screenY(0), _screenWidth(0), _screenHeight(0) {}
+  _worldWidth(0), _worldHeight(0), _screenX(0), _screenY(0), _screenWidth(0), _screenHeight(0) {}
 
 Viewport::~Viewport() {}
 
@@ -39,39 +39,23 @@ void Viewport::setScreenPosition(const float x, const float y) {
   _screenY = y;
 }
 
-void Viewport::setCamera(Camera& camera) {
-  _camera = &camera;
-}
-
-Camera* Viewport::getCamera() {
-  return _camera;
-}
-
-void Viewport::apply() {
-  apply(false);
-}
-
-void Viewport::apply(const bool centerCamera) {
+void Viewport::apply(Camera& camera) {
   glViewport(_screenX, _screenY, _screenWidth, _screenHeight);
 
-  _camera->viewportWidth = _worldWidth;
-  _camera->viewportHeight = _worldHeight;
+  camera.viewportWidth = _worldWidth;
+  camera.viewportHeight = _worldHeight;
 
-  if (centerCamera)
-    _camera->position = glm::vec3(_worldWidth / 2, _worldHeight / 2, _camera->position.z);
+  // Centering
+  camera.position = glm::vec3(_worldWidth / 2, _worldHeight / 2, camera.position.z);
 
-  _camera->update();
+  camera.update();
 }
 
-void Viewport::update(const int screenWidth, const int screenHeight) {
-  update(screenWidth, screenHeight, false);
-}
-
-void Viewport::update(const int screenWidth, const int screenHeight, const bool centerCamera) {
+void Viewport::update(Camera& camera, const int screenWidth, const int screenHeight) {
   _screenWidth = screenWidth;
   _screenHeight = screenHeight;
 
-  internalUpdate(centerCamera);
+  internalUpdate(camera);
 }
 
 glm::vec2 Viewport::screenToWorld(const glm::vec2 screenPoint) {

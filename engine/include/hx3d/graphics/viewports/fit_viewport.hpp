@@ -36,16 +36,16 @@ namespace viewports {
 class FitViewport: public Viewport {
 
 public:
+
   /**
-  @brief Create a fit viewport using a world width, height and a camera.
+  @brief Create a fit viewport using a world width and height.
 
-  @param worldWidth   World width
-  @param worldHeight  World height
-  @param camera       Camera
+  @param worldWidth World width
+  @param worldHeight World height
   */
-  FitViewport(const float worldWidth, const float worldHeight, Camera& camera);
+  FitViewport(const float worldWidth, const float worldHeight);
 
-  virtual void internalUpdate(const bool centerCamera) override;
+  virtual void internalUpdate(Camera& camera) override;
 
 };
 

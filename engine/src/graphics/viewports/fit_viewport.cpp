@@ -31,13 +31,12 @@ namespace hx3d {
 namespace graphics {
 namespace viewports {
 
-FitViewport::FitViewport(const float worldWidth, const float worldHeight, Camera& camera) {
+FitViewport::FitViewport(const float worldWidth, const float worldHeight) {
   _worldWidth = worldWidth;
   _worldHeight = worldHeight;
-  _camera = &camera;
 }
 
-void FitViewport::internalUpdate(const bool centerCamera) {
+void FitViewport::internalUpdate(Camera& camera) {
   float tgtRatio, srcRatio, scale;
 
   if (_screenWidth < _screenHeight) {
@@ -58,7 +57,7 @@ void FitViewport::internalUpdate(const bool centerCamera) {
   _screenWidth = nx;
   _screenHeight = ny;
 
-  apply(centerCamera);
+  apply(camera);
 }
 
 } /* viewports */

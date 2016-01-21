@@ -153,6 +153,7 @@ void Game::update(float delta) {
 }
 
 void Game::resize(int width, int height) {
+
   if (_screen)
     _screen->resize(width, height);
 }
@@ -172,7 +173,7 @@ void Game::setScreen(Ptr<Screen> screen) {
 
   if (screen) {
     screen->show();
-    screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
+    screen->resize(getSize().x, getSize().y);
 
     if (!_screen) {
       _screen = screen;

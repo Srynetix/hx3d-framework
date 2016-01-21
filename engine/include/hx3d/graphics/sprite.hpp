@@ -31,6 +31,33 @@ namespace graphics {
 
 /**
 @brief 2D texture manipulation.
+
+<i>Example code</i>
+@code
+// Inside a create function...
+
+Sprite sprite;
+
+// Load the texture "my_texture"
+sprite.setTexture(Core::Assets()->get<Texture>("my_texture"));
+
+// Set the sprite coordinate to (5, 5)
+sprite.transform.position.x = 5;
+sprite.transform.position.y = 5;
+
+[...]
+
+// Inside a render function...
+
+Framebuffer::clear(Color::Black);
+batch.begin();
+
+// Draw the sprite
+batch.draw(sprite);
+
+batch.end();
+@endcode
+
 */
 class Sprite: public Mesh {
 

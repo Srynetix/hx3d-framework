@@ -58,46 +58,21 @@ public:
   void setScreenPosition(const float x, const float y);
 
   /**
-  @brief Set the viewport camera.
+  @brief Apply the viewport on the screen, centering the camera.
 
   @param camera Camera
   */
-  void setCamera(Camera& camera);
-  /**
-  @brief Get the viewport camera.
-
-  @return Camera (Ptr)
-  */
-  Camera* getCamera();
+  void apply(Camera& camera);
 
   /**
-  @brief Apply the viewport on the screen without centering the camera.
-  */
-  void apply();
-  /**
-  @brief Apply the viewport on the screen with or without centering the camera.
-
-  @param centerCamera Center camera ?
-  */
-  void apply(const bool centerCamera);
-
-  /**
-  @brief Update the viewport with a new screen width and height without centering
+  @brief Update the viewport with a new screen width and height, centering
   the camera.
 
+  @param camera       Camera
   @param screenWidth  New width
   @param screenHeight New height
   */
-  void update(const int screenWidth, const int screenHeight);
-  /**
-  @brief Update the viewport with a new screen width and height with or without
-  centering the camera.
-
-  @param screenWidth  New width
-  @param screenHeight New height
-  @param centerCamera Center camera ?
-  */
-  void update(const int screenWidth, const int screenHeight, const bool centerCamera);
+  void update(Camera& camera, const int screenWidth, const int screenHeight);
 
   /**
   @brief Convert a screen point to a world point.
@@ -114,8 +89,6 @@ public:
   glm::vec2 getWorldSize();
 
 protected:
-  /// @brief Camera
-  Camera* _camera;
   /// @brief World width
   float _worldWidth;
   /// @brief World height
@@ -131,11 +104,9 @@ protected:
   int _screenHeight;
 
   /**
-  @brief Update the viewport with or without centering the camera (internal).
-
-  @param centerCamera Center camera ?
+  @brief Update the viewport, centering the camera (internal).
   */
-  virtual void internalUpdate(const bool centerCamera) = 0;
+  virtual void internalUpdate(Camera& camera) = 0;
 };
 
 } /* viewports */
