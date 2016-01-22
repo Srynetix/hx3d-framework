@@ -35,6 +35,8 @@ To go to the **tutorials**, click [here](https://srynetix.github.io/tutorials.ht
 
 #include "hx3d/utils/assets.hpp"
 
+#include <cstdlib>
+
 namespace hx3d {
 
 #if __ANDROID__

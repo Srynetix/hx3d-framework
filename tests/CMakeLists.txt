@@ -24,6 +24,12 @@ set(
 )
 
 set(
+  IOS_LIBRARIES
+
+  ${COMMON_LIBRARIES}
+)
+
+set(
   WINDOWS_LIBRARIES
 
   ${COMMON_LIBRARIES}

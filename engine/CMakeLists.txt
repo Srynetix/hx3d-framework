@@ -93,7 +93,9 @@ set(
   -framework QuartzCore\
   -framework OpenGLES\
   -framework UIKit\
-  -framework Foundation"
+  -framework Foundation\
+  -framework GameController\
+  -framework MediaPlayer"
 )
 
 if (WIN32)
