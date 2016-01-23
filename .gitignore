@@ -9,6 +9,7 @@ dependencies/
 game/
 doc/
 lab/
+tools/
 _game/
 
 tests/android/libs
