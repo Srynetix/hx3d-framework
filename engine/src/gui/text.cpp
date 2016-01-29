@@ -95,11 +95,11 @@ void Text::draw(Ptr<Shader> shader) {
   Font::Data& fontData = _font->getFontData(_characterSize);
 
   for (unsigned int i = 0; i < _content.size(); ++i) {
-    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, &_content[i]);
     if (glyph != nullptr) {
       float kerning = 0.f;
       if (i > 0) {
-        kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
+        kerning = texture_glyph_get_kerning(glyph, &_content[i-1]);
       }
 
       pen.x += kerning;
@@ -144,11 +144,11 @@ float Text::calculateLength() {
 
   Font::Data& fontData = _font->getFontData(_characterSize);
   for (unsigned int i = 0; i < _content.size(); ++i) {
-    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, &_content[i]);
     if (glyph != nullptr) {
       float kerning = 0.f;
       if (i > 0) {
-        kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
+        kerning = texture_glyph_get_kerning(glyph, &_content[i-1]);
       }
 
       pen.x += kerning;
@@ -168,11 +168,11 @@ void Text::functionDraw(Ptr<Shader> shader, math::Function function) {
   function.reset();
 
   for (unsigned int i = 0; i < _content.size(); ++i) {
-    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, _content[i]);
+    texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, &_content[i]);
     if (glyph != nullptr) {
       float kerning = 0.f;
       if (i > 0) {
-        kerning = texture_glyph_get_kerning(glyph, _content[i-1]);
+        kerning = texture_glyph_get_kerning(glyph, &_content[i-1]);
       }
 
       pen += function.sample();

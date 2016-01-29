@@ -36,7 +36,6 @@ set(
   ${COMMON_LIBRARIES}
   "-lSDL2\
   -lSDL2_mixer\
-  -lSDL2_net\
   -lGLEW\
   -lGL"
 )
@@ -47,7 +46,6 @@ set(
   ${COMMON_LIBRARIES}
   "-lSDL2\
   -lSDL2_mixer\
-  -lSDL2_net\
   -lglew32\
   -lopengl32\
   -lSDL2main"
@@ -75,7 +73,6 @@ set(
   ${COMMON_LIBRARIES}
   "-lSDL2\
   -lSDL2_mixer\
-  -lSDL2_net\
   -lGLESv2\
   -llog\
   -landroid"

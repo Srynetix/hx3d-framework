@@ -42,6 +42,7 @@ class AndroidBuilder(Builder):
             -GNinja \
             -DANDROID_STANDALONE_TOOLCHAIN={} \
             -DCMAKE_TOOLCHAIN_FILE=cmake/android.toolchain.cmake \
+            -D ANDROID_ABI=armeabi-v7a \
             -DCMAKE_BUILD_TYPE={}                  \
             ..".format(config["android_toolchain_path"], config["android_build_type"])
 
