@@ -6,7 +6,7 @@ namespace physics2d {
 Material::Material() {
   staticFriction = 0.5f;
   dynamicFriction = 0.3f;
-  restitution = 0.2f;
+  restitution = 0.0f;
 }
 
 } /* physics2d */

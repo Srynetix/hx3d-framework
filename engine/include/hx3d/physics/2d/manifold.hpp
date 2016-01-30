@@ -27,8 +27,6 @@
 namespace hx3d {
 namespace physics2d {
 
-using namespace colliders;
-
 /**
 @brief Contact manifold definition
 */

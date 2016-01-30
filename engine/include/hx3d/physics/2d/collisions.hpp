@@ -15,7 +15,7 @@ namespace physics2d {
 
 @return True/False
 */
-bool checkCollisions(Manifold& m, Ptr<Circle> a, Ptr<Circle> b);
+bool checkCollisions(Manifold& m, Ptr<colliders::Circle> a, Ptr<colliders::Circle> b);
 
 /**
 @brief Collision test between polygon and circle.
@@ -26,7 +26,7 @@ bool checkCollisions(Manifold& m, Ptr<Circle> a, Ptr<Circle> b);
 
 @return True/False
 */
-bool checkCollisions(Manifold& m, Ptr<Polygon> a, Ptr<Circle> b);
+bool checkCollisions(Manifold& m, Ptr<colliders::Polygon> a, Ptr<colliders::Circle> b);
 
 /**
 @brief Collision test between circle and polygon.
@@ -37,7 +37,7 @@ bool checkCollisions(Manifold& m, Ptr<Polygon> a, Ptr<Circle> b);
 
 @return True/False
 */
-bool checkCollisions(Manifold& m, Ptr<Circle> a, Ptr<Polygon> b);
+bool checkCollisions(Manifold& m, Ptr<colliders::Circle> a, Ptr<colliders::Polygon> b);
 
 /**
 @brief Collision test between two polygons.
@@ -48,7 +48,7 @@ bool checkCollisions(Manifold& m, Ptr<Circle> a, Ptr<Polygon> b);
 
 @return True/False
 */
-bool checkCollisions(Manifold& m, Ptr<Polygon> a, Ptr<Polygon> b);
+bool checkCollisions(Manifold& m, Ptr<colliders::Polygon> a, Ptr<colliders::Polygon> b);
 
 } /* physics2d */
 } /* hx3d */

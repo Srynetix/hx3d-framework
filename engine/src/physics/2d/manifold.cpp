@@ -20,13 +20,13 @@ bool Manifold::solve() {
   bool value = false;
 
   if (a->shape == Collider::Shape::Circle && b->shape == Collider::Shape::Circle)
-    value = checkCollisions(*this, std::dynamic_pointer_cast<Circle>(a), std::dynamic_pointer_cast<Circle>(b));
+    value = checkCollisions(*this, std::dynamic_pointer_cast<colliders::Circle>(a), std::dynamic_pointer_cast<colliders::Circle>(b));
   else if (a->shape == Collider::Shape::Circle && b->shape == Collider::Shape::Polygon)
-    value = checkCollisions(*this, std::dynamic_pointer_cast<Circle>(a), std::dynamic_pointer_cast<Polygon>(b));
+    value = checkCollisions(*this, std::dynamic_pointer_cast<colliders::Circle>(a), std::dynamic_pointer_cast<colliders::Polygon>(b));
   else if (a->shape == Collider::Shape::Polygon && b->shape == Collider::Shape::Circle)
-    value = checkCollisions(*this, std::dynamic_pointer_cast<Polygon>(a), std::dynamic_pointer_cast<Circle>(b));
+    value = checkCollisions(*this, std::dynamic_pointer_cast<colliders::Polygon>(a), std::dynamic_pointer_cast<colliders::Circle>(b));
   else if (a->shape == Collider::Shape::Polygon && b->shape == Collider::Shape::Polygon)
-    value = checkCollisions(*this, std::dynamic_pointer_cast<Polygon>(a), std::dynamic_pointer_cast<Polygon>(b));
+    value = checkCollisions(*this, std::dynamic_pointer_cast<colliders::Polygon>(a), std::dynamic_pointer_cast<colliders::Polygon>(b));
 
   return value;
 }
@@ -118,7 +118,7 @@ void Manifold::positionalCorrection() {
 
 void Manifold::infiniteMassCorrection() {
   if (disabled) return;
-  
+
   a->velocity = {0, 0};
   b->velocity = {0, 0};
 }

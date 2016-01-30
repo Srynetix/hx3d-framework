@@ -26,7 +26,10 @@ namespace hx3d {
 namespace physics2d {
 
 Collider::Definition::Definition():
-  unitCoef(1.f/30.f) {}
+  unitCoef(1.f/30.f),
+  material(Material()),
+  mask(0),
+  category(0)  {}
 
 Collider::Collider(const Shape shapeType, const Type colliderType):
   position(0, 0),

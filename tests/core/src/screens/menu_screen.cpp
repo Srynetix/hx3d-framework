@@ -26,6 +26,7 @@ Screens list.
 #include "tests/screens/test14_buffertest.hpp"
 #include "tests/screens/test15_timers.hpp"
 #include "tests/screens/test16_basicshading.hpp"
+#include "tests/screens/test17_physics_1.hpp"
 
 MenuScreen::MenuScreen():
   font(Core::Assets()->get<Font>("default")),
@@ -71,7 +72,8 @@ MenuScreen::MenuScreen():
     {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
     {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}},
     {"Timers", [](){Core::CurrentGame()->setScreen(Make<Test15>());}},
-    {"Basic Shading", [](){Core::CurrentGame()->setScreen(Make<Test16>());}}
+    {"Basic Shading", [](){Core::CurrentGame()->setScreen(Make<Test16>());}},
+    {"Physics 1", [](){Core::CurrentGame()->setScreen(Make<Test17>());}}
   };
 
   buttonCount = worldSize.y / buttonHeight;

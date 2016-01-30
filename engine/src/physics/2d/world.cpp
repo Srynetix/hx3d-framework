@@ -162,7 +162,7 @@ void World::render(graphics::BaseBatch& batch) {
     sprite.transform.position.y = c->position.y * _physRatio;
 
     if (c->shape == Collider::Shape::Polygon) {
-      const Ptr<Polygon>& b = std::dynamic_pointer_cast<Polygon>(c);
+      const Ptr<colliders::Polygon>& b = std::dynamic_pointer_cast<colliders::Polygon>(c);
       if (b->box) {
         float w = b->vertices[1].x * 2;
         float h = b->vertices[2].y * 2;
@@ -172,7 +172,7 @@ void World::render(graphics::BaseBatch& batch) {
     }
 
     else if (c->shape == Collider::Shape::Circle) {
-      const Ptr<Circle>& b = std::dynamic_pointer_cast<Circle>(c);
+      const Ptr<colliders::Circle>& b = std::dynamic_pointer_cast<colliders::Circle>(c);
       sprite.transform.size.x = (b->radius / 2) * _physRatio;
       sprite.transform.size.y = (b->radius / 2) * _physRatio;
     }

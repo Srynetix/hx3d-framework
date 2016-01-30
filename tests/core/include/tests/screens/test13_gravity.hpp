@@ -6,10 +6,6 @@
 using namespace hx3d;
 using namespace hx3d::physics2d;
 
-/*
-PROBLEM: TANGENT IMPULSE
-*/
-
 class Test13: public BaseTestScreen {
 public:
   Test13():
@@ -30,10 +26,10 @@ public:
     cDef.material.staticFriction = 0.f;
     cDef.material.dynamicFriction = 0.f;
 
-    auto ground = Make<Polygon>(Collider::Type::Static);
-    auto top = Make<Polygon>(Collider::Type::Static);
-    auto leftWall = Make<Polygon>(Collider::Type::Static);
-    auto rightWall = Make<Polygon>(Collider::Type::Static);
+    auto ground = Make<colliders::Polygon>(Collider::Type::Static);
+    auto top = Make<colliders::Polygon>(Collider::Type::Static);
+    auto leftWall = Make<colliders::Polygon>(Collider::Type::Static);
+    auto rightWall = Make<colliders::Polygon>(Collider::Type::Static);
 
     ground->setAsBox(Core::App()->getWidth() / physRatio, 50 / physRatio);
     ground->useDefinition(cDef);
@@ -55,7 +51,7 @@ public:
     rightWall->position.x = Core::App()->getWidth() / physRatio;
     rightWall->position.y = (Core::App()->getHeight() / 2) / physRatio;
 
-    me = Make<physics2d::Polygon>();
+    me = Make<colliders::Polygon>();
     me->setAsBox(25 / physRatio, 50 / physRatio);
     me->useDefinition(cDef);
     me->position.x = (Core::App()->getWidth() / 4) / physRatio;
@@ -70,7 +66,7 @@ public:
     timer.initialize(500, [this, physRatio, cDef](){
       glm::vec2 pos = {math::random(Core::App()->getWidth() / 4, Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4), Core::App()->getHeight() - 200};
 
-      Ptr<physics2d::Polygon> bo = Make<physics2d::Polygon>();
+      Ptr<colliders::Polygon> bo = Make<colliders::Polygon>();
       bo->setAsBox(50 / physRatio, 50 / physRatio);
       bo->useDefinition(cDef);
       bo->position.x = pos.x / physRatio;
@@ -80,7 +76,7 @@ public:
       timer.reset();
     });
 
-    auto zone = Make<physics2d::ZoneAttractor>();
+    auto zone = Make<ZoneAttractor>();
     zone->position.x = (Core::App()->getWidth() / 2) / physRatio;
     zone->position.y = 0;
     zone->width = (Core::App()->getWidth()) / physRatio;
@@ -88,7 +84,7 @@ public:
     zone->velocity = {-10, 60};
     // zone->velocity = {0, 0};
 
-    auto leftZone = Make<physics2d::ZoneAttractor>();
+    auto leftZone = Make<ZoneAttractor>();
     leftZone->position.x = 0;
     leftZone->position.y = (Core::App()->getHeight() / 2) / physRatio;
     leftZone->width = 150 / physRatio;
@@ -96,7 +92,7 @@ public:
     leftZone->velocity = {0, 5};
     leftZone->priority = 1;
 
-    auto topZone = Make<physics2d::ZoneAttractor>();
+    auto topZone = Make<ZoneAttractor>();
     topZone->position.x = (Core::App()->getWidth() / 2 - 100) / physRatio;
     topZone->position.y = Core::App()->getHeight() / physRatio;
     topZone->width = (Core::App()->getWidth() - 100) / physRatio;
@@ -104,13 +100,13 @@ public:
     topZone->velocity = {10, 0};
     topZone->priority = 2;
 
-    auto point = Make<physics2d::PointAttractor>();
+    auto point = Make<PointAttractor>();
     point->position.x = (Core::App()->getWidth() / 2) / physRatio;
     point->position.y = (Core::App()->getHeight() / 2) / physRatio;
     point->radius = 150 / physRatio;
     point->velocity = {5.f, 5.f};
     point->priority = 3;
-
+    
     pWorld.addAttractor(zone);
     pWorld.addAttractor(leftZone);
     pWorld.addAttractor(topZone);
@@ -138,7 +134,7 @@ public:
   virtual void update(float delta) override {
     text.setContent(format("FPS: %2.2f", 1.f/delta));
     timer.update(delta);
-    pWorld.step();
+    pWorld.step(delta);
   }
 
   virtual void render() override {
@@ -155,10 +151,10 @@ public:
 private:
   OrthographicCamera camera;
   gui::Text text;
-  physics2d::World pWorld;
+  World pWorld;
   CallbackTimer timer;
 
   Batch batch;
 
-  Ptr<physics2d::Polygon> me;
+  Ptr<colliders::Polygon> me;
 };
