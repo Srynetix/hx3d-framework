@@ -22,10 +22,16 @@ namespace hx3d {
 namespace tweens {
 
 template <class T>
-Tween<T>::Tween(T& mod, const T end, const float duration, const math::Interpolation interp):
-  BaseTween(), mod(&mod), end(end), duration(duration), interp(interp) {
+Tween<T>::Tween(T& mod, const T end, const float duration, const math::Interpolation interp, bool infinite):
+  BaseTween(infinite), mod(&mod), end(end), duration(duration), interp(interp) {
     currentTime = 0.f;
     _firstUpdate = false;
+}
+
+template <class T>
+void Tween<T>::reset() {
+  _ended = false;
+  currentTime = 0;
 }
 
 template <class T>
@@ -43,7 +49,11 @@ void Tween<T>::update(const float delta) {
     const float normTime = currentTime / duration;
     *mod = math::interpolate(base, end, normTime, interp);
   } else {
-    _ended = true;
+    if (_infinite) {
+      reset();
+    } else {
+      _ended = true;
+    }
   }
 }
 

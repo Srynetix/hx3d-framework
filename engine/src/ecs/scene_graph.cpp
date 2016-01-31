@@ -99,11 +99,20 @@ void SceneGraph::update(const float delta) {
   if (_entityEnabled) {
     _engine.update(delta);
   }
+
+  //// CLEAR
+
+  for (auto& node: _toRemove) {
+    internalRemove(node);
+  }
+
+  _toRemove.empty();
 }
 
   /////////////////
 
 void SceneGraph::remove(const std::string path) {
+
   if (_indices.find(path) == _indices.end()) {
     Log.Error("SceneGraph: Index `%s` does not exists.", path.c_str());
     return;
@@ -114,20 +123,25 @@ void SceneGraph::remove(const std::string path) {
     return;
   }
 
-  const Ptr<Node>& obj = _indices[path];
-  const Ptr<Node>& parent = obj->_parent;
-  for (const Ptr<Node>& child: obj->_children) {
+  _toRemove.insert(_indices[path]);
+}
+
+void SceneGraph::internalRemove(const Ptr<Node>& node) {
+  std::string path = node->getPath();
+  const Ptr<Node>& parent = node->_parent;
+
+  for (const Ptr<Node>& child: node->_children) {
     remove(child->getPath());
   }
 
   for (unsigned int i = 0; i < parent->_children.size(); ++i) {
-    if (parent->_children[i] == obj) {
+    if (parent->_children[i] == node) {
       parent->_children.erase(parent->_children.begin() + i);
     }
   }
 
   if (_entityEnabled) {
-    _engine.removeEntity(obj);
+    _engine.removeEntity(node);
   }
 
   _indices.erase(path);

@@ -30,6 +30,7 @@
 #include "hx3d/utils/ptr.hpp"
 
 #include <queue>
+#include <stack>
 
 namespace hx3d {
 namespace tweens {
@@ -39,7 +40,12 @@ namespace tweens {
 */
 class Sequence: public BaseTween {
 public:
-  Sequence();
+  /**
+  Create a sequence.
+
+  @param infinite Infinite ? (default: false)
+  */
+  Sequence(bool infinite = false);
 
   /**
   @brief Create a tween.
@@ -73,11 +79,13 @@ public:
   */
   void add(const Ptr<BaseTween>& tween);
 
+  virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:
   /// @brief Tweens
   std::queue<Ptr<BaseTween>> tweens;
+  std::stack<Ptr<BaseTween>> doneTweens;
 };
 
 } /* math */

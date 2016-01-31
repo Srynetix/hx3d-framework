@@ -40,6 +40,7 @@ public:
   */
   Delay(const float delayAsSeconds);
 
+  virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:

@@ -94,6 +94,7 @@ void Sprite::scaleTexture() {
 void Sprite::draw(Ptr<Shader> shader) {
   Texture::use(_texture);
   Mesh::draw(shader);
+  Texture::disable();
 }
 
 } /* graphics */

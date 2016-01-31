@@ -25,7 +25,7 @@
 namespace hx3d {
 namespace tweens {
 
-Parallel::Parallel() {}
+Parallel::Parallel(bool infinite): BaseTween(infinite) {}
 
 void Parallel::add(const Ptr<BaseTween>& tween) {
   tweens.push_back(tween);
@@ -36,22 +36,37 @@ void Parallel::addRepeatingCallback(std::function<void()> func, const float dura
   tweens.push_back(tween);
 }
 
+void Parallel::reset() {
+  for (auto i = tweens.begin(); i != tweens.end();) {
+    const Ptr<BaseTween>& tween = *i;
+    tween->reset();
+
+    ++i;
+  }
+}
+
 void Parallel::update(const float delta) {
   if (_ended)
     return;
 
+  bool all_ended = true;
   for (auto i = tweens.begin(); i != tweens.end();) {
     const Ptr<BaseTween>& tween = *i;
-    if (tween->hasEnded()) {
-      tweens.erase(i);
-    } else {
+
+    if (!tween->hasEnded()) {
+      all_ended = false;
       tween->update(delta);
-      ++i;
     }
+
+    ++i;
   }
 
-  if (tweens.empty()) {
-    _ended = true;
+  if (all_ended) {
+    if (_infinite) {
+      reset();
+    } else {
+      _ended = true;
+    }
   }
 }
 

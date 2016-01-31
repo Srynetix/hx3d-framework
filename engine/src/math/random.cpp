@@ -33,5 +33,9 @@ int random(int min, int max) {
   return rand() % (max-min + 1) + min;
 }
 
+bool flip_coin() {
+  return random(0, 1) == 0;
+}
+
 } /* math */
 } /* hx3d */

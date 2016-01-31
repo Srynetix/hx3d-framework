@@ -41,6 +41,13 @@ float randfloat();
 */
 int random(int min, int max);
 
+/**
+@brief Generate a random boolean.
+
+@return Random boolean.
+*/
+bool flip_coin();
+
 } /* math */
 } /* hx3d */
 

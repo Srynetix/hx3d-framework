@@ -39,9 +39,11 @@ public:
   @param end      End value
   @param duration Duration
   @param interp   Interpolation function
+  @param infinite Infinite ? (default: false)
   */
-  Tween(T& mod, const T end, const float duration, const math::Interpolation interp);
+  Tween(T& mod, const T end, const float duration, const math::Interpolation interp, bool infinite = false);
 
+  virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:

@@ -23,7 +23,7 @@
 namespace hx3d {
 namespace tweens {
 
-Sequence::Sequence() {}
+Sequence::Sequence(bool infinite): BaseTween(infinite) {}
 
 void Sequence::addDelay(const float delay) {
   Ptr<BaseTween> tween = Make<Delay>(delay);
@@ -39,19 +39,35 @@ void Sequence::add(const Ptr<BaseTween>& tween) {
   tweens.push(tween);
 }
 
+void Sequence::reset() {
+  while (!doneTweens.empty()) {
+    auto& tween = doneTweens.top();
+
+    tween.reset();
+    tweens.push(tween);
+
+    doneTweens.pop();
+  }
+}
+
 void Sequence::update(const float delta) {
   if (_ended)
     return;
 
   const Ptr<BaseTween>& tween = tweens.front();
   if (tween->hasEnded()) {
+    doneTweens.push(tween);
     tweens.pop();
   } else {
     tween->update(delta);
   }
 
   if (tweens.empty()) {
-    _ended = true;
+    if (_infinite) {
+      reset();
+    } else {
+      _ended = true;
+    }
   }
 }
 

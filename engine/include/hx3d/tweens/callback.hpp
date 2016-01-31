@@ -50,6 +50,7 @@ public:
   */
   Callback(std::function<void()> func, const float duration);
 
+  virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:

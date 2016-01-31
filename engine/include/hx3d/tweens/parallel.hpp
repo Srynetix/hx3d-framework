@@ -37,7 +37,12 @@ namespace tweens {
 */
 class Parallel: public BaseTween {
 public:
-  Parallel();
+  /**
+  Create a parallel tween.
+
+  @param infinite Infinite ? (default: false)
+  */
+  Parallel(bool infinite = false);
 
   /**
   @brief Create a tween.
@@ -65,6 +70,7 @@ public:
   */
   void add(const Ptr<BaseTween>& tween);
 
+  virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:

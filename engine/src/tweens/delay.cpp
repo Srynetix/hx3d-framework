@@ -24,8 +24,13 @@ namespace hx3d {
 namespace tweens {
 
 Delay::Delay(const float delayAsSeconds):
-  _delay(delayAsSeconds), _currentTime(0.f)
+  BaseTween(false), _delay(delayAsSeconds), _currentTime(0.f)
 {}
+
+void Delay::reset() {
+  _ended = false;
+  _currentTime = 0;
+}
 
 void Delay::update(const float delta) {
   if (_ended)

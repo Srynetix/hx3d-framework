@@ -28,8 +28,13 @@ Callback::Callback(std::function<void()> func):
 {}
 
 Callback::Callback(std::function<void()> func, const float duration):
-  _func(func), _delay(duration)
+  BaseTween(false), _func(func), _delay(duration)
 {}
+
+void Callback::reset() {
+  _ended = false;
+  _currentTime = 0;
+}
 
 void Callback::update(const float delta) {
   if (_ended)

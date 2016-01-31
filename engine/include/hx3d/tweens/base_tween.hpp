@@ -33,7 +33,7 @@ namespace tweens {
 */
 class BaseTween {
 public:
-  BaseTween();
+  BaseTween(bool infinite);
 
   /**
   @brief Test if the tween has ended
@@ -43,6 +43,11 @@ public:
   bool hasEnded();
 
   /**
+  @brief Reset the tween
+  */
+  virtual void reset() = 0;
+
+  /**
   @brief Update the tween
 
   @param delta Delta time
@@ -50,8 +55,11 @@ public:
   virtual void update(const float delta) = 0;
 
 protected:
-  /// @brief Has the theen ended ?
+  /// @brief Has the tween ended ?
   bool _ended;
+
+  /// @brief Is the tween infinite ?
+  bool _infinite;
 };
 
 } /* math */

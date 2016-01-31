@@ -23,8 +23,8 @@
 namespace hx3d {
 namespace tweens {
 
-BaseTween::BaseTween():
-  _ended(false) {}
+BaseTween::BaseTween(bool infinite):
+  _ended(false), _infinite(infinite) {}
 
 bool BaseTween::hasEnded() {
   return _ended;

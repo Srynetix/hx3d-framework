@@ -26,6 +26,7 @@
 #include "hx3d/ecs/engine.hpp"
 
 #include <string>
+#include <set>
 #include <map>
 
 namespace hx3d {
@@ -133,6 +134,8 @@ protected:
   Engine _engine;
   /// @brief Is entity management enabled ?
   bool _entityEnabled;
+  /// @brief Nodes for deletion
+  std::set<Ptr<Node>> _toRemove;
 
   /**
   @brief Add an index to the graph.
@@ -149,6 +152,13 @@ protected:
   @return Node (Ptr)
   */
   Ptr<Node> pathExists(const std::string path);
+
+  /**
+  @brief Remove a node.
+
+  @param node Node (Ptr)
+  */
+  void internalRemove(const Ptr<Node>& node);
 
   /**
   @brief Create a child for a container Node.
