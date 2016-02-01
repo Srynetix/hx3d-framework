@@ -69,8 +69,8 @@ void Game::setTransition(const Ptr<graphics::Transition>& transition) {
 void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
   if (viewport) {
     auto world_size = viewport->getWorldSize();
-    _currentFB = graphics::Framebuffer(world_size.x, world_size.y);
-    _nextFB = graphics::Framebuffer(world_size.x, world_size.y);
+    _currentFB.resize(world_size.x, world_size.y);
+    _nextFB.resize(world_size.x, world_size.y);
   }
 
   _currentViewport = viewport;

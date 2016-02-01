@@ -41,6 +41,7 @@ public:
   @brief Create a framebuffer at screen size.
   */
   Framebuffer();
+  ~Framebuffer();
 
   /**
   @brief Create a framebuffer.
@@ -56,6 +57,14 @@ public:
   @return Texture (Ptr)
   */
   Ptr<Texture> getColorBuffer();
+
+  /**
+  @brief Resize the framebuffer.
+
+  @param width Width
+  @param height Height
+  */
+  void resize(unsigned int width, unsigned int height);
 
   /////////////////
 

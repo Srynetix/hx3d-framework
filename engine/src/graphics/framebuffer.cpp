@@ -44,6 +44,22 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height):
   create();
 }
 
+Framebuffer::~Framebuffer() {
+  if (glIsFramebuffer(_id) == GL_TRUE)
+    glDeleteFramebuffers(1, &_id);
+  if (glIsRenderbuffer(_depthBuffer) == GL_TRUE)
+    glDeleteRenderbuffers(1, &_depthBuffer);
+
+  Log.Info("FBO deleted");
+}
+
+void Framebuffer::resize(unsigned int width, unsigned int height) {
+  _width = width;
+  _height = height;
+
+  create();
+}
+
 void Framebuffer::fetchDefaultFramebuffer() {
   glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultID);
 }
