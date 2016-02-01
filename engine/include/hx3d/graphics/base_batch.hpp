@@ -104,6 +104,13 @@ public:
   */
   void setCamera(Camera& camera);
 
+  /**
+  @brief Get the camera.
+
+  @param camera Camera
+  */
+  Camera* getCamera();
+
 protected:
   /// @brief Camera
   Camera* _camera;

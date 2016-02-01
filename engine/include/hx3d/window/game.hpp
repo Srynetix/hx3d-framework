@@ -156,6 +156,8 @@ private:
   Ptr<graphics::viewports::Viewport> _currentViewport;
 
   bool _showStats;
+
+  void updateStats();
 };
 
 } /* window */

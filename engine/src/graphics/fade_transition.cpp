@@ -33,14 +33,12 @@ FadeTransition::FadeTransition(window::Game* game, Color color): Transition(game
 }
 
 void FadeTransition::render(Batch& batch, graphics::Framebuffer& currentFB, graphics::Framebuffer& nextFB) {
-
   Sprite spriteCurrent;
   Sprite spriteNext;
   spriteCurrent.setTexture(currentFB);
   spriteNext.setTexture(nextFB);
 
   auto world_size = Core::CurrentGame()->getSize();
-
   spriteCurrent.transform.position.x = world_size.x / 2;
   spriteCurrent.transform.position.y = world_size.y / 2;
   spriteCurrent.transform.rotation.z = glm::radians(180.f);
@@ -72,7 +70,6 @@ void FadeTransition::onUpdate(float delta) {
 }
 
 void FadeTransition::onStart() {
-
 }
 
 void FadeTransition::onDone() {

@@ -67,8 +67,6 @@ void Game::setTransition(const Ptr<graphics::Transition>& transition) {
 }
 
 void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
-  /* RESET FB */
-
   if (viewport) {
     auto world_size = viewport->getWorldSize();
     _currentFB = graphics::Framebuffer(world_size.x, world_size.y);
@@ -76,6 +74,9 @@ void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
   }
 
   _currentViewport = viewport;
+  _currentViewport->apply(_camera);
+
+  updateStats();
 }
 
 const Ptr<graphics::viewports::Viewport>& Game::getViewport() {
@@ -87,6 +88,18 @@ glm::vec2 Game::getSize() {
     return _currentViewport->getWorldSize();
   else
     return Core::App()->getSize();
+}
+
+void Game::updateStats() {
+  _deltaText.transform.position.x = this->getSize().x / 2;
+  _deltaText.transform.position.y = 100;
+  _deltaText.transform.position.z = 0.95f;
+  _deltaText.setCharacterSize(20);
+
+  _fpsText.transform.position.x = this->getSize().x / 2;
+  _fpsText.transform.position.y = _deltaText.transform.position.y + _deltaText.getCharacterSize();
+  _fpsText.transform.position.z = 0.95f;
+  _fpsText.setCharacterSize(20);
 }
 
 void Game::render() {
@@ -106,7 +119,6 @@ void Game::render() {
         _currentTransition->reset();
         _nextScreen = nullptr;
 
-        _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
         _screen->render();
       }
 
@@ -120,6 +132,7 @@ void Game::render() {
         _nextScreen->render();
 
         graphics::Framebuffer::useDefault();
+        if (_currentViewport) _currentViewport->apply(_camera);
         _currentTransition->render(_batch, _currentFB, _nextFB);
       }
     }
@@ -193,10 +206,6 @@ void Game::setScreen(Ptr<Screen> screen) {
 
       if (_currentTransition) {
         _currentTransition->start();
-
-        if (_currentViewport) {
-          _currentViewport->update(_camera, Core::App()->getWidth(), Core::App()->getHeight());
-        }
       }
     }
   }

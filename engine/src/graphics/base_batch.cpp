@@ -47,5 +47,9 @@ void BaseBatch::setCamera(Camera& camera) {
   _camera = &camera;
 }
 
+Camera* BaseBatch::getCamera() {
+  return _camera;
+}
+
 } /* graphics */
 } /* hx3d */
