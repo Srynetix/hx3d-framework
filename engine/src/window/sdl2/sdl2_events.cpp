@@ -165,10 +165,15 @@ void SDL2EventManager::poll() {
       TouchEvent::Type type(event.type == SDL_FINGERDOWN ? TouchEvent::Type::Touched : TouchEvent::Type::Released);
 
       _touchPosition = glm::vec2(event.tfinger.x, event.tfinger.y);
-      _touchMovement = glm::vec2(0);
       _touchPressure = event.tfinger.pressure;
 
       if (type == TouchEvent::Type::Released) {
+
+        if (_screenReleased)
+          return;
+
+        _touchMovement = glm::vec2(0);
+
         _screenTouched = false;
         _screenReleased = true;
 
@@ -177,6 +182,12 @@ void SDL2EventManager::poll() {
         }
 
       } else {
+
+        if (_screenTouched)
+          return;
+
+        _touchMovement = glm::vec2(0);
+
         _screenReleased = false;
         _screenTouched = true;
 
@@ -188,7 +199,8 @@ void SDL2EventManager::poll() {
 
     else if (event.type == SDL_FINGERMOTION) {
       _touchPosition = glm::vec2(event.tfinger.x, event.tfinger.y);
-      _touchMovement = glm::vec2(event.tfinger.dx, event.tfinger.dy);
+      _touchMovement = glm::vec2(event.tfinger.dx, event.tfinger.dy) * 300.f;
+
       _touchPressure = event.tfinger.pressure;
 
       if (_currentHandler) {

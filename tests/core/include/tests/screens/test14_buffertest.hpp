@@ -11,9 +11,11 @@ public:
   SGeo(unsigned int tris) {
     std::vector<float> positions;
     std::vector<float> colors;
+    std::vector<GLushort> indices;
 
     positions.resize(tris * 3 * 3);
     colors.resize(tris * 3 * 4);
+    indices.resize(tris * 3);
 
     unsigned int n = 800;
     unsigned int n2 = n / 2;
@@ -83,10 +85,54 @@ public:
       i_color += 12;
     }
 
+    for (int i = 0; i < tris*3; i += 3) {
+      indices[i] = i;
+      indices[i+1] = i+1;
+      indices[i+2] = i+2;
+    }
+
     setAttribute("Position", positions);
     setAttribute("Color", colors);
+    setIndices(indices);
 
     uploadAll();
+  }
+};
+
+struct RollMovement: public InputHandler {
+
+  float movement_x;
+  bool roll_on;
+
+  ArcBallMovement() {
+    movement_x = 0;
+    roll_on = false;
+  }
+
+  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override {
+    movement_x = 0;
+    roll_on = true;
+  }
+
+  virtual void onTouchUp(glm::vec2 touchPosition, float touchPressure) override {
+    roll_on = false;
+  }
+
+  virtual void onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovement, float touchPressure) override {
+    if (roll_on) {
+      movement_x = touchMovement.x;
+    }
+  }
+
+  void updateCamera(float delta, Camera& camera) {
+    camera.rotateAround({0, 0, 0}, glm::degrees(movement_x / 250.f), {0, 1, 0});
+    camera.update();
+
+    float dt = 0.5f;
+    movement_x += movement_x > 0 ? -dt : dt;
+
+    if (movement_x >= -dt && movement_x <= dt)
+      movement_x = 0;
   }
 };
 
@@ -100,8 +146,8 @@ public:
     camera.rotate(180.f, glm::vec3(0, 1, 0));
     camera.update();
 
-    mesh.setGeometry(Make<SGeo>(1600));
-    // mesh.transform.size = glm::vec3(2);
+    mesh.setGeometry(Make<SGeo>(16000));
+    mesh.transform.size = glm::vec3(2);
     mesh.transform.position = glm::vec3(0);
 
     batch.setShader(Core::Assets()->get<Shader>("base"));
@@ -114,10 +160,24 @@ public:
     fps.transform.size = glm::vec3(1);
   }
 
-  virtual void update(float delta) override {
-    camera.rotateAround(glm::vec3(0.f, 0.f, 0.f), 0.8f, glm::vec3(0, 1, 0));
-    camera.update();
+  virtual void show() override {
+    Core::Events()->setInputHandler(this);
+  }
 
+  virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override {
+    ballMovement.onTouchDown(touchPosition, touchPressure);
+  }
+
+  virtual void onTouchUp(glm::vec2 touchPosition, float touchPressure) override {
+    ballMovement.onTouchUp(touchPosition, touchPressure);
+  }
+
+  virtual void onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovement, float touchPressure) override {
+    ballMovement.onTouchMotion(touchPosition, touchMovement, touchPressure);
+  }
+
+  virtual void update(float delta) override {
+    ballMovement.updateCamera(delta, camera);
     fps.setContent(format("FPS: %2.2f", 1.f/delta));
   }
 
@@ -131,6 +191,7 @@ public:
   }
 
 private:
+  ArcBallMovement ballMovement;
   PerspectiveCamera camera;
   Mesh mesh;
 
