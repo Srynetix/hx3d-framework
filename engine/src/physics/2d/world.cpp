@@ -53,6 +53,13 @@ void World::step(float dt) {
         // Ajout dans les contacts
         _inContact.insert(m);
 
+        if ((m.a->mask & m.b->category) || (m.b->mask & m.a->category)) {
+          // Contact
+        } else {
+          if (m.a->category != 0 && m.b->category != 0)
+            m.disabled = true;
+        }
+
         if (prevContactExists(m)) {
 
           // IN
@@ -67,13 +74,6 @@ void World::step(float dt) {
             listener->beginCollision(m);
           });
 
-        }
-
-        if ((m.a->mask & m.b->category) || (m.b->mask & m.a->category)) {
-          // Collision
-        } else {
-          if (m.a->category != 0 && m.b->category != 0)
-            m.disabled = true;
         }
 
         _contacts.push_back(m);
@@ -233,6 +233,10 @@ float World::getPhysRatio() const {
 
 const Ptr<GlobalAttractor> World::getGlobalGravity() {
   return std::dynamic_pointer_cast<GlobalAttractor>(_attractors[0]);
+}
+
+CollisionMatrix& World::getCollisionMatrix() {
+  return _collisionMatrix;
 }
 
 ///////////////

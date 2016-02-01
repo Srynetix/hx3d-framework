@@ -65,6 +65,10 @@ std::string Node::getPath() {
   return path;
 }
 
+std::string Node::getName() {
+  return _name;
+}
+
 void Node::draw(graphics::BaseBatch& batch) {}
 
 void Node::update(const float delta) {}

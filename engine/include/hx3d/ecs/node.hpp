@@ -113,6 +113,13 @@ public:
   unsigned int getChildCount();
 
   /**
+  @brief Get the node name
+
+  @return Name
+  */
+  std::string getName();
+
+  /**
   @brief Draw the node.
 
   @param batch Batch

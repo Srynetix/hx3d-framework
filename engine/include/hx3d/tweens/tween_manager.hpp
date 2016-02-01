@@ -58,6 +58,11 @@ public:
   */
   unsigned int getTweenCount();
 
+  /**
+  @brief Clear all the tweens
+  */
+  void clear();
+
 private:
   /// @brief Tweens
   std::vector<Ptr<BaseTween>> tweens;

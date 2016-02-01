@@ -48,13 +48,12 @@ public:
   /**
   @brief Create a game object at the root.
 
-  @param name Name
   @param args Arguments
 
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> createAtRoot(const std::string name, Args... args);
+  Ptr<T> createAtRoot(Args... args);
 
   /**
   @brief Create a game object at a path.
@@ -66,7 +65,7 @@ public:
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> create(const std::string path, const std::string name, Args... args);
+  Ptr<T> create(const std::string path, Args... args);
 
   /**
   @brief Remove a game object from a path.
@@ -134,8 +133,6 @@ protected:
   Engine _engine;
   /// @brief Is entity management enabled ?
   bool _entityEnabled;
-  /// @brief Nodes for deletion
-  std::set<Ptr<Node>> _toRemove;
 
   /**
   @brief Add an index to the graph.
@@ -170,7 +167,7 @@ protected:
   @return Node (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> createNodeChild(const Ptr<Node>& container, const std::string name, Args... args);
+  Ptr<T> createNodeChild(const Ptr<Node>& container, Args... args);
 };
 
 } /* ecs */

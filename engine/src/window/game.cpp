@@ -24,6 +24,8 @@
 #include "hx3d/window/application.hpp"
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/timer_manager.hpp"
+#include "hx3d/tweens/tween_manager.hpp"
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
@@ -114,6 +116,7 @@ void Game::render() {
     if (_currentTransition) {
       if (_currentTransition->isFinished()) {
         _screen->hide();
+        _screen->dispose();
         _screen = _nextScreen;
         _screen->resume();
         _currentTransition->reset();
@@ -156,6 +159,7 @@ void Game::render() {
 }
 
 void Game::update(float delta) {
+
   if (!_nextScreen) {
     _screen->update(delta);
   }

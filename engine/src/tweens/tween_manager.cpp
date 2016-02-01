@@ -46,6 +46,9 @@ unsigned int TweenManager::getTweenCount() {
   return tweens.size();
 }
 
+void TweenManager::clear() {
+  tweens.clear();
+}
 
 } /* tween */
 } /* hx3d */

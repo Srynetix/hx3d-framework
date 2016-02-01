@@ -45,8 +45,9 @@ public:
 
   @param delay    Timer delay
   @param function Callback
+  @param loop     Loop ?
   */
-  CallbackTimer(float delay, std::function<void()> function);
+  CallbackTimer(float delay, std::function<void()> function, bool loop = false);
 
   /**
   @brief Initialize the timer.
@@ -54,8 +55,9 @@ public:
 
   @param delay    Timer delay
   @param function Callback
+  @param loop     Loop ?
   */
-  void initialize(float delay, std::function<void()> function);
+  void initialize(float delay, std::function<void()> function, bool loop = false);
 
   /**
   @brief Get the remaining time in milliseconds.
@@ -74,9 +76,24 @@ public:
   */
   void update(float delta);
 
+  /**
+  @brief Did the timer ended ?
+
+  @return True/False
+  */
+  bool hasEnded();
+
+  /**
+  @brief Is the timer looping ?
+
+  @return True/False
+  */
+  bool isLooping();
+
 private:
   Timer _timer;
   std::function<void()> _function;
+  bool _loop;
 };
 
 } /* hx3d */

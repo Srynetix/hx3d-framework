@@ -99,14 +99,6 @@ void SceneGraph::update(const float delta) {
   if (_entityEnabled) {
     _engine.update(delta);
   }
-
-  //// CLEAR
-
-  for (auto& node: _toRemove) {
-    internalRemove(node);
-  }
-
-  _toRemove.empty();
 }
 
   /////////////////
@@ -123,7 +115,7 @@ void SceneGraph::remove(const std::string path) {
     return;
   }
 
-  _toRemove.insert(_indices[path]);
+  internalRemove(_indices[path]);
 }
 
 void SceneGraph::internalRemove(const Ptr<Node>& node) {

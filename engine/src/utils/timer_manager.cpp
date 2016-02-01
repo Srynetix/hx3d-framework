@@ -21,6 +21,7 @@
 #include "hx3d/utils/timer_manager.hpp"
 
 #include "hx3d/utils/algorithm.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
@@ -30,33 +31,66 @@ void TimerManager::addNamedTimer(std::string name, CallbackTimer& timer) {
   _registered[name] = timer;
 }
 
-void TimerManager::createNamedTimer(std::string name, float delay, std::function<void()> callback) {
-  CallbackTimer timer;
-  timer.initialize(delay, callback);
+void TimerManager::createNamedTimer(std::string name, float delay, std::function<void()> callback, bool loop) {
+  _registered[name].initialize(delay, callback, loop);
+}
 
-  _registered[name] = timer;
+void TimerManager::resetNamedTimer(std::string name) {
+  _registered[name].reset();
+}
+
+void TimerManager::removeNamedTimer(std::string name) {
+  if (_registered.find(name) != _registered.end()) {
+    _registered.erase(name);
+  }
 }
 
 void TimerManager::addTemporaryTimer(CallbackTimer& timer) {
   _temporaries.push_back(timer);
 }
 
-void TimerManager::createTemporaryTimer(float delay, std::function<void()> callback) {
+void TimerManager::createTemporaryTimer(float delay, std::function<void()> callback, bool loop) {
   CallbackTimer timer;
-  timer.initialize(delay, callback);
+  timer.initialize(delay, callback, loop);
 
   _temporaries.push_back(timer);
 }
 
 void TimerManager::update(float delta) {
-  algo::apply(_registered, [delta](std::pair<std::string,CallbackTimer> pair) {
+  std::vector<std::string> toRemoveReg;
+  std::vector<int> toRemoveTemp;
+
+  for (auto& pair: _registered) {
     auto& reg = pair.second;
     reg.update(delta);
+
+    if (reg.hasEnded()) {
+      toRemoveReg.push_back(pair.first);
+    }
+  }
+
+  int i = 0;
+  algo::apply(_temporaries, [&i,&toRemoveTemp,delta](CallbackTimer& reg) {
+    reg.update(delta);
+    if (reg.hasEnded()) {
+      toRemoveTemp.push_back(i);
+    }
+
+    ++i;
   });
 
-  algo::apply(_temporaries, [delta](CallbackTimer& reg) {
-    reg.update(delta);
-  });
+  while (!toRemoveReg.empty()) {
+    _registered.erase(toRemoveReg.back());
+  }
+
+  while (!toRemoveTemp.empty()) {
+    _temporaries.erase(_temporaries.begin() + toRemoveTemp.back());
+  }
+}
+
+void TimerManager::clear() {
+  _registered.clear();
+  _temporaries.clear();
 }
 
 } /* hx3d */

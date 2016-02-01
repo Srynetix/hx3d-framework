@@ -29,6 +29,7 @@
 
 #include "hx3d/physics/2d/manifold.hpp"
 #include "hx3d/physics/2d/collider.hpp"
+#include "hx3d/physics/2d/collision_matrix.hpp"
 
 #include "hx3d/physics/2d/attractors/global_attractor.hpp"
 #include "hx3d/physics/2d/attractors/point_attractor.hpp"
@@ -116,6 +117,13 @@ public:
   */
   const Ptr<GlobalAttractor> getGlobalGravity();
 
+  /**
+  @brief Get the collision matrix
+
+  @return Collision matrix
+  */
+  CollisionMatrix& getCollisionMatrix();
+
 private:
   /// @brief Iterations
   unsigned int _iterations;
@@ -135,6 +143,8 @@ private:
   std::set<Manifold> _inContact;
   /// @brief Manifolds in previous contact
   std::set<Manifold> _inPrevContact;
+
+  CollisionMatrix _collisionMatrix;
 
   /**
   @brief Integrate forces on the colliders

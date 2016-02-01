@@ -42,15 +42,17 @@ public:
   @brief Create a timer with a delay as milliseconds.
 
   @param delay Delay
+  @param loop  Loop ?
   */
-  Timer(long delay);
+  Timer(long delay, bool loop = false);
 
   /**
   @brief Initialize the timer with a delay.
 
   @param delay Delay
+  @param loop  Loop ?
   */
-  void initialize(long delay);
+  void initialize(long delay, bool loop = false);
 
   /**
   @brief Reset the timer.
@@ -76,6 +78,13 @@ public:
   */
   void update(float delta);
 
+  /**
+  @brief Is the timer looping ?
+
+  @return True/False
+  */
+  bool isLooping();
+
 private:
 
   /// @brief Timer delay
@@ -84,6 +93,8 @@ private:
   float _elapsed;
   /// @brief Has already ended ?
   bool _alreadyEnded;
+  /// @brief Do loop ?
+  bool _loop;
 };
 
 } /* hx3d */

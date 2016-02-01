@@ -85,7 +85,7 @@ public:
       i_color += 12;
     }
 
-    for (int i = 0; i < tris*3; i += 3) {
+    for (unsigned int i = 0; i < tris*3; i += 3) {
       indices[i] = i;
       indices[i+1] = i+1;
       indices[i+2] = i+2;
@@ -104,7 +104,7 @@ struct RollMovement: public InputHandler {
   float movement_x;
   bool roll_on;
 
-  ArcBallMovement() {
+  RollMovement() {
     movement_x = 0;
     roll_on = false;
   }
@@ -191,7 +191,7 @@ public:
   }
 
 private:
-  ArcBallMovement ballMovement;
+  RollMovement ballMovement;
   PerspectiveCamera camera;
   Mesh mesh;
 

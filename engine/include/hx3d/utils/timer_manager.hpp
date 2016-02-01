@@ -49,8 +49,23 @@ class TimerManager {
     @param name     Name
     @param delay    Delay before callback activation
     @param callback Callback to execute
+    @param loop     Loop ?
     */
-    void createNamedTimer(std::string name, float delay, std::function<void()> callback);
+    void createNamedTimer(std::string name, float delay, std::function<void()> callback, bool loop = false);
+
+    /**
+    @brief Reset a named timer.
+
+    @param name Name
+    */
+    void resetNamedTimer(std::string name);
+
+    /**
+    @brief Remove a named timer.
+
+    @param name Name
+    */
+    void removeNamedTimer(std::string name);
 
     /**
     @brief Add an existing temporary timer.
@@ -64,8 +79,9 @@ class TimerManager {
 
     @param delay    Delay before callback activation
     @param callback Callback to execute
+    @param loop     Loop ?
     */
-    void createTemporaryTimer(float delay, std::function<void()> callback);
+    void createTemporaryTimer(float delay, std::function<void()> callback, bool loop = false);
 
     /**
     @brief Update the timers
@@ -73,6 +89,11 @@ class TimerManager {
     @param delta Delta time
     */
     void update(float delta);
+
+    /**
+    @brief Clear all the timers
+    */
+    void clear();
 
   private:
     std::map<std::string, CallbackTimer> _registered;

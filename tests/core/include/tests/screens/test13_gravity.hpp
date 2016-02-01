@@ -3,13 +3,14 @@
 #include "hx3d/graphics/batch.hpp"
 #include "hx3d/physics/2d/world.hpp"
 
+#include <deque>
+
 using namespace hx3d;
 using namespace hx3d::physics2d;
 
 class Test13: public BaseTestScreen {
 public:
   Test13():
-    text(Core::Assets()->get<Font>("default")),
     pWorld({0, -10}, 10)
   {
     batch.setShader(Core::Assets()->get<Shader>("base"));
@@ -17,12 +18,8 @@ public:
 
     float physRatio = pWorld.getPhysRatio();
 
-    text.transform.position.x = 100;
-    text.transform.position.y = 100;
-    text.transform.position.z = 0.9f;
-
     Collider::Definition cDef;
-    cDef.material.restitution = 0.9f;
+    cDef.material.restitution = 0.1f;
     cDef.material.staticFriction = 0.f;
     cDef.material.dynamicFriction = 0.f;
 
@@ -73,6 +70,13 @@ public:
       bo->position.y = pos.y / physRatio;
       pWorld.addCollider(bo);
 
+      polygons.push_back(bo);
+      if (polygons.size() > 40) {
+        auto po = polygons.front();
+        polygons.pop_front();
+        pWorld.removeCollider(po);
+      }
+
       timer.reset();
     });
 
@@ -106,7 +110,7 @@ public:
     point->radius = 150 / physRatio;
     point->velocity = {5.f, 5.f};
     point->priority = 3;
-    
+
     pWorld.addAttractor(zone);
     pWorld.addAttractor(leftZone);
     pWorld.addAttractor(topZone);
@@ -114,25 +118,25 @@ public:
   }
 
   virtual void onKeyPressed(KeyEvent::Key key) override {
+    float vel = 10;
     if (key == KeyEvent::Key::Q) {
-      me->velocity.x -= 5;
+      me->velocity.x -= vel;
     }
 
     else if (key == KeyEvent::Key::D) {
-      me->velocity.x += 5;
+      me->velocity.x += vel;
     }
 
     else if (key == KeyEvent::Key::Z) {
-      me->velocity.y += 5;
+      me->velocity.y += vel;
     }
 
     else if (key == KeyEvent::Key::S) {
-      me->velocity.y -= 5;
+      me->velocity.y -= vel;
     }
   }
 
   virtual void update(float delta) override {
-    text.setContent(format("FPS: %2.2f", 1.f/delta));
     timer.update(delta);
     pWorld.step(delta);
   }
@@ -141,20 +145,17 @@ public:
     Framebuffer::clear(Color(0, 0, 0));
 
     batch.begin();
-
     pWorld.render(batch);
-
-    batch.draw(text);
     batch.end();
   }
 
 private:
   OrthographicCamera camera;
-  gui::Text text;
   World pWorld;
   CallbackTimer timer;
 
   Batch batch;
 
+  std::deque<Ptr<colliders::Polygon>> polygons;
   Ptr<colliders::Polygon> me;
 };

@@ -23,13 +23,15 @@
 namespace hx3d {
 
 CallbackTimer::CallbackTimer():
-  _timer(-1) {}
+  _timer(-1), _loop(false) {}
 
-CallbackTimer::CallbackTimer(float delay, std::function<void()> function):
-  _timer(delay), _function(function) {}
+CallbackTimer::CallbackTimer(float delay, std::function<void()> function, bool loop):
+  _timer(delay), _function(function), _loop(loop) {}
 
-void CallbackTimer::initialize(float delay, std::function<void()> function) {
+void CallbackTimer::initialize(float delay, std::function<void()> function, bool loop) {
   _timer.initialize(delay);
+
+  _loop = loop;
   _function = function;
 }
 
@@ -39,15 +41,27 @@ long CallbackTimer::remaining() {
 
 void CallbackTimer::update(float delta) {
   _timer.update(delta);
-  
+
   if (_timer.hasEnded()) {
     if (_function)
       _function();
+
+    if (_loop) {
+      reset();
+    }
   }
+}
+
+bool CallbackTimer::hasEnded() {
+  return _timer.hasEnded();
 }
 
 void CallbackTimer::reset() {
   _timer.reset();
+}
+
+bool CallbackTimer::isLooping() {
+  return _loop;
 }
 
 } /* hx3d */

@@ -27,12 +27,14 @@ namespace hx3d {
 Timer::Timer():
   Timer(-1) {}
 
-Timer::Timer(long delay):
-  _delay(delay), _elapsed(0), _alreadyEnded(false)
+Timer::Timer(long delay, bool loop):
+  _delay(delay), _elapsed(0), _alreadyEnded(false), _loop(loop)
 {}
 
-void Timer::initialize(long delay) {
+void Timer::initialize(long delay, bool loop) {
   _delay = delay;
+  _loop = loop;
+
   reset();
 }
 
@@ -49,13 +51,23 @@ long Timer::remaining() {
   return std::max(0L, _delay - elapsed);
 }
 
+bool Timer::isLooping() {
+  return _loop;
+}
+
 bool Timer::hasEnded() {
+
   if (_alreadyEnded)
     return false;
 
   if (remaining() == 0) {
-    _alreadyEnded = true;
-    return true;
+    if (_loop) {
+      reset();
+      return true;
+    } else {
+      _alreadyEnded = true;
+      return true;
+    }
   }
 
   return false;
