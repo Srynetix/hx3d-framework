@@ -100,8 +100,8 @@ public:
     camera.rotate(180.f, glm::vec3(0, 1, 0));
     camera.update();
 
-    mesh.setGeometry(Make<SGeo>(160000));
-    mesh.transform.size = glm::vec3(2);
+    mesh.setGeometry(Make<SGeo>(1600));
+    // mesh.transform.size = glm::vec3(2);
     mesh.transform.position = glm::vec3(0);
 
     batch.setShader(Core::Assets()->get<Shader>("base"));
@@ -115,7 +115,7 @@ public:
   }
 
   virtual void update(float delta) override {
-    camera.rotateAround(glm::vec3(0.f, 0.f, 0.f), 0.1f, glm::vec3(0, 1, 0));
+    camera.rotateAround(glm::vec3(0.f, 0.f, 0.f), 0.8f, glm::vec3(0, 1, 0));
     camera.update();
 
     fps.setContent(format("FPS: %2.2f", 1.f/delta));

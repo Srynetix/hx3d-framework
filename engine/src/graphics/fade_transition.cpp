@@ -23,6 +23,7 @@
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/game.hpp"
+#include "hx3d/window/application.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -43,7 +44,7 @@ void FadeTransition::render(Batch& batch, graphics::Framebuffer& currentFB, grap
   spriteCurrent.transform.position.x = world_size.x / 2;
   spriteCurrent.transform.position.y = world_size.y / 2;
   spriteCurrent.transform.rotation.z = glm::radians(180.f);
-  
+
   spriteNext.transform.position.x = world_size.x / 2;
   spriteNext.transform.position.y = world_size.y / 2;
   spriteNext.transform.rotation.z = glm::radians(180.f);

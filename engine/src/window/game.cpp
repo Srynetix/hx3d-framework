@@ -106,6 +106,7 @@ void Game::render() {
         _currentTransition->reset();
         _nextScreen = nullptr;
 
+        _screen->resize(Core::App()->getWidth(), Core::App()->getHeight());
         _screen->render();
       }
 
@@ -192,6 +193,10 @@ void Game::setScreen(Ptr<Screen> screen) {
 
       if (_currentTransition) {
         _currentTransition->start();
+
+        if (_currentViewport) {
+          _currentViewport->update(_camera, Core::App()->getWidth(), Core::App()->getHeight());
+        }
       }
     }
   }
