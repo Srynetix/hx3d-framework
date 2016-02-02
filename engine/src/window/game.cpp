@@ -158,6 +158,10 @@ void Game::render() {
   }
 }
 
+ObjectMap& Game::getSession() {
+  return _session;
+}
+
 void Game::update(float delta) {
 
   if (!_nextScreen) {

@@ -46,6 +46,16 @@ class ObjectMap {
     T* get(std::string name);
 
     /**
+    @brief Get the value of a named value (because values are all pointers)
+
+    @param name Key
+
+    @return Value value
+    */
+    template <class T>
+    T& getValue(std::string name);
+
+    /**
     @brief Set a named value
 
     @param name   Key

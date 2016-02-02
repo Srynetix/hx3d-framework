@@ -65,6 +65,23 @@ public:
   static Ptr<File> loadBinaryFile(std::string path);
 
   /**
+  @brief Write to an internal ascii file.
+
+  @param path     Path to file
+  @param content  Content
+  */
+  static void writeInternalAsciiFile(std::string path, std::string content);
+
+  /**
+  @brief Load an internal ascii file.
+
+  @param path Path to file
+
+  @return File handler
+  */
+  static Ptr<File> loadInternalAsciiFile(std::string path);
+
+  /**
   @brief Get the file size
 
   @return Size
@@ -103,6 +120,8 @@ private:
     @param path Path to file
     */
     static std::string readAsString(std::string path);
+
+    static std::string getInternalPath();
 
   #elif __APPLE__
 

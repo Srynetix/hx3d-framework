@@ -69,6 +69,24 @@ Ptr<File> File::loadBinaryFile(std::string path) {
   #endif
 }
 
+Ptr<File> File::loadInternalAsciiFile(std::string path) {
+  #if defined(__ANDROID__)
+    path = getInternalPath() + "/" + path;
+  #endif
+
+  return loadAsciiFileDesktop(path);
+}
+
+void File::writeInternalAsciiFile(std::string path, std::string content) {
+  #if defined(__ANDROID__)
+    path = getInternalPath() + "/" + path;
+  #endif
+
+  std::ofstream file(path);
+  file << content;
+  file.close();
+}
+
 std::string File::toString() {
   return std::string(data, size);
 }
@@ -155,6 +173,10 @@ namespace hx3d {
   #include <android/asset_manager_jni.h>
 
 namespace hx3d {
+
+  std::string File::getInternalPath() {
+    return std::string(SDL_AndroidGetInternalStoragePath());
+  }
 
   std::string File::readAsString(std::string path) {
     // Environnement et classe de l'activité

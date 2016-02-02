@@ -54,15 +54,20 @@ SDL2Application::SDL2Application(ApplicationConfig config):
 
 SDL2Application::~SDL2Application() {
 
+  Core::shutdown();
+  _game.reset();
+
   SDL_GL_DeleteContext(_context);
 
   if (_window) {
     SDL_DestroyWindow(_window);
   }
 
-  Core::shutdown();
-
   SDL_Quit();
+
+  #if defined(__ANDROID__)
+    exit(0);
+  #endif
 
   /* Stop the static classes */
   //.........

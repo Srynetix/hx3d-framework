@@ -31,6 +31,7 @@
 #include "hx3d/graphics/transition.hpp"
 
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/object_map.hpp"
 
 namespace hx3d {
 namespace window {
@@ -123,6 +124,13 @@ public:
   const Ptr<graphics::viewports::Viewport>& getViewport();
 
   /**
+  @brief Get the session
+
+  @return Session
+  */
+  ObjectMap& getSession();
+
+  /**
   @brief Get the current game size.
 
   If a viewport is enabled, return the viewport size.
@@ -152,8 +160,9 @@ private:
   graphics::Framebuffer _currentFB;
   graphics::Framebuffer _nextFB;
   Ptr<graphics::Transition> _currentTransition;
-
   Ptr<graphics::viewports::Viewport> _currentViewport;
+
+  ObjectMap _session;
 
   bool _showStats;
 

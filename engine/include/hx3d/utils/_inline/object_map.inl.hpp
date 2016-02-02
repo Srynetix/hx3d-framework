@@ -26,6 +26,11 @@ T* ObjectMap::get(std::string name) {
 }
 
 template <class T>
+T& ObjectMap::getValue(std::string name) {
+  return *static_cast<T*>(_objects[name]);
+}
+
+template <class T>
 void ObjectMap::set(std::string name, T* object) {
   _objects[name] = (void*)object;
 }
