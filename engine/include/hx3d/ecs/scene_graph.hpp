@@ -59,7 +59,6 @@ public:
   @brief Create a game object at a path.
 
   @param path Path
-  @param name Name
   @param args Arguments
 
   @return T (Ptr)
@@ -161,7 +160,6 @@ protected:
   @brief Create a child for a container Node.
 
   @param container  Container node
-  @param name       Child name
   @param args       Arguments
 
   @return Node (Ptr)

@@ -107,7 +107,7 @@ public:
   /**
   @brief Get the camera.
 
-  @param camera Camera
+  @return camera Camera
   */
   Camera* getCamera();
 
