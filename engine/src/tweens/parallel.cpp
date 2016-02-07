@@ -37,11 +37,9 @@ void Parallel::addRepeatingCallback(std::function<void()> func, const float dura
 }
 
 void Parallel::reset() {
-  for (auto i = tweens.begin(); i != tweens.end();) {
+  for (auto i = tweens.begin(); i != tweens.end(); ++i) {
     const Ptr<BaseTween>& tween = *i;
     tween->reset();
-
-    ++i;
   }
 }
 
@@ -50,15 +48,13 @@ void Parallel::update(const float delta) {
     return;
 
   bool all_ended = true;
-  for (auto i = tweens.begin(); i != tweens.end();) {
+  for (auto i = tweens.begin(); i != tweens.end(); ++i) {
     const Ptr<BaseTween>& tween = *i;
 
     if (!tween->hasEnded()) {
       all_ended = false;
       tween->update(delta);
     }
-
-    ++i;
   }
 
   if (all_ended) {

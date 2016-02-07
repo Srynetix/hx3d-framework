@@ -29,8 +29,7 @@
 
 #include "hx3d/utils/ptr.hpp"
 
-#include <queue>
-#include <stack>
+#include <vector>
 
 namespace hx3d {
 namespace tweens {
@@ -84,8 +83,7 @@ public:
 
 private:
   /// @brief Tweens
-  std::queue<Ptr<BaseTween>> tweens;
-  std::stack<Ptr<BaseTween>> doneTweens;
+  std::vector<Ptr<BaseTween>> tweens;
 };
 
 } /* math */

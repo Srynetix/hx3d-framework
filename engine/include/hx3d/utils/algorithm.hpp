@@ -50,6 +50,17 @@ template <class Container, class Function>
 void apply(Container& container, Function func);
 
 /**
+@brief Map a container.
+
+@param container  Container
+@param func       Function
+
+@return New container
+*/
+template <class Container, class Function>
+Container map(Container& container, Function func);
+
+/**
 @brief Clone a container.
 
 @param src Source container
@@ -57,6 +68,17 @@ void apply(Container& container, Function func);
 */
 template <class Source, class Dest>
 void clone(Source& src, Dest& dst);
+
+/**
+@brief Generate a range.
+
+@param beg First value
+@param end Last value
+
+@return Range between 'beg' and 'end'
+*/
+template <class T>
+std::vector<T> range(T beg, T end);
 
 /**
 @brief Apply a simple reduce.

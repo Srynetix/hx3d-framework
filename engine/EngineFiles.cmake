@@ -30,6 +30,7 @@ set(
 
   # UTILS
 
+  "${ENGINE_SRC}/utils/benchmark.cpp"
   "${ENGINE_SRC}/utils/bitset.cpp"
   "${ENGINE_SRC}/utils/callback_timer.cpp"
   "${ENGINE_SRC}/utils/chronometer.cpp"

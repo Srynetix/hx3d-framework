@@ -31,6 +31,22 @@ void clone(Source& src, Dest& dst) {
   std::copy(src.begin(), src.end(), std::inserter(dst, dst.begin()));
 }
 
+template <class T>
+std::vector<T> range(T beg, T end) {
+  std::vector<T> vec(end - beg);
+  std::iota(vec.begin(), vec.end(), beg);
+
+  return vec;
+}
+
+template <class Container, class Function>
+Container map(Container& container, Function func) {
+  Container output(container.size());
+
+  std::transform(container.begin(), container.end(), output.begin(), func);
+  return output;
+}
+
 template <class Container, class Type>
 Type reduce(Container& container, Type init) {
   return std::accumulate(container.begin(), container.end(), init);

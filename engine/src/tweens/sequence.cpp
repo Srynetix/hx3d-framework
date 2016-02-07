@@ -27,26 +27,22 @@ Sequence::Sequence(bool infinite): BaseTween(infinite) {}
 
 void Sequence::addDelay(const float delay) {
   Ptr<BaseTween> tween = Make<Delay>(delay);
-  tweens.push(tween);
+  tweens.push_back(tween);
 }
 
 void Sequence::addCallback(std::function<void()> func) {
   Ptr<BaseTween> tween = Make<Callback>(func);
-  tweens.push(tween);
+  tweens.push_back(tween);
 }
 
 void Sequence::add(const Ptr<BaseTween>& tween) {
-  tweens.push(tween);
+  tweens.push_back(tween);
 }
 
 void Sequence::reset() {
-  while (!doneTweens.empty()) {
-    auto& tween = doneTweens.top();
-
-    tween.reset();
-    tweens.push(tween);
-
-    doneTweens.pop();
+  for (auto i = tweens.begin(); i != tweens.end(); ++i) {
+    const Ptr<BaseTween>& tween = *i;
+    tween->reset();
   }
 }
 
@@ -54,15 +50,18 @@ void Sequence::update(const float delta) {
   if (_ended)
     return;
 
-  const Ptr<BaseTween>& tween = tweens.front();
-  if (tween->hasEnded()) {
-    doneTweens.push(tween);
-    tweens.pop();
-  } else {
-    tween->update(delta);
+  bool all_ended = true;
+  for (auto i = tweens.begin(); i != tweens.end(); ++i) {
+    const Ptr<BaseTween>& tween = *i;
+
+    if (!tween->hasEnded()) {
+      all_ended = false;
+      tween->update(delta);
+      break;
+    }
   }
 
-  if (tweens.empty()) {
+  if (all_ended) {
     if (_infinite) {
       reset();
     } else {

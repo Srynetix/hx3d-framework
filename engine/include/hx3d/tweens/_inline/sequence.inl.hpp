@@ -24,7 +24,7 @@ namespace tweens {
 template <class T>
 void Sequence::addTween(T& mod, const T to, const float duration, const math::Interpolation interp) {
   Ptr<BaseTween> tween = Make<Tween<T>>(mod, to, duration, interp);
-  tweens.push(tween);
+  tweens.push_back(tween);
 }
 
 } /* math */
