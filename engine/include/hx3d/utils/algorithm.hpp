@@ -35,6 +35,16 @@ namespace algo {
 
 @param container  Container
 @param func       Function
+
+<i>Example code</i>
+
+@code
+// Vector creation from 1 to 6
+std::vector<int> v = {1, 2, 3, 4, 5, 6};
+
+// Display each value
+algo::apply(v, [](int e) { Log.Info("Num: %d", e); });
+@endcode
 */
 template <class Container, class Function>
 void apply(Container& container, Function func);
@@ -47,6 +57,29 @@ void apply(Container& container, Function func);
 */
 template <class Source, class Dest>
 void clone(Source& src, Dest& dst);
+
+/**
+@brief Apply a simple reduce.
+
+@param container  Container
+@param init       Base value
+
+@return Accumulated value
+*/
+template <class Container, class Type>
+Type reduce(Container& container, Type init);
+
+/**
+@brief Apply a reduce operation.
+
+@param container  Container
+@param init       Base value
+@param operation  Operation
+
+@return Accumulated value
+*/
+template <class Container, class Type, class Operation>
+Type reduce(Container& container, Type init, Operation operation);
 
 } /* algo */
 } /* hx3d */

@@ -28,6 +28,34 @@ namespace audio {
 
 /**
 @brief Audio waveform displaying.
+
+<i>Example code</i>
+@code
+// Inside a create function...
+
+// Create a waveform
+audio::Waveform waveform;
+
+waveform.transform.position.x = 100;
+waveform.transform.position.y = 100;
+
+[...]
+
+// Inside an update function...
+
+// Get a signed short stream (see audio::S16Converter)
+short* stream = s16converter.getS16Stream();
+
+// Update the waveform
+waveform.update(stream, s16converter.getSampleSize(), delta);
+
+[...]
+
+// Inside a render function...
+
+// Display the waveform
+batch.draw(waveform);
+@endcode
 */
 class Waveform: public Display {
 public:

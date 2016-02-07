@@ -31,5 +31,15 @@ void clone(Source& src, Dest& dst) {
   std::copy(src.begin(), src.end(), std::inserter(dst, dst.begin()));
 }
 
+template <class Container, class Type>
+Type reduce(Container& container, Type init) {
+  return std::accumulate(container.begin(), container.end(), init);
+}
+
+template <class Container, class Type, class Operation>
+Type reduce(Container& container, Type init, Operation operation) {
+  return std::accumulate(container.begin(), container.end(), init, operation);
+}
+
 } /* algo */
 } /* hx3d */

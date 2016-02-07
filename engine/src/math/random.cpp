@@ -19,11 +19,53 @@
 */
 
 #include "hx3d/math/random.hpp"
+#include "hx3d/utils/algorithm.hpp"
+#include "hx3d/utils/log.hpp"
 
 #include <cstdlib>
 
 namespace hx3d {
 namespace math {
+
+WeightedRandom::WeightedRandom() {}
+
+void WeightedRandom::define(int i, int weight, std::function<void()> f) {
+  if (_weights.find(i) == _weights.end()) {
+    _vec.push_back(i);
+    _weights[i] = weight;
+    _map[i] = f;
+  } else {
+    Log.Error("WeightedRandom: Already defined '%d'", i);
+  }
+}
+
+int WeightedRandom::random() {
+  int n = get_number(math::random(0, total_count() - 1));
+  _map[n]();
+
+  return n;
+}
+
+int WeightedRandom::get_number(int gen) {
+  int curr = 0;
+
+  for (auto n: _vec) {
+    for (int i = 0; i < _weights[n]; ++i) {
+      if (gen == curr)
+        return n;
+
+      ++curr;
+    }
+  }
+
+  return -1;
+}
+
+int WeightedRandom::total_count() {
+  return algo::reduce(_vec, 0, [this](int res, int val){ return res + _weights[val]; });
+}
+
+///////////////////
 
 float randfloat() {
   return (float)rand() / (RAND_MAX + 1.f);

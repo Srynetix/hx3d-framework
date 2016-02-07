@@ -21,8 +21,62 @@
 #ifndef HX3D_MATH_RANDOM
 #define HX3D_MATH_RANDOM
 
+#include <functional>
+#include <vector>
+#include <map>
+
 namespace hx3d {
 namespace math {
+
+/**
+@brief Weighted random generator with callbacks.
+
+<i>Example code</i>
+@code
+// Create a weighted random generator
+math::WeightedRandom wr;
+
+// Define the entry '0' with a weight of 5, will write "0 choosed !" if choosed.
+wr.define(0, 5, [](){ Log.Info("0 choosed !") });
+
+// Define the entry '1' with a weight of 2, will write "1 choosed !" if choosed.
+wr.define(1, 2, [](){ Log.Info("1 choosed !") });
+
+// Define the entry '2' with a weight of 8, will write "2 choosed !" if choosed.
+wr.define(2, 8, [](){ Log.Info("2 choosed !") });
+
+// Choose a number between the entries defined, execute the corresponding callback, and return the value choosed.
+int choosed = wr.random(); // or only wr.random();
+@endcode
+*/
+class WeightedRandom {
+public:
+  WeightedRandom();
+
+  /**
+  @brief Define a value with a weight and a callback.
+
+  @param i      Value
+  @param weight Weight
+  @param f      Callback
+  */
+  void define(int i, int weight, std::function<void()> f);
+
+  /**
+  @brief Choose a random number and execute the callback
+
+  @return Choosed value
+  */
+  int random();
+
+private:
+  std::vector<int> _vec;
+  std::map<int, int> _weights;
+  std::map<int, std::function<void()>> _map;
+
+  int get_number(int gen);
+  int total_count();
+};
 
 /**
 @brief Generate a random float between 0.0 and 1.0.

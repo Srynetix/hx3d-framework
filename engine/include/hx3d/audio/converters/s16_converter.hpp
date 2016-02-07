@@ -28,6 +28,28 @@ namespace audio {
 
 /**
 @brief Convert an audio stream to the signed short format
+
+<i>Example code</i>
+@code
+// Inside a create function...
+
+// Converter creation
+audio::S16Converter converter;
+
+// Assign the converter as an effect over the main post channel
+Core::Audio()->registerEffect(AudioDevice::PostChannel, converter);
+
+[...]
+
+// Inside an update function...
+
+// If the converter has finished to convert
+if (converter.hasProcessed()) {
+
+  // Get the signed short stream and do whatever you want !
+  short* stream = converter.getS16Stream();
+}
+@endcode
 */
 class S16Converter: public Effect {
 public:

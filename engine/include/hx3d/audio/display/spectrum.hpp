@@ -29,6 +29,39 @@ namespace audio {
 
 /**
 @brief Audio spectrum displaying.
+
+<i>Example code</i>
+@code
+// Inside a create function...
+
+// Create a spectrum from 100Hz to 10KHz, with 10 bars
+audio::Spectrum spectrum(100, 10000, 10);
+
+spectrum.transform.position.x = 100;
+spectrum.transform.position.y = 100;
+
+[...]
+
+// Inside an update function...
+
+// Get a signed short stream (see audio::S16Converter)
+short* stream = s16converter.getS16Stream();
+
+// Update the spectrum
+spectrum.update(stream, s16converter.getSampleSize(), delta);
+
+// Look for an amplitude (for example 1KHz with a 500Hz range) -> between 0 and 1
+float amp = spectrum.getNormalizedFrequencyAmplitude(1000, 500);
+
+// > Do whatever you want with the amplitude ! (tempo measure ?)
+
+[...]
+
+// Inside a render function...
+
+// Display the spectrum
+batch.draw(spectrum);
+@endcode
 */
 class Spectrum: public Display {
 public:
