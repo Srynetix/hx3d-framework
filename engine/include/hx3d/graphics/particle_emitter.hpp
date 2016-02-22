@@ -24,6 +24,10 @@
 #include "hx3d/graphics/particle.hpp"
 #include "hx3d/utils/pool.hpp"
 
+/**
+TODO: Create a particle batch
+*/
+
 namespace hx3d {
 namespace graphics {
 

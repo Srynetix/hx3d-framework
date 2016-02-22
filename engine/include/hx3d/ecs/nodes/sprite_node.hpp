@@ -1,5 +1,5 @@
 /*
-    ECS header.
+    Sprite node.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,40 @@
     USA
 */
 
-#ifndef HX3D_MAIN_ECS
-#define HX3D_MAIN_ECS
+#ifndef HX3D_ECS_NODES_SPRITENODE
+#define HX3D_ECS_NODES_SPRITENODE
 
-#include "hx3d/ecs/component.hpp"
-#include "hx3d/ecs/engine.hpp"
-#include "hx3d/ecs/entity.hpp"
 #include "hx3d/ecs/node.hpp"
-#include "hx3d/ecs/scene_graph.hpp"
-#include "hx3d/ecs/system.hpp"
 
-#include "hx3d/ecs/nodes/sprite_node.hpp"
-#include "hx3d/ecs/nodes/physics_node.hpp"
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/base_batch.hpp"
 
-#endif /* HX3D_MAIN_ECS */
+namespace hx3d {
+namespace ecs {
+
+/**
+@brief Simple sprite node.
+*/
+class SpriteNode: public Node {
+public:
+  /**
+  @brief Create a sprite node using a texture
+
+  @param name    Name
+  @param texture Texture (Ptr)
+  */
+  SpriteNode(std::string name, const Ptr<graphics::Texture>& texture);
+
+  virtual void draw(graphics::BaseBatch& batch) override;
+  virtual void update(float delta) override;
+
+protected:
+  Ptr<graphics::Texture> _texture;
+  graphics::Sprite _sprite;
+};
+
+} /* ecs */
+} /* hx3d */
+
+#endif /* HX3D_ECS_NODES_SPRITENODE */

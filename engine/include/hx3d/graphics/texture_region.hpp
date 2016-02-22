@@ -89,6 +89,20 @@ public:
   */
   float getMaxY();
 
+  /**
+  @brief Get the region width
+
+  @return Width
+  */
+  float getWidth();
+
+  /**
+  @brief Get the region height
+
+  @return Height
+  */
+  float getHeight();
+
 private:
   /// @brief Texture
   Ptr<Texture> _texture;

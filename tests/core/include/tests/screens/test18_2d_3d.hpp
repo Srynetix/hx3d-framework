@@ -2,6 +2,8 @@
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
+#include "hx3d/window/game.hpp"
+#include "hx3d/utils/algorithm.hpp"
 #include "hx3d/tweens.hpp"
 
 #include "hx3d/physics/2d/world.hpp"
@@ -107,6 +109,11 @@ public:
   Test18():
     camera3d(0.1f, 3500.f)
   {
+    glm::vec2 worldSize = Core::CurrentGame()->getSize();
+
+    constexpr int tileSize = 64;
+    tilesToClear = algo::range(0, (int)(std::ceil(worldSize.x / tileSize) * std::ceil(worldSize.y / tileSize)));
+
     camera3d.translate(glm::vec3(0.f, 0.f, -1000.f));
     camera3d.rotate(180.f, glm::vec3(0, 1, 0));
     camera3d.update();
@@ -121,13 +128,41 @@ public:
     mesh.transform.size = glm::vec3(2);
     mesh.transform.position = glm::vec3(0);
 
+    image.create(Core::CurrentGame()->getSize().x, Core::CurrentGame()->getSize().y);
+    image.setRect(0, 0, Core::CurrentGame()->getSize().x-1, Core::CurrentGame()->getSize().y-1, Color::White);
+    image.buildTexture();
+
     sprite.setTexture(Core::Assets()->get<Texture>("logo"));
-    sprite.transform.position.x = Core::App()->getWidth() / 2;
-    sprite.transform.position.y = Core::App()->getHeight() / 2;
+    sprite.transform.position.x = Core::CurrentGame()->getSize().x / 2;
+    sprite.transform.position.y = Core::CurrentGame()->getSize().y / 2;
+    sprite.transform.position.z = 0.1f;
+
+    sprImage.setTexture(image.getTexture());
+    sprImage.transform.position.x = Core::CurrentGame()->getSize().x / 2;
+    sprImage.transform.position.y = Core::CurrentGame()->getSize().y / 2;
+    sprImage.transform.position.z = 0.5f;
 
     auto seq = Make<tweens::Sequence>(true);
     seq->addTween(sprite.transform.rotation.z, 2 * 3.14f, 5, math::Interpolation::InOutElastic);
     tweens.add(seq);
+
+    timers.createNamedTimer("carr", 10, [this, worldSize, tileSize](){
+
+      if (tilesToClear.empty())
+        return;
+
+      int i = math::random(0, tilesToClear.size() - 1);
+      int elem = tilesToClear[i];
+      tilesToClear.erase(tilesToClear.begin() + i);
+
+      int x = elem % (int)(std::floor(worldSize.x / tileSize));
+      int y = elem / (int)(std::floor(worldSize.x / tileSize));
+
+      image.setRect(x * tileSize, y * tileSize, tileSize, tileSize, Color(0, 255, 255, 0));
+      image.updateTextureZone(x * tileSize, y * tileSize, tileSize, tileSize);
+
+      timers.resetNamedTimer("carr");
+    });
   }
 
   virtual void update(float delta) override {
@@ -135,6 +170,7 @@ public:
     camera3d.update();
 
     tweens.update(delta);
+    timers.update(delta);
   }
 
   virtual void render() override {
@@ -146,6 +182,7 @@ public:
 
     batch2d.begin();
     batch2d.draw(sprite);
+    batch2d.draw(sprImage);
     batch2d.end();
   }
 
@@ -154,8 +191,14 @@ private:
   PerspectiveCamera camera3d;
 
   Mesh mesh;
+  Image image;
+  Sprite sprImage;
   Sprite sprite;
   tweens::TweenManager tweens;
+
+  std::vector<int> tilesToClear;
+
+  TimerManager timers;
 
   Batch batch2d;
   Batch batch3d;

@@ -1,5 +1,5 @@
 /*
-    ECS header.
+    Random utils.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,17 +18,14 @@
     USA
 */
 
-#ifndef HX3D_MAIN_ECS
-#define HX3D_MAIN_ECS
+namespace hx3d {
+namespace math {
 
-#include "hx3d/ecs/component.hpp"
-#include "hx3d/ecs/engine.hpp"
-#include "hx3d/ecs/entity.hpp"
-#include "hx3d/ecs/node.hpp"
-#include "hx3d/ecs/scene_graph.hpp"
-#include "hx3d/ecs/system.hpp"
+template <class T>
+T random(std::vector<T>& vector) {
+  int p = random(0, vector.size() - 1);
+  return vector.at(p);
+}
 
-#include "hx3d/ecs/nodes/sprite_node.hpp"
-#include "hx3d/ecs/nodes/physics_node.hpp"
-
-#endif /* HX3D_MAIN_ECS */
+} /* math */
+} /* hx3d */

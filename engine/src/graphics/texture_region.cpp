@@ -54,5 +54,13 @@ float TextureRegion::getMaxY() {
   return _maxY;
 }
 
+float TextureRegion::getWidth() {
+  return _maxX - _minX;
+}
+
+float TextureRegion::getHeight() {
+  return _maxY - _minY;
+}
+
 } /* graphics */
 } /* hx3d */

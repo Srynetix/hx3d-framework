@@ -132,6 +132,9 @@ set(
   "${ENGINE_SRC}/ecs/scene_graph.cpp"
   "${ENGINE_SRC}/ecs/system.cpp"
 
+  "${ENGINE_SRC}/ecs/nodes/sprite_node.cpp"
+  "${ENGINE_SRC}/ecs/nodes/physics_node.cpp"
+
   # TWEENS
 
   "${ENGINE_SRC}/tweens/base_tween.cpp"

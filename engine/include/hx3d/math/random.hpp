@@ -96,6 +96,14 @@ float randfloat();
 int random(int min, int max);
 
 /**
+@brief Return a random element.
+
+@param vector Vector
+*/
+template <class T>
+T random(std::vector<T>& vector);
+
+/**
 @brief Generate a random boolean.
 
 @return Random boolean.
@@ -104,5 +112,7 @@ bool flip_coin();
 
 } /* math */
 } /* hx3d */
+
+#include "hx3d/math/_inline/random.inl.hpp"
 
 #endif

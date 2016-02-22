@@ -68,6 +68,24 @@ class TimerManager {
     void removeNamedTimer(std::string name);
 
     /**
+    @brief Get a named timer remaining time.
+
+    @param name Name
+
+    @return Remaining time
+    */
+    long getNamedTimerRemainingTime(std::string name);
+
+    /**
+    @brief Test if a named timer exists
+
+    @param name Name
+
+    @return True/False
+    */
+    bool namedTimerExists(std::string name);
+
+    /**
     @brief Add an existing temporary timer.
 
     @param timer  Timer

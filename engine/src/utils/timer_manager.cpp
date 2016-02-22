@@ -45,6 +45,14 @@ void TimerManager::removeNamedTimer(std::string name) {
   }
 }
 
+long TimerManager::getNamedTimerRemainingTime(std::string name) {
+  return _registered[name].remaining();
+}
+
+bool TimerManager::namedTimerExists(std::string name) {
+  return _registered.find(name) != _registered.end();
+}
+
 void TimerManager::addTemporaryTimer(CallbackTimer& timer) {
   _temporaries.push_back(timer);
 }
