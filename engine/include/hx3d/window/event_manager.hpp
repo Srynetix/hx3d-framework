@@ -44,8 +44,10 @@ public:
 
     /**
     @brief Poll the event queue.
+
+    > IMPLEMENTATION NEEDED.
     */
-    virtual void poll() = 0;
+    void poll();
 
     /**
     @brief Test the window state.

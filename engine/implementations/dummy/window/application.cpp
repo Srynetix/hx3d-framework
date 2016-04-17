@@ -1,5 +1,5 @@
 /*
-    Window header.
+    Dummy Application Implementation.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,15 +18,26 @@
     USA
 */
 
-#ifndef HX3D_MAIN_WINDOW
-#define HX3D_MAIN_WINDOW
+#define HX3D_WINDOW_APPLICATION_INJECTION \
+    std::string _hello;
 
-#include "hx3d/window/application_config.hpp"
 #include "hx3d/window/application.hpp"
-#include "hx3d/window/event_manager.hpp"
-#include "hx3d/window/events.hpp"
 #include "hx3d/window/game.hpp"
-#include "hx3d/window/input_handler.hpp"
-#include "hx3d/window/screen.hpp"
 
-#endif /* HX3D_MAIN_WINDOW */
+#include "hx3d/utils/log.hpp"
+#include "hx3d/utils/ptr.hpp"
+
+namespace hx3d {
+namespace window {
+
+Application::Application(ApplicationConfig config): _hello("Coucou") {
+  Log.Info("I will crash and it's perfectly normal (because I don't initialize Core)");
+  Log.Info("Hello: %s", _hello.c_str());
+}
+
+Application::~Application() {}
+
+void Application::start(const Ptr<Game>& game) {}
+
+} /* window */
+} /* hx3d */

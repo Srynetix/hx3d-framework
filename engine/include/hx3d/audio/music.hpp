@@ -21,8 +21,6 @@
 #ifndef HX3D_AUDIO_MUSIC
 #define HX3D_AUDIO_MUSIC
 
-#include <SDL2/SDL_mixer.h>
-
 #include "hx3d/utils/file.hpp"
 
 namespace hx3d {
@@ -74,10 +72,13 @@ public:
   bool isPlaying();
 
 private:
-  /// @brief SDL_Mixer music
-  Mix_Music* _music;
   /// @brief File pointer
   Ptr<File> _file;
+
+#ifdef HX3D_AUDIO_MUSIC_INJECTION
+  HX3D_AUDIO_MUSIC_INJECTION
+#endif
+
 };
 
 } /* audio */

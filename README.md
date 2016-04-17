@@ -108,12 +108,12 @@ npm install -g ios-deploy
 
 - Linux
 - Android
-- Mac OS X
-- iOS
 
 #### In process ####
 
 - Windows
+- Mac OS X
+- iOS
 
 #### Will be available later ####
 
@@ -121,21 +121,18 @@ npm install -g ios-deploy
 
 ## <a name="building"></a> Building ##
 
-**hx3d** has it's own build system made in Python.  
+**hx3d** has it's own toolkit dedicated to project building, made in Python.
 It uses CMake and Ninja internally.
 
-It's simple enough to add new targets easily.
+It's simple enough to add new handlers easily.
 
-The build script is `build.py`.  
-The configuration is in `config.py`.
+The executable is in `tools/toolkit/bin/hx3d`.  
+The configuration is in `tools/toolkit/config.yml`.
 
 You must provide the target. The existing targets are:
 
 - `linux`
 - `android`
-- `windows`
-- `macos`
-- `ios`
 
 Then it supports multiple options:
 

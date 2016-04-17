@@ -1,27 +1,24 @@
-_build_android/
-_build_linux/
-_build_windows/
-_build_macos/
-_build_ios/
+/_build_*
+/_dep_fetch_*
 
-site/
-dependencies/
-game/
-doc/
-lab/
-tools/
-_game/
+/site/
+/dependencies
+/game/
+/doc/
+/lab/
+/tools/
+/_game/
 
-tests/android/libs
-tests/android/gen
-tests/android/bin
-tests/android/assets
-tests/android/obj
-tests/android/ext/hx3d/
-tests/android/jni/include
+/tests/android/libs
+/tests/android/gen
+/tests/android/bin
+/tests/android/assets
+/tests/android/obj
+/tests/android/ext/hx3d/
+/tests/android/jni/include
 
-tests/ios/assets
-tests/ios/build
+/tests/ios/assets
+/tests/ios/build
 
 .DS_Store
 /CMakeLists.txt

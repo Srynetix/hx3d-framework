@@ -1,5 +1,5 @@
 /*
-    Music management.
+    SDL2 mixer music management.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,10 +18,51 @@
     USA
 */
 
+#include <SDL2/SDL_mixer.h>
+
+#define HX3D_AUDIO_MUSIC_INJECTION \
+  Mix_Music* _music;
+
 #include "hx3d/audio/music.hpp"
+#include "hx3d/utils/file.hpp"
 
 namespace hx3d {
 namespace audio {
+
+Music::Music(): _file(nullptr) {
+  _music = nullptr;
+}
+
+Music::Music(const std::string pathToFile) {
+  initialize(pathToFile);
+}
+
+Music::~Music() {
+  Mix_FreeMusic(_music);
+}
+
+void Music::initialize(const std::string pathToFile) {
+  _file = File::loadBinaryFile(pathToFile);
+
+  SDL_RWops* musicOps = SDL_RWFromConstMem(_file->getData(), _file->getSize());
+  _music = Mix_LoadMUS_RW(musicOps, 1);
+}
+
+void Music::play() {
+  if (_music) {
+    Mix_PlayMusic(_music, 1);
+  }
+}
+
+void Music::stop() {
+  if (_music) {
+    Mix_HaltMusic();
+  }
+}
+
+bool Music::isPlaying() {
+  return Mix_PlayingMusic() != 0;
+}
 
 } /* audio */
 } /* hx3d */

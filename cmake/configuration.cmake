@@ -1,3 +1,18 @@
+## Configuration
+
+# Audio
+# -> SDL2
+if (NOT DEFINED AUDIO_PROVIDER)
+  set(AUDIO_PROVIDER "SDL2")
+endif()
+
+# Window
+# -> Dummy
+# -> SDL2
+if (NOT DEFINED WINDOW_PROVIDER)
+  set(WINDOW_PROVIDER "SDL2")
+endif()
+
 ## Flags C++
 
 set(

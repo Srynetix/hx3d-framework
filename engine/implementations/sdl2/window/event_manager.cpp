@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/window/sdl2/sdl2_events.hpp"
+#include "hx3d/window/event_manager.hpp"
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/application.hpp"
@@ -29,7 +29,7 @@
 namespace hx3d {
 namespace window {
 
-void SDL2EventManager::poll() {
+void EventManager::poll() {
   SDL_Event event;
 
   while (SDL_PollEvent(&event)) {

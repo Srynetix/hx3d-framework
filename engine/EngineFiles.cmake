@@ -1,11 +1,11 @@
 set(
-  COMMON_FILES
-
-  # CORE
+  CORE_FILES
 
   "${ENGINE_SRC}/core/core.cpp"
+)
 
-  # AUDIO
+set(
+  AUDIO_FILES
 
   "${ENGINE_SRC}/audio/audio.cpp"
   "${ENGINE_SRC}/audio/effect.cpp"
@@ -15,8 +15,10 @@ set(
   "${ENGINE_SRC}/audio/display/spectrum.cpp"
   "${ENGINE_SRC}/audio/display/waveform.cpp"
   "${ENGINE_SRC}/audio/converters/s16_converter.cpp"
+)
 
-  # WINDOW
+set(
+  WINDOW_FILES
 
   "${ENGINE_SRC}/window/application.cpp"
   "${ENGINE_SRC}/window/application_config.cpp"
@@ -24,11 +26,10 @@ set(
   "${ENGINE_SRC}/window/game.cpp"
   "${ENGINE_SRC}/window/input_handler.cpp"
   "${ENGINE_SRC}/window/screen.cpp"
+)
 
-  "${ENGINE_SRC}/window/sdl2/sdl2_application.cpp"
-  "${ENGINE_SRC}/window/sdl2/sdl2_events.cpp"
-
-  # UTILS
+set(
+  UTILS_FILES
 
   "${ENGINE_SRC}/utils/benchmark.cpp"
   "${ENGINE_SRC}/utils/bitset.cpp"
@@ -42,15 +43,19 @@ set(
   "${ENGINE_SRC}/utils/string.cpp"
   "${ENGINE_SRC}/utils/timer_manager.cpp"
   "${ENGINE_SRC}/utils/timer.cpp"
+)
 
-  # MATH
+set(
+  MATH_FILES
 
   "${ENGINE_SRC}/math/function.cpp"
   "${ENGINE_SRC}/math/number_utils.cpp"
   "${ENGINE_SRC}/math/random.cpp"
   "${ENGINE_SRC}/math/vector_utils.cpp"
+)
 
-  # GRAPHICS
+set(
+  GRAPHICS_FILES
 
   "${ENGINE_SRC}/graphics/animation.cpp"
   "${ENGINE_SRC}/graphics/base_batch.cpp"
@@ -94,18 +99,24 @@ set(
   "${ENGINE_SRC}/graphics/geometries/origin_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/sprite_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/star_geometry.cpp"
+)
 
-  # GUI
+set(
+  GUI_FILES
 
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/text.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"
+)
 
-  # NET
+set(
+  NET_FILES
 
   "${ENGINE_SRC}/net/net.cpp"
+)
 
-  # 2D PHYSICS
+set(
+  PHYSICS2D_FILES
 
   "${ENGINE_SRC}/physics/2d/attractor.cpp"
   "${ENGINE_SRC}/physics/2d/collider.cpp"
@@ -122,8 +133,10 @@ set(
   "${ENGINE_SRC}/physics/2d/attractors/global_attractor.cpp"
   "${ENGINE_SRC}/physics/2d/attractors/point_attractor.cpp"
   "${ENGINE_SRC}/physics/2d/attractors/zone_attractor.cpp"
+)
 
-  # ECS
+set(
+  ECS_FILES
 
   "${ENGINE_SRC}/ecs/component.cpp"
   "${ENGINE_SRC}/ecs/engine.cpp"
@@ -134,8 +147,10 @@ set(
 
   "${ENGINE_SRC}/ecs/nodes/sprite_node.cpp"
   "${ENGINE_SRC}/ecs/nodes/physics_node.cpp"
+)
 
-  # TWEENS
+set(
+  TWEENS_FILES
 
   "${ENGINE_SRC}/tweens/base_tween.cpp"
   "${ENGINE_SRC}/tweens/callback.cpp"

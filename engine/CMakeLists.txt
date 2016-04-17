@@ -17,7 +17,7 @@
 #     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 #     USA
 
-include(../cmake/system_check.cmake)
+include(../cmake/dependencies/system_check.cmake)
 include(../cmake/configuration.cmake)
 
 ###################
@@ -115,7 +115,33 @@ include_directories(${ENGINE_ROOT}/include)
 ###################
 ## Files
 
-include(./EngineFiles.cmake)
+include(EngineFiles.cmake)
+
+if (AUDIO_PROVIDER STREQUAL "SDL2")
+  include(../cmake/implementations/audio/sdl2.cmake)
+endif()
+
+if (WINDOW_PROVIDER STREQUAL "SDL2")
+  include(../cmake/implementations/window/sdl2.cmake)
+elseif(WINDOW_PROVIDER STREQUAL "Dummy")
+  include(../cmake/implementations/window/dummy.cmake)
+endif()
+
+set(
+  COMMON_FILES
+
+  ${CORE_FILES}
+  ${AUDIO_FILES}
+  ${WINDOW_FILES}
+  ${UTILS_FILES}
+  ${MATH_FILES}
+  ${GRAPHICS_FILES}
+  ${GUI_FILES}
+  ${NET_FILES}
+  ${PHYSICS2D_FILES}
+  ${ECS_FILES}
+  ${TWEENS_FILES}
+)
 
 #################
 ## Compilation

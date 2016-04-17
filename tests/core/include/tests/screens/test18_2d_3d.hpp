@@ -111,8 +111,9 @@ public:
   {
     glm::vec2 worldSize = Core::CurrentGame()->getSize();
 
-    constexpr int tileSize = 64;
-    tilesToClear = algo::range(0, (int)(std::ceil(worldSize.x / tileSize) * std::ceil(worldSize.y / tileSize)));
+    constexpr int tileSize = 8;
+    constexpr int qty = 160;
+    tilesToClear = algo::range(0, (int)(std::ceil(worldSize.x / (float)tileSize) * std::ceil(worldSize.y / (float)tileSize)));
 
     camera3d.translate(glm::vec3(0.f, 0.f, -1000.f));
     camera3d.rotate(180.f, glm::vec3(0, 1, 0));
@@ -146,20 +147,24 @@ public:
     seq->addTween(sprite.transform.rotation.z, 2 * 3.14f, 5, math::Interpolation::InOutElastic);
     tweens.add(seq);
 
-    timers.createNamedTimer("carr", 10, [this, worldSize, tileSize](){
+    timers.createNamedTimer("carr", 1, [this, worldSize, tileSize](){
 
-      if (tilesToClear.empty())
-        return;
+      for (int k = 0; k < qty; ++k) {
+        if (tilesToClear.empty())
+          return;
 
-      int i = math::random(0, tilesToClear.size() - 1);
-      int elem = tilesToClear[i];
-      tilesToClear.erase(tilesToClear.begin() + i);
+        int i = math::random(0, tilesToClear.size() - 1);
+        int elem = tilesToClear[i];
+        tilesToClear.erase(tilesToClear.begin() + i);
 
-      int x = elem % (int)(std::floor(worldSize.x / tileSize));
-      int y = elem / (int)(std::floor(worldSize.x / tileSize));
+        int x = elem % (int)(std::floor(worldSize.x / (float)tileSize));
+        int y = (elem / (int)(std::floor(worldSize.x / (float)tileSize)));
 
-      image.setRect(x * tileSize, y * tileSize, tileSize, tileSize, Color(0, 255, 255, 0));
-      image.updateTextureZone(x * tileSize, y * tileSize, tileSize, tileSize);
+        // Log.Info("Y: %d", y);
+
+        image.setRect(x * tileSize, y * tileSize, tileSize, tileSize, Color(0, 255, 255, 0));
+        image.updateTextureZone(x * tileSize, y * tileSize, tileSize, tileSize);
+      }
 
       timers.resetNamedTimer("carr");
     });

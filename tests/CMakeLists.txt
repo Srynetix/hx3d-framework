@@ -1,6 +1,6 @@
 set(GAME_NAME "tests")
 
-include(../cmake/system_check.cmake)
+include(../cmake/dependencies/system_check.cmake)
 include(../cmake/configuration.cmake)
 
 ###################
@@ -33,6 +33,7 @@ set(
   LINUX_LIBRARIES
 
   ${COMMON_LIBRARIES}
+  "-lpthread"
   "-lgtest"
 )
 

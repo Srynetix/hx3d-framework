@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "hx3d/window/sdl2/sdl2_application.hpp"
+#include "hx3d/window/application.hpp"
 #include "hx3d/window/application_config.hpp"
 
 #include "tests/test_game.hpp"
@@ -16,7 +16,7 @@ TEST_F(Tests, Screens) {
   config.height = 1080;
   config.fullscreen = true;
 
-  SDL2Application app(config);
+  Application app(config);
   app.start(Make<TestGame>());
 }
 

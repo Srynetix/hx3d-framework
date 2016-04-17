@@ -45,17 +45,27 @@ public:
   /**
   @brief Create a window.
 
+  > IMPLEMENTATION NEEDED.
+
   @param config Configuration
   */
   Application(ApplicationConfig config);
-  virtual ~Application();
+
+  /**
+  @brief Destroy the window.
+
+  > IMPLEMENTATION NEEDED.
+  */
+  ~Application();
 
   /**
   @brief Start the window.
 
+  > IMPLEMENTATION NEEDED.
+
   @param game   Game (Ptr)
   */
-  virtual void start(const Ptr<Game>& game) = 0;
+  void start(const Ptr<Game>& game);
 
   /**
   @brief Get the window width
@@ -115,6 +125,10 @@ protected:
   float _currentFPS;
   /// @brief Elapsed time since the beginning
   float _elapsedTime;
+
+#ifdef HX3D_WINDOW_APPLICATION_INJECTION
+  HX3D_WINDOW_APPLICATION_INJECTION
+#endif
 };
 
 } /* window */

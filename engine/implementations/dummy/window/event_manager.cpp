@@ -1,5 +1,5 @@
 /*
-    SDL2 Events Implementation.
+    Dummy Events Implementation.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,14 @@
     USA
 */
 
-#ifndef HX3D_WINDOW_SDL2_SDL2EVENTS
-#define HX3D_WINDOW_SDL2_SDL2EVENTS
-
 #include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 namespace window {
 
-/**
-@brief SDL2 event manager implementation
-*/
-class SDL2EventManager: public EventManager {
-
-public:
-  virtual void poll() override;
-};
+void EventManager::poll() {
+  Log.Info("No events !");
+}
 
 } /* window */
 } /* hx3d */
-
-#endif /* HX3D_WINDOW_SDL2_SDL2EVENTS */

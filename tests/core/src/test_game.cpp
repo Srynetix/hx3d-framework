@@ -17,7 +17,7 @@ void TestGame::create() {
     *   Core::Assets()->create<Texture>("texture_name", "textures/here.png")
     */
 
-  Shader::setProgramAnalyzing(true);
+  // Shader::setProgramAnalyzing(true);
 
   Core::Assets()->create<Texture>("box", "textures/box.png");
   Core::Assets()->create<Texture>("logo", "textures/logo.png");

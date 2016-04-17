@@ -23,15 +23,6 @@
 namespace hx3d {
 namespace window {
 
-Application::Application(ApplicationConfig config):
-  _running(false),
-  _width(config.width), _height(config.height), _fpsLimit(config.fpsLimit), _title(config.title),
-  _fullscreen(config.fullscreen),
-  _elapsedTime(0)
-  {}
-
-Application::~Application() {}
-
 int Application::getWidth() {
   return _width;
 }
