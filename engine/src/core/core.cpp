@@ -28,6 +28,7 @@ To go to the **tutorials**, click [here](https://srynetix.github.io/tutorials.ht
 */
 
 #include "hx3d/core/core.hpp"
+#include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/events.hpp"
 
 #include "hx3d/net/net.hpp"
@@ -64,9 +65,12 @@ Core::Core() {
   _assets = new AssetManager();
   _net = new net::Net();
   _audio = new audio::AudioDevice();
+  _events = new window::EventManager();
 }
 
 Core::~Core() {
+  if (_events)
+    delete _events;
   if (_assets)
     delete _assets;
   if (_net)
@@ -101,10 +105,9 @@ audio::AudioDevice* Core::Audio() {
 
 /////////////////////////
 
-void Core::initialize(window::Application* app, window::EventManager* events) {
+void Core::initialize(window::Application* app) {
   _instance = new Core();
   _instance->_application = app;
-  _instance->_events = events;
 }
 
 void Core::setGame(window::Game* game) {

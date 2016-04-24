@@ -119,7 +119,6 @@ Application::Application(ApplicationConfig config):
     glViewport(0, 0, _width, _height);
 
     glEnable(GL_DEPTH_TEST);
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -131,7 +130,7 @@ Application::Application(ApplicationConfig config):
 
     /** Initializations **/
 
-    Core::initialize(this, new EventManager());
+    Core::initialize(this);
     Framebuffer::fetchDefaultFramebuffer();
     Texture::generateBlankTexture();
 
@@ -145,13 +144,14 @@ Application::~Application() {
   Core::shutdown();
   _game.reset();
 
-  SDL_GL_DeleteContext(_context);
-
   if (_window) {
     SDL_DestroyWindow(_window);
   }
 
+  SDL_GL_DeleteContext(_context);
   SDL_Quit();
+
+  Log.Info("> END");
 
   #if defined(__ANDROID__)
     exit(0);

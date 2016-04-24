@@ -68,6 +68,7 @@ AudioDevice::AudioDevice() {
 
 AudioDevice::~AudioDevice() {
   Mix_Quit();
+  Log.Info("> Audio QUIT");
 }
 
 void AudioDevice::registerEffect(const int channel, Effect& effect) {

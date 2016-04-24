@@ -43,6 +43,11 @@ Font::Font(std::string fontPath, int characterSize):
 
 Font::~Font() {
   // Cleanup fonts and atlases
+  for (auto& pair: data) {
+    auto& d = pair.second;
+    texture_atlas_delete(d.atlas);
+    texture_font_delete(d.font);
+  }
 }
 
 void Font::createFontSize(int size) {
