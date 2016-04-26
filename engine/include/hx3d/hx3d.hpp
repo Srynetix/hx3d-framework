@@ -21,6 +21,8 @@
 #ifndef HX3D_MAIN_HEADER
 #define HX3D_MAIN_HEADER
 
+#include "hx3d/core/core.hpp"
+
 #include "hx3d/audio.hpp"
 #include "hx3d/graphics.hpp"
 #include "hx3d/ecs.hpp"
