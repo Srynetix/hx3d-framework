@@ -33,15 +33,15 @@ Attribute::Attribute(const std::string name, const GLenum type, const GLuint siz
   _size(size)
 {}
 
-const std::string Attribute::getName() const {
+std::string Attribute::getName() const {
   return _name;
 }
 
-const GLenum Attribute::getType() const {
+GLenum Attribute::getType() const {
   return _type;
 }
 
-const GLuint Attribute::getSize() const {
+GLuint Attribute::getSize() const {
   return _size;
 }
 

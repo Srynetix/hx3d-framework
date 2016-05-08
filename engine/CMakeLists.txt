@@ -27,7 +27,8 @@ set(
   COMMON_LIBRARIES
 
   "-lfreetype-gl\
-  -lfreetype"
+  -lfreetype\
+  -lyaml-cpp"
 )
 
 set(

@@ -28,6 +28,7 @@ To go to the **tutorials**, click [here](https://srynetix.github.io/tutorials.ht
 */
 
 #include "hx3d/core/core.hpp"
+#include "hx3d/core/configuration.hpp"
 #include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/events.hpp"
 
@@ -66,6 +67,7 @@ Core::Core() {
   _net = new net::Net();
   _audio = new audio::AudioDevice();
   _events = new window::EventManager();
+  _config = new Configuration();
 }
 
 Core::~Core() {
@@ -77,6 +79,8 @@ Core::~Core() {
     delete _net;
   if (_audio)
     delete _audio;
+  if (_config)
+    delete _config;
 }
 
 window::Application* Core::App() {
@@ -101,6 +105,10 @@ net::Net* Core::Network() {
 
 audio::AudioDevice* Core::Audio() {
   return get()->_audio;
+}
+
+Configuration* Core::Config() {
+  return get()->_config;
 }
 
 /////////////////////////

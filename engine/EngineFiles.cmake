@@ -21,7 +21,6 @@ set(
   WINDOW_FILES
 
   "${ENGINE_SRC}/window/application.cpp"
-  "${ENGINE_SRC}/window/application_config.cpp"
   "${ENGINE_SRC}/window/event_manager.cpp"
   "${ENGINE_SRC}/window/game.cpp"
   "${ENGINE_SRC}/window/input_handler.cpp"

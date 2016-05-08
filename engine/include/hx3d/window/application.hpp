@@ -21,7 +21,6 @@
 #ifndef HX3D_WINDOW_APPLICATION
 #define HX3D_WINDOW_APPLICATION
 
-#include "hx3d/window/application_config.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 #include <string>
@@ -46,10 +45,8 @@ public:
   @brief Create a window.
 
   > IMPLEMENTATION NEEDED.
-
-  @param config Configuration
   */
-  Application(ApplicationConfig config);
+  Application();
 
   /**
   @brief Destroy the window.

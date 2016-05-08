@@ -1,0 +1,13 @@
+# hx3d framework configuration
+#############################
+
+window:
+  title: hx3d tests
+  width: 1920
+  height: 1080
+  fullscreen: True
+
+graphics:
+  msaa:
+    active: True
+    samples: 4

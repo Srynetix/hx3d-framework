@@ -54,21 +54,21 @@ public:
 
   @return Name
   */
-  const std::string getName() const;
+  std::string getName() const;
 
   /**
   @brief Get the attribute type
 
   @return Type
   */
-  const GLenum getType() const;
+  GLenum getType() const;
 
   /**
   @brief Get the attribute size
 
   @return Size
   */
-  const GLuint getSize() const;
+  GLuint getSize() const;
 
 private:
   /// @brief Name

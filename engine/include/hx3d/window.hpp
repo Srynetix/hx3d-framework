@@ -21,7 +21,6 @@
 #ifndef HX3D_MAIN_WINDOW
 #define HX3D_MAIN_WINDOW
 
-#include "hx3d/window/application_config.hpp"
 #include "hx3d/window/application.hpp"
 #include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/events.hpp"

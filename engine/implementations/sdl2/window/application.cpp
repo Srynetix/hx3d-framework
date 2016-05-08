@@ -33,6 +33,7 @@
 #include "hx3d/graphics/font.hpp"
 
 #include "hx3d/core/core.hpp"
+#include "hx3d/core/configuration.hpp"
 #include "hx3d/window/application.hpp"
 #include "hx3d/window/game.hpp"
 #include "hx3d/window/events.hpp"
@@ -51,13 +52,22 @@ using namespace hx3d::graphics;
 namespace hx3d {
 namespace window {
 
-Application::Application(ApplicationConfig config):
+Application::Application():
   _running(false),
-  _width(config.width), _height(config.height), _fpsLimit(config.fpsLimit), _title(config.title),
-  _fullscreen(config.fullscreen),
+  _width(800), _height(600), _fpsLimit(60), _title("hx3d"),
+  _fullscreen(false),
   _elapsedTime(0)
   {
+    Core::initialize(this);
     srand(time(0));
+
+    _width = Core::Config()->get<int>("window", "width");
+    _height = Core::Config()->get<int>("window", "height");
+    _fullscreen  = Core::Config()->get<bool>("window", "fullscreen");
+    _title = Core::Config()->get<std::string>("window", "title");
+
+    bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
+    int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
 
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
       Log.Error("SDL Init Error: %s", SDL_GetError());
@@ -81,6 +91,11 @@ Application::Application(ApplicationConfig config):
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+    if (msaaActivated) {
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaaSamples);
+    }
 
   #ifdef DESKTOP_OPENGL
     auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
@@ -120,6 +135,11 @@ Application::Application(ApplicationConfig config):
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
+
+    if (msaaActivated) {
+      glEnable(GL_MULTISAMPLE);
+    }
+
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Stencil bitplanes
@@ -130,7 +150,6 @@ Application::Application(ApplicationConfig config):
 
     /** Initializations **/
 
-    Core::initialize(this);
     Framebuffer::fetchDefaultFramebuffer();
     Texture::generateBlankTexture();
 

@@ -102,10 +102,9 @@ Ptr<File> File::loadAsciiFileDesktop(std::string path) {
     std::string content = oss.str();
 
     Ptr<File> fileptr = Make<File>();
-    fileptr->size = content.size() + 1;
+    fileptr->size = content.size();
     fileptr->data = new char[fileptr->size];
     std::copy(content.begin(), content.end(), fileptr->data);
-    fileptr->data[content.size()] = '\0';
 
     return fileptr;
   }

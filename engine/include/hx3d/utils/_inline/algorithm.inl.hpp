@@ -18,6 +18,9 @@
     USA
 */
 
+#include <algorithm>
+#include <numeric>
+
 namespace hx3d {
 namespace algo {
 

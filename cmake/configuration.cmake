@@ -13,6 +13,8 @@ if (NOT DEFINED WINDOW_PROVIDER)
   set(WINDOW_PROVIDER "SDL2")
 endif()
 
+set(CMAKE_BUILD_TYPE "Debug")
+
 ## Flags C++
 
 set(
@@ -20,7 +22,10 @@ set(
   "-std=c++11\
   -fdiagnostics-color=always\
   -Wall\
-  -g"
+  -Wextra\
+  -Wno-unused-parameter\
+  -g3\
+  -ggdb3"
 )
 
 IF(NOT ANDROID)

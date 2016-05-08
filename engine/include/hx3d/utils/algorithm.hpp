@@ -21,7 +21,7 @@
 #ifndef HX3D_UTILS_ALGORITHM
 #define HX3D_UTILS_ALGORITHM
 
-#include <algorithm>
+#include <vector>
 
 namespace hx3d {
 

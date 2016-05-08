@@ -27,6 +27,7 @@
 namespace hx3d {
 
 class AssetManager;
+class Configuration;
 
 namespace window {
   class Application;
@@ -112,6 +113,13 @@ public:
   static audio::AudioDevice* Audio();
 
   /**
+  @brief Get the configuration instance.
+
+  @return Config
+  */
+  static Configuration* Config();
+
+  /**
   @brief Initialize the core system.
 
   @param app    Application (Ptr)
@@ -161,6 +169,8 @@ private:
   net::Net* _net;
   /// @brief Current audio device
   audio::AudioDevice* _audio;
+  /// @brief Configuration
+  Configuration* _config;
 };
 
 } /* hx3d */
