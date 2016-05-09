@@ -86,6 +86,11 @@ public:
   static void useDefault();
 
   /**
+  @brief Get the current framebuffer
+  */
+  static Ptr<Framebuffer> getCurrentFramebuffer();
+
+  /**
   @brief Clear the framebuffer.
   */
   static void clear(Color color);
@@ -105,6 +110,8 @@ private:
 
   /// @brief Default framebuffer ID
   static GLint _defaultID;
+
+  static Ptr<Framebuffer> _currentFramebuffer;
 
   /**
   @brief Create an empty framebuffer.
