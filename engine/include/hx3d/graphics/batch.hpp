@@ -40,9 +40,9 @@ public:
 
   virtual void begin() override;
   virtual void end() override;
-  virtual void draw(Mesh& mesh) override;
-  virtual void draw(gui::Text& text) override;
-  virtual void draw(gui::Text& text, math::Function function) override;
+  virtual void draw(const Ptr<Mesh>& mesh) override;
+  virtual void draw(const Ptr<gui::Text>& text) override;
+  virtual void draw(const Ptr<gui::Text>& text, math::Function function) override;
 };
 
 } /* graphics */

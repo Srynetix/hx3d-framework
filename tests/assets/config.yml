@@ -3,11 +3,11 @@
 
 window:
   title: hx3d tests
-  width: 1920
-  height: 1080
-  fullscreen: True
+  width: 1280 
+  height: 720
+  fullscreen: False
 
 graphics:
   msaa:
-    active: True
+    active: False
     samples: 4

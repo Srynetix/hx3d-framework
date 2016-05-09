@@ -60,7 +60,7 @@ public:
 
   @param mesh Mesh
   */
-  virtual void draw(Mesh& mesh) = 0;
+  virtual void draw(const Ptr<Mesh>& mesh) = 0;
 
   /**
   @brief Draw the text.
@@ -69,7 +69,7 @@ public:
 
   @param text Text
   */
-  virtual void draw(gui::Text& text) = 0;
+  virtual void draw(const Ptr<gui::Text>& text) = 0;
 
   /**
   @brief Draw the text following a function.
@@ -79,7 +79,7 @@ public:
   @param text   Text
   @param function  Function
   */
-  virtual void draw(gui::Text& text, math::Function function) = 0;
+  virtual void draw(const Ptr<gui::Text>& text, math::Function function) = 0;
 
   ///////////////////
 
@@ -102,18 +102,18 @@ public:
 
   @param camera Camera
   */
-  void setCamera(Camera& camera);
+  void setCamera(const Ptr<Camera>& camera);
 
   /**
   @brief Get the camera.
 
   @return camera Camera
   */
-  Camera* getCamera();
+  Ptr<Camera> getCamera();
 
 protected:
   /// @brief Camera
-  Camera* _camera;
+  Ptr<Camera> _camera;
   /// @brief Shader
   Ptr<Shader> _shader;
 };

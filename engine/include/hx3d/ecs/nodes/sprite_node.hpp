@@ -43,12 +43,12 @@ public:
   */
   SpriteNode(std::string name, const Ptr<graphics::Texture>& texture);
 
-  virtual void draw(graphics::BaseBatch& batch) override;
+  virtual void draw(const Ptr<graphics::BaseBatch>& batch) override;
   virtual void update(float delta) override;
 
 protected:
   Ptr<graphics::Texture> _texture;
-  graphics::Sprite _sprite;
+  Ptr<graphics::Sprite> _sprite;
 };
 
 } /* ecs */

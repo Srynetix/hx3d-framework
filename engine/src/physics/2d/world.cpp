@@ -119,72 +119,72 @@ void World::step(float dt) {
   }
 }
 
-void World::render(graphics::BaseBatch& batch) {
+void World::render(const Ptr<graphics::BaseBatch>& batch) {
 
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
     const Ptr<Attractor>& attractor = _attractors[i];
 
     if (attractor->type == Attractor::Type::Zone) {
       const Ptr<ZoneAttractor>& zone = std::dynamic_pointer_cast<ZoneAttractor>(attractor);
-      Sprite sprite;
-      sprite.setTexture(Texture::Blank);
-      sprite.transform.position.x = zone->position.x * _physRatio;
-      sprite.transform.position.y = zone->position.y * _physRatio;
-      sprite.transform.position.z = -0.25f;
-      sprite.transform.size.x = zone->width * _physRatio;
-      sprite.transform.size.y = zone->height * _physRatio;
+      Ptr<Sprite> sprite = Make<Sprite>();
+      sprite->setTexture(Texture::Blank);
+      sprite->transform.position.x = zone->position.x * _physRatio;
+      sprite->transform.position.y = zone->position.y * _physRatio;
+      sprite->transform.position.z = -0.25f;
+      sprite->transform.size.x = zone->width * _physRatio;
+      sprite->transform.size.y = zone->height * _physRatio;
 
-      sprite.setTint(Color(240, 20, 201));
-      batch.draw(sprite);
+      sprite->setTint(Color(240, 20, 201));
+      batch->draw(sprite);
     }
 
     else if (attractor->type == Attractor::Type::Point) {
       const Ptr<PointAttractor>& point = std::dynamic_pointer_cast<PointAttractor>(attractor);
-      Sprite sprite;
-      sprite.setTexture(Texture::Blank);
-      sprite.transform.position.x = point->position.x * _physRatio;
-      sprite.transform.position.y = point->position.y * _physRatio;
-      sprite.transform.position.z = -0.25f;
-      sprite.transform.size.x = point->radius * 2 * _physRatio;
-      sprite.transform.size.y = point->radius * 2 * _physRatio;
+      Ptr<Sprite> sprite = Make<Sprite>();
+      sprite->setTexture(Texture::Blank);
+      sprite->transform.position.x = point->position.x * _physRatio;
+      sprite->transform.position.y = point->position.y * _physRatio;
+      sprite->transform.position.z = -0.25f;
+      sprite->transform.size.x = point->radius * 2 * _physRatio;
+      sprite->transform.size.y = point->radius * 2 * _physRatio;
 
-      sprite.setTint(Color(20, 240, 201));
-      batch.draw(sprite);
+      sprite->setTint(Color(20, 240, 201));
+      batch->draw(sprite);
     }
   }
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
     const Ptr<Collider>& c = _colliders[i];
 
-    Sprite sprite;
-    sprite.setTexture(Texture::Blank);
-    sprite.transform.position.x = c->position.x * _physRatio;
-    sprite.transform.position.y = c->position.y * _physRatio;
+    Ptr<Sprite> sprite = Make<Sprite>();
+    sprite->setTexture(Texture::Blank);
+    sprite->transform.position.x = c->position.x * _physRatio;
+    sprite->transform.position.y = c->position.y * _physRatio;
 
     if (c->shape == Collider::Shape::Polygon) {
       const Ptr<colliders::Polygon>& b = std::dynamic_pointer_cast<colliders::Polygon>(c);
       if (b->box) {
         float w = b->vertices[1].x * 2;
         float h = b->vertices[2].y * 2;
-        sprite.transform.size.x = w * _physRatio;
-        sprite.transform.size.y = h * _physRatio;
+        sprite->transform.size.x = w * _physRatio;
+        sprite->transform.size.y = h * _physRatio;
       }
     }
 
     else if (c->shape == Collider::Shape::Circle) {
       const Ptr<colliders::Circle>& b = std::dynamic_pointer_cast<colliders::Circle>(c);
-      sprite.transform.size.x = (b->radius / 2) * _physRatio;
-      sprite.transform.size.y = (b->radius / 2) * _physRatio;
+      sprite->transform.size.x = (b->radius / 2) * _physRatio;
+      sprite->transform.size.y = (b->radius / 2) * _physRatio;
     }
 
-    sprite.transform.rotation.z = c->orientation;
+    sprite->transform.rotation.z = c->orientation;
 
     if (c->type == Collider::Type::Static)
-      sprite.setTint(Color::Blue);
+      sprite->setTint(Color::Blue);
     else
-      sprite.setTint(Color::Red);
+      sprite->setTint(Color::Red);
 
-    batch.draw(sprite);
+    batch->draw(sprite);
   }
 
   for (unsigned int i = 0; i < _contacts.size(); ++i) {
@@ -193,16 +193,16 @@ void World::render(graphics::BaseBatch& batch) {
     for (unsigned int j = 0; j < m.contacts.size(); ++j) {
       const glm::vec2& contact = m.contacts[j];
 
-      Sprite sprite;
-      sprite.setTexture(Texture::Blank);
-      sprite.setTint(Color::Green);
-      sprite.transform.position.x = contact.x * _physRatio;
-      sprite.transform.position.y = contact.y * _physRatio;
-      sprite.transform.position.z = 0.5f;
-      sprite.transform.size.x = 5;
-      sprite.transform.size.y = 5;
+      Ptr<Sprite> sprite = Make<Sprite>();
+      sprite->setTexture(Texture::Blank);
+      sprite->setTint(Color::Green);
+      sprite->transform.position.x = contact.x * _physRatio;
+      sprite->transform.position.y = contact.y * _physRatio;
+      sprite->transform.position.z = 0.5f;
+      sprite->transform.size.x = 5;
+      sprite->transform.size.y = 5;
 
-      batch.draw(sprite);
+      batch->draw(sprite);
     }
   }
 
@@ -212,17 +212,17 @@ void World::render(graphics::BaseBatch& batch) {
     for (unsigned int j = 0; j < m.contacts.size(); ++j) {
       const glm::vec2& contact = m.contacts[j];
 
-      Sprite sprite;
-      sprite.setTexture(Texture::Blank);
-      sprite.setTint(Color(255, 0, 255));
-      sprite.transform.size.x = 3;
-      sprite.transform.size.y = 20;
-      sprite.transform.position.x = contact.x * _physRatio;
-      sprite.transform.position.y = contact.y * _physRatio;
-      sprite.transform.position.z = 0.75f;
-      sprite.transform.rotation.z = math::angleBetweenVecs(glm::vec2(0, 1), m.normal);
+      Ptr<Sprite> sprite = Make<Sprite>();
+      sprite->setTexture(Texture::Blank);
+      sprite->setTint(Color(255, 0, 255));
+      sprite->transform.size.x = 3;
+      sprite->transform.size.y = 20;
+      sprite->transform.position.x = contact.x * _physRatio;
+      sprite->transform.position.y = contact.y * _physRatio;
+      sprite->transform.position.z = 0.75f;
+      sprite->transform.rotation.z = math::angleBetweenVecs(glm::vec2(0, 1), m.normal);
 
-      batch.draw(sprite);
+      batch->draw(sprite);
     }
   }
 }

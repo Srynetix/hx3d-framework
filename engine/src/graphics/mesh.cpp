@@ -27,7 +27,7 @@ namespace graphics {
 
 Mesh::Mesh() {}
 
-void Mesh::draw(Ptr<Shader> shader) {
+void Mesh::draw(const Ptr<Shader>& shader) {
 
   if (_geometry->getAttribute("Texture").size() == 0) {
     Texture::use(Texture::Blank);
@@ -46,7 +46,7 @@ void Mesh::setTint(Color tint) {
   updateColor();
 }
 
-void Mesh::setGeometry(Ptr<geom::BaseGeometry> geometry) {
+void Mesh::setGeometry(const Ptr<geom::BaseGeometry>& geometry) {
   _geometry = geometry;
 }
 

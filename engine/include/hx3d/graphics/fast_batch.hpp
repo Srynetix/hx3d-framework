@@ -69,7 +69,7 @@ public:
         drawing = false;
     }
 
-    void draw(Sprite& sprite) {
+    void draw(const Ptr<Sprite>& sprite) {
 
         if (!drawing) {
             Log.Error("FastBatch: not currently drawing !");
@@ -77,12 +77,12 @@ public:
         }
 
         // Calcul des positions post-transform
-        AttributeArrayBuffer& positions = sprite.getGeometry()->getAttribute("Position");
+        AttributeArrayBuffer& positions = sprite->getGeometry()->getAttribute("Position");
         unsigned int vertSize = positions.size() / 3;
         unsigned int prevMaxIdx = maxIdx;
-        auto& ind = sprite.getGeometry()->getIndices();
+        auto& ind = sprite->getGeometry()->getIndices();
 
-        glm::mat4 model = sprite.transform.compute();
+        glm::mat4 model = sprite->transform.compute();
         std::vector<float> newPositions;
         newPositions.resize(vertSize * 3);
 
@@ -116,10 +116,10 @@ public:
                 vertices[current++] = newPositions[j];
             }
             for (unsigned int j = i * 4; j < (i+1) * 4; ++j) {
-                vertices[current++] = sprite.getGeometry()->getAttribute("Color").getValue(j);
+                vertices[current++] = sprite->getGeometry()->getAttribute("Color").getValue(j);
             }
             for (unsigned int j = i * 2; j < (i+1) * 2; ++j) {
-                vertices[current++] = sprite.getGeometry()->getAttribute("Texture").getValue(j);
+                vertices[current++] = sprite->getGeometry()->getAttribute("Texture").getValue(j);
             }
         }
 

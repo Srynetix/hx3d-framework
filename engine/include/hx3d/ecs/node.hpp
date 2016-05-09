@@ -124,7 +124,7 @@ public:
 
   @param batch Batch
   */
-  virtual void draw(graphics::BaseBatch& batch);
+  virtual void draw(const Ptr<graphics::BaseBatch>& batch);
 
   /**
   @brief Update the node.

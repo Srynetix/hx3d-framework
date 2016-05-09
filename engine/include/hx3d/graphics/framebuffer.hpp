@@ -78,7 +78,7 @@ public:
 
   @param buf Framebuffer
   */
-  static void use(Framebuffer& buf);
+  static void use(const Ptr<Framebuffer>& buf);
 
   /**
   @brief Use the default framebuffer.

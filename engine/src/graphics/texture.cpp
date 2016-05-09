@@ -124,11 +124,11 @@ void Texture::setFilter(FilterType type, FilterValue value) {
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::use(Ptr<Texture> texture) {
+void Texture::use(const Ptr<Texture>& texture) {
   glBindTexture(GL_TEXTURE_2D, texture->_id);
 }
 
-void Texture::use(Ptr<Font> font, int characterSize) {
+void Texture::use(const Ptr<Font>& font, int characterSize) {
   Font::Data& data = font->getFontData(characterSize);
   glBindTexture(GL_TEXTURE_2D, data.atlas->id);
 }

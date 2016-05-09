@@ -36,7 +36,7 @@ void ParticleManager::update(const float delta) {
   }
 }
 
-void ParticleManager::draw(Batch& batch) {
+void ParticleManager::draw(const Ptr<Batch>& batch) {
 
   glDisable(GL_DEPTH_TEST);
 

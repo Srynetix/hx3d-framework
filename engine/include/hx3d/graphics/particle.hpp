@@ -57,7 +57,7 @@ public:
 
   @param batch Batch
   */
-  void draw(Batch& batch);
+  void draw(const Ptr<Batch>& batch);
 
   virtual void reset() override;
 
@@ -85,7 +85,7 @@ private:
   Color color;
 
   /// @brief Internal sprite
-  Sprite sprite;
+  Ptr<Sprite> sprite;
   /// @brief Is the particle dead ?
   bool dead;
 

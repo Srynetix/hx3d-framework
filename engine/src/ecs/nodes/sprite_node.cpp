@@ -25,14 +25,14 @@ namespace ecs {
 
 SpriteNode::SpriteNode(std::string name, const Ptr<graphics::Texture>& texture):
   Node(name), _texture(texture) {
-
-  _sprite.setTexture(_texture);
+  _sprite = Make<graphics::Sprite>();
+  _sprite->setTexture(_texture);
 }
 
 void SpriteNode::update(float delta) {}
 
-void SpriteNode::draw(graphics::BaseBatch& batch) {
-  batch.draw(_sprite);
+void SpriteNode::draw(const Ptr<graphics::BaseBatch>& batch) {
+  batch->draw(_sprite);
 }
 
 } /* ecs */

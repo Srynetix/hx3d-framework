@@ -52,7 +52,7 @@ class TextureAtlas: public Resource {
 
     @return TextureRegion
     */
-    TextureRegion& getRegion(std::string name);
+    Ptr<TextureRegion>& getRegion(std::string name);
 
   private:
     /**
@@ -65,7 +65,7 @@ class TextureAtlas: public Resource {
     /// @brief Texture
     Ptr<Texture> _texture;
     /// @brief Regions
-    std::map<std::string, TextureRegion> _regions;
+    std::map<std::string, Ptr<TextureRegion>> _regions;
 };
 
 } /* graphics */

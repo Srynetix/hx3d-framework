@@ -39,19 +39,19 @@ void Viewport::setScreenPosition(const float x, const float y) {
   _screenY = y;
 }
 
-void Viewport::apply(Camera& camera) {
+void Viewport::apply(const Ptr<Camera>& camera) {
   glViewport(_screenX, _screenY, _screenWidth, _screenHeight);
 
-  camera.viewportWidth = _worldWidth;
-  camera.viewportHeight = _worldHeight;
+  camera->viewportWidth = _worldWidth;
+  camera->viewportHeight = _worldHeight;
 
   // Centering
-  camera.position = glm::vec3(_worldWidth / 2, _worldHeight / 2, camera.position.z);
+  camera->position = glm::vec3(_worldWidth / 2, _worldHeight / 2, camera->position.z);
 
-  camera.update();
+  camera->update();
 }
 
-void Viewport::update(Camera& camera, const int screenWidth, const int screenHeight) {
+void Viewport::update(const Ptr<Camera>& camera, const int screenWidth, const int screenHeight) {
   _screenWidth = screenWidth;
   _screenHeight = screenHeight;
 

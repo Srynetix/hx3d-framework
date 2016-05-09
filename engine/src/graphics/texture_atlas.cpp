@@ -32,7 +32,7 @@ TextureAtlas::TextureAtlas(std::string pathToAtlas) {
   loadFromJSON(pathToAtlas);
 }
 
-TextureRegion& TextureAtlas::getRegion(std::string name) {
+Ptr<TextureRegion>& TextureAtlas::getRegion(std::string name) {
   return _regions[name];
 }
 
@@ -62,7 +62,7 @@ void TextureAtlas::loadFromJSON(std::string pathToAtlas) {
       int w = std::atoi(val["w"].GetString());
       int h = std::atoi(val["h"].GetString());
 
-      TextureRegion region(
+      auto region = Make<TextureRegion>(
         _texture,
         x,
         x + w,

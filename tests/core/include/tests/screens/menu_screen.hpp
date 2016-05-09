@@ -61,14 +61,14 @@ private:
   Ptr<Shader> defaultShader;
   Ptr<Shader> pixShader;
 
-  OrthographicCamera camera;
+  Ptr<OrthographicCamera> camera;
 
-  Sprite logoSprite;
-  Sprite sprite;
-  Batch batch;
+  Ptr<Sprite> logoSprite;
+  Ptr<Sprite> sprite;
+  Ptr<Batch> batch;
 
-  gui::Text text;
-  gui::Text instructions;
+  Ptr<gui::Text> text;
+  Ptr<gui::Text> instructions;
 
   std::vector<ScreenInfo> screens;
 

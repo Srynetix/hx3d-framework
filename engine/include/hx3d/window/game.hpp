@@ -93,7 +93,7 @@ public:
 
   @param screen Screen (Ptr)
   */
-  void setScreen(Ptr<Screen> screen);
+  void setScreen(const Ptr<Screen>& screen);
 
   /**
   @brief Activate the stats.
@@ -151,14 +151,14 @@ private:
   bool _running;
   Ptr<Screen> _screen;
   Ptr<Screen> _nextScreen;
-  gui::Text _deltaText;
-  gui::Text _fpsText;
+  Ptr<gui::Text> _deltaText;
+  Ptr<gui::Text> _fpsText;
 
-  graphics::OrthographicCamera _camera;
-  graphics::Batch _batch;
+  Ptr<graphics::OrthographicCamera> _camera;
+  Ptr<graphics::Batch> _batch;
 
-  graphics::Framebuffer _currentFB;
-  graphics::Framebuffer _nextFB;
+  Ptr<graphics::Framebuffer> _currentFB;
+  Ptr<graphics::Framebuffer> _nextFB;
   Ptr<graphics::Transition> _currentTransition;
   Ptr<graphics::viewports::Viewport> _currentViewport;
 

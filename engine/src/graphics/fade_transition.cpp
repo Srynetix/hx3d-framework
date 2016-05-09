@@ -32,41 +32,40 @@ FadeTransition::FadeTransition(window::Game* game, Color color): Transition(game
   _color = color;
 }
 
-void FadeTransition::render(Batch& batch, graphics::Framebuffer& currentFB, graphics::Framebuffer& nextFB) {
-  Sprite spriteCurrent;
-  Sprite spriteNext;
-  spriteCurrent.setTexture(currentFB);
-  spriteNext.setTexture(nextFB);
+void FadeTransition::render(const Ptr<Batch>& batch, const Ptr<graphics::Framebuffer>& currentFB, const Ptr<graphics::Framebuffer>& nextFB) {
+  Ptr<Sprite> spriteCurrent = Make<Sprite>();
+  Ptr<Sprite> spriteNext = Make<Sprite>();
+  spriteCurrent->setTexture(currentFB);
+  spriteNext->setTexture(nextFB);
 
   auto world_size = Core::CurrentGame()->getSize();
-  spriteCurrent.transform.position.x = world_size.x / 2;
-  spriteCurrent.transform.position.y = world_size.y / 2;
-  spriteCurrent.transform.rotation.z = glm::radians(180.f);
+  spriteCurrent->transform.position.x = world_size.x / 2;
+  spriteCurrent->transform.position.y = world_size.y / 2;
+  spriteCurrent->transform.rotation.z = glm::radians(180.f);
 
-  spriteNext.transform.position.x = world_size.x / 2;
-  spriteNext.transform.position.y = world_size.y / 2;
-  spriteNext.transform.rotation.z = glm::radians(180.f);
+  spriteNext->transform.position.x = world_size.x / 2;
+  spriteNext->transform.position.y = world_size.y / 2;
+  spriteNext->transform.rotation.z = glm::radians(180.f);
 
   int alpha = (_currentTime / (_duration/2.f)) * 255;
   if (_currentTime > _duration / 2) {
-    spriteNext.setTint(Color(255, 255, 255, alpha));
+    spriteNext->setTint(Color(255, 255, 255, alpha));
     Framebuffer::clear(_color);
-    batch.begin();
-    batch.draw(spriteNext);
-    batch.end();
+    batch->begin();
+    batch->draw(spriteNext);
+    batch->end();
   }
 
   else {
-    spriteCurrent.setTint(Color(255, 255, 255, 255 - alpha));
+    spriteCurrent->setTint(Color(255, 255, 255, 255 - alpha));
     Framebuffer::clear(_color);
-    batch.begin();
-    batch.draw(spriteCurrent);
-    batch.end();
+    batch->begin();
+    batch->draw(spriteCurrent);
+    batch->end();
   }
 }
 
 void FadeTransition::onUpdate(float delta) {
-
 }
 
 void FadeTransition::onStart() {

@@ -43,7 +43,7 @@ public:
   */
   PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category = "", std::string mask = "", const Ptr<graphics::Texture> texture = nullptr);
 
-  virtual void draw(graphics::BaseBatch& batch) override;
+  virtual void draw(const Ptr<graphics::BaseBatch>& batch) override;
   virtual void update(float delta) override;
 
 protected:
@@ -51,7 +51,7 @@ protected:
   Ptr<physics2d::Collider> _collider;
 
   Ptr<graphics::Texture> _texture;
-  graphics::Sprite _sprite;
+  Ptr<graphics::Sprite> _sprite;
 };
 
 } /* ecs */

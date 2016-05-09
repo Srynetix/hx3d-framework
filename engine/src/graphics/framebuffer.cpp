@@ -92,9 +92,9 @@ void Framebuffer::create() {
     glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
 }
 
-void Framebuffer::use(Framebuffer& buffer) {
-  glBindFramebuffer(GL_FRAMEBUFFER, buffer._id);
-  glViewport(0, 0, buffer._width, buffer._height);
+void Framebuffer::use(const Ptr<Framebuffer>& buffer) {
+  glBindFramebuffer(GL_FRAMEBUFFER, buffer->_id);
+  glViewport(0, 0, buffer->_width, buffer->_height);
 }
 
 void Framebuffer::useDefault() {

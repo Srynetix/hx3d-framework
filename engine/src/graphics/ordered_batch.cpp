@@ -54,7 +54,7 @@ void OrderedBatch::end() {
   */
   for (auto& pair: _meshes) {
     auto& model = pair.first;
-    Mesh* mesh = pair.second;
+    const Ptr<Mesh>& mesh = pair.second;
 
     _shader->setUniformMatrix4f("u_model", model);
     mesh->draw(_shader);
@@ -64,24 +64,24 @@ void OrderedBatch::end() {
   Function texts
   */
   for (auto& pair: _funcTexts) {
-    gui::Text& text = pair.first;
+    auto& text = pair.first;
     auto& func = pair.second;
 
-    Texture::use(text.getFont(), text.getCharacterSize());
+    Texture::use(text->getFont(), text->getCharacterSize());
 
-    float oldX = text.transform.position.x;
-    if (text.isCenterAligned())
-      text.transform.position.x -= text.getLength() / 2;
+    float oldX = text->transform.position.x;
+    if (text->isCenterAligned())
+      text->transform.position.x -= text->getLength() / 2;
 
-    glm::mat4 model = text.transform.compute();
-    text.transform.position.x = oldX;
+    glm::mat4 model = text->transform.compute();
+    text->transform.position.x = oldX;
 
-    auto& shader = text.getFont()->getShader();
+    auto& shader = text->getFont()->getShader();
     Shader::use(shader);
     shader->setUniformMatrix4f("u_model", model);
     shader->setUniformMatrix4f("u_view", _camera->view);
     shader->setUniformMatrix4f("u_projection", _camera->projection);
-    text.functionDraw(shader, func);
+    text->functionDraw(shader, func);
 
     Shader::use(_shader);
     _shader->setUniformMatrix4f("u_view", _camera->view);
@@ -93,22 +93,22 @@ void OrderedBatch::end() {
   /**
   Texts
   */
-  for (gui::Text& text: _texts) {
-    Texture::use(text.getFont(), text.getCharacterSize());
+  for (auto& text: _texts) {
+    Texture::use(text->getFont(), text->getCharacterSize());
 
-    float oldX = text.transform.position.x;
-    if (text.isCenterAligned())
-      text.transform.position.x -= text.getLength() / 2;
+    float oldX = text->transform.position.x;
+    if (text->isCenterAligned())
+      text->transform.position.x -= text->getLength() / 2;
 
-    glm::mat4 model = text.transform.compute();
-    text.transform.position.x = oldX;
+    glm::mat4 model = text->transform.compute();
+    text->transform.position.x = oldX;
 
-    auto& shader = text.getFont()->getShader();
+    auto& shader = text->getFont()->getShader();
     Shader::use(shader);
     shader->setUniformMatrix4f("u_model", model);
     shader->setUniformMatrix4f("u_view", _camera->view);
     shader->setUniformMatrix4f("u_projection", _camera->projection);
-    text.draw(shader);
+    text->draw(shader);
 
     Shader::use(_shader);
     _shader->setUniformMatrix4f("u_view", _camera->view);
@@ -123,26 +123,26 @@ void OrderedBatch::end() {
   _funcTexts.clear();
 }
 
-void OrderedBatch::draw(Mesh& mesh) {
+void OrderedBatch::draw(const Ptr<Mesh>& mesh) {
 
   unsigned int pos = 0;
   for (pos = 0; pos < _meshes.size(); ++pos) {
     auto& pair = _meshes[pos];
-    Mesh* m = pair.second;
+    auto& m = pair.second;
 
-    if (m->transform.position.z > mesh.transform.position.z) {
+    if (m->transform.position.z > mesh->transform.position.z) {
       break;
     }
   }
 
-  _meshes.insert(_meshes.begin() + pos, std::make_pair(mesh.transform.compute(), &mesh));
+  _meshes.insert(_meshes.begin() + pos, std::make_pair(mesh->transform.compute(), mesh));
 }
 
-void OrderedBatch::draw(gui::Text& text) {
+void OrderedBatch::draw(const Ptr<gui::Text>& text) {
   _texts.push_back(text);
 }
 
-void OrderedBatch::draw(gui::Text& text, math::Function function) {
+void OrderedBatch::draw(const Ptr<gui::Text>& text, math::Function function) {
   _funcTexts.push_back(std::make_pair(text, function));
 }
 

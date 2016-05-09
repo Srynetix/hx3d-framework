@@ -87,7 +87,7 @@ bool Text::isCenterAligned() {
   return _centerAligned;
 }
 
-void Text::draw(Ptr<Shader> shader) {
+void Text::draw(const Ptr<Shader>& shader) {
 
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
@@ -159,7 +159,7 @@ float Text::calculateLength() {
   return pen.x;
 }
 
-void Text::functionDraw(Ptr<Shader> shader, math::Function function) {
+void Text::functionDraw(const Ptr<Shader>& shader, math::Function function) {
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
 

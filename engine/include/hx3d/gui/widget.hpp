@@ -52,7 +52,7 @@ public:
   */
   void add(Ptr<Widget> widget);
 
-  virtual void draw(Ptr<Shader> shader) override;
+  virtual void draw(const Ptr<Shader>& shader) override;
 
 private:
   /// @brief Parent widget

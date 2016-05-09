@@ -62,7 +62,7 @@ public:
 
   @param camera Camera
   */
-  void apply(Camera& camera);
+  void apply(const Ptr<Camera>& camera);
 
   /**
   @brief Update the viewport with a new screen width and height, centering
@@ -72,7 +72,7 @@ public:
   @param screenWidth  New width
   @param screenHeight New height
   */
-  void update(Camera& camera, const int screenWidth, const int screenHeight);
+  void update(const Ptr<Camera>& camera, const int screenWidth, const int screenHeight);
 
   /**
   @brief Convert a screen point to a world point.
@@ -106,7 +106,7 @@ protected:
   /**
   @brief Update the viewport, centering the camera (internal).
   */
-  virtual void internalUpdate(Camera& camera) = 0;
+  virtual void internalUpdate(const Ptr<Camera>& camera) = 0;
 };
 
 } /* viewports */

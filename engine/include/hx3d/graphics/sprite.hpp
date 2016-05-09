@@ -82,14 +82,14 @@ public:
 
   @param buffer Framebuffer
   */
-  void setTexture(Framebuffer& buffer);
+  void setTexture(const Ptr<Framebuffer>& buffer);
 
   /**
   @brief Set the sprite texture from a texture region.
 
   @param region TextureRegion
   */
-  void setTexture(TextureRegion& region);
+  void setTexture(const Ptr<TextureRegion>& region);
 
   /**
   @brief Get the sprite texture.
@@ -103,7 +103,7 @@ public:
   */
   void scaleTexture();
 
-  virtual void draw(Ptr<Shader> shader) override;
+  virtual void draw(const Ptr<Shader>& shader) override;
 
 private:
   /// @brief Current texture

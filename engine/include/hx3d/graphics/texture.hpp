@@ -178,7 +178,7 @@ public:
 
   @param texture Texture (Ptr)
   */
-  static void use(Ptr<Texture> texture);
+  static void use(const Ptr<Texture>& texture);
 
   /**
   @brief Use the current font atlas for drawing.
@@ -186,7 +186,7 @@ public:
   @param font           Font (Ptr)
   @param characterSize  Character size
   */
-  static void use(Ptr<Font> font, int characterSize);
+  static void use(const Ptr<Font>& font, int characterSize);
 
   /**
   @brief Clear the current texture for drawing.

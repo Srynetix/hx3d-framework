@@ -82,17 +82,17 @@ void SpriteGeometry::activateTextureMode() {
   });
 }
 
-void SpriteGeometry::setFromRegion(TextureRegion& region) {
+void SpriteGeometry::setFromRegion(const Ptr<TextureRegion>& region) {
 
   // Calculate texture points;
-  unsigned int width = region.getTexture()->getWidth();
-  unsigned int height = region.getTexture()->getHeight();
+  unsigned int width = region->getTexture()->getWidth();
+  unsigned int height = region->getTexture()->getHeight();
 
   setAttribute("Texture", std::vector<float> {
-    region.getMinX() / (float)width, region.getMinY() / float(height),
-    region.getMaxX() / (float)width, region.getMinY() / float(height),
-    region.getMaxX() / (float)width, region.getMaxY() / float(height),
-    region.getMinX() / (float)width, region.getMaxY() / float(height)
+    region->getMinX() / (float)width, region->getMinY() / float(height),
+    region->getMaxX() / (float)width, region->getMinY() / float(height),
+    region->getMaxX() / (float)width, region->getMaxY() / float(height),
+    region->getMinX() / (float)width, region->getMaxY() / float(height)
   });
 }
 

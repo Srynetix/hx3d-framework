@@ -50,34 +50,34 @@ void Batch::end() {
   Shader::disable();
 }
 
-void Batch::draw(Mesh& mesh) {
+void Batch::draw(const Ptr<Mesh>& mesh) {
 
-  glm::mat4 model = mesh.transform.compute();
+  glm::mat4 model = mesh->transform.compute();
   _shader->setUniformMatrix4f("u_model", model);
 
-  mesh.draw(_shader);
+  mesh->draw(_shader);
 }
 
-void Batch::draw(gui::Text& text) {
+void Batch::draw(const Ptr<gui::Text>& text) {
 
-  Texture::use(text.getFont(), text.getCharacterSize());
+  Texture::use(text->getFont(), text->getCharacterSize());
 
   Ptr<Shader> prevShader = _shader;
 
-  setShader(text.getFont()->getShader());
+  setShader(text->getFont()->getShader());
   begin();
 
-  float oldX = text.transform.position.x;
+  float oldX = text->transform.position.x;
 
-  if (text.isCenterAligned())
-    text.transform.position.x -= text.getLength() / 2;
+  if (text->isCenterAligned())
+    text->transform.position.x -= text->getLength() / 2;
 
-  glm::mat4 model = text.transform.compute();
-  text.transform.position.x = oldX;
+  glm::mat4 model = text->transform.compute();
+  text->transform.position.x = oldX;
 
   _shader->setUniformMatrix4f("u_model", model);
 
-  text.draw(_shader);
+  text->draw(_shader);
 
   setShader(prevShader);
   begin();
@@ -85,25 +85,25 @@ void Batch::draw(gui::Text& text) {
   Texture::disable();
 }
 
-void Batch::draw(gui::Text& text, math::Function function) {
-  Texture::use(text.getFont(), text.getCharacterSize());
+void Batch::draw(const Ptr<gui::Text>& text, math::Function function) {
+  Texture::use(text->getFont(), text->getCharacterSize());
 
   Ptr<Shader> prevShader = _shader;
 
-  setShader(text.getFont()->getShader());
+  setShader(text->getFont()->getShader());
   begin();
 
-  float oldX = text.transform.position.x;
+  float oldX = text->transform.position.x;
 
-  if (text.isCenterAligned())
-    text.transform.position.x -= text.getLength() / 2;
+  if (text->isCenterAligned())
+    text->transform.position.x -= text->getLength() / 2;
 
-  glm::mat4 model = text.transform.compute();
-  text.transform.position.x = oldX;
+  glm::mat4 model = text->transform.compute();
+  text->transform.position.x = oldX;
 
   _shader->setUniformMatrix4f("u_model", model);
 
-  text.functionDraw(_shader, function);
+  text->functionDraw(_shader, function);
 
   setShader(prevShader);
   begin();

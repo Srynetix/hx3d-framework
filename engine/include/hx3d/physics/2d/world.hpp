@@ -101,7 +101,7 @@ public:
 
   @param batch Batch
   */
-  void render(graphics::BaseBatch& batch);
+  void render(const Ptr<graphics::BaseBatch>& batch);
 
   /**
   @brief Get the physical ratio

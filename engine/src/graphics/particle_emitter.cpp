@@ -49,7 +49,7 @@ void ParticleEmitter::update(const float delta) {
   }
 }
 
-void ParticleEmitter::draw(Batch& batch) {
+void ParticleEmitter::draw(const Ptr<Batch>& batch) {
   const auto& working = particles.getWorking();
   for (auto it = working.begin(); it != working.end(); ++it) {
     const Ptr<Particle> &p = *it;

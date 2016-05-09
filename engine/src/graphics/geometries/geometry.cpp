@@ -26,7 +26,7 @@ namespace geom {
 
 Geometry::Geometry(): BaseGeometry() {}
 
-void Geometry::draw(Ptr<Shader> shader) {
+void Geometry::draw(const Ptr<Shader>& shader) {
 
   // Culling
   switch (_cullingType) {

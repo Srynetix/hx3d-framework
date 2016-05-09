@@ -34,17 +34,26 @@ namespace window {
 Game::Game():
 _running(true), _screen(nullptr), _showStats(false)
 {
-  _deltaText.transform.position.x = Core::App()->getWidth() / 2;
-  _deltaText.transform.position.y = 100;
-  _deltaText.transform.position.z = 0.95f;
-  _deltaText.setCharacterSize(20);
+  _batch = Make<graphics::Batch>();
+  _camera = Make<graphics::OrthographicCamera>();
 
-  _fpsText.transform.position.x = Core::App()->getWidth() / 2;
-  _fpsText.transform.position.y = _deltaText.transform.position.y + _deltaText.getCharacterSize();
-  _fpsText.transform.position.z = 0.95f;
-  _fpsText.setCharacterSize(20);
+  _deltaText = Make<gui::Text>();
+  _fpsText = Make<gui::Text>();
 
-  _batch.setCamera(_camera);
+  _currentFB = Make<graphics::Framebuffer>();
+  _nextFB = Make<graphics::Framebuffer>();
+
+  _deltaText->transform.position.x = Core::App()->getWidth() / 2;
+  _deltaText->transform.position.y = 100;
+  _deltaText->transform.position.z = 0.95f;
+  _deltaText->setCharacterSize(20);
+
+  _fpsText->transform.position.x = Core::App()->getWidth() / 2;
+  _fpsText->transform.position.y = _deltaText->transform.position.y + _deltaText->getCharacterSize();
+  _fpsText->transform.position.z = 0.95f;
+  _fpsText->setCharacterSize(20);
+
+  _batch->setCamera(_camera);
 }
 
 void Game::create() {}
@@ -71,8 +80,8 @@ void Game::setTransition(const Ptr<graphics::Transition>& transition) {
 void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
   if (viewport) {
     auto world_size = viewport->getWorldSize();
-    _currentFB.resize(world_size.x, world_size.y);
-    _nextFB.resize(world_size.x, world_size.y);
+    _currentFB->resize(world_size.x, world_size.y);
+    _nextFB->resize(world_size.x, world_size.y);
   }
 
   _currentViewport = viewport;
@@ -93,15 +102,15 @@ glm::vec2 Game::getSize() {
 }
 
 void Game::updateStats() {
-  _deltaText.transform.position.x = this->getSize().x / 2;
-  _deltaText.transform.position.y = 100;
-  _deltaText.transform.position.z = 0.95f;
-  _deltaText.setCharacterSize(20);
+  _deltaText->transform.position.x = this->getSize().x / 2;
+  _deltaText->transform.position.y = 100;
+  _deltaText->transform.position.z = 0.95f;
+  _deltaText->setCharacterSize(20);
 
-  _fpsText.transform.position.x = this->getSize().x / 2;
-  _fpsText.transform.position.y = _deltaText.transform.position.y + _deltaText.getCharacterSize();
-  _fpsText.transform.position.z = 0.95f;
-  _fpsText.setCharacterSize(20);
+  _fpsText->transform.position.x = this->getSize().x / 2;
+  _fpsText->transform.position.y = _deltaText->transform.position.y + _deltaText->getCharacterSize();
+  _fpsText->transform.position.z = 0.95f;
+  _fpsText->setCharacterSize(20);
 }
 
 void Game::render() {
@@ -151,10 +160,10 @@ void Game::render() {
   }
 
   if (_showStats) {
-    _batch.begin();
-    _batch.draw(_deltaText);
-    _batch.draw(_fpsText);
-    _batch.end();
+    _batch->begin();
+    _batch->draw(_deltaText);
+    _batch->draw(_fpsText);
+    _batch->end();
   }
 }
 
@@ -177,8 +186,8 @@ void Game::update(float delta) {
   }
 
   if (_showStats) {
-    _deltaText.setContent(format("D: %2.0f", delta * 1000.f));
-    _fpsText.setContent(format("FPS: %2.0f", 1/delta));
+    _deltaText->setContent(format("D: %2.0f", delta * 1000.f));
+    _fpsText->setContent(format("FPS: %2.0f", 1/delta));
   }
 }
 
@@ -196,7 +205,7 @@ void Game::stop() {
   _running = false;
 }
 
-void Game::setScreen(Ptr<Screen> screen) {
+void Game::setScreen(const Ptr<Screen>& screen) {
 
   Core::Events()->setInputHandler(nullptr);
   auto size = Core::App()->getSize();

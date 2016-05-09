@@ -46,8 +46,8 @@ void Sprite::setTexture(const Ptr<Texture>& texture) {
   _geometry->uploadAll();
 }
 
-void Sprite::setTexture(Framebuffer& buffer) {
-  _texture = buffer.getColorBuffer();
+void Sprite::setTexture(const Ptr<Framebuffer>& buffer) {
+  _texture = buffer->getColorBuffer();
 
   transform.size.x = _texture->getWidth();
   transform.size.y = _texture->getHeight();
@@ -59,11 +59,11 @@ void Sprite::setTexture(Framebuffer& buffer) {
   _geometry->uploadAll();
 }
 
-void Sprite::setTexture(TextureRegion& region) {
-  _texture = region.getTexture();
+void Sprite::setTexture(const Ptr<TextureRegion>& region) {
+  _texture = region->getTexture();
 
-  transform.size.x = region.getMaxX() - region.getMinX();
-  transform.size.y = region.getMaxY() - region.getMinY();
+  transform.size.x = region->getMaxX() - region->getMinX();
+  transform.size.y = region->getMaxY() - region->getMinY();
 
   Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->setFromRegion(region);
@@ -91,7 +91,7 @@ void Sprite::scaleTexture() {
   _geometry->uploadAll();
 }
 
-void Sprite::draw(Ptr<Shader> shader) {
+void Sprite::draw(const Ptr<Shader>& shader) {
   Texture::use(_texture);
   Mesh::draw(shader);
   Texture::disable();

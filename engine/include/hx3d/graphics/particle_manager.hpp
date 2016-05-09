@@ -52,7 +52,7 @@ public:
 
   @param batch Batch
   */
-  void draw(Batch& batch);
+  void draw(const Ptr<Batch>& batch);
 
 private:
   /// @brief Particle emitters

@@ -64,7 +64,7 @@ void Widget::add(Ptr<Widget> widget) {
   _children.push_back(widget);
 }
 
-void Widget::draw(Ptr<Shader> shader) {
+void Widget::draw(const Ptr<Shader>& shader) {
   Mesh::draw(shader);
 }
 

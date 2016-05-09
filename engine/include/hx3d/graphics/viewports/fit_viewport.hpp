@@ -45,7 +45,7 @@ public:
   */
   FitViewport(const float worldWidth, const float worldHeight);
 
-  virtual void internalUpdate(Camera& camera) override;
+  virtual void internalUpdate(const Ptr<Camera>& camera) override;
 
 };
 

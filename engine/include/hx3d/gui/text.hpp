@@ -93,7 +93,7 @@ public:
   @param shader Shader (Ptr)
   @param function  Function
   */
-  void functionDraw(Ptr<Shader> shader, math::Function function);
+  void functionDraw(const Ptr<Shader>& shader, math::Function function);
 
   /**
   @brief Get the text font.
@@ -123,7 +123,7 @@ public:
   */
   bool isCenterAligned();
 
-  virtual void draw(Ptr<Shader> shader) override;
+  virtual void draw(const Ptr<Shader>& shader) override;
 
 protected:
 

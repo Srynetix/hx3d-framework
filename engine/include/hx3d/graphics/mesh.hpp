@@ -48,7 +48,7 @@ public:
 
   @param shader Shader (Ptr)
   */
-  virtual void draw(Ptr<Shader> shader);
+  virtual void draw(const Ptr<Shader>& shader);
 
   /**
   @brief Set the mesh tint.
@@ -77,7 +77,7 @@ public:
 
   @param geometry BaseGeometry (Ptr)
   */
-  void setGeometry(Ptr<geom::BaseGeometry> geometry);
+  void setGeometry(const Ptr<geom::BaseGeometry>& geometry);
 
   /**
   @brief Get the mesh geometry

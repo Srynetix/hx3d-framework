@@ -43,11 +43,11 @@ Ptr<Shader> BaseBatch::getShader() {
   return _shader;
 }
 
-void BaseBatch::setCamera(Camera& camera) {
-  _camera = &camera;
+void BaseBatch::setCamera(const Ptr<Camera>& camera) {
+  _camera = camera;
 }
 
-Camera* BaseBatch::getCamera() {
+Ptr<Camera> BaseBatch::getCamera() {
   return _camera;
 }
 

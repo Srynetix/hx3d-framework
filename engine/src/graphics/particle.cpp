@@ -26,6 +26,7 @@ namespace hx3d {
 namespace graphics {
 
 Particle::Particle() {
+  sprite = Make<Sprite>();
   reset();
 }
 
@@ -38,7 +39,7 @@ void Particle::reset() {
 }
 
 void Particle::setTexture(const Ptr<Texture>& texture) {
-  sprite.setTexture(texture);
+  sprite->setTexture(texture);
 }
 
 void Particle::update(const float delta) {
@@ -53,7 +54,7 @@ void Particle::update(const float delta) {
     float percentage = life / baseLife;
     color.a = math::interpolate(0, 255, percentage, math::Interpolation::Linear);
     float z_pos = color.a / 255.f; // between 0 && 1
-    sprite.setTint(color);
+    sprite->setTint(color);
 
     position.x -= velocity.x * delta;
     position.y -= velocity.y * delta;
@@ -66,12 +67,12 @@ void Particle::update(const float delta) {
   }
 }
 
-void Particle::draw(Batch& batch) {
-  sprite.transform.position = position;
-  sprite.transform.size = size;
-  sprite.transform.rotation.z = rotation;
+void Particle::draw(const Ptr<Batch>& batch) {
+  sprite->transform.position = position;
+  sprite->transform.size = size;
+  sprite->transform.rotation.z = rotation;
 
-  batch.draw(sprite);
+  batch->draw(sprite);
 }
 
 } /* graphics */

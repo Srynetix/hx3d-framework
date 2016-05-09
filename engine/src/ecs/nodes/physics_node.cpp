@@ -26,12 +26,14 @@ namespace ecs {
 PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category, std::string mask, const Ptr<graphics::Texture> texture):
   Node(name), _world(world), _texture(texture)
 {
+  _sprite = Make<graphics::Sprite>();
+
   if (_texture) {
-    _sprite.setTexture(_texture);
-    _sprite.transform.size.x = w;
-    _sprite.transform.size.y = h;
-    _sprite.transform.position.x = x;
-    _sprite.transform.position.y = y;
+    _sprite->setTexture(_texture);
+    _sprite->transform.size.x = w;
+    _sprite->transform.size.y = h;
+    _sprite->transform.position.x = x;
+    _sprite->transform.position.y = y;
   }
 
   auto& matrix = _world->getCollisionMatrix();
@@ -51,15 +53,15 @@ PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::C
 
 void PhysicsNode::update(float delta) {
   if (_texture) {
-    _sprite.transform.position.x = _collider->position.x * _world->getPhysRatio();
-    _sprite.transform.position.y = _collider->position.y * _world->getPhysRatio();
-    _sprite.transform.rotation.z = _collider->orientation;
+    _sprite->transform.position.x = _collider->position.x * _world->getPhysRatio();
+    _sprite->transform.position.y = _collider->position.y * _world->getPhysRatio();
+    _sprite->transform.rotation.z = _collider->orientation;
   }
 }
 
-void PhysicsNode::draw(graphics::BaseBatch& batch) {
+void PhysicsNode::draw(const Ptr<graphics::BaseBatch>& batch) {
   if (_texture) {
-    batch.draw(_sprite);
+    batch->draw(_sprite);
   }
 }
 

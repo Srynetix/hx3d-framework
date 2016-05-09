@@ -36,7 +36,7 @@ FitViewport::FitViewport(const float worldWidth, const float worldHeight) {
   _worldHeight = worldHeight;
 }
 
-void FitViewport::internalUpdate(Camera& camera) {
+void FitViewport::internalUpdate(const Ptr<Camera>& camera) {
   float tgtRatio, srcRatio, scale;
 
   if (_screenWidth < _screenHeight) {
