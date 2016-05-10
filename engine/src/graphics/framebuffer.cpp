@@ -99,23 +99,20 @@ void Framebuffer::push(const Ptr<Framebuffer>& buffer) {
 }
 
 void Framebuffer::pop() {
-  if (_buffersQueue.empty()) {
+  _buffersQueue.pop();
+  if (_buffersQueue.size() == 0) {
     Framebuffer::use(nullptr);
   } else {
     auto elem = _buffersQueue.top();
-    _buffersQueue.pop();
-
     Framebuffer::use(elem);
   }
 }
 
 void Framebuffer::use(const Ptr<Framebuffer>& buffer) {
   if (buffer != nullptr) {
-    Log.Info("-- FB %d", buffer->_id);
     glBindFramebuffer(GL_FRAMEBUFFER, buffer->_id);
     glViewport(0, 0, buffer->_width, buffer->_height);
   } else {
-    Log.Info("-- FB default");
     Framebuffer::useDefault();
   }
 }

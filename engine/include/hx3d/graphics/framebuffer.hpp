@@ -112,7 +112,6 @@ private:
 
   /// @brief Default framebuffer ID
   static GLint _defaultID;
-
   static std::stack<Ptr<Framebuffer>> _buffersQueue;
 
   static void use(const Ptr<Framebuffer>& buf);
