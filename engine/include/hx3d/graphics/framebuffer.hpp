@@ -26,6 +26,8 @@
 
 #include "hx3d/utils/ptr.hpp"
 
+#include <stack>
+
 namespace hx3d {
 namespace graphics {
 
@@ -74,21 +76,21 @@ public:
   static void fetchDefaultFramebuffer();
 
   /**
-  @brief Use the framebuffer as current framebuffer.
+  @brief Push a framebuffer as a current framebuffer.
 
   @param buf Framebuffer
   */
-  static void use(const Ptr<Framebuffer>& buf);
+  static void push(const Ptr<Framebuffer>& buf);
+
+  /**
+  @brief Pop the last framebuffer.
+  */
+  static void pop();
 
   /**
   @brief Use the default framebuffer.
   */
   static void useDefault();
-
-  /**
-  @brief Get the current framebuffer
-  */
-  static Ptr<Framebuffer> getCurrentFramebuffer();
 
   /**
   @brief Clear the framebuffer.
@@ -111,7 +113,9 @@ private:
   /// @brief Default framebuffer ID
   static GLint _defaultID;
 
-  static Ptr<Framebuffer> _currentFramebuffer;
+  static std::stack<Ptr<Framebuffer>> _buffersQueue;
+
+  static void use(const Ptr<Framebuffer>& buf);
 
   /**
   @brief Create an empty framebuffer.

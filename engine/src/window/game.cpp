@@ -135,15 +135,18 @@ void Game::render() {
       }
 
       else {
-        graphics::Framebuffer::use(_currentFB);
+        graphics::Framebuffer::clear(graphics::Color::Black);
+
+        graphics::Framebuffer::push(_currentFB);
         graphics::Framebuffer::clear(graphics::Color::Black);
         _screen->render();
+        graphics::Framebuffer::pop();
 
-        graphics::Framebuffer::use(_nextFB);
+        graphics::Framebuffer::push(_nextFB);
         graphics::Framebuffer::clear(graphics::Color::Black);
         _nextScreen->render();
+        graphics::Framebuffer::pop();
 
-        graphics::Framebuffer::useDefault();
         if (_currentViewport) _currentViewport->apply(_camera);
         _currentTransition->render(_batch, _currentFB, _nextFB);
       }

@@ -32,7 +32,7 @@ namespace hx3d {
 namespace graphics {
 
 GLint Framebuffer::_defaultID = 0;
-Ptr<Framebuffer> Framebuffer::_currentFramebuffer = nullptr;
+std::stack<Ptr<Framebuffer>> Framebuffer::_buffersQueue;
 
 Framebuffer::Framebuffer():
   Framebuffer(Core::App()->getWidth(), Core::App()->getHeight())
@@ -93,13 +93,29 @@ void Framebuffer::create() {
     glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
 }
 
+void Framebuffer::push(const Ptr<Framebuffer>& buffer) {
+  Framebuffer::use(buffer);
+  _buffersQueue.push(buffer);
+}
+
+void Framebuffer::pop() {
+  if (_buffersQueue.empty()) {
+    Framebuffer::use(nullptr);
+  } else {
+    auto elem = _buffersQueue.top();
+    _buffersQueue.pop();
+
+    Framebuffer::use(elem);
+  }
+}
+
 void Framebuffer::use(const Ptr<Framebuffer>& buffer) {
-  if (buffer) {
+  if (buffer != nullptr) {
+    Log.Info("-- FB %d", buffer->_id);
     glBindFramebuffer(GL_FRAMEBUFFER, buffer->_id);
     glViewport(0, 0, buffer->_width, buffer->_height);
-
-    _currentFramebuffer = buffer;
   } else {
+    Log.Info("-- FB default");
     Framebuffer::useDefault();
   }
 }
@@ -107,8 +123,6 @@ void Framebuffer::use(const Ptr<Framebuffer>& buffer) {
 void Framebuffer::useDefault() {
   glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
   glViewport(0, 0, Core::App()->getWidth(), Core::App()->getHeight());
-
-  _currentFramebuffer = nullptr;
 }
 
 void Framebuffer::clear(Color color) {
@@ -120,10 +134,6 @@ void Framebuffer::clear(Color color) {
 
 Ptr<Texture> Framebuffer::getColorBuffer() {
   return _colorBuffer;
-}
-
-Ptr<Framebuffer> Framebuffer::getCurrentFramebuffer() {
-  return _currentFramebuffer;
 }
 
 void Framebuffer::createRenderBuffer(GLuint& id, GLenum format) {
