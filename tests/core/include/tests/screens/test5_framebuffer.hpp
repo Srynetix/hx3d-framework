@@ -16,26 +16,32 @@ public:
   Test5():
     baseShader(Core::Assets()->get<Shader>("base")),
     pixShader(Core::Assets()->get<Shader>("pix2D")),
-    text(Core::Assets()->get<Font>("default"))
+    text(Make<gui::Text>(Core::Assets()->get<Font>("default")))
   {
-    batch.setShader(baseShader);
-    batch.setCamera(camera);
+    batch = Make<Batch>();
+    sprite = Make<Sprite>();
+    framebufferSprite = Make<Sprite>();
+    framebuffer = Make<Framebuffer>();
+    camera = Make<OrthographicCamera>();
 
-    sprite.setTexture(Core::Assets()->get<Texture>("box"));
-    sprite.transform.size = glm::vec3(64);
-    sprite.transform.position = glm::vec3(Core::App()->getWidth() / 2 - 64 / 2, Core::App()->getHeight() / 2 - 64 / 2, 0);
-    sprite.setTint(Color::White);
+    batch->setShader(baseShader);
+    batch->setCamera(camera);
+
+    sprite->setTexture(Core::Assets()->get<Texture>("box"));
+    sprite->transform.size = glm::vec3(64);
+    sprite->transform.position = glm::vec3(Core::App()->getWidth() / 2 - 64 / 2, Core::App()->getHeight() / 2 - 64 / 2, 0);
+    sprite->setTint(Color::White);
 
     glm::vec2 screenSize = Core::App()->getSize();
-    framebufferSprite.setTexture(framebuffer);
-    framebufferSprite.transform.position = glm::vec3(
+    framebufferSprite->setTexture(framebuffer);
+    framebufferSprite->transform.position = glm::vec3(
       screenSize.x / 2,
       screenSize.y / 2,
       0
     );
 
-    text.setContent("WOOOOOOOOOHOOOOOOOOO !!");
-    text.transform.position = glm::vec3(
+    text->setContent("WOOOOOOOOOHOOOOOOOOO !!");
+    text->transform.position = glm::vec3(
       Core::App()->getWidth() / 2,
       Core::App()->getHeight() / 2 - 200,
       0
@@ -43,28 +49,28 @@ public:
   }
 
   virtual void update(float delta) override {
-    camera.update();
+    camera->update();
 
-    float angle = framebufferSprite.transform.rotation.z;
+    float angle = framebufferSprite->transform.rotation.z;
     angle += glm::radians(1.f);
 
     angle = math::mclamp(angle, 0.f, 360.f);
-    framebufferSprite.transform.rotation.z = angle;
+    framebufferSprite->transform.rotation.z = angle;
   }
 
   virtual void render() override {
 
-    Framebuffer::use(framebuffer);
+    Framebuffer::push(framebuffer);
     Framebuffer::clear(Color::Black);
 
-    batch.begin();
-    batch.draw(sprite);
-    batch.draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
+    batch->begin();
+    batch->draw(sprite);
+    batch->draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
       y = std::sin(t) * 5.f;
     }));
-    batch.end();
+    batch->end();
 
-    Framebuffer::useDefault();
+    Framebuffer::pop();
     Framebuffer::clear(Color::Black);
 
     Shader::use(pixShader);
@@ -73,25 +79,25 @@ public:
     pixShader->setUniform2f("pixel_size", glm::vec2(10.f, 10.f));
     Shader::disable();
 
-    batch.setShader(pixShader);
+    batch->setShader(pixShader);
 
-    batch.begin();
-    batch.draw(framebufferSprite);
-    batch.end();
+    batch->begin();
+    batch->draw(framebufferSprite);
+    batch->end();
 
-    batch.setShader(baseShader);
+    batch->setShader(baseShader);
   }
 
 private:
   Ptr<Shader> baseShader;
   Ptr<Shader> pixShader;
 
-  Framebuffer framebuffer;
-  OrthographicCamera camera;
+  Ptr<Framebuffer> framebuffer;
+  Ptr<OrthographicCamera> camera;
 
-  gui::Text text;
+  Ptr<gui::Text> text;
 
-  Batch batch;
-  Sprite sprite;
-  Sprite framebufferSprite;
+  Ptr<Batch> batch;
+  Ptr<Sprite> sprite;
+  Ptr<Sprite> framebufferSprite;
 };

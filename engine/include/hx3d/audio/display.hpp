@@ -89,8 +89,8 @@ public:
   */
   virtual void onInitialization();
 
-  void setTexture(const Ptr<graphics::Texture>&) = delete;
-  void setTexture(const Ptr<graphics::Framebuffer>&) = delete;
+  void setTexture(const graphics::Texture::Ptr&) = delete;
+  void setTexture(const graphics::Framebuffer::Ptr&) = delete;
 
 protected:
   /// @brief Drawing image

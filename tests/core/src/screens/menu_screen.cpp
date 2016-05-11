@@ -14,12 +14,12 @@ Screens list.
 // #include "tests/screens/test2_simple3d2.hpp"
 // #include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
-// #include "tests/screens/test5_framebuffer.hpp"
+#include "tests/screens/test5_framebuffer.hpp"
 // #include "tests/screens/test6_fastbatch.hpp"
 // #include "tests/screens/test7_sound.hpp"
 // #include "tests/screens/test8_image.hpp"
 // #include "tests/screens/test9_interpolation.hpp"
-// #include "tests/screens/test10_stencil.hpp"
+#include "tests/screens/test10_stencil.hpp"
 // #include "tests/screens/test11_tweening.hpp"
 // #include "tests/screens/test12_particles.hpp"
 // #include "tests/screens/test13_gravity.hpp"
@@ -64,16 +64,16 @@ MenuScreen::MenuScreen():
   logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
-    {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}}
+    {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
     // {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
     // {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
     // {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
-    // {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
+    {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
     // {"Fast Batch 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
     // {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
     // {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
     // {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}},
-    // {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
+    {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}}
     // {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
     // {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
     // {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},

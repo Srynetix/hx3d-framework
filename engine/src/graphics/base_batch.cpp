@@ -35,19 +35,19 @@ BaseBatch::BaseBatch():
   _shader(Core::Assets()->get<Shader>("base"))
   {}
 
-void BaseBatch::setShader(const Ptr<Shader>& shader) {
+void BaseBatch::setShader(const Shader::Ptr& shader) {
   _shader = shader;
 }
 
-Ptr<Shader> BaseBatch::getShader() {
+Shader::Ptr BaseBatch::getShader() {
   return _shader;
 }
 
-void BaseBatch::setCamera(const Ptr<Camera>& camera) {
+void BaseBatch::setCamera(const Camera::Ptr& camera) {
   _camera = camera;
 }
 
-Ptr<Camera> BaseBatch::getCamera() {
+Camera::Ptr BaseBatch::getCamera() {
   return _camera;
 }
 

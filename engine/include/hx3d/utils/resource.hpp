@@ -21,12 +21,16 @@
 #ifndef HX3D_CORE_RESOURCE
 #define HX3D_CORE_RESOURCE
 
+#include "hx3d/utils/ptr.hpp"
+
 namespace hx3d {
 
 /**
 @brief Resource type: to use in an asset manager
 */
 class Resource {
+  HX3D_PTR(Resource)
+
 public:
   virtual ~Resource();
 };

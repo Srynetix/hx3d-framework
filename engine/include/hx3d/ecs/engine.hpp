@@ -50,14 +50,14 @@ public:
 
   @return Entity (Ptr)
   */
-  Ptr<Entity> createEntity();
+  Entity::Ptr createEntity();
 
   /**
   @brief Affect an ID to a uninitialized entity.
 
   @param entity Entity (Ptr)
   */
-  void registerEntity(const Ptr<Entity>& entity);
+  void registerEntity(const Entity::Ptr& entity);
 
   /**
   @brief Mark the entity for deletion from the engine.
@@ -66,7 +66,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  void removeEntity(const Ptr<Entity>& entity);
+  void removeEntity(const Entity::Ptr& entity);
 
   // COMPONENTS /////////////////////
 
@@ -78,7 +78,7 @@ public:
   @return Component
   */
   template <class T>
-  Ptr<T> getComponent(const Ptr<Entity>& entity);
+  Ptr<T> getComponent(const Entity::Ptr& entity);
 
   /**
   @brief Add a component for an entity.
@@ -87,7 +87,7 @@ public:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addComponent(const Ptr<Entity>& entity, const Ptr<Component>& component);
+  void addComponent(const Entity::Ptr& entity, const Component::Ptr& component);
 
   /**
   @brief Create a component for an entity with variable args.
@@ -96,7 +96,7 @@ public:
   @param args   Arguments
   */
   template <class T, class... Args>
-  void createComponent(const Ptr<Entity>& entity, Args... args);
+  void createComponent(const Entity::Ptr& entity, Args... args);
 
   // SYSTEM /////////////////////////
 
@@ -106,7 +106,7 @@ public:
   @param sys  System (Ptr)
   */
   template <class T>
-  void addSystem(const Ptr<System>& sys);
+  void addSystem(const System::Ptr& sys);
 
   /**
   @brief Create a system into the engine.
@@ -125,7 +125,7 @@ public:
 
   @return Number of components
   */
-  unsigned int getComponentSize(const Ptr<Entity>& entity);
+  unsigned int getComponentSize(const Entity::Ptr& entity);
 
   /**
   @brief Get the number of entities.
@@ -141,7 +141,7 @@ public:
 
   @return Entity components bits
   */
-  unsigned int getBits(const Ptr<Entity>& entity);
+  unsigned int getBits(const Entity::Ptr& entity);
 
   /**
   @brief Register a callback for a certain component type when it's added.
@@ -149,7 +149,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentAdded(std::function<void(const Ptr<Component>&, const Ptr<Entity>&)> callback);
+  void registerComponentAdded(std::function<void(const Component::Ptr&, const Entity::Ptr&)> callback);
 
   /**
   @brief Register a callback for a certain component type when it's removed.

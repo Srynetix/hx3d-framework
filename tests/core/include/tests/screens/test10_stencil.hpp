@@ -10,30 +10,36 @@ using namespace hx3d;
 class Test10: public BaseTestScreen {
 public:
   Test10():
-    text(Core::Assets()->get<Font>("default"))
+    text(Make<gui::Text>(Core::Assets()->get<Font>("default")))
   {
-    batch.setShader(Core::Assets()->get<Shader>("base"));
-    batch.setCamera(camera);
+    batch = Make<Batch>();
+    sprite = Make<Sprite>();
+    stencilSprite = Make<Sprite>();
+    text = Make<gui::Text>();
+    camera = Make<OrthographicCamera>();
 
-    sprite.setTexture(Core::Assets()->get<Texture>("box"));
-    sprite.transform.position.x = Core::App()->getWidth() / 2;
-    sprite.transform.position.y = Core::App()->getHeight() / 2;
+    batch->setShader(Core::Assets()->get<Shader>("base"));
+    batch->setCamera(camera);
 
-    stencilSprite.setTexture(Core::Assets()->get<Texture>("box"));
-    stencilSprite.transform = sprite.transform;
+    sprite->setTexture(Core::Assets()->get<Texture>("box"));
+    sprite->transform.position.x = Core::App()->getWidth() / 2;
+    sprite->transform.position.y = Core::App()->getHeight() / 2;
 
-    text.setContent("Hey !");
-    text.transform.position = sprite.transform.position;
-    text.transform.position.z = 0.5f;
+    stencilSprite->setTexture(Core::Assets()->get<Texture>("box"));
+    stencilSprite->transform = sprite->transform;
 
-    stencil.enable();
-    stencil.setFunction(
+    text->setContent("Hey !");
+    text->transform.position = sprite->transform.position;
+    text->transform.position.z = 0.5f;
+
+    stencil->enable();
+    stencil->setFunction(
       Stencil::Function::Never,
       1,
       0xFF
     );
 
-    stencil.setOperation(
+    stencil->setOperation(
         Stencil::Operation::Replace,
         Stencil::Operation::Keep,
         Stencil::Operation::Keep
@@ -43,14 +49,14 @@ public:
   }
 
   virtual void hide() override {
-    stencil.disable();
+    stencil->disable();
   }
 
   virtual void update(float delta) override {
-    camera.update();
+    camera->update();
 
-    sprite.transform.rotation.z = glm::radians(angle);
-    stencilSprite.transform.scale = glm::vec3(1.f - 0.5f * std::abs(std::sin(glm::radians(angle))));
+    sprite->transform.rotation.z = glm::radians(angle);
+    stencilSprite->transform.scale = glm::vec3(1.f - 0.5f * std::abs(std::sin(glm::radians(angle))));
 
     angle = math::mclamp(angle + 1, 0, 360);
   }
@@ -58,30 +64,30 @@ public:
   virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
-    batch.begin();
+    batch->begin();
 
-    stencil.begin();
-    batch.draw(stencilSprite);
-    stencil.end();
+    stencil->begin();
+    batch->draw(stencilSprite);
+    stencil->end();
 
-    batch.draw(sprite);
+    batch->draw(sprite);
 
-    batch.draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
+    batch->draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
       y = std::sin(t) * 5.f;
     }));
 
-    batch.end();
+    batch->end();
   }
 
 private:
-  OrthographicCamera camera;
+  Ptr<OrthographicCamera> camera;
 
-  Stencil stencil;
-  Sprite sprite;
-  Sprite stencilSprite;
-  gui::Text text;
+  Ptr<Stencil> stencil;
+  Ptr<Sprite> sprite;
+  Ptr<Sprite> stencilSprite;
+  Ptr<gui::Text> text;
 
-  Batch batch;
+  Batch::Obj batch;
 
   float angle;
 };

@@ -25,19 +25,23 @@
 
 #include <memory>
 
+#define HX3D_PTR(klass) \
+public: \
+  using Ptr = hx3d::Pointer<klass>;
+
 namespace hx3d {
 
 /**
 @brief Quick-typing shared ptr
 */
 template <class T>
-using Ptr = std::shared_ptr<T>;
+using Pointer = std::shared_ptr<T>;
 
 /**
 @brief Quick-typing unique ptr
 */
 template <class T>
-using UPtr = std::unique_ptr<T>;
+using UPointer = std::unique_ptr<T>;
 
 /**
 @brief Quick-typing enable shared from this

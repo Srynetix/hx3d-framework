@@ -39,6 +39,7 @@ class Color;
 @brief Displayable 2D/3D element.
 */
 class Mesh {
+  HX3D_PTR(Mesh)
 
 public:
   Mesh();

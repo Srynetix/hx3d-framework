@@ -39,6 +39,8 @@ namespace graphics {
 @see PerspectiveCamera
 */
 class Camera {
+  HX3D_PTR(Camera)
+  
 public:
   /**
   @brief Create a camera with a viewport width and height.
