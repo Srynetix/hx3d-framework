@@ -26,22 +26,22 @@ namespace tweens {
 Sequence::Sequence(bool infinite): BaseTween(infinite) {}
 
 void Sequence::addDelay(const float delay) {
-  Ptr<BaseTween> tween = Make<Delay>(delay);
+  Pointer<BaseTween> tween = Make<Delay>(delay);
   tweens.push_back(tween);
 }
 
 void Sequence::addCallback(std::function<void()> func) {
-  Ptr<BaseTween> tween = Make<Callback>(func);
+  Pointer<BaseTween> tween = Make<Callback>(func);
   tweens.push_back(tween);
 }
 
-void Sequence::add(const Ptr<BaseTween>& tween) {
+void Sequence::add(const Pointer<BaseTween>& tween) {
   tweens.push_back(tween);
 }
 
 void Sequence::reset() {
   for (auto i = tweens.begin(); i != tweens.end(); ++i) {
-    const Ptr<BaseTween>& tween = *i;
+    const Pointer<BaseTween>& tween = *i;
     tween->reset();
   }
 }
@@ -52,7 +52,7 @@ void Sequence::update(const float delta) {
 
   bool all_ended = true;
   for (auto i = tweens.begin(); i != tweens.end(); ++i) {
-    const Ptr<BaseTween>& tween = *i;
+    const Pointer<BaseTween>& tween = *i;
 
     if (!tween->hasEnded()) {
       all_ended = false;

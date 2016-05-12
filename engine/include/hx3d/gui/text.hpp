@@ -35,6 +35,7 @@ namespace gui {
 @brief Text GUI element
 */
 class Text: public Widget {
+  HX3D_PTR(Text)
 
 public:
 
@@ -49,7 +50,7 @@ public:
 
   @param font Font (Ptr)
   */
-  Text(Ptr<Font> font);
+  Text(Pointer<Font> font);
 
   /**
   @brief Create a text from a parent widget and a font.
@@ -57,14 +58,14 @@ public:
   @param parent Widget (Ptr)
   @param font   Font (Ptr)
   */
-  Text(Widget* parent, Ptr<Font> font);
+  Text(Widget* parent, Pointer<Font> font);
 
   /**
   @brief Set the font.
 
   @param font Font (Ptr)
   */
-  void setFont(Ptr<Font> font);
+  void setFont(Pointer<Font> font);
 
   /**
   @brief Set the character size
@@ -93,14 +94,14 @@ public:
   @param shader Shader (Ptr)
   @param function  Function
   */
-  void functionDraw(const Ptr<Shader>& shader, math::Function function);
+  void functionDraw(const Pointer<Shader>& shader, math::Function function);
 
   /**
   @brief Get the text font.
 
   @return Font (Ptr)
   */
-  Ptr<Font> getFont();
+  Pointer<Font> getFont();
 
   /**
   @brief Get the character size
@@ -123,7 +124,7 @@ public:
   */
   bool isCenterAligned();
 
-  virtual void draw(const Ptr<Shader>& shader) override;
+  virtual void draw(const Pointer<Shader>& shader) override;
 
 protected:
 
@@ -138,7 +139,7 @@ protected:
   float calculateLength();
 
   /// @brief Text font
-  Ptr<Font> _font;
+  Pointer<Font> _font;
   /// @brief Text content
   std::string _content;
   /// @brief Text length

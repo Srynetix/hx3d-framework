@@ -42,7 +42,7 @@ public:
 
   @param tween Base Tween (Ptr)
   */
-  void add(const Ptr<BaseTween>& tween);
+  void add(const Pointer<BaseTween>& tween);
 
   /**
   @brief Update all tweens.
@@ -65,7 +65,7 @@ public:
 
 private:
   /// @brief Tweens
-  std::vector<Ptr<BaseTween>> tweens;
+  std::vector<Pointer<BaseTween>> tweens;
 };
 
 } /* tween */

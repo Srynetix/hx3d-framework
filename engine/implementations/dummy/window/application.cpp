@@ -37,7 +37,7 @@ Application::Application(ApplicationConfig config): _hello("Coucou") {
 
 Application::~Application() {}
 
-void Application::start(const Ptr<Game>& game) {}
+void Application::start(const Pointer<Game>& game) {}
 
 } /* window */
 } /* hx3d */

@@ -62,7 +62,7 @@ public:
 
   @param game   Game (Ptr)
   */
-  void start(const Ptr<Game>& game);
+  void start(const Pointer<Game>& game);
 
   /**
   @brief Get the window width
@@ -103,7 +103,7 @@ public:
 protected:
 
   /// @brief Game pointer
-  Ptr<Game> _game;
+  Pointer<Game> _game;
   /// @brief Is the application running ?
   bool _running;
 

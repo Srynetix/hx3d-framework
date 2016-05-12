@@ -25,7 +25,7 @@
 //
 //   }
 //
-//   virtual void draw(Ptr<Shader> shader) override {
+//   virtual void draw(Pointer<Shader> shader) override {
 //
 //   }
 // };

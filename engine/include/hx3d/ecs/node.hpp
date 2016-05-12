@@ -64,7 +64,7 @@ public:
   @return Node
   */
   template <class T, class... Args>
-  Ptr<T> createChild(SceneGraph& sg, const std::string name, Args... args);
+  Pointer<T> createChild(SceneGraph& sg, const std::string name, Args... args);
 
   /**
   @brief Get one child.
@@ -74,7 +74,7 @@ public:
   @return Node
   */
   template <class T>
-  Ptr<T> getChild(const std::string name);
+  Pointer<T> getChild(const std::string name);
 
   /**
   @brief Remove a child, using the SceneGraph.
@@ -124,7 +124,7 @@ public:
 
   @param batch Batch
   */
-  virtual void draw(const Ptr<graphics::BaseBatch>& batch);
+  virtual void draw(const Pointer<graphics::BaseBatch>& batch);
 
   /**
   @brief Update the node.
@@ -144,9 +144,9 @@ protected:
   /// @brief Current name
   std::string _name;
   /// @brief Parent node
-  Ptr<Node> _parent;
+  Pointer<Node> _parent;
   /// @brief Children nodes
-  std::vector<Ptr<Node>> _children;
+  std::vector<Pointer<Node>> _children;
 
   /**
   @brief Test if the object have a child.

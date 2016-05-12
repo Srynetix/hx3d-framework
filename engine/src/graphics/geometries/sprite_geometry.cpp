@@ -82,7 +82,7 @@ void SpriteGeometry::activateTextureMode() {
   });
 }
 
-void SpriteGeometry::setFromRegion(const Ptr<TextureRegion>& region) {
+void SpriteGeometry::setFromRegion(const Pointer<TextureRegion>& region) {
 
   // Calculate texture points;
   unsigned int width = region->getTexture()->getWidth();

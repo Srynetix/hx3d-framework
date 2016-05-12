@@ -75,7 +75,7 @@ unsigned int Font::getDefaultSize() const {
   return defaultSize;
 }
 
-const Ptr<Shader>& Font::getShader() {
+const Pointer<Shader>& Font::getShader() {
   return shader;
 }
 

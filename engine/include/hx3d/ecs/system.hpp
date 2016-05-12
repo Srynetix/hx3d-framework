@@ -55,7 +55,7 @@ public:
   @param entity Entity (Ptr)
   @param delta Delta time
   */
-  virtual void process(const Ptr<Entity>& entity, const float delta) = 0;
+  virtual void process(const Pointer<Entity>& entity, const float delta) = 0;
 
   /**
   @brief Check if an entity can be processed (using the required family).

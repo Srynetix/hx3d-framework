@@ -32,7 +32,7 @@
 namespace hx3d {
 namespace graphics {
 
-Ptr<Texture> Texture::Blank(nullptr);
+Pointer<Texture> Texture::Blank(nullptr);
 
 Texture::Texture(std::string pathToImage): Texture() {
   load(pathToImage);
@@ -70,7 +70,7 @@ Texture::~Texture()
 }
 
 bool Texture::load(std::string pathToImage) {
-  const Ptr<File>& file = File::loadBinaryFile(pathToImage);
+  const Pointer<File>& file = File::loadBinaryFile(pathToImage);
 
   int bpp = 0;
   unsigned char* file_content = reinterpret_cast<unsigned char*>(file->getData());
@@ -124,11 +124,11 @@ void Texture::setFilter(FilterType type, FilterValue value) {
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::use(const Ptr<Texture>& texture) {
+void Texture::use(const Pointer<Texture>& texture) {
   glBindTexture(GL_TEXTURE_2D, texture->_id);
 }
 
-void Texture::use(const Ptr<Font>& font, int characterSize) {
+void Texture::use(const Pointer<Font>& font, int characterSize) {
   Font::Data& data = font->getFontData(characterSize);
   glBindTexture(GL_TEXTURE_2D, data.atlas->id);
 }
@@ -137,8 +137,8 @@ void Texture::disable() {
   glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Ptr<Texture> Texture::createColorBuffer(unsigned int width, unsigned int height) {
-  Ptr<Texture> texture(Make<Texture>());
+Pointer<Texture> Texture::createColorBuffer(unsigned int width, unsigned int height) {
+  Pointer<Texture> texture(Make<Texture>());
 
   texture->_width = width;
   texture->_height = height;
@@ -177,7 +177,7 @@ void Texture::updateZone(unsigned int x, unsigned int y, unsigned int w, unsigne
 }
 
 void Texture::generateBlankTexture() {
-  Ptr<Texture> texture(Make<Texture>());
+  Pointer<Texture> texture(Make<Texture>());
 
   texture->_width = 1;
   texture->_height = 1;

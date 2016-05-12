@@ -33,45 +33,45 @@ Mesh() {
   setTint(Color::White);
 }
 
-void Sprite::setTexture(const Ptr<Texture>& texture) {
+void Sprite::setTexture(const Pointer<Texture>& texture) {
   _texture = texture;
 
   transform.size.x = _texture->getWidth();
   transform.size.y = _texture->getHeight();
 
   /* Set the correct texture coordinates, in case of previous framebuffer. */
-  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->activateTextureMode();
 
   _geometry->uploadAll();
 }
 
-void Sprite::setTexture(const Ptr<Framebuffer>& buffer) {
+void Sprite::setTexture(const Pointer<Framebuffer>& buffer) {
   _texture = buffer->getColorBuffer();
 
   transform.size.x = _texture->getWidth();
   transform.size.y = _texture->getHeight();
 
   /* Reverse the framebuffer ! */
-  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->activateFramebufferMode();
 
   _geometry->uploadAll();
 }
 
-void Sprite::setTexture(const Ptr<TextureRegion>& region) {
+void Sprite::setTexture(const Pointer<TextureRegion>& region) {
   _texture = region->getTexture();
 
   transform.size.x = region->getMaxX() - region->getMinX();
   transform.size.y = region->getMaxY() - region->getMinY();
 
-  Ptr<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
   spriteGeo->setFromRegion(region);
 
   _geometry->uploadAll();
 }
 
-Ptr<Texture> Sprite::getTexture() {
+Pointer<Texture> Sprite::getTexture() {
   return _texture;
 }
 
@@ -91,7 +91,7 @@ void Sprite::scaleTexture() {
   _geometry->uploadAll();
 }
 
-void Sprite::draw(const Ptr<Shader>& shader) {
+void Sprite::draw(const Pointer<Shader>& shader) {
   Texture::use(_texture);
   Mesh::draw(shader);
   Texture::disable();

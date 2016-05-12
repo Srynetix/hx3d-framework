@@ -24,14 +24,14 @@ namespace hx3d {
 namespace ecs {
 
 template <class T, class... Args>
-Ptr<T> Node::createChild(SceneGraph& sg, const std::string name, Args... args) {
+Pointer<T> Node::createChild(SceneGraph& sg, const std::string name, Args... args) {
   return sg.template createNodeChild<T>(this->shared_from_this(), name, args...);
 }
 
 
 template <class T>
-Ptr<T> Node::getChild(const std::string name) {
-  for (const Ptr<Node>& obj: _children) {
+Pointer<T> Node::getChild(const std::string name) {
+  for (const Pointer<Node>& obj: _children) {
     if (obj->_name == name) {
       return std::dynamic_pointer_cast<T>(obj);
     }

@@ -32,6 +32,8 @@ namespace graphics {
 @brief 3D perspective camera.
 */
 class PerspectiveCamera: public Camera {
+  HX3D_PTR(PerspectiveCamera)
+
 public:
   /**
   @brief Create a perspective camera with the screen size and the near and far.

@@ -53,7 +53,7 @@ public:
   @param asset  Asset (Ptr)
   */
   template <class Asset>
-  void add(std::string name, Ptr<Asset> asset);
+  void add(std::string name, Pointer<Asset> asset);
 
   /**
   @brief Get an asset.
@@ -63,11 +63,11 @@ public:
   @return Asset (Ptr)
   */
   template <class Asset>
-  Ptr<Asset> get(std::string name);
+  Pointer<Asset> get(std::string name);
 
 private:
   /// @brief Assets map
-  std::map<std::type_index, std::map<std::string, Ptr<Resource>>> _assets;
+  std::map<std::type_index, std::map<std::string, Pointer<Resource>>> _assets;
 };
 
 #include "hx3d/utils/_inline/assets.inl.hpp"

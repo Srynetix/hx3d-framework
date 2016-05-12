@@ -29,8 +29,6 @@ namespace hx3d {
 @brief Resource type: to use in an asset manager
 */
 class Resource {
-  HX3D_PTR(Resource)
-
 public:
   virtual ~Resource();
 };

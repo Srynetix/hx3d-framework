@@ -40,17 +40,17 @@ public:
 
   virtual void begin() override;
   virtual void end() override;
-  virtual void draw(const Ptr<Mesh>& mesh) override;
-  virtual void draw(const Ptr<gui::Text>& text) override;
-  virtual void draw(const Ptr<gui::Text>& text, math::Function function) override;
+  virtual void draw(const Pointer<Mesh>& mesh) override;
+  virtual void draw(const Pointer<gui::Text>& text) override;
+  virtual void draw(const Pointer<gui::Text>& text, math::Function function) override;
 
 private:
   /// @brief Sorted mesh
-  std::vector<std::pair<glm::mat4, Ptr<Mesh>>> _meshes;
+  std::vector<std::pair<glm::mat4, Pointer<Mesh>>> _meshes;
   /// @brief Texts
-  std::vector<Ptr<gui::Text>> _texts;
+  std::vector<Pointer<gui::Text>> _texts;
   /// @brief Function texts
-  std::vector<std::pair<Ptr<gui::Text>, math::Function>> _funcTexts;
+  std::vector<std::pair<Pointer<gui::Text>, math::Function>> _funcTexts;
 };
 
 } /* graphics */

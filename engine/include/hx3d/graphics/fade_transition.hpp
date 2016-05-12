@@ -40,7 +40,7 @@ public:
   */
   FadeTransition(window::Game* game, Color color = Color::Black);
 
-  virtual void render(const Ptr<Batch>& batch, const Ptr<Framebuffer>& currentFB, const Ptr<Framebuffer>& nextFB) override;
+  virtual void render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) override;
 
   virtual void onUpdate(float delta) override;
   virtual void onDone() override;

@@ -52,14 +52,14 @@ public:
 
   @param shader Shader (Ptr)
   */
-  virtual void begin(const Ptr<Shader>& shader) = 0;
+  virtual void begin(const Pointer<Shader>& shader) = 0;
 
   /**
   @brief End the use with a shader.
 
   @param shader Shader (Ptr)
   */
-  virtual void end(const Ptr<Shader>& shader) = 0;
+  virtual void end(const Pointer<Shader>& shader) = 0;
 };
 
 } /* buffers */

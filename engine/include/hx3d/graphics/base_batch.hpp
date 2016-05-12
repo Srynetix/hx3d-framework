@@ -39,8 +39,7 @@ class Camera;
 @brief Draw meshes and texts on screen.
 */
 class BaseBatch {
-  HX3D_PTR(BaseBatch)
-
+  
 public:
   BaseBatch();
 
@@ -61,7 +60,7 @@ public:
 
   @param mesh Mesh
   */
-  virtual void draw(const Mesh::Ptr& mesh) = 0;
+  virtual void draw(const Pointer<Mesh>& mesh) = 0;
 
   /**
   @brief Draw the text.
@@ -70,7 +69,7 @@ public:
 
   @param text Text
   */
-  virtual void draw(const gui::Text::Ptr& text) = 0;
+  virtual void draw(const Pointer<gui::Text>& text) = 0;
 
   /**
   @brief Draw the text following a function.
@@ -80,7 +79,7 @@ public:
   @param text   Text
   @param function  Function
   */
-  virtual void draw(const gui::Text::Ptr& text, math::Function function) = 0;
+  virtual void draw(const Pointer<gui::Text>& text, math::Function function) = 0;
 
   ///////////////////
 
@@ -89,34 +88,34 @@ public:
 
   @param shader Shader (Ptr)
   */
-  void setShader(const Shader::Ptr& shader);
+  void setShader(const Pointer<Shader>& shader);
 
   /**
   @brief Get the current batching shader.
 
   @return Shader (Ptr)
   */
-  Shader::Ptr getShader();
+  Pointer<Shader> getShader();
 
   /**
   @brief Set the camera for the next batching.
 
   @param camera Camera
   */
-  void setCamera(const Camera::Ptr& camera);
+  void setCamera(const Pointer<Camera>& camera);
 
   /**
   @brief Get the camera.
 
   @return camera Camera
   */
-  Camera::Ptr getCamera();
+  Pointer<Camera> getCamera();
 
 protected:
   /// @brief Camera
-  Camera::Ptr _camera;
+  Pointer<Camera> _camera;
   /// @brief Shader
-  Shader::Ptr _shader;
+  Pointer<Shader> _shader;
 };
 
 } /* graphics */

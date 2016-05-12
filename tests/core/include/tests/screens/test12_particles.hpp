@@ -71,7 +71,7 @@ public:
   }
 
 private:
-  Ptr<ParticleEmitter> emitter;
+  Pointer<ParticleEmitter> emitter;
   ParticleManager particles;
   OrthographicCamera camera;
   Sprite sprite;

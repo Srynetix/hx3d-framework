@@ -47,8 +47,8 @@ public:
   IndexArrayBuffer(const std::vector<GLushort> values);
 
   virtual void upload() override;
-  virtual void begin(const Ptr<Shader>& shader) override;
-  virtual void end(const Ptr<Shader>& shader) override;
+  virtual void begin(const Pointer<Shader>& shader) override;
+  virtual void end(const Pointer<Shader>& shader) override;
 };
 
 } /* buffers */

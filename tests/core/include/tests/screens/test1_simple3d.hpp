@@ -6,19 +6,12 @@
 class Test1: public BaseTestScreen {
 public:
   Test1():
-    camera(Make<PerspectiveCamera>(0.1f, 100.f))
+    camera(0.1f, 100.f)
   {
-
-    sprite = Make<Sprite>();
-    batch = Make<Batch>();
-    cube = Make<Mesh>();
-    star = Make<Mesh>();
-
     camera->translate(glm::vec3(0.f, 0.f, -5.f));
     camera->rotate(180.f, glm::vec3(0, 1, 0));
     camera->update();
 
-    batch->setShader(Core::Assets()->get<Shader>("base"));
     batch->setCamera(camera);
 
     sprite->setTexture(Core::Assets()->get<Texture>("box"));
@@ -107,13 +100,13 @@ public:
   }
 
 private:
-  Ptr<PerspectiveCamera> camera;
-  Ptr<Batch> batch;
+  PerspectiveCamera::Ref camera;
+  Batch::Ref batch;
 
-  Ptr<Mesh> cube;
-  Ptr<Mesh> star;
+  Mesh::Ref cube;
+  Mesh::Ref star;
 
-  Ptr<Sprite> sprite;
+  Sprite::Ref sprite;
 
   float angle;
 };

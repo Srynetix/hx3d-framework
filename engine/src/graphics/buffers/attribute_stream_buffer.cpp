@@ -58,7 +58,7 @@ void AttributeStreamBuffer::upload() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void AttributeStreamBuffer::begin(const Ptr<Shader>& shader) {
+void AttributeStreamBuffer::begin(const Pointer<Shader>& shader) {
 
   GLint loc = shader->getAttribute(_attribute.getName());
 
@@ -69,7 +69,7 @@ void AttributeStreamBuffer::begin(const Ptr<Shader>& shader) {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void AttributeStreamBuffer::end(const Ptr<Shader>& shader) {
+void AttributeStreamBuffer::end(const Pointer<Shader>& shader) {
   if (_vector.size() > 0) {
     GLint loc = shader->getAttribute(_attribute.getName());
 

@@ -76,14 +76,14 @@ public:
 
   @param tween Base Tween (Ptr)
   */
-  void add(const Ptr<BaseTween>& tween);
+  void add(const Pointer<BaseTween>& tween);
 
   virtual void reset() override;
   virtual void update(const float delta) override;
 
 private:
   /// @brief Tweens
-  std::vector<Ptr<BaseTween>> tweens;
+  std::vector<Pointer<BaseTween>> tweens;
 };
 
 } /* math */

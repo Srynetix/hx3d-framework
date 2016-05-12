@@ -27,14 +27,14 @@
 namespace hx3d {
 namespace graphics {
 
-TextureRegion::TextureRegion(Ptr<Texture> texture, float minX, float maxX, float minY, float maxY):
+TextureRegion::TextureRegion(Pointer<Texture> texture, float minX, float maxX, float minY, float maxY):
   _texture(texture), _minX(minX), _maxX(maxX), _minY(minY), _maxY(maxY),
   _uv(0.f)
   {}
 
 TextureRegion::TextureRegion() {}
 
-const Ptr<Texture>& TextureRegion::getTexture() {
+const Pointer<Texture>& TextureRegion::getTexture() {
   return _texture;
 }
 

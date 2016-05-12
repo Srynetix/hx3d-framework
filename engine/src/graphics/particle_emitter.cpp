@@ -39,7 +39,7 @@ void ParticleEmitter::update(const float delta) {
   const auto& working = particles.getWorking();
 
   for (auto i = working.begin(); i != working.end();) {
-    const Ptr<Particle>& p = *i;
+    const Pointer<Particle>& p = *i;
     if (p->dead) {
       particles.release(p);
     } else {
@@ -49,15 +49,15 @@ void ParticleEmitter::update(const float delta) {
   }
 }
 
-void ParticleEmitter::draw(const Ptr<Batch>& batch) {
+void ParticleEmitter::draw(const Pointer<Batch>& batch) {
   const auto& working = particles.getWorking();
   for (auto it = working.begin(); it != working.end(); ++it) {
-    const Ptr<Particle> &p = *it;
+    const Pointer<Particle> &p = *it;
     p->draw(batch);
   }
 }
 
-void ParticleEmitter::setTexture(const Ptr<Texture>& texture) {
+void ParticleEmitter::setTexture(const Pointer<Texture>& texture) {
   this->texture = texture;
 }
 
@@ -68,7 +68,7 @@ unsigned int ParticleEmitter::getParticleCount() {
 ////////////////////
 
 void ParticleEmitter::emitOne() {
-  Ptr<Particle> p = particles.take();
+  Pointer<Particle> p = particles.take();
   if (!p) {
     return;
   }

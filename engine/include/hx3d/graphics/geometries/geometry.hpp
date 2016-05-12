@@ -33,7 +33,7 @@ namespace geom {
 class Geometry: public BaseGeometry {
 public:
   Geometry();
-  virtual void draw(const Ptr<Shader>& shader) override;
+  virtual void draw(const Pointer<Shader>& shader) override;
 };
 
 } /* geom */

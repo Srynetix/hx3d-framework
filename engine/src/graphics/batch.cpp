@@ -33,7 +33,9 @@
 namespace hx3d {
 namespace graphics {
 
-Batch::Batch(): BaseBatch() {}
+Batch::Batch(): BaseBatch() {
+  this->setShader(Core::Assets()->get<Shader>("base"));
+}
 
 void Batch::begin() {
   if (_shader == nullptr) {
@@ -50,7 +52,7 @@ void Batch::end() {
   Shader::disable();
 }
 
-void Batch::draw(const Ptr<Mesh>& mesh) {
+void Batch::draw(const Pointer<Mesh>& mesh) {
 
   glm::mat4 model = mesh->transform.compute();
   _shader->setUniformMatrix4f("u_model", model);
@@ -58,11 +60,11 @@ void Batch::draw(const Ptr<Mesh>& mesh) {
   mesh->draw(_shader);
 }
 
-void Batch::draw(const Ptr<gui::Text>& text) {
+void Batch::draw(const Pointer<gui::Text>& text) {
 
   Texture::use(text->getFont(), text->getCharacterSize());
 
-  Ptr<Shader> prevShader = _shader;
+  Pointer<Shader> prevShader = _shader;
 
   setShader(text->getFont()->getShader());
   begin();
@@ -85,10 +87,10 @@ void Batch::draw(const Ptr<gui::Text>& text) {
   Texture::disable();
 }
 
-void Batch::draw(const Ptr<gui::Text>& text, math::Function function) {
+void Batch::draw(const Pointer<gui::Text>& text, math::Function function) {
   Texture::use(text->getFont(), text->getCharacterSize());
 
-  Ptr<Shader> prevShader = _shader;
+  Pointer<Shader> prevShader = _shader;
 
   setShader(text->getFont()->getShader());
   begin();

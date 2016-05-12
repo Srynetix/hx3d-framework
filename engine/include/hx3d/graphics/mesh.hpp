@@ -49,7 +49,7 @@ public:
 
   @param shader Shader (Ptr)
   */
-  virtual void draw(const Ptr<Shader>& shader);
+  virtual void draw(const Pointer<Shader>& shader);
 
   /**
   @brief Set the mesh tint.
@@ -78,14 +78,14 @@ public:
 
   @param geometry BaseGeometry (Ptr)
   */
-  void setGeometry(const Ptr<geom::BaseGeometry>& geometry);
+  void setGeometry(const Pointer<geom::BaseGeometry>& geometry);
 
   /**
   @brief Get the mesh geometry
 
   @return BaseGeometry (Ptr)
   */
-  Ptr<geom::BaseGeometry>& getGeometry();
+  Pointer<geom::BaseGeometry>& getGeometry();
 
   /// @brief Mesh transformation
   Transform transform;
@@ -94,7 +94,7 @@ protected:
   /// @brief Tint color
   Color _tint;
   /// @brief Current geometry
-  Ptr<geom::BaseGeometry> _geometry;
+  Pointer<geom::BaseGeometry> _geometry;
 };
 
 } /* graphics */

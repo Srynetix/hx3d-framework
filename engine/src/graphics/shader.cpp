@@ -309,7 +309,7 @@ std::string Shader::getParameterType(GLenum type) {
   }
 }
 
-void Shader::use(Ptr<Shader> shader) {
+void Shader::use(Pointer<Shader> shader) {
   glUseProgram(shader->_programID);
 }
 

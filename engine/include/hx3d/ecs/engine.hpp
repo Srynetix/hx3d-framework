@@ -50,14 +50,14 @@ public:
 
   @return Entity (Ptr)
   */
-  Entity::Ptr createEntity();
+  Pointer<Entity> createEntity();
 
   /**
   @brief Affect an ID to a uninitialized entity.
 
   @param entity Entity (Ptr)
   */
-  void registerEntity(const Entity::Ptr& entity);
+  void registerEntity(const Pointer<Entity>& entity);
 
   /**
   @brief Mark the entity for deletion from the engine.
@@ -66,7 +66,7 @@ public:
 
   @param entity Entity (Ptr)
   */
-  void removeEntity(const Entity::Ptr& entity);
+  void removeEntity(const Pointer<Entity>& entity);
 
   // COMPONENTS /////////////////////
 
@@ -78,7 +78,7 @@ public:
   @return Component
   */
   template <class T>
-  Ptr<T> getComponent(const Entity::Ptr& entity);
+  Pointer<T> getComponent(const Pointer<Entity>& entity);
 
   /**
   @brief Add a component for an entity.
@@ -87,7 +87,7 @@ public:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addComponent(const Entity::Ptr& entity, const Component::Ptr& component);
+  void addComponent(const Pointer<Entity>& entity, const Pointer<Component>& component);
 
   /**
   @brief Create a component for an entity with variable args.
@@ -96,7 +96,7 @@ public:
   @param args   Arguments
   */
   template <class T, class... Args>
-  void createComponent(const Entity::Ptr& entity, Args... args);
+  void createComponent(const Pointer<Entity>& entity, Args... args);
 
   // SYSTEM /////////////////////////
 
@@ -106,7 +106,7 @@ public:
   @param sys  System (Ptr)
   */
   template <class T>
-  void addSystem(const System::Ptr& sys);
+  void addSystem(const Pointer<System>& sys);
 
   /**
   @brief Create a system into the engine.
@@ -125,7 +125,7 @@ public:
 
   @return Number of components
   */
-  unsigned int getComponentSize(const Entity::Ptr& entity);
+  unsigned int getComponentSize(const Pointer<Entity>& entity);
 
   /**
   @brief Get the number of entities.
@@ -141,7 +141,7 @@ public:
 
   @return Entity components bits
   */
-  unsigned int getBits(const Entity::Ptr& entity);
+  unsigned int getBits(const Pointer<Entity>& entity);
 
   /**
   @brief Register a callback for a certain component type when it's added.
@@ -149,7 +149,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentAdded(std::function<void(const Component::Ptr&, const Entity::Ptr&)> callback);
+  void registerComponentAdded(std::function<void(const Pointer<Component>&, const Pointer<Entity>&)> callback);
 
   /**
   @brief Register a callback for a certain component type when it's removed.
@@ -157,7 +157,7 @@ public:
   @param callback Callback function
   */
   template <class T>
-  void registerComponentRemoved(std::function<void(const Ptr<Component>&, const Ptr<Entity>&)> callback);
+  void registerComponentRemoved(std::function<void(const Pointer<Component>&, const Pointer<Entity>&)> callback);
 
   /**
   @brief Update the engine.
@@ -173,18 +173,18 @@ public:
 
 private:
   /// @brief Entities
-  std::map<unsigned int, Ptr<Entity>> _entities;
+  std::map<unsigned int, Pointer<Entity>> _entities;
   /// @brief Components
-  std::map<unsigned int, std::map<std::type_index, Ptr<Component>>> _components;
+  std::map<unsigned int, std::map<std::type_index, Pointer<Component>>> _components;
   /// @brief Bits
   std::map<unsigned int, Bitset> _bits;
 
   /// @brief Systems
-  std::map<std::type_index, Ptr<System>> _systems;
+  std::map<std::type_index, Pointer<System>> _systems;
   /// @brief On component added callbacks
-  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<Entity>)>> _onComponentAdded;
+  std::map<std::type_index, std::function<void(Pointer<Component>, Pointer<Entity>)>> _onComponentAdded;
   /// @brief On component removed callbacks
-  std::map<std::type_index, std::function<void(Ptr<Component>, Ptr<Entity>)>> _onComponentRemoved;
+  std::map<std::type_index, std::function<void(Pointer<Component>, Pointer<Entity>)>> _onComponentRemoved;
 
   /// @brief Entities to remove
   std::vector<unsigned int> _toRemove;
@@ -208,7 +208,7 @@ private:
   @param component  Component (Ptr)
   */
   template <class T>
-  void addInternalComponent(const unsigned int entityId, const Ptr<Component>& component);
+  void addInternalComponent(const unsigned int entityId, const Pointer<Component>& component);
 
   /**
   @brief Remove all components for an entity.

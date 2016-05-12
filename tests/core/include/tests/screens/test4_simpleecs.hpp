@@ -26,7 +26,7 @@ public:
     setRequiredFamily<RotationComponent>();
   }
 
-  virtual void process(const Ptr<ecs::Entity>& entity, const float delta) override {
+  virtual void process(const Pointer<ecs::Entity>& entity, const float delta) override {
     auto rotComp = getEngine()->getComponent<RotationComponent>(entity);
     rotComp->angle = math::mclamp(rotComp->angle + rotComp->speed, 0.f, 360.f);
   }
@@ -45,7 +45,7 @@ public:
     sprite.setTexture(Core::Assets()->get<Texture>("box"));
 
     entity = engine.createEntity();
-    engine.registerComponentAdded<RotationComponent>([](Ptr<ecs::Component> component, Ptr<ecs::Entity> entity) {
+    engine.registerComponentAdded<RotationComponent>([](Pointer<ecs::Component> component, Pointer<ecs::Entity> entity) {
       Log.Info("Rotation component registered for entity %ld", entity->getId());
     });
 
@@ -96,7 +96,7 @@ public:
   }
 
 private:
-  Ptr<ecs::Entity> entity;
+  Pointer<ecs::Entity> entity;
 
   OrthographicCamera camera;
 

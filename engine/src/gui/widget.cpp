@@ -59,12 +59,12 @@ Widget::Widget(Widget* parent): Mesh(),
   _geometry->uploadAll();
 }
 
-void Widget::add(Ptr<Widget> widget) {
+void Widget::add(Pointer<Widget> widget) {
   widget->_parent = this;
   _children.push_back(widget);
 }
 
-void Widget::draw(const Ptr<Shader>& shader) {
+void Widget::draw(const Pointer<Shader>& shader) {
   Mesh::draw(shader);
 }
 

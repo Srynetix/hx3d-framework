@@ -49,7 +49,7 @@ public:
   /**
   @brief Set the geometry for a texture region.
   */
-  void setFromRegion(const Ptr<TextureRegion>& region);
+  void setFromRegion(const Pointer<TextureRegion>& region);
 };
 
 } /* geom */

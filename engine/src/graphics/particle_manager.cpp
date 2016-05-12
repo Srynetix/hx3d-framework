@@ -26,21 +26,21 @@ namespace graphics {
 ParticleManager::ParticleManager()
 {}
 
-void ParticleManager::addEmitter(const Ptr<ParticleEmitter>& emitter) {
+void ParticleManager::addEmitter(const Pointer<ParticleEmitter>& emitter) {
   emitters.push_back(emitter);
 }
 
 void ParticleManager::update(const float delta) {
-  for (Ptr<ParticleEmitter>& emitter: emitters) {
+  for (Pointer<ParticleEmitter>& emitter: emitters) {
     emitter->update(delta);
   }
 }
 
-void ParticleManager::draw(const Ptr<Batch>& batch) {
+void ParticleManager::draw(const Pointer<Batch>& batch) {
 
   glDisable(GL_DEPTH_TEST);
 
-  for (Ptr<ParticleEmitter>& emitter: emitters) {
+  for (Pointer<ParticleEmitter>& emitter: emitters) {
     emitter->draw(batch);
   }
 

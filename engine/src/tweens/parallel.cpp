@@ -27,18 +27,18 @@ namespace tweens {
 
 Parallel::Parallel(bool infinite): BaseTween(infinite) {}
 
-void Parallel::add(const Ptr<BaseTween>& tween) {
+void Parallel::add(const Pointer<BaseTween>& tween) {
   tweens.push_back(tween);
 }
 
 void Parallel::addRepeatingCallback(std::function<void()> func, const float duration) {
-  Ptr<BaseTween> tween = Make<Callback>(func, duration);
+  Pointer<BaseTween> tween = Make<Callback>(func, duration);
   tweens.push_back(tween);
 }
 
 void Parallel::reset() {
   for (auto i = tweens.begin(); i != tweens.end(); ++i) {
-    const Ptr<BaseTween>& tween = *i;
+    const Pointer<BaseTween>& tween = *i;
     tween->reset();
   }
 }
@@ -49,7 +49,7 @@ void Parallel::update(const float delta) {
 
   bool all_ended = true;
   for (auto i = tweens.begin(); i != tweens.end(); ++i) {
-    const Ptr<BaseTween>& tween = *i;
+    const Pointer<BaseTween>& tween = *i;
 
     if (!tween->hasEnded()) {
       all_ended = false;

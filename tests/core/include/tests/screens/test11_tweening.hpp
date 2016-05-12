@@ -37,14 +37,14 @@ public:
     fps.transform.position.z = 0.5f;
     fps.setCenterAlignment(false);
 
-    Ptr<tweens::Parallel> start = Make<tweens::Parallel>();
+    Pointer<tweens::Parallel> start = Make<tweens::Parallel>();
     start->addTween(sprite.transform.position.x, (float)Core::App()->getWidth() / 2.f, 10.f, math::Interpolation::OutQuad);
     start->addTween(sprite.transform.scale.x, 0.5f, 10.f, math::Interpolation::Linear);
     start->addTween(sprite.transform.scale.y, 0.5f, 10.f, math::Interpolation::Linear);
     start->addTween(sprite.transform.rotation.z, glm::radians(180.f), 10.f, math::Interpolation::InOutBounce);
     start->addTween(sprite.getTint(), Color::Green, 10.f, math::Interpolation::Linear);
 
-    Ptr<tweens::Sequence> seq = Make<tweens::Sequence>();
+    Pointer<tweens::Sequence> seq = Make<tweens::Sequence>();
     seq->add(start);
     seq->addTween(sprite.transform.position.x, 0.f, 2.5f, math::Interpolation::InOutElastic);
     seq->addCallback([this](){

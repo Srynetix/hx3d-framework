@@ -33,9 +33,9 @@ namespace physics2d {
 class Manifold {
 public:
   /// @brief First collider
-  Ptr<Collider> a;
+  Pointer<Collider> a;
   /// @brief Second collider
-  Ptr<Collider> b;
+  Pointer<Collider> b;
 
   /// @brief Penetration coefficient
   float penetration;
@@ -63,7 +63,7 @@ public:
   @param a First collider
   @param b Second collider
   */
-  Manifold(const Ptr<Collider>& a, const Ptr<Collider>& b);
+  Manifold(const Pointer<Collider>& a, const Pointer<Collider>& b);
 
   /**
   @brief Solve the contact

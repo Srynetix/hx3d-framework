@@ -24,11 +24,11 @@ namespace hx3d {
 namespace graphics {
 
 Animation::Animation() {}
-Animation::Animation(Ptr<TextureAtlas> atlas, std::vector<std::string> frames, float speed) {
+Animation::Animation(Pointer<TextureAtlas> atlas, std::vector<std::string> frames, float speed) {
   initialize(atlas, frames, speed);
 }
 
-void Animation::initialize(Ptr<TextureAtlas> atlas, std::vector<std::string> frames, float speed) {
+void Animation::initialize(Pointer<TextureAtlas> atlas, std::vector<std::string> frames, float speed) {
   _atlas = atlas;
   _currentTime = 0;
   _frames = frames;

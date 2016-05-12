@@ -32,6 +32,8 @@ namespace graphics {
 @brief 2D orthographic camera w/ Z-buffer.
 */
 class OrthographicCamera: public Camera {
+  HX3D_PTR(OrthographicCamera)
+
 public:
   /**
   @brief Create an orthographic camera with the screen size.

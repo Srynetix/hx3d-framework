@@ -52,7 +52,7 @@ class TextureAtlas: public Resource {
 
     @return TextureRegion
     */
-    Ptr<TextureRegion>& getRegion(std::string name);
+    Pointer<TextureRegion>& getRegion(std::string name);
 
   private:
     /**
@@ -63,9 +63,9 @@ class TextureAtlas: public Resource {
     void loadFromJSON(std::string pathToAtlas);
 
     /// @brief Texture
-    Ptr<Texture> _texture;
+    Pointer<Texture> _texture;
     /// @brief Regions
-    std::map<std::string, Ptr<TextureRegion>> _regions;
+    std::map<std::string, Pointer<TextureRegion>> _regions;
 };
 
 } /* graphics */

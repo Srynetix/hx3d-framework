@@ -57,18 +57,17 @@ public:
   virtual void render() override;
 
 private:
-  Ptr<Font> font;
-  Ptr<Shader> defaultShader;
-  Ptr<Shader> pixShader;
+  Shader::Ptr defaultShader;
+  Shader::Ptr pixShader;
 
-  Ptr<OrthographicCamera> camera;
+  OrthographicCamera::Ref camera;
 
-  Ptr<Sprite> logoSprite;
-  Ptr<Sprite> sprite;
-  Ptr<Batch> batch;
+  Sprite::Ref logoSprite;
+  Sprite::Ref sprite;
+  Batch::Ref batch;
 
-  Ptr<gui::Text> text;
-  Ptr<gui::Text> instructions;
+  gui::Text::Ref text;
+  gui::Text::Ref instructions;
 
   std::vector<ScreenInfo> screens;
 

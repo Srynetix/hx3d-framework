@@ -23,7 +23,7 @@ namespace tweens {
 
 template <class T>
 void Parallel::addTween(T& mod, const T to, const float duration, const math::Interpolation interp) {
-  Ptr<BaseTween> tween = Make<Tween<T>>(mod, to, duration, interp);
+  Pointer<BaseTween> tween = Make<Tween<T>>(mod, to, duration, interp);
   tweens.push_back(tween);
 }
 

@@ -12,7 +12,7 @@ PointAttractor::PointAttractor():
   radius(0)
   {}
 
-bool PointAttractor::overlaps(const Ptr<Collider>& collider) {
+bool PointAttractor::overlaps(const Pointer<Collider>& collider) {
   if (radius == 0) return false;
 
   float dx = position.x - collider->position.x;
@@ -20,7 +20,7 @@ bool PointAttractor::overlaps(const Ptr<Collider>& collider) {
   return dx * dx + dy * dy <= radius * radius;
 }
 
-void PointAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
+void PointAttractor::computeForce(const Pointer<Collider>& collider, const float dt) {
   glm::vec2 dir = math::normalize(position - collider->position);
   dir *= velocity;
   collider->gravityForce += dir;

@@ -41,13 +41,13 @@ void Node::removeChild(SceneGraph& sg, const std::string name) {
     return;
   }
 
-  const Ptr<Node>& obj = getChild<Node>(name);
+  const Pointer<Node>& obj = getChild<Node>(name);
   sg.remove(obj->getPath());
 }
 
 std::string Node::getPath() {
   std::string path = _name;
-  Ptr<Node> cursor = _parent;
+  Pointer<Node> cursor = _parent;
 
   while (cursor != nullptr) {
 
@@ -69,7 +69,7 @@ std::string Node::getName() {
   return _name;
 }
 
-void Node::draw(const Ptr<graphics::BaseBatch>& batch) {}
+void Node::draw(const Pointer<graphics::BaseBatch>& batch) {}
 
 void Node::update(const float delta) {}
 
@@ -90,7 +90,7 @@ unsigned int Node::getChildCount() {
 /////////////////////
 
 bool Node::childNameExists(const std::string name) {
-  for (const Ptr<Node>& o: _children) {
+  for (const Pointer<Node>& o: _children) {
     if (o->_name == name) {
       return true;
     }

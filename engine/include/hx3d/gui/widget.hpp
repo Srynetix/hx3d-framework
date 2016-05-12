@@ -50,15 +50,15 @@ public:
 
   @param widget Widget (Ptr)
   */
-  void add(Ptr<Widget> widget);
+  void add(Pointer<Widget> widget);
 
-  virtual void draw(const Ptr<Shader>& shader) override;
+  virtual void draw(const Pointer<Shader>& shader) override;
 
 private:
   /// @brief Parent widget
   Widget* _parent;
   /// @brief Children widgets
-  std::vector<Ptr<Widget>> _children;
+  std::vector<Pointer<Widget>> _children;
 };
 
 } /* gui */

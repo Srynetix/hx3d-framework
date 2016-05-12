@@ -39,7 +39,7 @@ void Viewport::setScreenPosition(const float x, const float y) {
   _screenY = y;
 }
 
-void Viewport::apply(const Ptr<Camera>& camera) {
+void Viewport::apply(const Pointer<Camera>& camera) {
   glViewport(_screenX, _screenY, _screenWidth, _screenHeight);
 
   camera->viewportWidth = _worldWidth;
@@ -51,7 +51,7 @@ void Viewport::apply(const Ptr<Camera>& camera) {
   camera->update();
 }
 
-void Viewport::update(const Ptr<Camera>& camera, const int screenWidth, const int screenHeight) {
+void Viewport::update(const Pointer<Camera>& camera, const int screenWidth, const int screenHeight) {
   _screenWidth = screenWidth;
   _screenHeight = screenHeight;
 

@@ -38,7 +38,7 @@ void SceneGraph::setEntityMode(bool enabled) {
   _entityEnabled = enabled;
 }
 
-Ptr<Node> SceneGraph::getRoot() {
+Pointer<Node> SceneGraph::getRoot() {
   return _root;
 }
 
@@ -46,7 +46,7 @@ unsigned int SceneGraph::getNodeCount() {
   return _root->getChildCount();
 }
 
-void SceneGraph::addIndex(const Ptr<Node>& object) {
+void SceneGraph::addIndex(const Pointer<Node>& object) {
   const std::string& path = object->getPath();
   for (const auto& pair: _indices) {
     if (pair.first == object->_name) {
@@ -65,33 +65,33 @@ void SceneGraph::showIndices() {
   }
 }
 
-void SceneGraph::draw(const Ptr<graphics::BaseBatch>& batch) {
-  std::stack<Ptr<Node>> stack;
+void SceneGraph::draw(const Pointer<graphics::BaseBatch>& batch) {
+  std::stack<Pointer<Node>> stack;
   stack.push(_root);
 
   while (!stack.empty()) {
-    const Ptr<Node>& node = stack.top();
+    const Pointer<Node>& node = stack.top();
     stack.pop();
 
     node->draw(batch);
 
-    for (const Ptr<Node>& child: node->_children) {
+    for (const Pointer<Node>& child: node->_children) {
       stack.push(child);
     }
   }
 }
 
 void SceneGraph::update(const float delta) {
-  std::stack<Ptr<Node>> stack;
+  std::stack<Pointer<Node>> stack;
   stack.push(_root);
 
   while (!stack.empty()) {
-    const Ptr<Node>& node = stack.top();
+    const Pointer<Node>& node = stack.top();
     stack.pop();
 
     node->update(delta);
 
-    for (const Ptr<Node>& child: node->_children) {
+    for (const Pointer<Node>& child: node->_children) {
       stack.push(child);
     }
   }
@@ -118,11 +118,11 @@ void SceneGraph::remove(const std::string path) {
   internalRemove(_indices[path]);
 }
 
-void SceneGraph::internalRemove(const Ptr<Node>& node) {
+void SceneGraph::internalRemove(const Pointer<Node>& node) {
   std::string path = node->getPath();
-  const Ptr<Node>& parent = node->_parent;
+  const Pointer<Node>& parent = node->_parent;
 
-  for (const Ptr<Node>& child: node->_children) {
+  for (const Pointer<Node>& child: node->_children) {
     remove(child->getPath());
   }
 
@@ -139,7 +139,7 @@ void SceneGraph::internalRemove(const Ptr<Node>& node) {
   _indices.erase(path);
 }
 
-Ptr<Node> SceneGraph::pathExists(const std::string path) {
+Pointer<Node> SceneGraph::pathExists(const std::string path) {
   if (path.size() == 0 || path[0] != '/') {
     Log.Error("SceneGraph: ill-formed path: `%s`. Must start with `/`", path.c_str());
     return nullptr;
@@ -148,7 +148,7 @@ Ptr<Node> SceneGraph::pathExists(const std::string path) {
   std::vector<std::string> folders = split(path, '/');
   folders.erase(folders.begin());
 
-  Ptr<Node>& node = _root;
+  Pointer<Node>& node = _root;
   while (folders.size() > 0) {
     const std::string folder = folders[0];
 

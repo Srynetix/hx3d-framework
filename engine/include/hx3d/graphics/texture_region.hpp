@@ -47,7 +47,7 @@ public:
   @param minY     Top coordinate
   @param maxY     Height
   */
-  TextureRegion(Ptr<Texture> texture, float minX, float maxX, float minY, float maxY);
+  TextureRegion(Pointer<Texture> texture, float minX, float maxX, float minY, float maxY);
 
   /**
   @brief Create an empty texture region
@@ -59,7 +59,7 @@ public:
 
   @return Texture (Ptr)
   */
-  const Ptr<Texture>& getTexture();
+  const Pointer<Texture>& getTexture();
 
   /**
   @brief Get the left coordinate
@@ -105,7 +105,7 @@ public:
 
 private:
   /// @brief Texture
-  Ptr<Texture> _texture;
+  Pointer<Texture> _texture;
   /// @brief Left coordinate
   float _minX;
   /// @brief Right coordinate

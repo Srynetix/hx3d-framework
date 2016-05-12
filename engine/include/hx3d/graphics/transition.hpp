@@ -90,7 +90,7 @@ public:
   @param currentFB  Current framebuffer
   @param nextFB     Next framebuffer
   */
-  virtual void render(const Ptr<Batch>& batch, const Ptr<Framebuffer>& currentFB, const Ptr<Framebuffer>& nextFB) = 0;
+  virtual void render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) = 0;
 
   /**
   @brief On transition update callback

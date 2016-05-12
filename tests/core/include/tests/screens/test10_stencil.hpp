@@ -9,16 +9,8 @@ using namespace hx3d;
 
 class Test10: public BaseTestScreen {
 public:
-  Test10():
-    text(Make<gui::Text>(Core::Assets()->get<Font>("default")))
+  Test10()
   {
-    batch = Make<Batch>();
-    sprite = Make<Sprite>();
-    stencilSprite = Make<Sprite>();
-    text = Make<gui::Text>();
-    camera = Make<OrthographicCamera>();
-
-    batch->setShader(Core::Assets()->get<Shader>("base"));
     batch->setCamera(camera);
 
     sprite->setTexture(Core::Assets()->get<Texture>("box"));
@@ -80,14 +72,14 @@ public:
   }
 
 private:
-  Ptr<OrthographicCamera> camera;
+  OrthographicCamera::Ref camera;
 
-  Ptr<Stencil> stencil;
-  Ptr<Sprite> sprite;
-  Ptr<Sprite> stencilSprite;
-  Ptr<gui::Text> text;
+  Stencil::Ref stencil;
+  Sprite::Ref sprite;
+  Sprite::Ref stencilSprite;
+  gui::Text::Ref text;
 
-  Batch::Obj batch;
+  Batch::Ref batch;
 
   float angle;
 };

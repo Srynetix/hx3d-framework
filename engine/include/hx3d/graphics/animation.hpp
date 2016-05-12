@@ -47,7 +47,7 @@ public:
   @param frames Frame names
   @param speed  Frame speed
   */
-  Animation(Ptr<TextureAtlas> atlas, std::vector<std::string> frames, float speed);
+  Animation(Pointer<TextureAtlas> atlas, std::vector<std::string> frames, float speed);
 
   /**
   @brief Initialize an animation with an atlas, frames and a speed
@@ -56,7 +56,7 @@ public:
   @param frames Frame names
   @param speed  Frame speed
   */
-  void initialize(Ptr<TextureAtlas> atlas, std::vector<std::string> frames, float speed);
+  void initialize(Pointer<TextureAtlas> atlas, std::vector<std::string> frames, float speed);
 
   /**
   @brief Update the animation
@@ -66,7 +66,7 @@ public:
   void update(float delta);
 
 private:
-  Ptr<TextureAtlas> _atlas;
+  Pointer<TextureAtlas> _atlas;
   std::vector<std::string> _frames;
 
   float _currentTime;

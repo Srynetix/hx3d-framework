@@ -175,7 +175,7 @@ public:
   Mass massData;
 
   /// @brief Current attractor
-  Ptr<Attractor> currentAttractor;
+  Pointer<Attractor> currentAttractor;
   /// @brief User data
   ObjectMap userData;
 };

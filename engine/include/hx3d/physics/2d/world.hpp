@@ -66,28 +66,28 @@ public:
 
   @param attractor Attractor
   */
-  void addAttractor(const Ptr<Attractor>& attractor);
+  void addAttractor(const Pointer<Attractor>& attractor);
 
   /**
   @brief Add a collision listener
 
   @param listener Collision listener
   */
-  void addListener(const Ptr<CollisionListener>& listener);
+  void addListener(const Pointer<CollisionListener>& listener);
 
   /**
   @brief Add a collider
 
   @param collider Collider
   */
-  void addCollider(const Ptr<Collider>& collider);
+  void addCollider(const Pointer<Collider>& collider);
 
   /**
   @brief Remove a collider
 
   @param collider Collider
   */
-  void removeCollider(const Ptr<Collider>& collider);
+  void removeCollider(const Pointer<Collider>& collider);
 
   /**
   @brief Step the physical simulation
@@ -101,7 +101,7 @@ public:
 
   @param batch Batch
   */
-  void render(const Ptr<graphics::BaseBatch>& batch);
+  void render(const Pointer<graphics::BaseBatch>& batch);
 
   /**
   @brief Get the physical ratio
@@ -115,7 +115,7 @@ public:
 
   @return Global attractor
   */
-  const Ptr<GlobalAttractor> getGlobalGravity();
+  const Pointer<GlobalAttractor> getGlobalGravity();
 
   /**
   @brief Get the collision matrix
@@ -131,11 +131,11 @@ private:
   float _physRatio;
 
   /// @brief Attractors
-  std::vector<Ptr<Attractor>> _attractors;
+  std::vector<Pointer<Attractor>> _attractors;
   /// @brief Colliders
-  std::vector<Ptr<Collider>> _colliders;
+  std::vector<Pointer<Collider>> _colliders;
   /// @brief Collision listeners
-  std::vector<Ptr<CollisionListener>> _listeners;
+  std::vector<Pointer<CollisionListener>> _listeners;
   /// @brief Contacts
   std::vector<Manifold> _contacts;
 
@@ -152,7 +152,7 @@ private:
   @param c Collider (Ptr)
   @param dt Delta time
   */
-  void integrateForces(const Ptr<Collider>& c, float dt);
+  void integrateForces(const Pointer<Collider>& c, float dt);
 
   /**
   @brief Integrate velocity on the colliders
@@ -160,7 +160,7 @@ private:
   @param c Collider (Ptr)
   @param dt Delta time
   */
-  void integrateVelocity(const Ptr<Collider>& c, float dt);
+  void integrateVelocity(const Pointer<Collider>& c, float dt);
 
   /**
   @brief Check if a previous contact exists

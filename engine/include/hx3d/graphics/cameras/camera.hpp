@@ -28,6 +28,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "hx3d/graphics/color.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -40,7 +41,7 @@ namespace graphics {
 */
 class Camera {
   HX3D_PTR(Camera)
-  
+
 public:
   /**
   @brief Create a camera with a viewport width and height.

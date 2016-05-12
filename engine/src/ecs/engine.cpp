@@ -25,16 +25,16 @@ namespace ecs {
 
 Engine::Engine() {}
 
-Ptr<Entity> Engine::createEntity() {
-  Ptr<Entity> entity(Make<Entity>(lastEntityAvailable()));
+Pointer<Entity> Engine::createEntity() {
+  Pointer<Entity> entity(Make<Entity>(lastEntityAvailable()));
   _entities[entity->getId()] = entity;
-  _components[entity->getId()] = std::map<std::type_index, Ptr<Component>>();
+  _components[entity->getId()] = std::map<std::type_index, Pointer<Component>>();
   _bits[entity->getId()] = Bitset();
 
   return entity;
 }
 
-void Engine::registerEntity(const Ptr<Entity>& entity) {
+void Engine::registerEntity(const Pointer<Entity>& entity) {
   if (entity->getId() != 0) {
     Log.Error("Engine: entity `%d` already registered.", entity->getId());
     return;
@@ -42,21 +42,21 @@ void Engine::registerEntity(const Ptr<Entity>& entity) {
 
   entity->setId(lastEntityAvailable());
   _entities[entity->getId()] = entity;
-  _components[entity->getId()] = std::map<std::type_index, Ptr<Component>>();
+  _components[entity->getId()] = std::map<std::type_index, Pointer<Component>>();
   _bits[entity->getId()] = Bitset();
 }
 
-void Engine::removeEntity(const Ptr<Entity>& entity) {
+void Engine::removeEntity(const Pointer<Entity>& entity) {
   _toRemove.push_back(entity->getId());
 }
 
-unsigned int Engine::getComponentSize(const Ptr<Entity>& entity) {
+unsigned int Engine::getComponentSize(const Pointer<Entity>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return 0;
   }
 
-  const std::map<std::type_index, Ptr<Component>>& compMap = _components[entity->getId()];
+  const std::map<std::type_index, Pointer<Component>>& compMap = _components[entity->getId()];
   return compMap.size();
 }
 
@@ -64,7 +64,7 @@ unsigned int Engine::getEntityCount() {
   return _entities.size();
 }
 
-unsigned int Engine::getBits(const Ptr<Entity>& entity) {
+unsigned int Engine::getBits(const Pointer<Entity>& entity) {
   const unsigned int id = entity->getId();
   return _bits[id].getBits();
 }
@@ -72,7 +72,7 @@ unsigned int Engine::getBits(const Ptr<Entity>& entity) {
 void Engine::update(const float delta) {
   for (auto& id: _entities) {
     for (auto& pair: _systems) {
-      const Ptr<System>& sys = pair.second;
+      const Pointer<System>& sys = pair.second;
       if (sys->canProcess(_bits[id.first].getBits())) {
         sys->process(id.second, delta);
       }

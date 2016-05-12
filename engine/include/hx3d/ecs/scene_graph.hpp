@@ -53,7 +53,7 @@ public:
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> createAtRoot(Args... args);
+  Pointer<T> createAtRoot(Args... args);
 
   /**
   @brief Create a game object at a path.
@@ -64,7 +64,7 @@ public:
   @return T (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> create(const std::string path, Args... args);
+  Pointer<T> create(const std::string path, Args... args);
 
   /**
   @brief Remove a game object from a path.
@@ -81,14 +81,14 @@ public:
   @return T (Ptr)
   */
   template <class T>
-  Ptr<T> fetch(const std::string path);
+  Pointer<T> fetch(const std::string path);
 
   /**
   @brief Get the root.
 
   @return Node (Ptr)
   */
-  Ptr<Node> getRoot();
+  Pointer<Node> getRoot();
 
   /**
   @brief Get the number of nodes.
@@ -107,7 +107,7 @@ public:
 
   @param batch Batch
   */
-  void draw(const Ptr<graphics::BaseBatch>& batch);
+  void draw(const Pointer<graphics::BaseBatch>& batch);
 
   /**
   @brief Update the nodes.
@@ -125,9 +125,9 @@ public:
 
 protected:
   /// @brief Graph root
-  Ptr<Node> _root;
+  Pointer<Node> _root;
   /// @brief Node indices
-  std::map<std::string, Ptr<Node>> _indices;
+  std::map<std::string, Pointer<Node>> _indices;
   /// @brief Engine for entity management
   Engine _engine;
   /// @brief Is entity management enabled ?
@@ -138,7 +138,7 @@ protected:
 
   @param object Node (Ptr)
   */
-  void addIndex(const Ptr<Node>& object);
+  void addIndex(const Pointer<Node>& object);
 
   /**
   @brief Test if the path exists and returns the node.
@@ -147,14 +147,14 @@ protected:
 
   @return Node (Ptr)
   */
-  Ptr<Node> pathExists(const std::string path);
+  Pointer<Node> pathExists(const std::string path);
 
   /**
   @brief Remove a node.
 
   @param node Node (Ptr)
   */
-  void internalRemove(const Ptr<Node>& node);
+  void internalRemove(const Pointer<Node>& node);
 
   /**
   @brief Create a child for a container Node.
@@ -165,7 +165,7 @@ protected:
   @return Node (Ptr)
   */
   template <class T, class... Args>
-  Ptr<T> createNodeChild(const Ptr<Node>& container, Args... args);
+  Pointer<T> createNodeChild(const Pointer<Node>& container, Args... args);
 };
 
 } /* ecs */

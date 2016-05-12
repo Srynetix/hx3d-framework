@@ -41,14 +41,14 @@ public:
   @param name    Name
   @param texture Texture (Ptr)
   */
-  SpriteNode(std::string name, const Ptr<graphics::Texture>& texture);
+  SpriteNode(std::string name, const Pointer<graphics::Texture>& texture);
 
-  virtual void draw(const Ptr<graphics::BaseBatch>& batch) override;
+  virtual void draw(const Pointer<graphics::BaseBatch>& batch) override;
   virtual void update(float delta) override;
 
 protected:
-  Ptr<graphics::Texture> _texture;
-  Ptr<graphics::Sprite> _sprite;
+  Pointer<graphics::Texture> _texture;
+  Pointer<graphics::Sprite> _sprite;
 };
 
 } /* ecs */

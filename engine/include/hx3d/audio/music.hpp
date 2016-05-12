@@ -73,7 +73,7 @@ public:
 
 private:
   /// @brief File pointer
-  File::Ptr _file;
+  Pointer<File> _file;
 
 #ifdef HX3D_AUDIO_MUSIC_INJECTION
   HX3D_AUDIO_MUSIC_INJECTION

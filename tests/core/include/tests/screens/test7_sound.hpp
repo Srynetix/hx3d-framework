@@ -104,7 +104,7 @@ public:
   }
 
 private:
-  Ptr<Texture> texture;
+  Pointer<Texture> texture;
 
   OrthographicCamera camera;
 

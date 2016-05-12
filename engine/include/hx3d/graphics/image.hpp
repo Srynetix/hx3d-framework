@@ -94,7 +94,7 @@ public:
 
   @return Texture (Ptr)
   */
-  Ptr<Texture> getTexture();
+  Pointer<Texture> getTexture();
 
   /**
   @brief Get the image width.
@@ -136,7 +136,7 @@ private:
   unsigned char* _buffer;
 
   /// @brief Internal texture
-  Ptr<Texture> _texture;
+  Pointer<Texture> _texture;
 };
 
 } /* graphics */

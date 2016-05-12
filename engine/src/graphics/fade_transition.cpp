@@ -32,9 +32,9 @@ FadeTransition::FadeTransition(window::Game* game, Color color): Transition(game
   _color = color;
 }
 
-void FadeTransition::render(const Ptr<Batch>& batch, const Ptr<graphics::Framebuffer>& currentFB, const Ptr<graphics::Framebuffer>& nextFB) {
-  Ptr<Sprite> spriteCurrent = Make<Sprite>();
-  Ptr<Sprite> spriteNext = Make<Sprite>();
+void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<graphics::Framebuffer>& currentFB, const Pointer<graphics::Framebuffer>& nextFB) {
+  Pointer<Sprite> spriteCurrent = Make<Sprite>();
+  Pointer<Sprite> spriteNext = Make<Sprite>();
   spriteCurrent->setTexture(currentFB);
   spriteNext->setTexture(nextFB);
 

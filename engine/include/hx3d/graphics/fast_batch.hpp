@@ -43,7 +43,7 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * 6 * sizeof(GLushort), NULL, GL_STREAM_DRAW);
     }
 
-    void setShader(const Ptr<Shader>& shader) {
+    void setShader(const Pointer<Shader>& shader) {
         this->shader = shader;
     }
 
@@ -69,7 +69,7 @@ public:
         drawing = false;
     }
 
-    void draw(const Ptr<Sprite>& sprite) {
+    void draw(const Pointer<Sprite>& sprite) {
 
         if (!drawing) {
             Log.Error("FastBatch: not currently drawing !");
@@ -169,7 +169,7 @@ public:
     unsigned int drawCalls;
     bool drawing;
 
-    Ptr<Shader> shader;
+    Pointer<Shader> shader;
     std::vector<float> vertices;
     std::vector<GLushort> indices;
 };

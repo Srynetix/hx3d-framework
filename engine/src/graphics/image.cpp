@@ -71,7 +71,7 @@ Color Image::get(unsigned int x, unsigned int y) {
   return Color(_buffer[pos], _buffer[pos + 1], _buffer[pos + 2], _buffer[pos + 3]);
 }
 
-Ptr<Texture> Image::getTexture() {
+Pointer<Texture> Image::getTexture() {
   if (!_texture)
     Log.Error("Image: attempt to access a non-created texture.");
 

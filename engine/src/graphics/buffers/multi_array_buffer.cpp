@@ -84,7 +84,7 @@ void MultiArrayBuffer::upload() {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void MultiArrayBuffer::begin(const Ptr<Shader>& shader)
+void MultiArrayBuffer::begin(const Pointer<Shader>& shader)
 {
   glBindBuffer(GL_ARRAY_BUFFER, _buf);
 
@@ -100,7 +100,7 @@ void MultiArrayBuffer::begin(const Ptr<Shader>& shader)
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void MultiArrayBuffer::end(const Ptr<Shader>& shader)
+void MultiArrayBuffer::end(const Pointer<Shader>& shader)
 {
   for (auto& attr: _attributes) {
     Attribute& attribute = attr.second.getAttribute();

@@ -9,11 +9,11 @@ GlobalAttractor::GlobalAttractor(glm::vec2 velocity):
   {}
 
 
-bool GlobalAttractor::overlaps(const Ptr<Collider>& collider) {
+bool GlobalAttractor::overlaps(const Pointer<Collider>& collider) {
   return true;
 }
 
-void GlobalAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
+void GlobalAttractor::computeForce(const Pointer<Collider>& collider, const float dt) {
   collider->gravityForce += velocity;
 }
 

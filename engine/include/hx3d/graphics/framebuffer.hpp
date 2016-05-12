@@ -37,6 +37,7 @@ class Texture;
 @brief Render-to-texture buffer.
 */
 class Framebuffer {
+  HX3D_PTR(Framebuffer)
 
 public:
   /**
@@ -58,7 +59,7 @@ public:
 
   @return Texture (Ptr)
   */
-  Ptr<Texture> getColorBuffer();
+  Pointer<Texture> getColorBuffer();
 
   /**
   @brief Resize the framebuffer.
@@ -80,7 +81,7 @@ public:
 
   @param buf Framebuffer
   */
-  static void push(const Ptr<Framebuffer>& buf);
+  static void push(const Pointer<Framebuffer>& buf);
 
   /**
   @brief Pop the last framebuffer.
@@ -106,15 +107,15 @@ private:
   /// @brief Framebuffer ID
   GLuint _id;
   /// @brief Color buffer
-  Ptr<Texture> _colorBuffer;
+  Pointer<Texture> _colorBuffer;
   /// @brief Depth buffer
   GLuint _depthBuffer;
 
   /// @brief Default framebuffer ID
   static GLint _defaultID;
-  static std::stack<Ptr<Framebuffer>> _buffersQueue;
+  static std::stack<Pointer<Framebuffer>> _buffersQueue;
 
-  static void use(const Ptr<Framebuffer>& buf);
+  static void use(const Pointer<Framebuffer>& buf);
 
   /**
   @brief Create an empty framebuffer.

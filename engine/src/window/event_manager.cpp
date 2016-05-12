@@ -190,7 +190,7 @@ void EventManager::emulateTouchWithMouse(bool value) {
   _touchSimulation = value;
 }
 
-void EventManager::setInputHandler(Ptr<InputHandler> handler) {
+void EventManager::setInputHandler(Pointer<InputHandler> handler) {
   _currentHandler = handler.get();
 }
 

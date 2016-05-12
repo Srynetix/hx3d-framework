@@ -41,17 +41,17 @@ public:
   /**
   @brief Create a physics node
   */
-  PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category = "", std::string mask = "", const Ptr<graphics::Texture> texture = nullptr);
+  PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category = "", std::string mask = "", const Pointer<graphics::Texture> texture = nullptr);
 
-  virtual void draw(const Ptr<graphics::BaseBatch>& batch) override;
+  virtual void draw(const Pointer<graphics::BaseBatch>& batch) override;
   virtual void update(float delta) override;
 
 protected:
   physics2d::World* _world;
-  Ptr<physics2d::Collider> _collider;
+  Pointer<physics2d::Collider> _collider;
 
-  Ptr<graphics::Texture> _texture;
-  Ptr<graphics::Sprite> _sprite;
+  Pointer<graphics::Texture> _texture;
+  Pointer<graphics::Sprite> _sprite;
 };
 
 } /* ecs */

@@ -23,7 +23,7 @@
 namespace hx3d {
 namespace ecs {
 
-PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category, std::string mask, const Ptr<graphics::Texture> texture):
+PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category, std::string mask, const Pointer<graphics::Texture> texture):
   Node(name), _world(world), _texture(texture)
 {
   _sprite = Make<graphics::Sprite>();
@@ -59,7 +59,7 @@ void PhysicsNode::update(float delta) {
   }
 }
 
-void PhysicsNode::draw(const Ptr<graphics::BaseBatch>& batch) {
+void PhysicsNode::draw(const Pointer<graphics::BaseBatch>& batch) {
   if (_texture) {
     batch->draw(_sprite);
   }

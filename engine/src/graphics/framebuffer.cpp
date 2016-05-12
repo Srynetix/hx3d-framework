@@ -32,7 +32,7 @@ namespace hx3d {
 namespace graphics {
 
 GLint Framebuffer::_defaultID = 0;
-std::stack<Ptr<Framebuffer>> Framebuffer::_buffersQueue;
+std::stack<Pointer<Framebuffer>> Framebuffer::_buffersQueue;
 
 Framebuffer::Framebuffer():
   Framebuffer(Core::App()->getWidth(), Core::App()->getHeight())
@@ -93,7 +93,7 @@ void Framebuffer::create() {
     glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
 }
 
-void Framebuffer::push(const Ptr<Framebuffer>& buffer) {
+void Framebuffer::push(const Pointer<Framebuffer>& buffer) {
   Framebuffer::use(buffer);
   _buffersQueue.push(buffer);
 }
@@ -108,7 +108,7 @@ void Framebuffer::pop() {
   }
 }
 
-void Framebuffer::use(const Ptr<Framebuffer>& buffer) {
+void Framebuffer::use(const Pointer<Framebuffer>& buffer) {
   if (buffer != nullptr) {
     glBindFramebuffer(GL_FRAMEBUFFER, buffer->_id);
     glViewport(0, 0, buffer->_width, buffer->_height);
@@ -129,7 +129,7 @@ void Framebuffer::clear(Color color) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-Ptr<Texture> Framebuffer::getColorBuffer() {
+Pointer<Texture> Framebuffer::getColorBuffer() {
   return _colorBuffer;
 }
 

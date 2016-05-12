@@ -22,27 +22,27 @@ template <class Asset, class... Args>
 void AssetManager::create(std::string name, Args... args) {
   auto& type = typeid(Asset);
   if (_assets.find(type) == _assets.end()) {
-    _assets[type] = std::map<std::string, Ptr<Resource>>();
+    _assets[type] = std::map<std::string, Pointer<Resource>>();
   }
 
   _assets[type][name] = std::make_shared<Asset>(args...);
 }
 
 template <class Asset>
-void AssetManager::add(std::string name, Ptr<Asset> asset) {
+void AssetManager::add(std::string name, Pointer<Asset> asset) {
   auto& type = typeid(Asset);
   if (_assets.find(type) == _assets.end()) {
-    _assets[type] = std::map<std::string, Ptr<Resource>>();
+    _assets[type] = std::map<std::string, Pointer<Resource>>();
   }
 
   _assets[type][name] = asset;
 }
 
 template <class Asset>
-Ptr<Asset> AssetManager::get(std::string name) {
+Pointer<Asset> AssetManager::get(std::string name) {
   auto& type = typeid(Asset);
   if (_assets.find(type) == _assets.end()) {
-    _assets[type] = std::map<std::string, Ptr<Resource>>();
+    _assets[type] = std::map<std::string, Pointer<Resource>>();
   }
 
   if (_assets[type].find(name) == _assets[type].end()) {

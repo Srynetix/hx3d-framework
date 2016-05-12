@@ -11,7 +11,7 @@ namespace physics2d {
     return a >= b * 0.95f + a * 0.01f;
   }
 
-  float findAxisLeastPenetration(unsigned int* face, Ptr<colliders::Polygon>& a, Ptr<colliders::Polygon>& b) {
+  float findAxisLeastPenetration(unsigned int* face, Pointer<colliders::Polygon>& a, Pointer<colliders::Polygon>& b) {
     float bestDistance = -FLT_MAX;
     unsigned int bestIndex = 0;
 
@@ -40,7 +40,7 @@ namespace physics2d {
     return bestDistance;
   }
 
-  void findIncidentFace(std::vector<glm::vec2>& v, const Ptr<colliders::Polygon>& ref, const Ptr<colliders::Polygon>& inc, int refIndex) {
+  void findIncidentFace(std::vector<glm::vec2>& v, const Pointer<colliders::Polygon>& ref, const Pointer<colliders::Polygon>& inc, int refIndex) {
     glm::vec2 refNormal = ref->normals[refIndex];
     refNormal = ref->u * refNormal;
     refNormal = glm::transpose(inc->u) * refNormal;
@@ -84,7 +84,7 @@ namespace physics2d {
 
   //////////
 
-  bool checkCollisions(Manifold& m, Ptr<colliders::Polygon> a, Ptr<colliders::Polygon> b) {
+  bool checkCollisions(Manifold& m, Pointer<colliders::Polygon> a, Pointer<colliders::Polygon> b) {
 
     m.contacts.clear();
 
@@ -101,8 +101,8 @@ namespace physics2d {
     unsigned int refIndex = 0;
     bool flip = false;
 
-    Ptr<colliders::Polygon> ref;
-    Ptr<colliders::Polygon> inc;
+    Pointer<colliders::Polygon> ref;
+    Pointer<colliders::Polygon> inc;
 
     if (gt(penetrationA, penetrationB)) {
       ref = a;
@@ -166,7 +166,7 @@ namespace physics2d {
     return true;
   }
 
-  bool checkCollisions(Manifold& m, Ptr<colliders::Circle> a, Ptr<colliders::Circle> b) {
+  bool checkCollisions(Manifold& m, Pointer<colliders::Circle> a, Pointer<colliders::Circle> b) {
 
     glm::vec2 normal = b->position - a->position;
     float squareLength = math::squareLength(normal);
@@ -195,7 +195,7 @@ namespace physics2d {
     return true;
   }
 
-  bool checkCollisions(Manifold& m, Ptr<colliders::Polygon> a, Ptr<colliders::Circle> b) {
+  bool checkCollisions(Manifold& m, Pointer<colliders::Polygon> a, Pointer<colliders::Circle> b) {
     if (checkCollisions(m, b, a)) {
       m.normal = -m.normal;
       return true;
@@ -204,7 +204,7 @@ namespace physics2d {
     return false;
   }
 
-  bool checkCollisions(Manifold& m, Ptr<colliders::Circle> a, Ptr<colliders::Polygon> b) {
+  bool checkCollisions(Manifold& m, Pointer<colliders::Circle> a, Pointer<colliders::Polygon> b) {
     return false;
   }
 

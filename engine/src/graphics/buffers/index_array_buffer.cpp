@@ -44,14 +44,14 @@ void IndexArrayBuffer::upload() {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexArrayBuffer::begin(const Ptr<Shader>& shader) {
+void IndexArrayBuffer::begin(const Pointer<Shader>& shader) {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buf);
   glDrawElements(GL_TRIANGLES, _vector.size(), GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexArrayBuffer::end(const Ptr<Shader>& shader)
+void IndexArrayBuffer::end(const Pointer<Shader>& shader)
 {}
 
 } /* buffers */

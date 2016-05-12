@@ -64,7 +64,7 @@ struct Attractor {
 
   @return True/False
   */
-  virtual bool overlaps(const Ptr<Collider>& collider) = 0;
+  virtual bool overlaps(const Pointer<Collider>& collider) = 0;
 
   /**
   @brief Compute the gravity force on a collider
@@ -72,7 +72,7 @@ struct Attractor {
   @param collider Collider (Ptr)
   @param dt       Delta time
   */
-  virtual void computeForce(const Ptr<Collider>& collider, const float dt) = 0;
+  virtual void computeForce(const Pointer<Collider>& collider, const float dt) = 0;
 
   /**
   @brief Defines the current attractor on a collider
@@ -81,7 +81,7 @@ struct Attractor {
   @param attractor  Attractor (Ptr)
   @param dt         Delta time
   */
-  static void setCurrentAttractor(const Ptr<Collider>& collider, const Ptr<Attractor>& attractor, const float dt);
+  static void setCurrentAttractor(const Pointer<Collider>& collider, const Pointer<Attractor>& attractor, const float dt);
 
   /**
   @brief Apply an attractor force on a collider.
@@ -90,7 +90,7 @@ struct Attractor {
   @param attractor  Attractor (Ptr)
   @param dt         Delta time
   */
-  static void applyForce(const Ptr<Collider>& collider, const Ptr<Attractor>& attractor, const float dt);
+  static void applyForce(const Pointer<Collider>& collider, const Pointer<Attractor>& attractor, const float dt);
 };
 
 } /* physics2d */

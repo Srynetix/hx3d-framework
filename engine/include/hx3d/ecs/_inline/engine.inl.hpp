@@ -22,34 +22,34 @@ namespace hx3d {
 namespace ecs {
 
 template <class T>
-Ptr<T> Engine::getComponent(const Ptr<Entity>& entity) {
+Pointer<T> Engine::getComponent(const Pointer<Entity>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
     Log.Error("No entity %ld", entity->getId());
     return nullptr;
   }
 
-  std::map<std::type_index, Ptr<Component>>& compMap = _components[entity->getId()];
+  std::map<std::type_index, Pointer<Component>>& compMap = _components[entity->getId()];
   if (compMap.find(typeid(T)) == compMap.end()) {
     Log.Error("No component of type %s in entity %ld", typeid(T).name(), entity->getId());
     return nullptr;
   }
 
-  const Ptr<Component>& component = compMap[typeid(T)];
+  const Pointer<Component>& component = compMap[typeid(T)];
   return std::dynamic_pointer_cast<T>(component);
 }
 
 template <class T>
-void Engine::addComponent(const Ptr<Entity>& entity, const Ptr<Component>& component) {
+void Engine::addComponent(const Pointer<Entity>& entity, const Pointer<Component>& component) {
   addInternalComponent<T>(entity->getId(), component);
 }
 
 template <class T, class... Args>
-void Engine::createComponent(const Ptr<Entity>& entity, Args... args) {
+void Engine::createComponent(const Pointer<Entity>& entity, Args... args) {
   addInternalComponent<T>(entity->getId(), Make<T>(args...));
 }
 
 template <class T>
-void Engine::addInternalComponent(const unsigned int entityId, const Ptr<Component>& component) {
+void Engine::addInternalComponent(const unsigned int entityId, const Pointer<Component>& component) {
 
   const auto& type = typeid(T);
 
@@ -58,7 +58,7 @@ void Engine::addInternalComponent(const unsigned int entityId, const Ptr<Compone
     return;
   }
 
-  std::map<std::type_index, Ptr<Component>>& compMap = _components[entityId];
+  std::map<std::type_index, Pointer<Component>>& compMap = _components[entityId];
 
   // Already a component from this type
   if (compMap.find(type) != compMap.end()) {
@@ -77,7 +77,7 @@ void Engine::addInternalComponent(const unsigned int entityId, const Ptr<Compone
 }
 
 template <class T>
-void Engine::addSystem(const Ptr<System>& sys) {
+void Engine::addSystem(const Pointer<System>& sys) {
   const auto& type = typeid(T);
 
   _systems[type] = sys;
@@ -93,12 +93,12 @@ void Engine::createSystem(Args... args) {
 }
 
 template <class T>
-void Engine::registerComponentAdded(std::function<void(const Ptr<Component>&, const Ptr<Entity>&)> callback) {
+void Engine::registerComponentAdded(std::function<void(const Pointer<Component>&, const Pointer<Entity>&)> callback) {
   _onComponentAdded[typeid(T)] = callback;
 }
 
 template <class T>
-void Engine::registerComponentRemoved(std::function<void(const Ptr<Component>&, const Ptr<Entity>&)> callback) {
+void Engine::registerComponentRemoved(std::function<void(const Pointer<Component>&, const Pointer<Entity>&)> callback) {
   _onComponentRemoved[typeid(T)] = callback;
 }
 

@@ -73,11 +73,11 @@ void Game::resume() {
     _screen->resume();
 }
 
-void Game::setTransition(const Ptr<graphics::Transition>& transition) {
+void Game::setTransition(const Pointer<graphics::Transition>& transition) {
   _currentTransition = transition;
 }
 
-void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
+void Game::setViewport(const Pointer<graphics::viewports::Viewport>& viewport) {
   if (viewport) {
     auto world_size = viewport->getWorldSize();
     _currentFB->resize(world_size.x, world_size.y);
@@ -90,7 +90,7 @@ void Game::setViewport(const Ptr<graphics::viewports::Viewport>& viewport) {
   updateStats();
 }
 
-const Ptr<graphics::viewports::Viewport>& Game::getViewport() {
+const Pointer<graphics::viewports::Viewport>& Game::getViewport() {
   return _currentViewport;
 }
 
@@ -208,7 +208,7 @@ void Game::stop() {
   _running = false;
 }
 
-void Game::setScreen(const Ptr<Screen>& screen) {
+void Game::setScreen(const Pointer<Screen>& screen) {
 
   Core::Events()->setInputHandler(nullptr);
   auto size = Core::App()->getSize();

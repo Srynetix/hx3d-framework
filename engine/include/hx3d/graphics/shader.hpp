@@ -40,6 +40,7 @@ namespace graphics {
 Manage vertex and fragment shader.
 */
 class Shader: public Resource {
+  HX3D_PTR(Shader)
 
 public:
   /**
@@ -136,7 +137,7 @@ public:
 
   @param shader Shader (Ptr)
   */
-  static void use(Ptr<Shader> shader);
+  static void use(Pointer<Shader> shader);
 
   /**
   @brief Clear the current shader.

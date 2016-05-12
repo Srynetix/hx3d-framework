@@ -24,31 +24,31 @@ namespace hx3d {
 namespace ecs {
 
 template <class T, class... Args>
-Ptr<T> SceneGraph::createAtRoot(Args... args) {
-  const Ptr<T>& ptr = createNodeChild<T>(_root, args...);
+Pointer<T> SceneGraph::createAtRoot(Args... args) {
+  const Pointer<T>& ptr = createNodeChild<T>(_root, args...);
   return ptr;
 }
 
 template <class T, class... Args>
-Ptr<T> SceneGraph::create(const std::string path, Args... args) {
-  const Ptr<Node>& container = pathExists(path);
+Pointer<T> SceneGraph::create(const std::string path, Args... args) {
+  const Pointer<Node>& container = pathExists(path);
   if (container == nullptr) {
     Log.Error("SceneGraph: could not create at `%s`.", path.c_str());
     return nullptr;
   }
 
-  const Ptr<T>& ptr = createNodeChild<T>(container, args...);
+  const Pointer<T>& ptr = createNodeChild<T>(container, args...);
   return ptr;
 }
 
 template <class T>
-Ptr<T> SceneGraph::fetch(const std::string path) {
+Pointer<T> SceneGraph::fetch(const std::string path) {
   return std::dynamic_pointer_cast<T>(_indices[path]);
 }
 
 template <class T, class... Args>
-Ptr<T> SceneGraph::createNodeChild(const Ptr<Node>& container, Args... args) {
-  const Ptr<T>& object = Make<T>(args...);
+Pointer<T> SceneGraph::createNodeChild(const Pointer<Node>& container, Args... args) {
+  const Pointer<T>& object = Make<T>(args...);
   auto obj_name = object->getName();
   if (container->childNameExists(obj_name)) {
     Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), obj_name.c_str());

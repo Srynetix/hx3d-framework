@@ -29,7 +29,7 @@ System::System():
   _content(Make<Widget>(nullptr))
   {}
 
-Ptr<Widget> System::getContent() {
+Pointer<Widget> System::getContent() {
   return _content;
 }
 

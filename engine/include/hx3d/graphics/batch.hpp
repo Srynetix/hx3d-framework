@@ -34,15 +34,16 @@ class Camera;
 @brief Simple base batch implementation. Draw at each draw call.
 */
 class Batch: public BaseBatch {
+  HX3D_PTR(Batch)
 
 public:
   Batch();
 
   virtual void begin() override;
   virtual void end() override;
-  virtual void draw(const Ptr<Mesh>& mesh) override;
-  virtual void draw(const Ptr<gui::Text>& text) override;
-  virtual void draw(const Ptr<gui::Text>& text, math::Function function) override;
+  virtual void draw(const Pointer<Mesh>& mesh) override;
+  virtual void draw(const Pointer<gui::Text>& text) override;
+  virtual void draw(const Pointer<gui::Text>& text, math::Function function) override;
 };
 
 } /* graphics */

@@ -43,7 +43,7 @@ public:
 
   @param texture Texture (Ptr)
   */
-  void setTexture(const Ptr<Texture>& texture);
+  void setTexture(const Pointer<Texture>& texture);
 
   /**
   @brief Update the particle.
@@ -57,7 +57,7 @@ public:
 
   @param batch Batch
   */
-  void draw(const Ptr<Batch>& batch);
+  void draw(const Pointer<Batch>& batch);
 
   virtual void reset() override;
 
@@ -85,7 +85,7 @@ private:
   Color color;
 
   /// @brief Internal sprite
-  Ptr<Sprite> sprite;
+  Pointer<Sprite> sprite;
   /// @brief Is the particle dead ?
   bool dead;
 

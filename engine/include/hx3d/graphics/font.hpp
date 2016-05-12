@@ -88,13 +88,13 @@ public:
 
   @return Shader (Ptr)
   */
-  const Ptr<Shader>& getShader();
+  const Pointer<Shader>& getShader();
 
 private:
   /// @brief Font shader
-  Ptr<Shader> shader;
+  Pointer<Shader> shader;
   /// @brief Font file
-  Ptr<File> file;
+  Pointer<File> file;
 
   /// @brief Internal font data map
   std::map<int, Data> data;

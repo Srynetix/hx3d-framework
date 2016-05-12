@@ -59,7 +59,7 @@ void AttributeArrayBuffer::upload() {
   }
 }
 
-void AttributeArrayBuffer::begin(const Ptr<Shader>& shader) {
+void AttributeArrayBuffer::begin(const Pointer<Shader>& shader) {
 
   if (_vector.size() > 0) {
     const GLint loc = shader->getAttribute(_attribute.getName());
@@ -72,7 +72,7 @@ void AttributeArrayBuffer::begin(const Ptr<Shader>& shader) {
   }
 }
 
-void AttributeArrayBuffer::end(const Ptr<Shader>& shader) {
+void AttributeArrayBuffer::end(const Pointer<Shader>& shader) {
   if (_vector.size() > 0) {
     const GLint loc = shader->getAttribute(_attribute.getName());
 

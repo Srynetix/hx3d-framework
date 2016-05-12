@@ -22,6 +22,7 @@
 #define HX3D_GRAPHICS_STENCIL
 
 #include "hx3d/graphics/gl.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -32,6 +33,8 @@ namespace graphics {
 Use this to hide/show elements following a shape or to apply a function over a specified shape.
 */
 class Stencil {
+  HX3D_PTR(Stencil)
+
 public:
   /**
   @brief Stencil function

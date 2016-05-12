@@ -34,10 +34,10 @@ namespace gui {
 Text::Text():
   Text(Core::Assets()->get<Font>("default")) {}
 
-Text::Text(Ptr<Font> font):
+Text::Text(Pointer<Font> font):
   Text(nullptr, font) {}
 
-Text::Text(Widget* parent, Ptr<Font> font):
+Text::Text(Widget* parent, Pointer<Font> font):
   Widget(parent), _font(font), _content("") {
     init();
 }
@@ -51,7 +51,7 @@ void Text::init() {
   _centerAligned = true;
 }
 
-void Text::setFont(Ptr<Font> font) {
+void Text::setFont(Pointer<Font> font) {
   _font = font;
   _characterSize = font->getDefaultSize();
   _length = calculateLength();
@@ -67,7 +67,7 @@ void Text::setContent(std::string content) {
   _length = calculateLength();
 }
 
-Ptr<Font> Text::getFont() {
+Pointer<Font> Text::getFont() {
   return _font;
 }
 
@@ -87,7 +87,7 @@ bool Text::isCenterAligned() {
   return _centerAligned;
 }
 
-void Text::draw(const Ptr<Shader>& shader) {
+void Text::draw(const Pointer<Shader>& shader) {
 
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
@@ -159,7 +159,7 @@ float Text::calculateLength() {
   return pen.x;
 }
 
-void Text::functionDraw(const Ptr<Shader>& shader, math::Function function) {
+void Text::functionDraw(const Pointer<Shader>& shader, math::Function function) {
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
 

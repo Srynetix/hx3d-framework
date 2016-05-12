@@ -10,14 +10,14 @@ Attractor::Attractor(Type type):
 
 /////
 
-void Attractor::setCurrentAttractor(const Ptr<Collider>& collider, const Ptr<Attractor>& attractor, const float dt) {
+void Attractor::setCurrentAttractor(const Pointer<Collider>& collider, const Pointer<Attractor>& attractor, const float dt) {
   collider->currentAttractor = attractor;
   attractor->computeForce(collider, dt);
 }
 
-void Attractor::applyForce(const Ptr<Collider>& collider, const Ptr<Attractor>& attractor, const float dt) {
+void Attractor::applyForce(const Pointer<Collider>& collider, const Pointer<Attractor>& attractor, const float dt) {
   if (attractor->overlaps(collider)) {
-    const Ptr<Attractor>& current = collider->currentAttractor;
+    const Pointer<Attractor>& current = collider->currentAttractor;
     if (!current) {
       setCurrentAttractor(collider, attractor, dt);
       return;

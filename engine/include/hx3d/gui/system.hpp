@@ -41,11 +41,11 @@ public:
 
   @return Widget (Ptr)
   */
-  Ptr<Widget> getContent();
+  Pointer<Widget> getContent();
 
 private:
   /// @brief Root
-  Ptr<Widget> _content;
+  Pointer<Widget> _content;
 };
 
 } /* gui */

@@ -16,19 +16,19 @@ World::World(const glm::vec2 globalGravity, const unsigned int iterations, const
     _attractors.emplace_back(Make<GlobalAttractor>(globalGravity));
   }
 
-void World::addAttractor(const Ptr<Attractor>& attractor) {
+void World::addAttractor(const Pointer<Attractor>& attractor) {
   _attractors.push_back(attractor);
 }
 
-void World::addCollider(const Ptr<Collider>& collider) {
+void World::addCollider(const Pointer<Collider>& collider) {
   _colliders.push_back(collider);
 }
 
-void World::addListener(const Ptr<CollisionListener>& listener) {
+void World::addListener(const Pointer<CollisionListener>& listener) {
   _listeners.push_back(listener);
 }
 
-void World::removeCollider(const Ptr<Collider>& collider) {
+void World::removeCollider(const Pointer<Collider>& collider) {
   _colliders.erase(std::remove(_colliders.begin(), _colliders.end(), collider), _colliders.end());
 }
 
@@ -38,10 +38,10 @@ void World::step(float dt) {
   _inContact.clear();
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
-    const Ptr<Collider>& a = _colliders[i];
+    const Pointer<Collider>& a = _colliders[i];
 
     for (unsigned int j = i+1; j < _colliders.size(); ++j) {
-      const Ptr<Collider>& b = _colliders[j];
+      const Pointer<Collider>& b = _colliders[j];
       if (a->massData.invMass == 0 && b->massData.invMass == 0)
         continue;
 
@@ -63,14 +63,14 @@ void World::step(float dt) {
         if (prevContactExists(m)) {
 
           // IN
-          algo::apply(_listeners, [&m](Ptr<CollisionListener>& listener) {
+          algo::apply(_listeners, [&m](Pointer<CollisionListener>& listener) {
             listener->duringCollision(m);
           });
 
         } else {
 
           // BEGIN
-          algo::apply(_listeners, [&m](Ptr<CollisionListener>& listener) {
+          algo::apply(_listeners, [&m](Pointer<CollisionListener>& listener) {
             listener->beginCollision(m);
           });
 
@@ -112,21 +112,21 @@ void World::step(float dt) {
   }
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
-    const Ptr<Collider>& c = _colliders[i];
+    const Pointer<Collider>& c = _colliders[i];
     c->force = {0, 0};
     c->gravityForce = {0.f, 0.f};
     c->torque = 0;
   }
 }
 
-void World::render(const Ptr<graphics::BaseBatch>& batch) {
+void World::render(const Pointer<graphics::BaseBatch>& batch) {
 
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
-    const Ptr<Attractor>& attractor = _attractors[i];
+    const Pointer<Attractor>& attractor = _attractors[i];
 
     if (attractor->type == Attractor::Type::Zone) {
-      const Ptr<ZoneAttractor>& zone = std::dynamic_pointer_cast<ZoneAttractor>(attractor);
-      Ptr<Sprite> sprite = Make<Sprite>();
+      const Pointer<ZoneAttractor>& zone = std::dynamic_pointer_cast<ZoneAttractor>(attractor);
+      Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->transform.position.x = zone->position.x * _physRatio;
       sprite->transform.position.y = zone->position.y * _physRatio;
@@ -139,8 +139,8 @@ void World::render(const Ptr<graphics::BaseBatch>& batch) {
     }
 
     else if (attractor->type == Attractor::Type::Point) {
-      const Ptr<PointAttractor>& point = std::dynamic_pointer_cast<PointAttractor>(attractor);
-      Ptr<Sprite> sprite = Make<Sprite>();
+      const Pointer<PointAttractor>& point = std::dynamic_pointer_cast<PointAttractor>(attractor);
+      Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->transform.position.x = point->position.x * _physRatio;
       sprite->transform.position.y = point->position.y * _physRatio;
@@ -154,15 +154,15 @@ void World::render(const Ptr<graphics::BaseBatch>& batch) {
   }
 
   for (unsigned int i = 0; i < _colliders.size(); ++i) {
-    const Ptr<Collider>& c = _colliders[i];
+    const Pointer<Collider>& c = _colliders[i];
 
-    Ptr<Sprite> sprite = Make<Sprite>();
+    Pointer<Sprite> sprite = Make<Sprite>();
     sprite->setTexture(Texture::Blank);
     sprite->transform.position.x = c->position.x * _physRatio;
     sprite->transform.position.y = c->position.y * _physRatio;
 
     if (c->shape == Collider::Shape::Polygon) {
-      const Ptr<colliders::Polygon>& b = std::dynamic_pointer_cast<colliders::Polygon>(c);
+      const Pointer<colliders::Polygon>& b = std::dynamic_pointer_cast<colliders::Polygon>(c);
       if (b->box) {
         float w = b->vertices[1].x * 2;
         float h = b->vertices[2].y * 2;
@@ -172,7 +172,7 @@ void World::render(const Ptr<graphics::BaseBatch>& batch) {
     }
 
     else if (c->shape == Collider::Shape::Circle) {
-      const Ptr<colliders::Circle>& b = std::dynamic_pointer_cast<colliders::Circle>(c);
+      const Pointer<colliders::Circle>& b = std::dynamic_pointer_cast<colliders::Circle>(c);
       sprite->transform.size.x = (b->radius / 2) * _physRatio;
       sprite->transform.size.y = (b->radius / 2) * _physRatio;
     }
@@ -193,7 +193,7 @@ void World::render(const Ptr<graphics::BaseBatch>& batch) {
     for (unsigned int j = 0; j < m.contacts.size(); ++j) {
       const glm::vec2& contact = m.contacts[j];
 
-      Ptr<Sprite> sprite = Make<Sprite>();
+      Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->setTint(Color::Green);
       sprite->transform.position.x = contact.x * _physRatio;
@@ -212,7 +212,7 @@ void World::render(const Ptr<graphics::BaseBatch>& batch) {
     for (unsigned int j = 0; j < m.contacts.size(); ++j) {
       const glm::vec2& contact = m.contacts[j];
 
-      Ptr<Sprite> sprite = Make<Sprite>();
+      Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->setTint(Color(255, 0, 255));
       sprite->transform.size.x = 3;
@@ -231,7 +231,7 @@ float World::getPhysRatio() const {
   return _physRatio;
 }
 
-const Ptr<GlobalAttractor> World::getGlobalGravity() {
+const Pointer<GlobalAttractor> World::getGlobalGravity() {
   return std::dynamic_pointer_cast<GlobalAttractor>(_attractors[0]);
 }
 
@@ -241,7 +241,7 @@ CollisionMatrix& World::getCollisionMatrix() {
 
 ///////////////
 
-void World::integrateForces(const Ptr<Collider>& c, float dt) {
+void World::integrateForces(const Pointer<Collider>& c, float dt) {
   if (c->massData.invMass == 0.f)
     return;
 
@@ -256,7 +256,7 @@ void World::integrateForces(const Ptr<Collider>& c, float dt) {
   }
 }
 
-void World::integrateVelocity(const Ptr<Collider>& c, float dt) {
+void World::integrateVelocity(const Pointer<Collider>& c, float dt) {
   if (c->type != Collider::Type::Kinematic && c->massData.invMass == 0.f)
     return;
 
@@ -314,7 +314,7 @@ void World::checkOldContacts() {
   }
 
   algo::apply(diffSet, [this](Manifold manif) {
-    algo::apply(_listeners, [&manif](Ptr<CollisionListener> listener) {
+    algo::apply(_listeners, [&manif](Pointer<CollisionListener> listener) {
       listener->endCollision(manif);
     });
   });

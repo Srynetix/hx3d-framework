@@ -7,7 +7,7 @@
 namespace hx3d {
 namespace physics2d {
 
-Manifold::Manifold(const Ptr<Collider>& a, const Ptr<Collider>& b): a(a), b(b) {
+Manifold::Manifold(const Pointer<Collider>& a, const Pointer<Collider>& b): a(a), b(b) {
   penetration = 0.f;
   normal = {0, 0};
   mixedRestitution = 0.f;

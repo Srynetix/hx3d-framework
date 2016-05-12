@@ -66,7 +66,7 @@ public:
 private:
   OrthographicCamera camera;
 
-  Ptr<Shader> fShader;
+  Pointer<Shader> fShader;
   Batch batch;
   FastBatch fBatch;
 

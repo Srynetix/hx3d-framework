@@ -60,6 +60,7 @@ batch.end();
 
 */
 class Sprite: public Mesh {
+  HX3D_PTR(Sprite)
 
 public:
 
@@ -75,39 +76,39 @@ public:
 
   @param texture Texture (Ptr)
   */
-  void setTexture(const Ptr<Texture>& texture);
+  void setTexture(const Pointer<Texture>& texture);
 
   /**
   @brief Set the sprite texture from a framebuffer color buffer.
 
   @param buffer Framebuffer
   */
-  void setTexture(const Ptr<Framebuffer>& buffer);
+  void setTexture(const Pointer<Framebuffer>& buffer);
 
   /**
   @brief Set the sprite texture from a texture region.
 
   @param region TextureRegion
   */
-  void setTexture(const Ptr<TextureRegion>& region);
+  void setTexture(const Pointer<TextureRegion>& region);
 
   /**
   @brief Get the sprite texture.
 
   @return Texture (Ptr)
   */
-  Ptr<Texture> getTexture();
+  Pointer<Texture> getTexture();
 
   /**
   @brief Scale the texture coordinates following the texture size.
   */
   void scaleTexture();
 
-  virtual void draw(const Ptr<Shader>& shader) override;
+  virtual void draw(const Pointer<Shader>& shader) override;
 
 private:
   /// @brief Current texture
-  Ptr<Texture> _texture;
+  Pointer<Texture> _texture;
 };
 
 } /* graphics */

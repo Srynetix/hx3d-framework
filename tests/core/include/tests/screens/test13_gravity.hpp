@@ -63,7 +63,7 @@ public:
     timer.initialize(500, [this, physRatio, cDef](){
       glm::vec2 pos = {math::random(Core::App()->getWidth() / 4, Core::App()->getWidth() / 2 + Core::App()->getWidth() / 4), Core::App()->getHeight() - 200};
 
-      Ptr<colliders::Polygon> bo = Make<colliders::Polygon>();
+      Pointer<colliders::Polygon> bo = Make<colliders::Polygon>();
       bo->setAsBox(50 / physRatio, 50 / physRatio);
       bo->useDefinition(cDef);
       bo->position.x = pos.x / physRatio;
@@ -156,6 +156,6 @@ private:
 
   Batch batch;
 
-  std::deque<Ptr<colliders::Polygon>> polygons;
-  Ptr<colliders::Polygon> me;
+  std::deque<Pointer<colliders::Polygon>> polygons;
+  Pointer<colliders::Polygon> me;
 };

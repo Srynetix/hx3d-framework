@@ -54,7 +54,7 @@ void OrderedBatch::end() {
   */
   for (auto& pair: _meshes) {
     auto& model = pair.first;
-    const Ptr<Mesh>& mesh = pair.second;
+    const Pointer<Mesh>& mesh = pair.second;
 
     _shader->setUniformMatrix4f("u_model", model);
     mesh->draw(_shader);
@@ -123,7 +123,7 @@ void OrderedBatch::end() {
   _funcTexts.clear();
 }
 
-void OrderedBatch::draw(const Ptr<Mesh>& mesh) {
+void OrderedBatch::draw(const Pointer<Mesh>& mesh) {
 
   unsigned int pos = 0;
   for (pos = 0; pos < _meshes.size(); ++pos) {
@@ -138,11 +138,11 @@ void OrderedBatch::draw(const Ptr<Mesh>& mesh) {
   _meshes.insert(_meshes.begin() + pos, std::make_pair(mesh->transform.compute(), mesh));
 }
 
-void OrderedBatch::draw(const Ptr<gui::Text>& text) {
+void OrderedBatch::draw(const Pointer<gui::Text>& text) {
   _texts.push_back(text);
 }
 
-void OrderedBatch::draw(const Ptr<gui::Text>& text, math::Function function) {
+void OrderedBatch::draw(const Pointer<gui::Text>& text, math::Function function) {
   _funcTexts.push_back(std::make_pair(text, function));
 }
 

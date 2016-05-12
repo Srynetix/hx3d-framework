@@ -78,8 +78,8 @@ struct ZoneAttractor: public Attractor {
   */
   void useDefinition(const Definition& def);
 
-  virtual bool overlaps(const Ptr<Collider>& collider) override;
-  virtual void computeForce(const Ptr<Collider>& collider, const float dt) override;
+  virtual bool overlaps(const Pointer<Collider>& collider) override;
+  virtual void computeForce(const Pointer<Collider>& collider, const float dt) override;
 };
 
 } /* physics2d */

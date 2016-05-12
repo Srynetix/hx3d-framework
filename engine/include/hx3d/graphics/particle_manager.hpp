@@ -38,7 +38,7 @@ public:
 
   @param emitter Particle emitter
   */
-  void addEmitter(const Ptr<ParticleEmitter>& emitter);
+  void addEmitter(const Pointer<ParticleEmitter>& emitter);
 
   /**
   @brief Update the particle manager.
@@ -52,11 +52,11 @@ public:
 
   @param batch Batch
   */
-  void draw(const Ptr<Batch>& batch);
+  void draw(const Pointer<Batch>& batch);
 
 private:
   /// @brief Particle emitters
-  std::vector<Ptr<ParticleEmitter>> emitters;
+  std::vector<Pointer<ParticleEmitter>> emitters;
 };
 
 } /* graphics */

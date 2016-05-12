@@ -224,7 +224,7 @@ public:
 
     @param handler Input handler (Ptr)
     */
-    void setInputHandler(Ptr<InputHandler> handler);
+    void setInputHandler(Pointer<InputHandler> handler);
 
   protected:
     /// @brief Keys released

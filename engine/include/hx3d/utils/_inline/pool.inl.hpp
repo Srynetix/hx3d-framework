@@ -26,7 +26,7 @@ template <class T>
 template <class... Args>
 Pool<T>::Pool(unsigned int size, Args... args): size(size) {
   for (unsigned int i = 0; i < size; ++i) {
-    const Ptr<T>& p = Make<T>(args...);
+    const Pointer<T>& p = Make<T>(args...);
     p->setId(i);
 
     _available.push(i);
@@ -38,9 +38,9 @@ template <class T>
 Pool<T>::~Pool() {}
 
 template <class T>
-const Ptr<T>& Pool<T>::take() {
+const Pointer<T>& Pool<T>::take() {
   if (_available.size() > 0) {
-    const Ptr<T>& ptr = _content[_available.front()];
+    const Pointer<T>& ptr = _content[_available.front()];
     _available.pop();
     _locked.insert(ptr->getId());
 
@@ -52,7 +52,7 @@ const Ptr<T>& Pool<T>::take() {
 }
 
 template <class T>
-void Pool<T>::release(const Ptr<T>& ptr) {
+void Pool<T>::release(const Pointer<T>& ptr) {
   unsigned int id = ptr->getId();
   if (_locked.find(id) != _locked.end()) {
     _locked.erase(id);
@@ -67,7 +67,7 @@ void Pool<T>::release(const Ptr<T>& ptr) {
 }
 
 template <class T>
-const std::set<Ptr<T>>& Pool<T>::getWorking() {
+const std::set<Pointer<T>>& Pool<T>::getWorking() {
   _working.clear();
   for (auto& i: _locked) {
     _working.insert(_content[i]);

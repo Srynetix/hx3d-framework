@@ -15,16 +15,8 @@ class Test5: public BaseTestScreen {
 public:
   Test5():
     baseShader(Core::Assets()->get<Shader>("base")),
-    pixShader(Core::Assets()->get<Shader>("pix2D")),
-    text(Make<gui::Text>(Core::Assets()->get<Font>("default")))
+    pixShader(Core::Assets()->get<Shader>("pix2D"))
   {
-    batch = Make<Batch>();
-    sprite = Make<Sprite>();
-    framebufferSprite = Make<Sprite>();
-    framebuffer = Make<Framebuffer>();
-    camera = Make<OrthographicCamera>();
-
-    batch->setShader(baseShader);
     batch->setCamera(camera);
 
     sprite->setTexture(Core::Assets()->get<Texture>("box"));
@@ -89,15 +81,15 @@ public:
   }
 
 private:
-  Ptr<Shader> baseShader;
-  Ptr<Shader> pixShader;
+  Shader::Ptr baseShader;
+  Shader::Ptr pixShader;
 
-  Ptr<Framebuffer> framebuffer;
-  Ptr<OrthographicCamera> camera;
+  Framebuffer::Ref framebuffer;
+  OrthographicCamera::Ref camera;
 
-  Ptr<gui::Text> text;
+  gui::Text::Ref text;
 
-  Ptr<Batch> batch;
-  Ptr<Sprite> sprite;
-  Ptr<Sprite> framebufferSprite;
+  Batch::Ref batch;
+  Sprite::Ref sprite;
+  Sprite::Ref framebufferSprite;
 };

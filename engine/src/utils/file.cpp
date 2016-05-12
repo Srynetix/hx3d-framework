@@ -49,7 +49,7 @@ size_t File::getSize() const {
 
 ///////////////////////////////////
 
-Ptr<File> File::loadAsciiFile(std::string path) {
+Pointer<File> File::loadAsciiFile(std::string path) {
   #if defined(__ANDROID__)
     return loadAsciiFileAndroid(path);
   #elif defined(__IOS__)
@@ -59,7 +59,7 @@ Ptr<File> File::loadAsciiFile(std::string path) {
   #endif
 }
 
-Ptr<File> File::loadBinaryFile(std::string path) {
+Pointer<File> File::loadBinaryFile(std::string path) {
   #if defined(__ANDROID__)
     return loadBinaryFileAndroid(path);
   #elif defined(__IOS__)
@@ -69,7 +69,7 @@ Ptr<File> File::loadBinaryFile(std::string path) {
   #endif
 }
 
-Ptr<File> File::loadInternalAsciiFile(std::string path) {
+Pointer<File> File::loadInternalAsciiFile(std::string path) {
   #if defined(__ANDROID__)
     path = getInternalPath() + "/" + path;
   #endif
@@ -93,7 +93,7 @@ std::string File::toString() {
 
 // Desktop ///////////////////////////////////
 
-Ptr<File> File::loadAsciiFileDesktop(std::string path) {
+Pointer<File> File::loadAsciiFileDesktop(std::string path) {
   std::ifstream file(path);
   if (file) {
     std::ostringstream oss("");
@@ -101,7 +101,7 @@ Ptr<File> File::loadAsciiFileDesktop(std::string path) {
 
     std::string content = oss.str();
 
-    Ptr<File> fileptr = Make<File>();
+    Pointer<File> fileptr = Make<File>();
     fileptr->size = content.size();
     fileptr->data = new char[fileptr->size];
     std::copy(content.begin(), content.end(), fileptr->data);
@@ -114,10 +114,10 @@ Ptr<File> File::loadAsciiFileDesktop(std::string path) {
   return nullptr;
 }
 
-Ptr<File> File::loadBinaryFileDesktop(std::string path) {
+Pointer<File> File::loadBinaryFileDesktop(std::string path) {
   std::ifstream file(path, std::ios::binary);
   if (file) {
-    Ptr<File> fileptr = Make<File>();
+    Pointer<File> fileptr = Make<File>();
     unsigned int size = 0;
 
     file.seekg(0, std::ios::end);
@@ -150,11 +150,11 @@ Ptr<File> File::loadBinaryFileDesktop(std::string path) {
 
 namespace hx3d {
 
-  Ptr<File> File::loadAsciiFileiOS(std::string path) {
+  Pointer<File> File::loadAsciiFileiOS(std::string path) {
     return loadAsciiFileDesktop(path);
   }
 
-  Ptr<File> File::loadBinaryFileiOS(std::string path) {
+  Pointer<File> File::loadBinaryFileiOS(std::string path) {
     return loadBinaryFileDesktop(path);
   }
 }
@@ -230,11 +230,11 @@ namespace hx3d {
     return fileContent;
   }
 
-  Ptr<File> File::loadBinaryFileAndroid(std::string path) {
+  Pointer<File> File::loadBinaryFileAndroid(std::string path) {
 
     std::string content = File::readAsString(path);
 
-    Ptr<File> file = Make<File>();
+    Pointer<File> file = Make<File>();
     file->size = content.size();
     file->data = new char[file->size];
     std::copy(content.begin(), content.end(), file->data);
@@ -242,10 +242,10 @@ namespace hx3d {
     return file;
   }
 
-  Ptr<File> File::loadAsciiFileAndroid(std::string path) {
+  Pointer<File> File::loadAsciiFileAndroid(std::string path) {
     std::string content = File::readAsString(path);
 
-    Ptr<File> file = Make<File>();
+    Pointer<File> file = Make<File>();
     file->size = content.size();
     file->data = new char[file->size];
     std::copy(content.begin(), content.end(), file->data);

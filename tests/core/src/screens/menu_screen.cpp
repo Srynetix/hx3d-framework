@@ -30,25 +30,14 @@ Screens list.
 // #include "tests/screens/test18_2d_3d.hpp"
 
 MenuScreen::MenuScreen():
-  font(Core::Assets()->get<Font>("default")),
   defaultShader(Core::Assets()->get<Shader>("base")),
   pixShader(Core::Assets()->get<Shader>("pix2D"))
 {
-  camera = Make<OrthographicCamera>();
-  batch = Make<Batch>();
-
-  sprite = Make<Sprite>();
-  logoSprite = Make<Sprite>();
-
-  instructions = Make<gui::Text>(font);
-  text = Make<gui::Text>(font);
-
   sprite->setTexture(Core::Assets()->get<Texture>("box"));
   sprite->setTint(Color(0, 0, 64));
 
   logoSprite->setTexture(Core::Assets()->get<Texture>("logo"));
 
-  batch->setShader(defaultShader);
   batch->setCamera(camera);
 
   glm::vec2 worldSize = Core::App()->getSize();
@@ -150,7 +139,7 @@ void MenuScreen::render() {
     text->setContent(screens[i].name);
 
     batch->draw(sprite);
-    batch->draw(text);
+    batch->draw(text.get());
   }
 
   batch->draw(instructions, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {

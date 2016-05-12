@@ -63,14 +63,14 @@ public:
 
   @param batch Batch
   */
-  void draw(const Ptr<Batch>& batch);
+  void draw(const Pointer<Batch>& batch);
 
   /**
   @brief Set the emitter texture.
 
   @param texture Texture (Ptr)
   */
-  void setTexture(const Ptr<Texture>& texture);
+  void setTexture(const Pointer<Texture>& texture);
 
   /**
   @brief Get the active particle count.
@@ -104,7 +104,7 @@ private:
   Pool<Particle> particles;
 
   /// @brief Particles texture
-  Ptr<Texture> texture;
+  Pointer<Texture> texture;
 };
 
 } /* graphics */

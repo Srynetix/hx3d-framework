@@ -180,7 +180,7 @@ Application::~Application() {
   //.........
 }
 
-void Application::start(const Ptr<Game>& game) {
+void Application::start(const Pointer<Game>& game) {
   _game = game;
 
   Core::setGame(_game.get());

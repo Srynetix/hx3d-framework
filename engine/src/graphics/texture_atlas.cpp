@@ -32,7 +32,7 @@ TextureAtlas::TextureAtlas(std::string pathToAtlas) {
   loadFromJSON(pathToAtlas);
 }
 
-Ptr<TextureRegion>& TextureAtlas::getRegion(std::string name) {
+Pointer<TextureRegion>& TextureAtlas::getRegion(std::string name) {
   return _regions[name];
 }
 

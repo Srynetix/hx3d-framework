@@ -38,7 +38,7 @@ void Particle::reset() {
   color = Color::White;
 }
 
-void Particle::setTexture(const Ptr<Texture>& texture) {
+void Particle::setTexture(const Pointer<Texture>& texture) {
   sprite->setTexture(texture);
 }
 
@@ -67,7 +67,7 @@ void Particle::update(const float delta) {
   }
 }
 
-void Particle::draw(const Ptr<Batch>& batch) {
+void Particle::draw(const Pointer<Batch>& batch) {
   sprite->transform.position = position;
   sprite->transform.size = size;
   sprite->transform.rotation.z = rotation;

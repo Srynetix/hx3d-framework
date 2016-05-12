@@ -23,7 +23,7 @@
 namespace hx3d {
 namespace ecs {
 
-SpriteNode::SpriteNode(std::string name, const Ptr<graphics::Texture>& texture):
+SpriteNode::SpriteNode(std::string name, const Pointer<graphics::Texture>& texture):
   Node(name), _texture(texture) {
   _sprite = Make<graphics::Sprite>();
   _sprite->setTexture(_texture);
@@ -31,7 +31,7 @@ SpriteNode::SpriteNode(std::string name, const Ptr<graphics::Texture>& texture):
 
 void SpriteNode::update(float delta) {}
 
-void SpriteNode::draw(const Ptr<graphics::BaseBatch>& batch) {
+void SpriteNode::draw(const Pointer<graphics::BaseBatch>& batch) {
   batch->draw(_sprite);
 }
 

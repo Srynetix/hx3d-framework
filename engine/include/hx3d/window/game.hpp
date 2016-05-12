@@ -93,7 +93,7 @@ public:
 
   @param screen Screen (Ptr)
   */
-  void setScreen(const Ptr<Screen>& screen);
+  void setScreen(const Pointer<Screen>& screen);
 
   /**
   @brief Activate the stats.
@@ -107,21 +107,21 @@ public:
 
   @param transition Transition
   */
-  void setTransition(const Ptr<graphics::Transition>& transition);
+  void setTransition(const Pointer<graphics::Transition>& transition);
 
   /**
   @brief Set the current viewport
 
   @param viewport Viewport
   */
-  void setViewport(const Ptr<graphics::viewports::Viewport>& viewport);
+  void setViewport(const Pointer<graphics::viewports::Viewport>& viewport);
 
   /**
   @brief Get the current viewport
 
   @return Viewport
   */
-  const Ptr<graphics::viewports::Viewport>& getViewport();
+  const Pointer<graphics::viewports::Viewport>& getViewport();
 
   /**
   @brief Get the session
@@ -149,18 +149,18 @@ public:
 
 private:
   bool _running;
-  Ptr<Screen> _screen;
-  Ptr<Screen> _nextScreen;
-  Ptr<gui::Text> _deltaText;
-  Ptr<gui::Text> _fpsText;
+  Pointer<Screen> _screen;
+  Pointer<Screen> _nextScreen;
+  Pointer<gui::Text> _deltaText;
+  Pointer<gui::Text> _fpsText;
 
-  Ptr<graphics::OrthographicCamera> _camera;
-  Ptr<graphics::Batch> _batch;
+  Pointer<graphics::OrthographicCamera> _camera;
+  Pointer<graphics::Batch> _batch;
 
-  Ptr<graphics::Framebuffer> _currentFB;
-  Ptr<graphics::Framebuffer> _nextFB;
-  Ptr<graphics::Transition> _currentTransition;
-  Ptr<graphics::viewports::Viewport> _currentViewport;
+  Pointer<graphics::Framebuffer> _currentFB;
+  Pointer<graphics::Framebuffer> _nextFB;
+  Pointer<graphics::Transition> _currentTransition;
+  Pointer<graphics::viewports::Viewport> _currentViewport;
 
   ObjectMap _session;
 

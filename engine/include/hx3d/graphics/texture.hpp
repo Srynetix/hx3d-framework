@@ -89,7 +89,7 @@ public:
   };
 
   /// @brief Default blank texture
-  static Ptr<Texture> Blank;
+  static Pointer<Texture> Blank;
 
   /**
   @brief Construct an empty texture.
@@ -171,14 +171,14 @@ public:
 
   @return Texture (Ptr)
   */
-  static Ptr<Texture> createColorBuffer(unsigned int width, unsigned int height);
+  static Pointer<Texture> createColorBuffer(unsigned int width, unsigned int height);
 
   /**
   @brief Use the current texture for drawing.
 
   @param texture Texture (Ptr)
   */
-  static void use(const Ptr<Texture>& texture);
+  static void use(const Pointer<Texture>& texture);
 
   /**
   @brief Use the current font atlas for drawing.
@@ -186,7 +186,7 @@ public:
   @param font           Font (Ptr)
   @param characterSize  Character size
   */
-  static void use(const Ptr<Font>& font, int characterSize);
+  static void use(const Pointer<Font>& font, int characterSize);
 
   /**
   @brief Clear the current texture for drawing.

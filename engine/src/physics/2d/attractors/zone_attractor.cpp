@@ -29,7 +29,7 @@ void ZoneAttractor::useDefinition(const Definition& def) {
   velocity = def.velocity;
 }
 
-bool ZoneAttractor::overlaps(const Ptr<Collider>& collider) {
+bool ZoneAttractor::overlaps(const Pointer<Collider>& collider) {
   bool x_overlap = (collider->position.x >= position.x - width / 2 && collider->position.x <= position.x + width / 2);
   if (x_overlap) {
     bool y_overlap = (collider->position.y >= position.y - height / 2 && collider->position.y <= position.y + height / 2);
@@ -41,7 +41,7 @@ bool ZoneAttractor::overlaps(const Ptr<Collider>& collider) {
   return false;
 }
 
-void ZoneAttractor::computeForce(const Ptr<Collider>& collider, const float dt) {
+void ZoneAttractor::computeForce(const Pointer<Collider>& collider, const float dt) {
   collider->gravityForce += velocity;
 }
 

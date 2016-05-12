@@ -111,7 +111,7 @@ public:
 
   @param shader Shader
   */
-  virtual void draw(const Ptr<Shader>& shader) = 0;
+  virtual void draw(const Pointer<Shader>& shader) = 0;
 
 protected:
   /// @brief Attributes map

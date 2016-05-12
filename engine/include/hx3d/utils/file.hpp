@@ -53,7 +53,7 @@ public:
 
   @return File handler
   */
-  static Ptr<File> loadAsciiFile(std::string path);
+  static Pointer<File> loadAsciiFile(std::string path);
 
   /**
   @brief Load a binary file from a path.
@@ -62,7 +62,7 @@ public:
 
   @return File handler
   */
-  static Ptr<File> loadBinaryFile(std::string path);
+  static Pointer<File> loadBinaryFile(std::string path);
 
   /**
   @brief Write to an internal ascii file.
@@ -79,7 +79,7 @@ public:
 
   @return File handler
   */
-  static Ptr<File> loadInternalAsciiFile(std::string path);
+  static Pointer<File> loadInternalAsciiFile(std::string path);
 
   /**
   @brief Get the file size
@@ -107,13 +107,13 @@ private:
 
     @param path Path to file
     */
-    static Ptr<File> loadAsciiFileAndroid(std::string path);
+    static Pointer<File> loadAsciiFileAndroid(std::string path);
     /**
     @brief Load a binary file from an Android APK.
 
     @param path Path to file
     */
-    static Ptr<File> loadBinaryFileAndroid(std::string path);
+    static Pointer<File> loadBinaryFileAndroid(std::string path);
     /**
     @brief Read the file content as string.
 
@@ -133,14 +133,14 @@ private:
 
       @param path Path to file
       */
-      static Ptr<File> loadAsciiFileiOS(std::string path);
+      static Pointer<File> loadAsciiFileiOS(std::string path);
 
       /**
       @brief Load a binary file for iOS.
 
       @param path Path to file
       */
-      static Ptr<File> loadBinaryFileiOS(std::string path);
+      static Pointer<File> loadBinaryFileiOS(std::string path);
 
       /**
       @brief Read the file content as string.
@@ -156,13 +156,13 @@ private:
 
   @param path Path to file
   */
-  static Ptr<File> loadAsciiFileDesktop(std::string path);
+  static Pointer<File> loadAsciiFileDesktop(std::string path);
   /**
   @brief Load a binary file from a path on a desktop system.
 
   @param path Path to file
   */
-  static Ptr<File> loadBinaryFileDesktop(std::string path);
+  static Pointer<File> loadBinaryFileDesktop(std::string path);
 };
 
 } /* hx3d */
