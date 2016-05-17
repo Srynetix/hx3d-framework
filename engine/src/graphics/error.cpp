@@ -24,6 +24,7 @@
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
+namespace graphics {
 
   void checkGLError(const char* file, int line) {
     GLenum err = GL_NO_ERROR;
@@ -53,4 +54,5 @@ namespace hx3d {
     }
   }
 
+} /* graphics */
 } /* hx3d */
