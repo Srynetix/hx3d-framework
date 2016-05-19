@@ -1,5 +1,5 @@
 /*
-    Array geometry.
+    Base geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,25 +18,112 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_GEOMETRY
+#ifndef HX3D_GRAPHICS_GEOMETRIES_BASEGEOMETRY
+#define HX3D_GRAPHICS_GEOMETRIES_BASEGEOMETRY
 
-#include "hx3d/graphics/geometries/base_geometry.hpp"
+#include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
+#include "hx3d/graphics/buffers/index_array_buffer.hpp"
+#include "hx3d/graphics/shader.hpp"
+
+using namespace hx3d::graphics::buffers;
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 /**
-@brief VBO drawing geometry w or w/o indices.
+@brief Face culling type
 */
-class Geometry: public BaseGeometry {
-public:
-  Geometry();
-  virtual void draw(const Pointer<Shader>& shader) override;
+enum class Culling {
+  /// @brief Clockwise culling: front face
+  Front = 0,
+  /// @brief CounterClockwise culling: back face
+  Back,
+  /// @brief No culling
+  Disabled,
 };
 
-} /* geom */
+/**
+@brief Base geometry.
+*/
+class Geometry {
+public:
+  Geometry();
+  virtual ~Geometry();
+
+  /**
+  @brief Add an attribute
+
+  @param name Name
+  @param attribute Attribute definition
+  */
+  void addAttribute(std::string name, Attribute attribute);
+
+  /**
+  @brief Set an attribute with values
+
+  @param name Name
+  @param values Values
+  */
+  void setAttribute(std::string name, std::vector<float> values);
+
+  /**
+  @brief Get an attribute array buffer
+
+  @param name Name
+
+  @return Attribute array buffer
+  */
+  AttributeArrayBuffer& getAttribute(std::string name);
+
+  /**
+  @brief Get all attributes
+
+  @return Attribute array buffers
+  */
+  std::map<std::string, AttributeArrayBuffer>& getAttributes();
+
+  /**
+  @brief Set the indices
+
+  @param values Values
+  */
+  void setIndices(std::vector<GLushort> values);
+
+  /**
+  @brief Get the index array buffer
+
+  @return Index array buffer
+  */
+  IndexArrayBuffer& getIndices();
+
+  /**
+  @brief Set the culling type
+
+  @param culling Culling type
+  */
+  void setFaceCulling(Culling culling);
+
+  /**
+  @brief Get the culling type
+
+  @return Culling type
+  */
+  Culling& getFaceCulling();
+
+  /**
+  @brief Upload all the buffers to the GPU
+  */
+  void uploadAll();
+
+protected:
+  /// @brief Attributes map
+  std::map<std::string, AttributeArrayBuffer> _attributes;
+  /// @brief Index array buffer
+  IndexArrayBuffer _indices;
+  /// @brief Current culling
+  Culling _cullingType;
+};
+
 } /* graphics */
 } /* hx3d */
 

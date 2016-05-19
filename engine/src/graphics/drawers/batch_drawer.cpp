@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Batch drawer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,13 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/drawers/batch_drawer.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-/**
-@brief Star shape VBO geometry
-*/
-class StarGeometry: public Geometry {
-
-public:
-  StarGeometry();
-};
+BatchDrawer::BatchDrawer() {}
+BatchDrawer::~BatchDrawer() {}
 
 } /* graphics */
 } /* hx3d */
-
-#endif

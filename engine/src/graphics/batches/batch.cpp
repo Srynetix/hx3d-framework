@@ -1,5 +1,5 @@
 /*
-    Screen transition.
+    Base Batch Class.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,53 +18,38 @@
     USA
 */
 
-#include "hx3d/graphics/transition.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+
+#include "hx3d/core/core.hpp"
+
+#include "hx3d/graphics/cameras/camera.hpp"
+#include "hx3d/graphics/shader.hpp"
+
+#include "hx3d/utils/assets.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-Transition::Transition(window::Game* game) {
-  _duration = 1.f;
-  _currentTime = 0.f;
-  _running = false;
+Batch::Batch():
+  _camera(nullptr),
+  _shader(Core::Assets()->get<Shader>("base"))
+  {}
 
-  _game = game;
+void Batch::setShader(const Pointer<Shader>& shader) {
+  _shader = shader;
 }
 
-void Transition::start() {
-  _currentTime = 0.f;
-  _running = true;
-
-  onStart();
+Pointer<Shader>& Batch::getShader() {
+  return _shader;
 }
 
-void Transition::reset() {
-  _currentTime = 0.f;
-  _running = false;
+void Batch::setCamera(const Pointer<Camera>& camera) {
+  _camera = camera;
 }
 
-void Transition::setDuration(float duration) {
-  _duration = duration;
+Pointer<Camera>& Batch::getCamera() {
+  return _camera;
 }
-
-bool Transition::isFinished() const {
-  return _running && _currentTime >= _duration;
-}
-
-bool Transition::isRunning() const {
-  return _running;
-}
-
-void Transition::update(float delta) {
-  if (_running) {
-    _currentTime += delta;
-    onUpdate(delta);
-  }
-}
-
-void Transition::onDone() {}
-void Transition::onStart() {}
-void Transition::onUpdate(float delta) {}
 
 } /* graphics */
 } /* hx3d */

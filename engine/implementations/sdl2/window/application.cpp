@@ -69,7 +69,7 @@ Application::Application():
     bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
     int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
 
-    if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       Log.Error("SDL Init Error: %s", SDL_GetError());
       SDL_Quit();
 
@@ -98,11 +98,11 @@ Application::Application():
     }
 
   #ifdef DESKTOP_OPENGL
-    auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
-    _window = SDL_CreateWindow(_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, window_flags);
-
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 0);
+
+    auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+    _window = SDL_CreateWindow(_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, window_flags);
   #else
     _window = SDL_CreateWindow("", 0, 0, 0, 0, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 
@@ -195,7 +195,6 @@ void Application::start(const Pointer<Game>& game) {
   while (_running) {
 
     frameStart = SDL_GetTicks();
-
     Core::Events()->poll();
 
     if (Core::Events()->isWindowState(WindowEvent::Type::Closed)) {

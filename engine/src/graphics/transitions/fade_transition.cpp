@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/graphics/fade_transition.hpp"
+#include "hx3d/graphics/transitions/fade_transition.hpp"
 
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/core/core.hpp"
@@ -32,7 +32,7 @@ FadeTransition::FadeTransition(window::Game* game, Color color): Transition(game
   _color = color;
 }
 
-void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<graphics::Framebuffer>& currentFB, const Pointer<graphics::Framebuffer>& nextFB) {
+void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) {
   Pointer<Sprite> spriteCurrent = Make<Sprite>();
   Pointer<Sprite> spriteNext = Make<Sprite>();
   spriteCurrent->setTexture(currentFB);

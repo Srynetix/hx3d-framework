@@ -1,5 +1,5 @@
 /*
-    Base Batch Class.
+    Simple mesh batch drawer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,37 +18,22 @@
     USA
 */
 
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/drawers/simple_mesh_batch_drawer.hpp"
 
-#include "hx3d/graphics/cameras/camera.hpp"
-
-#include "hx3d/core/core.hpp"
-#include "hx3d/graphics/shader.hpp"
-
-#include "hx3d/utils/assets.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+#include "hx3d/graphics/mesh.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-BaseBatch::BaseBatch():
-  _camera(nullptr),
-  _shader(Core::Assets()->get<Shader>("base"))
-  {}
+SimpleMeshBatchDrawer::SimpleMeshBatchDrawer(): BatchDrawer() {}
 
-void BaseBatch::setShader(const Pointer<Shader>& shader) {
-  _shader = shader;
-}
+void SimpleMeshBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
+  auto model = mesh->transform.compute();
+  auto& shader = batch->getShader();
+  shader->setUniformMatrix4f("u_model", model);
 
-Pointer<Shader> BaseBatch::getShader() {
-  return _shader;
-}
-
-void BaseBatch::setCamera(const Pointer<Camera>& camera) {
-  _camera = camera;
-}
-
-Pointer<Camera> BaseBatch::getCamera() {
-  return _camera;
+  mesh->draw(shader);
 }
 
 } /* graphics */

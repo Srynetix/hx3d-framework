@@ -18,11 +18,8 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BASEBATCH
-#define HX3D_GRAPHICS_BASEBATCH
+#pragma once
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/gui/text.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
@@ -32,16 +29,17 @@ namespace hx3d {
 */
 namespace graphics {
 
+class Mesh;
 class Shader;
 class Camera;
 
 /**
 @brief Draw meshes and texts on screen.
 */
-class BaseBatch {
-  
+class Batch {
+
 public:
-  BaseBatch();
+  Batch();
 
   /**
   @brief Begin the batching.
@@ -62,25 +60,6 @@ public:
   */
   virtual void draw(const Pointer<Mesh>& mesh) = 0;
 
-  /**
-  @brief Draw the text.
-
-  You must have called @link begin @endlink before.
-
-  @param text Text
-  */
-  virtual void draw(const Pointer<gui::Text>& text) = 0;
-
-  /**
-  @brief Draw the text following a function.
-
-  You must have called @link begin @endlink before.
-
-  @param text   Text
-  @param function  Function
-  */
-  virtual void draw(const Pointer<gui::Text>& text, math::Function function) = 0;
-
   ///////////////////
 
   /**
@@ -95,7 +74,7 @@ public:
 
   @return Shader (Ptr)
   */
-  Pointer<Shader> getShader();
+  Pointer<Shader>& getShader();
 
   /**
   @brief Set the camera for the next batching.
@@ -109,7 +88,7 @@ public:
 
   @return camera Camera
   */
-  Pointer<Camera> getCamera();
+  Pointer<Camera>& getCamera();
 
 protected:
   /// @brief Camera
@@ -120,5 +99,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

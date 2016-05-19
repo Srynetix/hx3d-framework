@@ -24,18 +24,42 @@ namespace hx3d {
 namespace math {
 
 Function::Function(float init, float speed, std::function<void(float&, float&, float)> func)
-    : _init(init), _speed(speed), _t(init), _func(func)
+    : _init(init), _speed(speed), _t(init), _enabled(true), _func(func)
   {}
+
+Function::Function():
+  _init(0), _speed(0), _t(0), _enabled(false), _func(nullptr)
+  {}
+
+void Function::disable() {
+  _enabled = false;
+}
+
+void Function::enable() {
+  _enabled = true;
+}
+
+bool Function::isEnabled() {
+  return _enabled;
+}
 
 void Function::reset() {
   _t = _init;
 }
 
-glm::vec2 Function::sample() {
-  glm::vec2 coord(0, 0);
-  _func(coord.x, coord.y, _t);
+void Function::setInit(float init) {
+  _init = init;
+}
 
-  return coord;
+glm::vec2 Function::sample() {
+  if (_enabled) {
+    glm::vec2 coord(0, 0);
+    _func(coord.x, coord.y, _t);
+
+    return coord;
+  }
+
+  return glm::vec2(0, 0);
 }
 
 void Function::step() {

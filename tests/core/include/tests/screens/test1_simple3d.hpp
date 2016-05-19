@@ -17,8 +17,8 @@ public:
     sprite->setTexture(Core::Assets()->get<Texture>("box"));
     sprite->getGeometry()->setFaceCulling(Culling::Disabled);
 
-    cube->setGeometry(Make<geom::CubeGeometry>());
-    star->setGeometry(Make<geom::StarGeometry>());
+    cube->setGeometry(Make<CubeGeometry>());
+    star->setGeometry(Make<StarGeometry>());
 
     angle = 0.f;
   }
@@ -101,7 +101,7 @@ public:
 
 private:
   PerspectiveCamera::Ref camera;
-  Batch::Ref batch;
+  SimpleBatch::Ref batch;
 
   Mesh::Ref cube;
   Mesh::Ref star;

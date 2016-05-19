@@ -11,7 +11,7 @@
 Screens list.
 */
 #include "tests/screens/test1_simple3d.hpp"
-// #include "tests/screens/test2_simple3d2.hpp"
+#include "tests/screens/test2_simple3d2.hpp"
 // #include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
 #include "tests/screens/test5_framebuffer.hpp"
@@ -49,12 +49,17 @@ MenuScreen::MenuScreen():
   instructions->setContent("touch test to launch. then ESC or Back to go back. ESC or Back here to quit.");
   instructions->transform.position = glm::vec3(worldSize.x / 2.f, 40, 0);
 
+  instructions->setFunction(math::Function(0, 0.5f, [](float& x, float& y, float t) {
+    y = std::sin(t) * 2.f;
+    x = std::cos(t / 2.f);
+  }));
+
   logoSprite->transform.scale = glm::vec3(0.25, 0.25, 0);
   logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
-    // {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
+    {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
     // {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
     // {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
     {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
@@ -114,6 +119,8 @@ void MenuScreen::update(float delta) {
     Core::CurrentGame()->stop();
   }
 
+  instructions->setFunctionInit(Core::App()->getElapsedTime() * 2);
+
   camera->update();
 }
 
@@ -139,13 +146,11 @@ void MenuScreen::render() {
     text->setContent(screens[i].name);
 
     batch->draw(sprite);
-    batch->draw(text.get());
+    batch->draw(text);
   }
 
-  batch->draw(instructions, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
-    y = std::sin(t) * 2.f;
-    x = std::cos(t / 2.f);
-  }));
+  batch->draw(instructions);
+
   batch->end();
 
   /** PIX */

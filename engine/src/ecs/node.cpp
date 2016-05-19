@@ -69,7 +69,7 @@ std::string Node::getName() {
   return _name;
 }
 
-void Node::draw(const Pointer<graphics::BaseBatch>& batch) {}
+void Node::draw(const Pointer<graphics::Batch>& batch) {}
 
 void Node::update(const float delta) {}
 

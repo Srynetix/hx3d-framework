@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Fade screen transition.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,36 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#pragma once
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/transitions/transition.hpp"
+#include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
 namespace graphics {
 
 /**
-@brief Star shape VBO geometry
+@brief Color fading transition.
 */
-class StarGeometry: public Geometry {
-
+class FadeTransition: public Transition {
 public:
-  StarGeometry();
+  /**
+  @brief Create a fading transition with a color
+
+  @param game   Game (Raw ptr)
+  @param color  Color
+  */
+  FadeTransition(window::Game* game, Color color = Color::Black);
+
+  virtual void render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) override;
+
+  virtual void onUpdate(float delta) override;
+  virtual void onDone() override;
+  virtual void onStart() override;
+
+private:
+  Color _color;
 };
 
 } /* graphics */
 } /* hx3d */
-
-#endif

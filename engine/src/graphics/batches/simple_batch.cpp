@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,39 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#include "hx3d/graphics/batches/simple_batch.hpp"
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/core/core.hpp"
+
+#include "hx3d/graphics/cameras/camera.hpp"
+#include "hx3d/graphics/shader.hpp"
+#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-/**
-@brief Star shape VBO geometry
-*/
-class StarGeometry: public Geometry {
+SimpleBatch::SimpleBatch(): Batch() {}
 
-public:
-  StarGeometry();
-};
+void SimpleBatch::begin() {
+  if (_shader == nullptr) {
+    Log.Error("Attempt to draw without shader.");
+    return;
+  }
+
+  Shader::use(_shader);
+  _shader->setUniformMatrix4f("u_projection", _camera->projection);
+  _shader->setUniformMatrix4f("u_view", _camera->view);
+}
+
+void SimpleBatch::end() {
+  Shader::disable();
+}
+
+void SimpleBatch::draw(const Pointer<Mesh>& mesh) {
+  auto& drawer = mesh->getBatchDrawer();
+  drawer->drawWithBatch(this, mesh.get());
+}
 
 } /* graphics */
 } /* hx3d */
-
-#endif

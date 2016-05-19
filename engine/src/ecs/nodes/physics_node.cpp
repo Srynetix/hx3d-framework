@@ -59,7 +59,7 @@ void PhysicsNode::update(float delta) {
   }
 }
 
-void PhysicsNode::draw(const Pointer<graphics::BaseBatch>& batch) {
+void PhysicsNode::draw(const Pointer<graphics::Batch>& batch) {
   if (_texture) {
     batch->draw(_sprite);
   }

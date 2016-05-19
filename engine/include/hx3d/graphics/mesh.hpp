@@ -23,11 +23,12 @@
 
 #include "hx3d/graphics/color.hpp"
 
-#include "hx3d/graphics/geometries/base_geometry.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/drawers/geometry_drawer.hpp"
+#include "hx3d/graphics/drawers/batch_drawer.hpp"
 #include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/utils/ptr.hpp"
-
 
 namespace hx3d {
 namespace graphics {
@@ -43,6 +44,7 @@ class Mesh {
 
 public:
   Mesh();
+  Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>& batchDrawer);
 
   /**
   @brief Draw the mesh using a shader.
@@ -50,6 +52,13 @@ public:
   @param shader Shader (Ptr)
   */
   virtual void draw(const Pointer<Shader>& shader);
+
+  /**
+  @brief Draw the mesh using a batch.
+
+  @param batch Batch (Ptr)
+  */
+  virtual void drawWithBatch(Batch* batch);
 
   /**
   @brief Set the mesh tint.
@@ -76,16 +85,44 @@ public:
   /**
   @brief Set the mesh geometry.
 
-  @param geometry BaseGeometry (Ptr)
+  @param geometry Geometry (Ptr)
   */
-  void setGeometry(const Pointer<geom::BaseGeometry>& geometry);
+  void setGeometry(const Pointer<Geometry>& geometry);
+
+  /**
+  @brief Set the geometry drawer.
+
+  @param drawer GeometryDrawer (Ptr)
+  */
+  void setGeometryDrawer(const Pointer<GeometryDrawer>& geoDrawer);
+
+  /**
+  @brief Set the batch drawer.
+
+  @param drawer BatchDrawer (Ptr)
+  */
+  void setBatchDrawer(const Pointer<BatchDrawer>& batchDrawer);
 
   /**
   @brief Get the mesh geometry
 
-  @return BaseGeometry (Ptr)
+  @return Geometry (Ptr)
   */
-  Pointer<geom::BaseGeometry>& getGeometry();
+  Pointer<Geometry>& getGeometry();
+
+  /**
+  @brief Get the mesh geometry drawer
+
+  @return GeometryDrawer (Ptr)
+  */
+  Pointer<GeometryDrawer>& getGeometryDrawer();
+
+  /**
+  @brief Get the batch drawer
+
+  @return BatchDrawer (Ptr)
+  */
+  Pointer<BatchDrawer>& getBatchDrawer();
 
   /// @brief Mesh transformation
   Transform transform;
@@ -94,7 +131,11 @@ protected:
   /// @brief Tint color
   Color _tint;
   /// @brief Current geometry
-  Pointer<geom::BaseGeometry> _geometry;
+  Pointer<Geometry> _geometry;
+  /// @brief Current geometry drawer
+  Pointer<GeometryDrawer> _geoDrawer;
+  /// @brief Current batch drawer
+  Pointer<BatchDrawer> _batchDrawer;
 };
 
 } /* graphics */

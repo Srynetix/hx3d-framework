@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,29 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#pragma once
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 namespace hx3d {
 namespace graphics {
 
+class Shader;
+class Camera;
+
 /**
-@brief Star shape VBO geometry
+@brief Simple base batch implementation. Draw at each draw call.
 */
-class StarGeometry: public Geometry {
+class SimpleBatch: public Batch {
+  HX3D_PTR(SimpleBatch)
 
 public:
-  StarGeometry();
+  SimpleBatch();
+
+  virtual void begin() override;
+  virtual void end() override;
+  virtual void draw(const Pointer<Mesh>& mesh) override;
 };
 
 } /* graphics */
 } /* hx3d */
-
-#endif

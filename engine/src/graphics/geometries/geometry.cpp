@@ -1,5 +1,5 @@
 /*
-    Geometry.
+    Base geometry.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -22,45 +22,55 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
-Geometry::Geometry(): BaseGeometry() {}
-
-void Geometry::draw(const Pointer<Shader>& shader) {
-
-  // Culling
-  switch (_cullingType) {
-    case Culling::Disabled:
-      glDisable(GL_CULL_FACE);
-      break;
-    case Culling::Front:
-      glEnable(GL_CULL_FACE);
-      glCullFace(GL_FRONT);
-      break;
-    case Culling::Back:
-      glEnable(GL_CULL_FACE);
-      glCullFace(GL_BACK);
-      break;
-    default:
-      break;
-  }
-
-  for (auto& a: _attributes) {
-    a.second.begin(shader);
-  }
-
-  if (_indices.size() == 0) {
-    glDrawArrays(GL_TRIANGLES, 0, _attributes["Position"].size());
-  } else {
-    _indices.begin(shader);
-    _indices.end(shader);
-  }
-
-  for (auto& a: _attributes) {
-    a.second.end(shader);
-  }
+Geometry::Geometry(): _cullingType(Culling::Disabled) {
+  addAttribute("Position", Attribute("a_position", GL_FLOAT, 3));
+  addAttribute("Color", Attribute("a_color", GL_FLOAT, 4));
+  addAttribute("Texture", Attribute("a_texture", GL_FLOAT, 2));
+  addAttribute("Normal", Attribute("a_normal", GL_FLOAT, 3));
 }
 
-} /* geom */
+Geometry::~Geometry() {}
+
+void Geometry::addAttribute(std::string name, Attribute attribute) {
+  _attributes[name].create(attribute);
+}
+
+void Geometry::setAttribute(std::string name, std::vector<float> values) {
+  _attributes[name].set(values);
+}
+
+AttributeArrayBuffer& Geometry::getAttribute(std::string name) {
+  return _attributes[name];
+}
+
+std::map<std::string, AttributeArrayBuffer>& Geometry::getAttributes() {
+  return _attributes;
+}
+
+void Geometry::setIndices(std::vector<GLushort> values) {
+  _indices.set(values);
+}
+
+IndexArrayBuffer& Geometry::getIndices() {
+  return _indices;
+}
+
+void Geometry::setFaceCulling(Culling culling) {
+  _cullingType = culling;
+}
+
+Culling& Geometry::getFaceCulling() {
+  return _cullingType;
+}
+
+void Geometry::uploadAll() {
+  for (auto& a: _attributes) {
+    a.second.upload();
+  }
+
+  _indices.upload();
+}
+
 } /* graphics */
 } /* hx3d */

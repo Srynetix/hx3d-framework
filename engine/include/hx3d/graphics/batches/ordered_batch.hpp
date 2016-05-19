@@ -1,5 +1,5 @@
 /*
-    Star model.
+    Ordered Batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,24 +18,33 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#pragma once
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 namespace hx3d {
 namespace graphics {
 
+class Shader;
+class Mesh;
+class Camera;
+
 /**
-@brief Star shape VBO geometry
+@brief Draw ordered meshes and texts on screen.
 */
-class StarGeometry: public Geometry {
+class OrderedBatch: public Batch {
 
 public:
-  StarGeometry();
+  OrderedBatch();
+
+  virtual void begin() override;
+  virtual void end() override;
+  virtual void draw(const Pointer<Mesh>& mesh) override;
+
+private:
+  /// @brief Sorted meshes
+  std::vector<std::pair<glm::mat4, Pointer<Mesh>>> _meshes;
 };
 
 } /* graphics */
 } /* hx3d */
-
-#endif

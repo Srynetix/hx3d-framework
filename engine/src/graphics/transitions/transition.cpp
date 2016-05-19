@@ -1,5 +1,5 @@
 /*
-    Ordered Batch.
+    Screen transition.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,42 +18,53 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_ORDEREDBATCH
-#define HX3D_GRAPHICS_ORDEREDBATCH
-
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/transitions/transition.hpp"
 
 namespace hx3d {
-
 namespace graphics {
 
-class Shader;
-class Camera;
+Transition::Transition(window::Game* game) {
+  _duration = 1.f;
+  _currentTime = 0.f;
+  _running = false;
 
-/**
-@brief Draw ordered meshes and texts on screen.
-*/
-class OrderedBatch: public BaseBatch {
+  _game = game;
+}
 
-public:
-  OrderedBatch();
+void Transition::start() {
+  _currentTime = 0.f;
+  _running = true;
 
-  virtual void begin() override;
-  virtual void end() override;
-  virtual void draw(const Pointer<Mesh>& mesh) override;
-  virtual void draw(const Pointer<gui::Text>& text) override;
-  virtual void draw(const Pointer<gui::Text>& text, math::Function function) override;
+  onStart();
+}
 
-private:
-  /// @brief Sorted mesh
-  std::vector<std::pair<glm::mat4, Pointer<Mesh>>> _meshes;
-  /// @brief Texts
-  std::vector<Pointer<gui::Text>> _texts;
-  /// @brief Function texts
-  std::vector<std::pair<Pointer<gui::Text>, math::Function>> _funcTexts;
-};
+void Transition::reset() {
+  _currentTime = 0.f;
+  _running = false;
+}
+
+void Transition::setDuration(float duration) {
+  _duration = duration;
+}
+
+bool Transition::isFinished() const {
+  return _running && _currentTime >= _duration;
+}
+
+bool Transition::isRunning() const {
+  return _running;
+}
+
+void Transition::update(float delta) {
+  if (_running) {
+    _currentTime += delta;
+    onUpdate(delta);
+  }
+}
+
+void Transition::onDone() {}
+void Transition::onStart() {}
+void Transition::onUpdate(float delta) {}
 
 } /* graphics */
 } /* hx3d */
-
-#endif

@@ -18,10 +18,9 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TRANSITION
-#define HX3D_GRAPHICS_TRANSITION
+#pragma once
 
-#include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
 
 namespace hx3d {
@@ -122,5 +121,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif /* HX3D_GRAPHICS_TRANSITION */

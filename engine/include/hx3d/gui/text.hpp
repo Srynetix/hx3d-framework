@@ -89,12 +89,26 @@ public:
   void setContent(std::string content);
 
   /**
+  @brief Set the math function.
+
+  @param function Math function
+  */
+  void setFunction(math::Function function);
+
+  /**
+  @brief Change function init value.
+
+  @param init Change function init value
+  */
+  void setFunctionInit(float value);
+
+  /**
   @brief Draw the text following a function.
 
   @param shader Shader (Ptr)
   @param function  Function
   */
-  void functionDraw(const Pointer<Shader>& shader, math::Function function);
+  void functionDraw(const Pointer<Shader>& shader);
 
   /**
   @brief Get the text font.
@@ -148,6 +162,8 @@ protected:
   int _characterSize;
   /// @brief Is the text center aligned ?
   bool _centerAligned;
+  /// @brief Math function
+  math::Function _function;
 };
 
 } /* gui */

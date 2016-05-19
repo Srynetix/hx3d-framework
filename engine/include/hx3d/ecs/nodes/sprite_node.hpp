@@ -25,7 +25,7 @@
 
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 namespace hx3d {
 namespace ecs {
@@ -43,7 +43,7 @@ public:
   */
   SpriteNode(std::string name, const Pointer<graphics::Texture>& texture);
 
-  virtual void draw(const Pointer<graphics::BaseBatch>& batch) override;
+  virtual void draw(const Pointer<graphics::Batch>& batch) override;
   virtual void update(float delta) override;
 
 protected:

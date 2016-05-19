@@ -22,7 +22,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 CubeGeometry::CubeGeometry(): Geometry() {
 
@@ -68,6 +67,5 @@ CubeGeometry::CubeGeometry(): Geometry() {
   uploadAll();
 }
 
-} /* geom */
 } /* graphics */
 } /* hx3d */

@@ -1,5 +1,5 @@
 /*
-    Batch.
+    Simple text batch drawer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,35 +18,19 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BATCH
-#define HX3D_GRAPHICS_BATCH
+#pragma once
 
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/drawers/batch_drawer.hpp"
 
 namespace hx3d {
-
 namespace graphics {
 
-class Shader;
-class Camera;
-
-/**
-@brief Simple base batch implementation. Draw at each draw call.
-*/
-class Batch: public BaseBatch {
-  HX3D_PTR(Batch)
-
+class SimpleTextBatchDrawer: public BatchDrawer {
 public:
-  Batch();
+  SimpleTextBatchDrawer();
 
-  virtual void begin() override;
-  virtual void end() override;
-  virtual void draw(const Pointer<Mesh>& mesh) override;
-  virtual void draw(const Pointer<gui::Text>& text) override;
-  virtual void draw(const Pointer<gui::Text>& text, math::Function function) override;
+  virtual void drawWithBatch(Batch* batch, Mesh* mesh) override;
 };
 
 } /* graphics */
 } /* hx3d */
-
-#endif

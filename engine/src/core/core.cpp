@@ -64,8 +64,8 @@ Core* Core::_instance(nullptr);
 
 Core::Core() {
   _assets = new AssetManager();
-  _net = new net::Net();
   _audio = new audio::AudioDevice();
+  _net = new net::Net();
   _events = new window::EventManager();
   _config = new Configuration();
 }

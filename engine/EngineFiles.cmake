@@ -57,16 +57,12 @@ set(
   GRAPHICS_FILES
 
   "${ENGINE_SRC}/graphics/animation.cpp"
-  "${ENGINE_SRC}/graphics/base_batch.cpp"
-  "${ENGINE_SRC}/graphics/batch.cpp"
   "${ENGINE_SRC}/graphics/color.cpp"
   "${ENGINE_SRC}/graphics/error.cpp"
-  "${ENGINE_SRC}/graphics/fade_transition.cpp"
   "${ENGINE_SRC}/graphics/font.cpp"
   "${ENGINE_SRC}/graphics/framebuffer.cpp"
   "${ENGINE_SRC}/graphics/image.cpp"
   "${ENGINE_SRC}/graphics/mesh.cpp"
-  "${ENGINE_SRC}/graphics/ordered_batch.cpp"
   "${ENGINE_SRC}/graphics/particle_emitter.cpp"
   "${ENGINE_SRC}/graphics/particle_manager.cpp"
   "${ENGINE_SRC}/graphics/particle.cpp"
@@ -77,7 +73,19 @@ set(
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/texture.cpp"
   "${ENGINE_SRC}/graphics/transform.cpp"
-  "${ENGINE_SRC}/graphics/transition.cpp"
+
+  "${ENGINE_SRC}/graphics/drawers/geometry_drawer.cpp"
+  "${ENGINE_SRC}/graphics/drawers/batch_drawer.cpp"
+  "${ENGINE_SRC}/graphics/drawers/mesh_drawer.cpp"
+  "${ENGINE_SRC}/graphics/drawers/simple_mesh_batch_drawer.cpp"
+  "${ENGINE_SRC}/graphics/drawers/simple_text_batch_drawer.cpp"
+
+  "${ENGINE_SRC}/graphics/transitions/fade_transition.cpp"
+  "${ENGINE_SRC}/graphics/transitions/transition.cpp"
+
+  "${ENGINE_SRC}/graphics/batches/batch.cpp"
+  "${ENGINE_SRC}/graphics/batches/simple_batch.cpp"
+  "${ENGINE_SRC}/graphics/batches/ordered_batch.cpp"
 
   "${ENGINE_SRC}/graphics/viewports/fit_viewport.cpp"
   "${ENGINE_SRC}/graphics/viewports/viewport.cpp"
@@ -92,7 +100,6 @@ set(
   "${ENGINE_SRC}/graphics/buffers/index_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/multi_array_buffer.cpp"
 
-  "${ENGINE_SRC}/graphics/geometries/base_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/cube_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/origin_geometry.cpp"

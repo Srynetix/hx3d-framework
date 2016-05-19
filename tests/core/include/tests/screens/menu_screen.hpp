@@ -26,12 +26,14 @@
 
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/batch.hpp"
+#include "hx3d/graphics/batches/simple_batch.hpp"
 
 #include "hx3d/graphics/cameras/perspective_camera.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
 
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
+
+#include "hx3d/gui/text.hpp"
 
 #include <functional>
 #include <vector>
@@ -64,7 +66,7 @@ private:
 
   Sprite::Ref logoSprite;
   Sprite::Ref sprite;
-  Batch::Ref batch;
+  SimpleBatch::Ref batch;
 
   gui::Text::Ref text;
   gui::Text::Ref instructions;

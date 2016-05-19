@@ -23,6 +23,9 @@ public:
     text->setContent("Hey !");
     text->transform.position = sprite->transform.position;
     text->transform.position.z = 0.5f;
+    text->setFunction(math::Function(0, 0.5f, [](float& x, float& y, float t) {
+      y = std::sin(t) * 5.f;
+    }));
 
     stencil->enable();
     stencil->setFunction(
@@ -51,6 +54,8 @@ public:
     stencilSprite->transform.scale = glm::vec3(1.f - 0.5f * std::abs(std::sin(glm::radians(angle))));
 
     angle = math::mclamp(angle + 1, 0, 360);
+
+    text->setFunctionInit(Core::App()->getElapsedTime() * 2);
   }
 
   virtual void render() override {
@@ -63,11 +68,8 @@ public:
     stencil->end();
 
     batch->draw(sprite);
-
-    batch->draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
-      y = std::sin(t) * 5.f;
-    }));
-
+    batch->draw(text);
+    
     batch->end();
   }
 
@@ -79,7 +81,7 @@ private:
   Sprite::Ref stencilSprite;
   gui::Text::Ref text;
 
-  Batch::Ref batch;
+  SimpleBatch::Ref batch;
 
   float angle;
 };

@@ -28,7 +28,7 @@ namespace gui {
 Widget::Widget(Widget* parent): Mesh(),
   _parent(parent)
  {
-  _geometry = Make<graphics::geom::Geometry>();
+  _geometry = Make<graphics::Geometry>();
 
   _geometry->setAttribute("Position", std::vector<float> {
     -0.5f, 0.5f, 0.f,

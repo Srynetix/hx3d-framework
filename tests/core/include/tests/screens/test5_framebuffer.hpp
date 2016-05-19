@@ -38,6 +38,9 @@ public:
       Core::App()->getHeight() / 2 - 200,
       0
     );
+    text->setFunction(math::Function(0, 0.5f, [](float& x, float& y, float t) {
+      y = std::sin(t) * 5.f;
+    }));
   }
 
   virtual void update(float delta) override {
@@ -48,6 +51,8 @@ public:
 
     angle = math::mclamp(angle, 0.f, 360.f);
     framebufferSprite->transform.rotation.z = angle;
+
+    text->setFunctionInit(Core::App()->getElapsedTime() * 2);
   }
 
   virtual void render() override {
@@ -57,9 +62,7 @@ public:
 
     batch->begin();
     batch->draw(sprite);
-    batch->draw(text, math::Function(Core::App()->getElapsedTime() * 2, 0.5f, [](float& x, float& y, float t) {
-      y = std::sin(t) * 5.f;
-    }));
+    batch->draw(text);
     batch->end();
 
     Framebuffer::pop();
@@ -89,7 +92,7 @@ private:
 
   gui::Text::Ref text;
 
-  Batch::Ref batch;
+  SimpleBatch::Ref batch;
   Sprite::Ref sprite;
   Sprite::Ref framebufferSprite;
 };

@@ -24,9 +24,9 @@
 #include "hx3d/utils/poolable.hpp"
 #include "hx3d/utils/ptr.hpp"
 
+#include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/batch.hpp"
 
 namespace hx3d {
 namespace graphics {

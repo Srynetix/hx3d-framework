@@ -48,9 +48,38 @@ public:
   Function(float init, float speed, std::function<void(float&, float&, float)> func);
 
   /**
+  @brief Empty function.
+  */
+  Function();
+
+  /**
+  @brief Enable function.
+  */
+  void enable();
+
+  /**
+  @brief Disable function
+  */
+  void disable();
+
+  /**
+  @brief Is the function enabled ?
+
+  @return True/False
+  */
+  bool isEnabled();
+
+  /**
   @brief Reset the function time.
   */
   void reset();
+
+  /**
+  @brief Set init value.
+
+  @param init Init value
+  */
+  void setInit(float init);
 
   /**
   @brief Step the function time.
@@ -71,6 +100,8 @@ private:
   float _speed;
   /// @brief Current time
   float _t;
+  /// @brief Enabled
+  bool _enabled;
 
   /// @brief Function
   std::function<void(float&, float&, float)> _func;

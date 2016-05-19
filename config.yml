@@ -2,10 +2,10 @@
 #####################
 
 # Debug mode
-debug_mode: False
+debug_mode: True
 
 # Compiler and debugger
-cxx_compiler: g++
+cxx_compiler: clang++
 debugger: gdb
 
 # Android configuration
