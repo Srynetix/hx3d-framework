@@ -17,8 +17,15 @@ public:
   BaseTestScreen()
   {}
 
-  virtual void resize(int width, int height) override {
-    Core::Events()->setInputHandler(this);
+  // virtual void resize(int width, int height) override {
+  // }
+
+  virtual void show() override {
+    Core::Events()->registerHandler(this);
+  }
+
+  virtual void hide() override {
+    Core::Events()->unregisterHandler(this);
   }
 
   virtual void onKeyReleased(KeyEvent::Key key) override {

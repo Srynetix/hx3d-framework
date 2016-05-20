@@ -23,15 +23,13 @@
 
 #include <glm/vec2.hpp>
 
-#include "hx3d/utils/log.hpp"
 #include "hx3d/utils/ptr.hpp"
-
 #include "hx3d/window/events.hpp"
+
+#include "hx3d/window/input_multiplexer.hpp"
 
 namespace hx3d {
 namespace window {
-
-class InputHandler;
 
 /**
 @brief Manage real-time inputs
@@ -213,18 +211,23 @@ public:
     void emulateTouchWithMouse(bool value);
 
     /**
-    @brief Define an input handler.
+    @brief Register an input handler
 
-    @param handler Input handler (Raw ptr)
+    @param handler Handler
     */
-    void setInputHandler(InputHandler* handler);
+    void registerHandler(InputHandler* handler);
 
     /**
-    @brief Define an input handler.
+    @brief Unregister an input handler
 
-    @param handler Input handler (Ptr)
+    @param handler Handler
     */
-    void setInputHandler(Pointer<InputHandler> handler);
+    void unregisterHandler(InputHandler* handler);
+
+    /**
+    @brief Clear handlers
+    */
+    void clearHandlers();
 
   protected:
     /// @brief Keys released
@@ -265,7 +268,7 @@ public:
     bool _touchSimulation;
 
     /// @brief Current input handler
-    InputHandler* _currentHandler;
+    Pointer<InputMultiplexer> _currentHandler;
 };
 
 } /* window */

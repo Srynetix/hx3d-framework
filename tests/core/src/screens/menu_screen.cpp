@@ -12,7 +12,7 @@ Screens list.
 */
 #include "tests/screens/test1_simple3d.hpp"
 #include "tests/screens/test2_simple3d2.hpp"
-// #include "tests/screens/test3_simple2d.hpp"
+#include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
 #include "tests/screens/test5_framebuffer.hpp"
 // #include "tests/screens/test6_fastbatch.hpp"
@@ -23,7 +23,7 @@ Screens list.
 // #include "tests/screens/test11_tweening.hpp"
 // #include "tests/screens/test12_particles.hpp"
 // #include "tests/screens/test13_gravity.hpp"
-// #include "tests/screens/test14_buffertest.hpp"
+#include "tests/screens/test14_buffertest.hpp"
 // #include "tests/screens/test15_timers.hpp"
 // #include "tests/screens/test16_basicshading.hpp"
 // #include "tests/screens/test17_physics_1.hpp"
@@ -60,18 +60,18 @@ MenuScreen::MenuScreen():
   screens = std::vector<ScreenInfo> {
     {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
     {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
-    // {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
+    {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
     // {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
     {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
     // {"Fast Batch 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
     // {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
     // {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
     // {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}},
-    {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}}
+    {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
     // {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
     // {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
     // {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
-    // {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}},
+    {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}}
     // {"Timers", [](){Core::CurrentGame()->setScreen(Make<Test15>());}},
     // {"Basic Shading", [](){Core::CurrentGame()->setScreen(Make<Test16>());}},
     // {"Physics 1", [](){Core::CurrentGame()->setScreen(Make<Test17>());}},
@@ -83,8 +83,12 @@ MenuScreen::MenuScreen():
   text->setCharacterSize(16);
 }
 
-void MenuScreen::resize(int width, int height) {
-  Core::Events()->setInputHandler(this);
+void MenuScreen::show() {
+  Core::Events()->registerHandler(this);
+}
+
+void MenuScreen::hide() {
+  Core::Events()->unregisterHandler(this);
 }
 
 void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {

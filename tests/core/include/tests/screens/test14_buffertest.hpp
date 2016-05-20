@@ -4,9 +4,11 @@
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/geometries/cube_geometry.hpp"
 
+#include "hx3d/math/random.hpp"
+
 using namespace hx3d;
 
-class SGeo: public geom::Geometry {
+class SGeo: public Geometry {
 public:
   SGeo(unsigned int tris) {
     std::vector<float> positions;
@@ -124,9 +126,9 @@ struct RollMovement: public InputHandler {
     }
   }
 
-  void updateCamera(float delta, Camera& camera) {
-    camera.rotateAround({0, 0, 0}, glm::degrees(movement_x / 250.f), {0, 1, 0});
-    camera.update();
+  void updateCamera(float delta, const Pointer<Camera>& camera) {
+    camera->rotateAround({0, 0, 0}, glm::degrees(movement_x / 250.f), {0, 1, 0});
+    camera->update();
 
     float dt = 0.5f;
     movement_x += movement_x > 0 ? -dt : dt;
@@ -139,29 +141,33 @@ struct RollMovement: public InputHandler {
 class Test14: public BaseTestScreen {
 public:
   Test14():
-    camera(0.1f, 3500.f),
-    fps(Core::Assets()->get<Font>("default"))
+    camera(0.1f, 3500.f)
   {
-    camera.translate(glm::vec3(0.f, 0.f, -1000.f));
-    camera.rotate(180.f, glm::vec3(0, 1, 0));
-    camera.update();
+    camera->translate(glm::vec3(0.f, 0.f, -1000.f));
+    camera->rotate(180.f, glm::vec3(0, 1, 0));
+    camera->update();
 
-    mesh.setGeometry(Make<SGeo>(16000));
-    mesh.transform.size = glm::vec3(2);
-    mesh.transform.position = glm::vec3(0);
+    mesh->setGeometry(Make<SGeo>(16000));
+    mesh->transform.size = glm::vec3(2);
+    mesh->transform.position = glm::vec3(0);
 
-    batch.setShader(Core::Assets()->get<Shader>("base"));
-    batch.setCamera(camera);
+    batch->setCamera(camera);
 
-    fps.setContent("FPS: ");
-    fps.transform.position.x = -2000;
-    fps.transform.position.y = 0;
-    fps.transform.position.z = 0.5f;
-    fps.transform.size = glm::vec3(1);
+    fps->setContent("FPS: ");
+    fps->transform.position.x = -2000;
+    fps->transform.position.y = 0;
+    fps->transform.position.z = 0.5f;
+    fps->transform.size = glm::vec3(1);
   }
 
   virtual void show() override {
-    Core::Events()->setInputHandler(this);
+    BaseTestScreen::show();
+    Core::Events()->registerHandler(&ballMovement);
+  }
+
+  virtual void hide() override {
+    BaseTestScreen::hide();
+    Core::Events()->unregisterHandler(&ballMovement);
   }
 
   virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override {
@@ -178,24 +184,24 @@ public:
 
   virtual void update(float delta) override {
     ballMovement.updateCamera(delta, camera);
-    fps.setContent(format("FPS: %2.2f", 1.f/delta));
+    fps->setContent(format("FPS: %2.2f", 1.f/delta));
   }
 
   virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
-    batch.begin();
-    batch.draw(mesh);
-    batch.draw(fps);
-    batch.end();
+    batch->begin();
+    batch->draw(mesh);
+    batch->draw(fps);
+    batch->end();
   }
 
 private:
   RollMovement ballMovement;
-  PerspectiveCamera camera;
-  Mesh mesh;
+  PerspectiveCamera::Ref camera;
+  Mesh::Ref mesh;
 
-  gui::Text fps;
+  gui::Text::Ref fps;
 
-  Batch batch;
+  SimpleBatch::Ref batch;
 };

@@ -201,7 +201,7 @@ void Game::stop() {
 
 void Game::setScreen(const Pointer<Screen>& screen) {
 
-  Core::Events()->setInputHandler(nullptr);
+  // Core::Events()->clearHandlers();
   auto size = Core::App()->getSize();
 
   if (screen) {

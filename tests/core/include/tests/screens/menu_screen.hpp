@@ -54,7 +54,9 @@ public:
 
   virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override;
 
-  virtual void resize(int width, int height) override;
+  virtual void show() override;
+  virtual void hide() override;
+
   virtual void update(float delta) override;
   virtual void render() override;
 

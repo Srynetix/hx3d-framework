@@ -24,6 +24,7 @@ set(
   "${ENGINE_SRC}/window/event_manager.cpp"
   "${ENGINE_SRC}/window/game.cpp"
   "${ENGINE_SRC}/window/input_handler.cpp"
+  "${ENGINE_SRC}/window/input_multiplexer.cpp"
   "${ENGINE_SRC}/window/screen.cpp"
 )
 

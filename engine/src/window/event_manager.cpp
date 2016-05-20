@@ -23,6 +23,8 @@
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/game.hpp"
 #include "hx3d/window/application.hpp"
+#include "hx3d/window/input_multiplexer.hpp"
+#include "hx3d/window/input_handler.hpp"
 
 namespace hx3d {
 namespace window {
@@ -42,7 +44,7 @@ EventManager::EventManager() {
   _touchPressure = 0.f;
 
   _touchSimulation = false;
-  _currentHandler = nullptr;
+  _currentHandler = Make<InputMultiplexer>();
 }
 
 EventManager::~EventManager() {
@@ -190,12 +192,16 @@ void EventManager::emulateTouchWithMouse(bool value) {
   _touchSimulation = value;
 }
 
-void EventManager::setInputHandler(Pointer<InputHandler> handler) {
-  _currentHandler = handler.get();
+void EventManager::registerHandler(InputHandler* handler) {
+  _currentHandler->registerInput(handler);
 }
 
-void EventManager::setInputHandler(InputHandler* handler) {
-  _currentHandler = handler;
+void EventManager::unregisterHandler(InputHandler* handler) {
+  _currentHandler->unregisterInput(handler);
+}
+
+void EventManager::clearHandlers() {
+  _currentHandler->clearInputs();
 }
 
 } /* window */
