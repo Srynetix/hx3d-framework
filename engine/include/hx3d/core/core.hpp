@@ -18,8 +18,9 @@
     USA
 */
 
-#ifndef HX3D_CORE_CORE
-#define HX3D_CORE_CORE
+#pragma once
+
+#include "hx3d/utils/ptr.hpp"
 
 /**
   @brief hx3d framework namespace
@@ -82,42 +83,42 @@ public:
 
   @return Game
   */
-  static window::Game* CurrentGame();
+  static Pointer<window::Game>& CurrentGame();
 
   /**
   @brief Get the asset manager.
 
   @return Asset manager
   */
-  static AssetManager* Assets();
+  static Pointer<AssetManager>& Assets();
 
   /**
   @brief Get the event manager.
 
   @return Event manager
   */
-  static window::EventManager* Events();
+  static Pointer<window::EventManager>& Events();
 
   /**
   @brief Get the net instance.
 
   @return Net
   */
-  static net::Net* Network();
+  static Pointer<net::Net>& Network();
 
   /**
   @brief Get the audio device instance.
 
   @return Audio
   */
-  static audio::AudioDevice* Audio();
+  static Pointer<audio::AudioDevice>& Audio();
 
   /**
   @brief Get the configuration instance.
 
   @return Config
   */
-  static Configuration* Config();
+  static Pointer<Configuration>& Config();
 
   /**
   @brief Initialize the core system.
@@ -131,7 +132,7 @@ public:
 
   @param game   Game (Ptr)
   */
-  static void setGame(window::Game* game);
+  static void setGame(const Pointer<window::Game>& game);
 
   /**
   @brief Shutdown the core system.
@@ -160,19 +161,17 @@ private:
   /// @brief Current application
   window::Application* _application;
   /// @brief Current game
-  window::Game* _game;
+  Pointer<window::Game> _game;
   /// @brief Current asset manager
-  AssetManager* _assets;
+  Pointer<AssetManager> _assets;
   /// @brief Current event manager
-  window::EventManager* _events;
+  Pointer<window::EventManager> _events;
   /// @brief Current net device
-  net::Net* _net;
+  Pointer<net::Net> _net;
   /// @brief Current audio device
-  audio::AudioDevice* _audio;
+  Pointer<audio::AudioDevice> _audio;
   /// @brief Configuration
-  Configuration* _config;
+  Pointer<Configuration> _config;
 };
 
 } /* hx3d */
-
-#endif

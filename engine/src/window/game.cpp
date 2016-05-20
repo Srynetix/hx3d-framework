@@ -115,7 +115,6 @@ void Game::render() {
   else {
     if (_currentTransition) {
       if (_currentTransition->isFinished()) {
-        _screen->hide();
         _screen->dispose();
         _screen = _nextScreen;
         _screen->resume();
@@ -146,7 +145,7 @@ void Game::render() {
     else {
       _screen->hide();
       _screen = _nextScreen;
-      _screen->resume();
+      _screen->show();
       _nextScreen = nullptr;
 
       _screen->render();
@@ -200,8 +199,6 @@ void Game::stop() {
 }
 
 void Game::setScreen(const Pointer<Screen>& screen) {
-
-  // Core::Events()->clearHandlers();
   auto size = Core::App()->getSize();
 
   if (screen) {
@@ -212,7 +209,7 @@ void Game::setScreen(const Pointer<Screen>& screen) {
       _screen = screen;
     } else {
       _nextScreen = screen;
-      _screen->pause();
+      _screen->hide();
       _nextScreen->pause();
 
       if (_currentTransition) {

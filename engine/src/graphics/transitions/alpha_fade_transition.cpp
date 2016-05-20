@@ -1,5 +1,5 @@
 /*
-    Fade screen transition.
+    Alpha fade screen transition.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -16,9 +16,11 @@
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
+
+    TODO: FIX !
 */
 
-#include "hx3d/graphics/transitions/fade_transition.hpp"
+#include "hx3d/graphics/transitions/alpha_fade_transition.hpp"
 
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/core/core.hpp"
@@ -28,11 +30,9 @@
 namespace hx3d {
 namespace graphics {
 
-FadeTransition::FadeTransition(window::Game* game, Color color): Transition(game) {
-  _color = color;
-}
+AlphaFadeTransition::AlphaFadeTransition(window::Game* game): Transition(game) {}
 
-void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) {
+void AlphaFadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) {
   _currentSprite->setTexture(currentFB);
   _nextSprite->setTexture(nextFB);
 
@@ -45,31 +45,24 @@ void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuff
   _nextSprite->transform.position.y = world_size.y / 2;
   _nextSprite->transform.rotation.z = glm::radians(180.f);
 
-  int alpha = (_currentTime / (_duration/2.f)) * 255;
-  if (_currentTime > _duration / 2) {
-    _nextSprite->setTint(Color(255, 255, 255, alpha));
-    Framebuffer::clear(_color);
-    batch->begin();
-    batch->draw(_nextSprite);
-    batch->end();
-  }
+  // int alpha = (_currentTime / _duration) * 255;
+  _nextSprite->setTint(Color(255, 255, 255, 255));
+  _currentSprite->setTint(Color(255, 255, 255, 255));
 
-  else {
-    _currentSprite->setTint(Color(255, 255, 255, 255 - alpha));
-    Framebuffer::clear(_color);
-    batch->begin();
-    batch->draw(_currentSprite);
-    batch->end();
-  }
+  Framebuffer::clear(Color::Black);
+  batch->begin();
+  batch->draw(_nextSprite);
+  batch->draw(_currentSprite);
+  batch->end();
 }
 
-void FadeTransition::onUpdate(float delta) {
+void AlphaFadeTransition::onUpdate(float delta) {
 }
 
-void FadeTransition::onStart() {
+void AlphaFadeTransition::onStart() {
 }
 
-void FadeTransition::onDone() {
+void AlphaFadeTransition::onDone() {
 
 }
 

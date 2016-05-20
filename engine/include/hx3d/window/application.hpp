@@ -93,6 +93,13 @@ public:
   float getFPS();
 
   /**
+  @brief Get the current delta time;
+
+  @return Delta time
+  */
+  float getDeltaTime();
+
+  /**
   @brief Get the elapsed time in seconds since the application start.
   Reset after one hour.
 
@@ -122,6 +129,8 @@ protected:
   float _currentFPS;
   /// @brief Elapsed time since the beginning
   float _elapsedTime;
+  /// @brief Delta time
+  float _deltaTime;
 
 #ifdef HX3D_WINDOW_APPLICATION_INJECTION
   HX3D_WINDOW_APPLICATION_INJECTION

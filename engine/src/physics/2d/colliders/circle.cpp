@@ -4,7 +4,6 @@
 
 namespace hx3d {
 namespace physics2d {
-namespace colliders {
 
 Circle::Circle(float radius, const Type colliderType):
     Collider(Shape::Circle, colliderType),
@@ -24,6 +23,5 @@ void Circle::computeMass(float density) {
   massData.setInertia(inertia);
 }
 
-} /* colliders */
 } /* physics2d */
 } /* hx3d */

@@ -1,5 +1,5 @@
 /*
-    2D circle collider.
+    Alpha fade screen transition.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,35 +18,32 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLIDERS_CIRCLE
-#define HX3D_PHYSICS_2D_COLLIDERS_CIRCLE
+#pragma once
 
-#include "hx3d/physics/2d/collider.hpp"
+#include "hx3d/graphics/transitions/transition.hpp"
+#include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
-namespace physics2d {
+namespace graphics {
 
 /**
-@brief Circle shaped collider
+@brief Alpha fading transition.
 */
-struct Circle: public Collider {
-
+class AlphaFadeTransition: public Transition {
+public:
   /**
-  @brief Create a circle
+  @brief Create a fading transition
 
-  @param radius       Radius
-  @param colliderType Collider type
+  @param game   Game (Raw ptr)
   */
-  Circle(float radius, const Type colliderType = Type::Dynamic);
+  AlphaFadeTransition(window::Game* game);
 
-  virtual void setOrientation(float angle) override;
-  virtual void computeMass(float density) override;
+  virtual void render(const Pointer<Batch>& batch, const Pointer<Framebuffer>& currentFB, const Pointer<Framebuffer>& nextFB) override;
 
-  /// @brief Radius
-  float radius;
+  virtual void onUpdate(float delta) override;
+  virtual void onDone() override;
+  virtual void onStart() override;
 };
 
-} /* physics2d */
+} /* graphics */
 } /* hx3d */
-
-#endif

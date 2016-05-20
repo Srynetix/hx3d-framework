@@ -39,6 +39,10 @@ float Application::getFPS() {
   return _currentFPS;
 }
 
+float Application::getDeltaTime() {
+  return _deltaTime;
+}
+
 float Application::getElapsedTime() {
   return _elapsedTime;
 }

@@ -82,6 +82,7 @@ set(
   "${ENGINE_SRC}/graphics/drawers/simple_text_batch_drawer.cpp"
 
   "${ENGINE_SRC}/graphics/transitions/fade_transition.cpp"
+  "${ENGINE_SRC}/graphics/transitions/alpha_fade_transition.cpp"
   "${ENGINE_SRC}/graphics/transitions/transition.cpp"
 
   "${ENGINE_SRC}/graphics/batches/batch.cpp"

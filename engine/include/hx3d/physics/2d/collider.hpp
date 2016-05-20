@@ -39,6 +39,7 @@ struct Attractor;
 */
 class Collider {
 public:
+  HX3D_ONLY_PTR(Collider)
 
   /**
   @brief Collider type

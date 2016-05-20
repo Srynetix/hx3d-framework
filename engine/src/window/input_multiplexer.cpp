@@ -20,6 +20,8 @@
 
 #include "hx3d/window/input_multiplexer.hpp"
 
+#include "hx3d/utils/log.hpp"
+
 namespace hx3d {
 namespace window {
 
@@ -27,6 +29,7 @@ InputMultiplexer::InputMultiplexer() {}
 
 void InputMultiplexer::registerInput(InputHandler* handler) {
   if (std::find(_handlers.begin(), _handlers.end(), handler) == _handlers.end()) {
+    Log.Debug("Registering input handler %p", handler);
     _handlers.push_back(handler);
   }
 }
@@ -34,6 +37,7 @@ void InputMultiplexer::registerInput(InputHandler* handler) {
 void InputMultiplexer::unregisterInput(InputHandler* handler) {
   auto pos = std::find(_handlers.begin(), _handlers.end(), handler);
   if (pos != _handlers.end()) {
+    Log.Debug("Unregistering input handler %p", handler);
     _handlers.erase(pos);
   }
 }

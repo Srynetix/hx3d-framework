@@ -22,6 +22,7 @@
 
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/sprite.hpp"
 
 namespace hx3d {
 
@@ -117,6 +118,12 @@ protected:
   bool _running;
   /// @brief Current game
   window::Game* _game;
+
+  /// @brief Current sprite
+  PrivateReference<Sprite> _currentSprite;
+  /// @brief Next sprite
+  PrivateReference<Sprite> _nextSprite;
+
 };
 
 } /* graphics */

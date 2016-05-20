@@ -51,6 +51,8 @@ namespace physics2d {
 @brief Physical world. Manages colliders and attractors.
 */
 class World {
+  HX3D_PTR(World)
+  
 public:
   /**
   @brief Create a world with a global gravity, iterations and the physical ratio.

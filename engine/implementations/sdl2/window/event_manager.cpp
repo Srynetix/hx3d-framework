@@ -241,6 +241,18 @@ void EventManager::poll() {
         case SDLK_z:
           key = KeyEvent::Key::Z;
           break;
+        case SDLK_UP:
+          key = KeyEvent::Key::Up;
+          break;
+        case SDLK_DOWN:
+          key = KeyEvent::Key::Down;
+          break;
+        case SDLK_LEFT:
+          key = KeyEvent::Key::Left;
+          break;
+        case SDLK_RIGHT:
+          key = KeyEvent::Key::Right;
+          break;
         case SDLK_SPACE:
           key = KeyEvent::Key::Space;
           break;

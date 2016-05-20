@@ -8,6 +8,7 @@
 #include "hx3d/window/event_manager.hpp"
 
 #include "hx3d/graphics/transitions/fade_transition.hpp"
+#include "hx3d/graphics/transitions/alpha_fade_transition.hpp"
 #include "hx3d/graphics/shader.hpp"
 
 using namespace hx3d;

@@ -56,7 +56,7 @@ Application::Application():
   _running(false),
   _width(800), _height(600), _fpsLimit(60), _title("hx3d"),
   _fullscreen(false),
-  _elapsedTime(0)
+  _elapsedTime(0), _deltaTime(0)
   {
     Core::initialize(this);
     srand(time(0));
@@ -160,8 +160,8 @@ Application::Application():
 
 Application::~Application() {
 
-  Core::shutdown();
   _game.reset();
+  Core::shutdown();
 
   if (_window) {
     SDL_DestroyWindow(_window);
@@ -183,13 +183,12 @@ Application::~Application() {
 void Application::start(const Pointer<Game>& game) {
   _game = game;
 
-  Core::setGame(_game.get());
+  Core::setGame(_game);
   _game->create();
 
   Uint32 frameTime = 0;
   Uint32 frameStart;
   Uint32 frameEnd;
-  float deltaTime = 0.f;
 
   _running = true;
   while (_running) {
@@ -200,7 +199,7 @@ void Application::start(const Pointer<Game>& game) {
     if (Core::Events()->isWindowState(WindowEvent::Type::Closed)) {
       _game->stop();
     } else {
-      _game->update(deltaTime);
+      _game->update(_deltaTime);
     }
 
     if (!_game->isRunning())
@@ -216,10 +215,10 @@ void Application::start(const Pointer<Game>& game) {
 
     frameEnd = SDL_GetTicks();
     frameTime = frameEnd - frameStart;
-    deltaTime = frameTime / 1000.f;
 
-    _currentFPS = 1.f / deltaTime;
-    _elapsedTime = math::mclamp(_elapsedTime + deltaTime, 0.f, 3600.f);
+    _deltaTime = frameTime / 1000.f;
+    _currentFPS = 1.f / _deltaTime;
+    _elapsedTime = math::mclamp(_elapsedTime + _deltaTime, 0.f, 3600.f);
   }
 }
 

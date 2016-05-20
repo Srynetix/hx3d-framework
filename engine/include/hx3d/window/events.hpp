@@ -54,6 +54,7 @@ namespace window {
       K, L, M, N, O,
       P, Q, R, S, T,
       U, V, W, X, Y, Z,
+      Left, Right, Up, Down,
       Space, Escape, Return,
       AndroidBack, AndroidMenu,
       None

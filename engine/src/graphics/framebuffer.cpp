@@ -51,7 +51,7 @@ Framebuffer::~Framebuffer() {
   if (glIsRenderbuffer(_depthBuffer) == GL_TRUE)
     glDeleteRenderbuffers(1, &_depthBuffer);
 
-  Log.Info("FBO deleted");
+  Log.Debug("FBO %p deleted", this);
 }
 
 void Framebuffer::resize(unsigned int width, unsigned int height) {
@@ -84,10 +84,10 @@ void Framebuffer::create() {
       glDeleteFramebuffers(1, &_id);
       glDeleteRenderbuffers(1, &_depthBuffer);
 
-      Log.Error("FBO Error.");
+      Log.Error("FBO creation Error.");
     }
     else {
-      Log.Info(format("FBO created (size: %dx%d).", _width, _height));
+      Log.Debug("FBO %p created (size: %dx%d).", this, _width, _height);
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
