@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/window/impl/sdl2/event_manager.hpp"
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/application.hpp"

@@ -1,5 +1,5 @@
 /*
-    Event manager.
+    Music management.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,10 +18,14 @@
     USA
 */
 
-#pragma once
+#include "hx3d/audio/i_music.hpp"
 
-#if SDL2_WINDOW_PROVIDER
-  #include "hx3d/window/impl/sdl2/event_manager.hpp"
-#else
-  #include "hx3d/window/impl/dummy/event_manager.hpp"
-#endif
+namespace hx3d {
+namespace audio {
+
+IMusic::IMusic() {}
+IMusic::IMusic(const std::string pathToFile) {}
+IMusic::~IMusic() {}
+
+} /* audio */
+} /* hx3d */

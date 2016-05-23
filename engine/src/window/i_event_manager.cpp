@@ -18,7 +18,7 @@
     USA
 */
 
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/window/i_event_manager.hpp"
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/game.hpp"
@@ -29,7 +29,7 @@
 namespace hx3d {
 namespace window {
 
-EventManager::EventManager() {
+IEventManager::IEventManager() {
   _keysPressed = new bool[static_cast<unsigned int>(KeyEvent::Key::None) + 1]{false};
   _keysReleased = new bool[static_cast<unsigned int>(KeyEvent::Key::None) + 1]{false};
 
@@ -47,7 +47,7 @@ EventManager::EventManager() {
   _currentHandler = Make<InputMultiplexer>();
 }
 
-EventManager::~EventManager() {
+IEventManager::~IEventManager() {
   delete[] _keysPressed;
   delete[] _keysReleased;
 
@@ -58,7 +58,7 @@ EventManager::~EventManager() {
   delete[] _windowEvents;
 }
 
-bool EventManager::isWindowState(WindowEvent::Type type) {
+bool IEventManager::isWindowState(WindowEvent::Type type) {
   unsigned int position = static_cast<unsigned int>(type);
   bool value = _windowEvents[position];
   if (value)
@@ -67,17 +67,17 @@ bool EventManager::isWindowState(WindowEvent::Type type) {
   return value;
 }
 
-bool EventManager::isMouseButtonClicked(MouseButtonEvent::Button button) {
+bool IEventManager::isMouseButtonClicked(MouseButtonEvent::Button button) {
   unsigned int position = static_cast<unsigned int>(button);
   return _mouseButtonClicked[position];
 }
 
-bool EventManager::isMouseButtonReleased(MouseButtonEvent::Button button) {
+bool IEventManager::isMouseButtonReleased(MouseButtonEvent::Button button) {
   unsigned int position = static_cast<unsigned int>(button);
   return _mouseButtonReleased[position];
 }
 
-bool EventManager::isMouseButtonJustClicked(MouseButtonEvent::Button button) {
+bool IEventManager::isMouseButtonJustClicked(MouseButtonEvent::Button button) {
   unsigned int position = static_cast<unsigned int>(button);
   bool value = _mouseButtonClicked[position];
   if (value)
@@ -86,7 +86,7 @@ bool EventManager::isMouseButtonJustClicked(MouseButtonEvent::Button button) {
   return value;
 }
 
-bool EventManager::isMouseButtonJustReleased(MouseButtonEvent::Button button) {
+bool IEventManager::isMouseButtonJustReleased(MouseButtonEvent::Button button) {
   unsigned int position = static_cast<unsigned int>(button);
   bool value = _mouseButtonReleased[position];
   if (value)
@@ -95,7 +95,7 @@ bool EventManager::isMouseButtonJustReleased(MouseButtonEvent::Button button) {
   return value;
 }
 
-bool EventManager::isMouseWheelTurned(MouseWheelEvent::Direction direction) {
+bool IEventManager::isMouseWheelTurned(MouseWheelEvent::Direction direction) {
   unsigned int position = static_cast<unsigned int>(direction);
   bool value = _mouseWheelTurned[position];
   if (value)
@@ -104,15 +104,15 @@ bool EventManager::isMouseWheelTurned(MouseWheelEvent::Direction direction) {
   return value;
 }
 
-bool EventManager::isScreenTouched() {
+bool IEventManager::isScreenTouched() {
   return _screenTouched;
 }
 
-bool EventManager::isScreenReleased() {
+bool IEventManager::isScreenReleased() {
   return _screenReleased;
 }
 
-bool EventManager::isScreenJustTouched() {
+bool IEventManager::isScreenJustTouched() {
   bool value = _screenTouched;
   if (value)
     _screenTouched = false;
@@ -120,7 +120,7 @@ bool EventManager::isScreenJustTouched() {
   return value;
 }
 
-bool EventManager::isScreenJustReleased() {
+bool IEventManager::isScreenJustReleased() {
   bool value = _screenReleased;
   if (value)
     _screenReleased = false;
@@ -128,17 +128,17 @@ bool EventManager::isScreenJustReleased() {
   return value;
 }
 
-bool EventManager::isKeyPressed(KeyEvent::Key key) {
+bool IEventManager::isKeyPressed(KeyEvent::Key key) {
   unsigned int position = static_cast<unsigned int>(key);
   return _keysPressed[position];
 }
 
-bool EventManager::isKeyReleased(KeyEvent::Key key) {
+bool IEventManager::isKeyReleased(KeyEvent::Key key) {
   unsigned int position = static_cast<unsigned int>(key);
   return _keysReleased[position];
 }
 
-bool EventManager::isKeyJustPressed(KeyEvent::Key key) {
+bool IEventManager::isKeyJustPressed(KeyEvent::Key key) {
   unsigned int position = static_cast<unsigned int>(key);
   bool value = _keysPressed[position];
   if (value)
@@ -147,7 +147,7 @@ bool EventManager::isKeyJustPressed(KeyEvent::Key key) {
   return value;
 }
 
-bool EventManager::isKeyJustReleased(KeyEvent::Key key) {
+bool IEventManager::isKeyJustReleased(KeyEvent::Key key) {
   unsigned int position = static_cast<unsigned int>(key);
   bool value = _keysReleased[position];
   if (value)
@@ -156,23 +156,23 @@ bool EventManager::isKeyJustReleased(KeyEvent::Key key) {
   return value;
 }
 
-glm::vec2 EventManager::getMousePosition() {
+glm::vec2 IEventManager::getMousePosition() {
   return _mousePosition;
 }
 
-glm::vec2 EventManager::getMouseMovement() {
+glm::vec2 IEventManager::getMouseMovement() {
   return _mouseMovement;
 }
 
-glm::vec2 EventManager::getMouseWheelMovement() {
+glm::vec2 IEventManager::getMouseWheelMovement() {
   return _mouseWheelMovement;
 }
 
-glm::vec2 EventManager::getTouchPosition() {
+glm::vec2 IEventManager::getTouchPosition() {
   return _touchPosition;
 }
 
-glm::vec2 EventManager::getScreenConvertedTouchPosition() {
+glm::vec2 IEventManager::getScreenConvertedTouchPosition() {
   auto screen_size = Core::App()->getSize();
   auto viewport = Core::CurrentGame()->getViewport();
   glm::vec2 pos = {_touchPosition.x * screen_size.x, (1-_touchPosition.y) * screen_size.y};
@@ -180,27 +180,27 @@ glm::vec2 EventManager::getScreenConvertedTouchPosition() {
   return (viewport ? viewport->screenToWorld(pos) : pos);
 }
 
-glm::vec2 EventManager::getTouchMovement() {
+glm::vec2 IEventManager::getTouchMovement() {
   return _touchMovement;
 }
 
-float EventManager::getTouchPressure() {
+float IEventManager::getTouchPressure() {
   return _touchPressure;
 }
 
-void EventManager::emulateTouchWithMouse(bool value) {
+void IEventManager::emulateTouchWithMouse(bool value) {
   _touchSimulation = value;
 }
 
-void EventManager::registerHandler(InputHandler* handler) {
+void IEventManager::registerHandler(InputHandler* handler) {
   _currentHandler->registerInput(handler);
 }
 
-void EventManager::unregisterHandler(InputHandler* handler) {
+void IEventManager::unregisterHandler(InputHandler* handler) {
   _currentHandler->unregisterInput(handler);
 }
 
-void EventManager::clearHandlers() {
+void IEventManager::clearHandlers() {
   _currentHandler->clearInputs();
 }
 

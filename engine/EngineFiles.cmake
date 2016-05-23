@@ -7,10 +7,11 @@ set(
 set(
   AUDIO_FILES
 
+  "${ENGINE_SRC}/audio/i_music.cpp"
+
   "${ENGINE_SRC}/audio/audio.cpp"
   "${ENGINE_SRC}/audio/effect.cpp"
   "${ENGINE_SRC}/audio/fft.cpp"
-  "${ENGINE_SRC}/audio/music.cpp"
   "${ENGINE_SRC}/audio/display.cpp"
   "${ENGINE_SRC}/audio/display/spectrum.cpp"
   "${ENGINE_SRC}/audio/display/waveform.cpp"
@@ -20,8 +21,9 @@ set(
 set(
   WINDOW_FILES
 
-  "${ENGINE_SRC}/window/application.cpp"
-  "${ENGINE_SRC}/window/event_manager.cpp"
+  "${ENGINE_SRC}/window/i_application.cpp"
+  "${ENGINE_SRC}/window/i_event_manager.cpp"
+
   "${ENGINE_SRC}/window/game.cpp"
   "${ENGINE_SRC}/window/input_handler.cpp"
   "${ENGINE_SRC}/window/input_multiplexer.cpp"

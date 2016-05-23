@@ -1,5 +1,5 @@
 /*
-    Music management.
+    SDL2 Application.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,10 +18,25 @@
     USA
 */
 
-#include "hx3d/audio/music.hpp"
+#pragma once
+
+#include "hx3d/window/i_application.hpp"
+#include <SDL2/SDL.h>
 
 namespace hx3d {
-namespace audio {
+namespace window {
 
-} /* audio */
+class Application: public IApplication {
+public:
+  Application();
+  ~Application();
+
+  virtual void start(const Pointer<Game>& game) override;
+
+private:
+  SDL_Window* _window;
+  SDL_GLContext _context;
+};
+
+} /* window */
 } /* hx3d */

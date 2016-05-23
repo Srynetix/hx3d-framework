@@ -13,6 +13,17 @@ if (NOT DEFINED WINDOW_PROVIDER)
   set(WINDOW_PROVIDER "SDL2")
 endif()
 
+
+if (WINDOW_PROVIDER STREQUAL "SDL2")
+  add_definitions(-DSDL2_WINDOW_PROVIDER)
+elseif (WINDOW_PROVIDER STREQUAL "Dummy")
+  add_definitions(-DDUMMY_WINDOW_PROVIDER)
+endif()
+
+if (AUDIO_PROVIDER STREQUAL "SDL2")
+  add_definitions(-DSDL2_AUDIO_PROVIDER)
+endif()
+
 set(CMAKE_BUILD_TYPE "Debug")
 
 ## Flags C++

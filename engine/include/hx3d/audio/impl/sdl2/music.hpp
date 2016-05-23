@@ -1,5 +1,5 @@
 /*
-    Event manager.
+    SDL2 mixer music management.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,10 +18,29 @@
     USA
 */
 
-#pragma once
+#include <SDL2/SDL_mixer.h>
 
-#if SDL2_WINDOW_PROVIDER
-  #include "hx3d/window/impl/sdl2/event_manager.hpp"
-#else
-  #include "hx3d/window/impl/dummy/event_manager.hpp"
-#endif
+#include "hx3d/audio/i_music.hpp"
+#include "hx3d/utils/file.hpp"
+
+namespace hx3d {
+namespace audio {
+
+class Music: public IMusic {
+public:
+  Music();
+  Music(const std::string pathToFile);
+  virtual ~Music();
+
+  virtual void initialize(const std::string pathToFile) override;
+  virtual void play() override;
+  virtual void stop() override;
+  virtual bool isPlaying() override;
+
+private:
+  Pointer<File> _file;
+  Mix_Music* _music;
+};
+
+} /* audio */
+} /* hx3d */

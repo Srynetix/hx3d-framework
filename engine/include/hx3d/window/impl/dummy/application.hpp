@@ -1,5 +1,5 @@
 /*
-    Application management.
+    Dummy Application Implementation.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,34 +18,23 @@
     USA
 */
 
-#include "hx3d/window/application.hpp"
+#pragma once
+
+#include "hx3d/window/i_application.hpp"
 
 namespace hx3d {
 namespace window {
 
-int Application::getWidth() {
-  return _width;
-}
+class Application: public IApplication {
+public:
+  Application();
+  ~Application();
 
-int Application::getHeight() {
-  return _height;
-}
+  virtual void start(const Pointer<Game>& game) override;
 
-glm::ivec2 Application::getSize() {
-  return glm::ivec2(_width, _height);
-}
-
-float Application::getFPS() {
-  return _currentFPS;
-}
-
-float Application::getDeltaTime() {
-  return _deltaTime;
-}
-
-float Application::getElapsedTime() {
-  return _elapsedTime;
-}
+private:
+  std::string _hello;
+};
 
 } /* window */
 } /* hx3d */

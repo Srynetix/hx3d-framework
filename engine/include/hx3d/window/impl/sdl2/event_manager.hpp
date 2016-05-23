@@ -1,5 +1,5 @@
 /*
-    Dummy Application Implementation.
+    SDL2 Events Implementation.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,26 +18,17 @@
     USA
 */
 
-#define HX3D_WINDOW_APPLICATION_INJECTION \
-    std::string _hello;
+#pragma once
 
-#include "hx3d/window/application.hpp"
-#include "hx3d/window/game.hpp"
-
-#include "hx3d/utils/log.hpp"
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/window/i_event_manager.hpp"
 
 namespace hx3d {
 namespace window {
 
-Application::Application(ApplicationConfig config): _hello("Coucou") {
-  Log.Info("I will crash and it's perfectly normal (because I don't initialize Core)");
-  Log.Info("Hello: %s", _hello.c_str());
-}
-
-Application::~Application() {}
-
-void Application::start(const Pointer<Game>& game) {}
+class EventManager: public IEventManager {
+public:
+  virtual void poll() override;
+};
 
 } /* window */
 } /* hx3d */

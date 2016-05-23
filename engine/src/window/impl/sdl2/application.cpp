@@ -20,9 +20,7 @@
 
 #include <SDL2/SDL.h>
 
-#define HX3D_WINDOW_APPLICATION_INJECTION \
-  SDL_Window* _window; \
-  SDL_GLContext _context;
+#include "hx3d/window/impl/sdl2/application.hpp"
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/assets.hpp"
@@ -34,7 +32,6 @@
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/core/configuration.hpp"
-#include "hx3d/window/application.hpp"
 #include "hx3d/window/game.hpp"
 #include "hx3d/window/events.hpp"
 #include "hx3d/window/event_manager.hpp"
@@ -52,12 +49,16 @@ using namespace hx3d::graphics;
 namespace hx3d {
 namespace window {
 
-Application::Application():
-  _running(false),
-  _width(800), _height(600), _fpsLimit(60), _title("hx3d"),
-  _fullscreen(false),
-  _elapsedTime(0), _deltaTime(0)
-  {
+Application::Application() {
+  _running = false;
+  _width = 800;
+  _height = 600;
+  _fpsLimit = 60;
+  _title = "hx3d";
+  _fullscreen = false;
+  _elapsedTime = 0;
+  _deltaTime = 0;
+
     Core::initialize(this);
     srand(time(0));
 
@@ -160,7 +161,6 @@ Application::Application():
 
 Application::~Application() {
 
-  _game.reset();
   Core::shutdown();
 
   if (_window) {
@@ -181,10 +181,8 @@ Application::~Application() {
 }
 
 void Application::start(const Pointer<Game>& game) {
-  _game = game;
-
-  Core::setGame(_game);
-  _game->create();
+  Core::setGame(game);
+  game->create();
 
   Uint32 frameTime = 0;
   Uint32 frameStart;
@@ -197,20 +195,20 @@ void Application::start(const Pointer<Game>& game) {
     Core::Events()->poll();
 
     if (Core::Events()->isWindowState(WindowEvent::Type::Closed)) {
-      _game->stop();
+      game->stop();
     } else {
-      _game->update(_deltaTime);
+      game->update(_deltaTime);
     }
 
-    if (!_game->isRunning())
+    if (!game->isRunning())
       _running = false;
 
     // Render !
-    _game->render();
+    game->render();
 
     SDL_GL_SwapWindow(_window);
 
-    if (!_game->isRunning())
+    if (!game->isRunning())
       _running = false;
 
     frameEnd = SDL_GetTicks();
