@@ -29,6 +29,7 @@ void TestGame::create() {
   Core::Assets()->create<Shader>("pix2D", "shaders/pix2D");
   Core::Assets()->create<Shader>("custom2D", "shaders/custom2D");
   Core::Assets()->create<Shader>("light3D", "shaders/light3D");
+  Core::Assets()->create<Shader>("debugdraw", "shaders/debugdraw/debugdraw");
 
   Core::Events()->emulateTouchWithMouse(true);
 

@@ -28,6 +28,7 @@ set(
 
   "-lfreetype-gl\
   -lfreetype\
+  -lchipmunk\
   -lyaml-cpp"
 )
 

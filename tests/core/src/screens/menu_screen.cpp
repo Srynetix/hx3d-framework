@@ -28,6 +28,7 @@ Screens list.
 // #include "tests/screens/test16_basicshading.hpp"
 // #include "tests/screens/test17_physics_1.hpp"
 // #include "tests/screens/test18_2d_3d.hpp"
+#include "tests/screens/test19_chipmunk.hpp"
 
 MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
@@ -71,11 +72,12 @@ MenuScreen::MenuScreen():
     // {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
     // {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
     // {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
-    {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}}
+    {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}},
     // {"Timers", [](){Core::CurrentGame()->setScreen(Make<Test15>());}},
     // {"Basic Shading", [](){Core::CurrentGame()->setScreen(Make<Test16>());}},
     // {"Physics 1", [](){Core::CurrentGame()->setScreen(Make<Test17>());}},
     // {"2D + 3D", [](){Core::CurrentGame()->setScreen(Make<Test18>());}}
+    {"Chipmunk", [](){Core::CurrentGame()->setScreen(Make<Test19>());}}
   };
 
   buttonCount = worldSize.y / buttonHeight;
