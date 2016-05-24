@@ -33,6 +33,10 @@ public:
     _root = YAML::Load(config_text);
   }
 
+  ~Configuration() {
+
+  }
+
   template <class T, class... Keys>
   T get(const std::string& key, Keys... keys) {
     auto node = _getNode(_root, key, keys...);
@@ -52,7 +56,11 @@ private:
   }
 
   YAML::Node _getNode(YAML::Node& node, const std::string& key) {
-    return node[key];
+    if (node.IsMap()) {
+      return node[key];
+    } else {
+      return node;
+    }
   }
 
   YAML::Node _root;

@@ -20,6 +20,9 @@
 
 #include "hx3d/utils/log.hpp"
 
+#include "hx3d/core/core.hpp"
+#include "hx3d/core/configuration.hpp"
+
 #include <iostream>
 #include <sstream>
 
@@ -76,21 +79,34 @@ void LogImpl::Error(const std::string fmt, ...) {
   va_end(args);
 }
 
+void LogImpl::Debug(const std::string fmt, ...) {
+  if (Core::Config()->get<bool>("log", "debug")) {
+    va_list args;
+    va_start(args, fmt);
+    write(format(fmt, args), Status::Debug);
+    va_end(args);
+  }
+}
+
 //////////////////////////////
 
 void LogImpl::write(std::string text, Status status) {
 
     std::ostringstream oss;
     if (status == Status::Error) {
-        oss << "E /!\\> ";
+      oss << "E /!\\> ";
     }
 
     else if (status == Status::Shader) {
-        oss << "S> ";
+      oss << "S> ";
     }
 
     else if (status == Status::Info) {
-        oss << "I> ";
+      oss << "I> ";
+    }
+
+    else if (status == Status::Debug) {
+      oss << "D> ";
     }
 
     oss << text;

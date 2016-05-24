@@ -26,7 +26,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 /**
 @brief Sprite defined VBO geometry
@@ -52,7 +51,6 @@ public:
   void setFromRegion(const Pointer<TextureRegion>& region);
 };
 
-} /* geom */
 } /* graphics */
 } /* hx3d */
 

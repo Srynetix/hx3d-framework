@@ -24,7 +24,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 SpriteGeometry::SpriteGeometry(): Geometry() {
 
@@ -96,6 +95,5 @@ void SpriteGeometry::setFromRegion(const Pointer<TextureRegion>& region) {
   });
 }
 
-} /* geom */
 } /* graphics */
 } /* hx3d */

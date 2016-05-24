@@ -63,51 +63,48 @@ namespace hx3d {
 Core* Core::_instance(nullptr);
 
 Core::Core() {
-  _assets = new AssetManager();
-  _net = new net::Net();
-  _audio = new audio::AudioDevice();
-  _events = new window::EventManager();
-  _config = new Configuration();
+  _assets = Make<AssetManager>();
+  _net = Make<net::Net>();
+  _audio = Make<audio::AudioDevice>();
+  _events = Make<window::EventManager>();
+  _config = Make<Configuration>();
 }
 
 Core::~Core() {
-  if (_events)
-    delete _events;
-  if (_assets)
-    delete _assets;
-  if (_net)
-    delete _net;
-  if (_audio)
-    delete _audio;
-  if (_config)
-    delete _config;
+  _game.reset();
+
+  _events.reset();
+  _assets.reset();
+  _net.reset();
+  _audio.reset();
+  _config.reset();
 }
 
 window::Application* Core::App() {
   return get()->_application;
 }
 
-window::Game* Core::CurrentGame() {
+Pointer<window::Game>& Core::CurrentGame() {
   return get()->_game;
 }
 
-AssetManager* Core::Assets() {
+Pointer<AssetManager>& Core::Assets() {
   return get()->_assets;
 }
 
-window::EventManager* Core::Events() {
+Pointer<window::EventManager>& Core::Events() {
   return get()->_events;
 }
 
-net::Net* Core::Network() {
+Pointer<net::Net>& Core::Network() {
   return get()->_net;
 }
 
-audio::AudioDevice* Core::Audio() {
+Pointer<audio::AudioDevice>& Core::Audio() {
   return get()->_audio;
 }
 
-Configuration* Core::Config() {
+Pointer<Configuration>& Core::Config() {
   return get()->_config;
 }
 
@@ -118,13 +115,14 @@ void Core::initialize(window::Application* app) {
   _instance->_application = app;
 }
 
-void Core::setGame(window::Game* game) {
+void Core::setGame(const Pointer<window::Game>& game) {
   _instance->_game = game;
 }
 
 void Core::shutdown() {
-  if (_instance)
+  if (_instance) {
     delete _instance;
+  }
 }
 
 Core* Core::get() {

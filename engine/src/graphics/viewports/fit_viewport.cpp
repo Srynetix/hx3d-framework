@@ -29,7 +29,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace viewports {
 
 FitViewport::FitViewport(const float worldWidth, const float worldHeight) {
   _worldWidth = worldWidth;
@@ -60,6 +59,5 @@ void FitViewport::internalUpdate(const Pointer<Camera>& camera) {
   apply(camera);
 }
 
-} /* viewports */
 } /* graphics */
 } /* hx3d */

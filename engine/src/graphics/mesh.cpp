@@ -21,23 +21,44 @@
 #include "hx3d/graphics/mesh.hpp"
 
 #include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/drawers/mesh_drawer.hpp"
+#include "hx3d/graphics/drawers/simple_mesh_batch_drawer.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-Mesh::Mesh() {}
+Mesh::Mesh() {
+  _geoDrawer = Make<MeshDrawer>();
+  _batchDrawer = Make<SimpleMeshBatchDrawer>();
+}
+
+Mesh::Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>& batchDrawer) {
+  _geoDrawer = geoDrawer;
+  _batchDrawer = batchDrawer;
+}
 
 void Mesh::draw(const Pointer<Shader>& shader) {
+  if (!_geometry || !_geoDrawer) {
+    return;
+  }
 
   if (_geometry->getAttribute("Texture").size() == 0) {
     Texture::use(Texture::Blank);
-    _geometry->draw(shader);
+    _geoDrawer->drawWithShader(_geometry, shader);
     Texture::disable();
   }
 
   else {
-    _geometry->draw(shader);
+    _geoDrawer->drawWithShader(_geometry, shader);
   }
+}
+
+void Mesh::drawWithBatch(Batch* batch) {
+  if (!_batchDrawer) {
+    return;
+  }
+
+  _batchDrawer->drawWithBatch(batch, this);
 }
 
 void Mesh::setTint(Color tint) {
@@ -46,12 +67,28 @@ void Mesh::setTint(Color tint) {
   updateColor();
 }
 
-void Mesh::setGeometry(const Pointer<geom::BaseGeometry>& geometry) {
+void Mesh::setGeometry(const Pointer<Geometry>& geometry) {
   _geometry = geometry;
 }
 
-Pointer<geom::BaseGeometry>& Mesh::getGeometry() {
+void Mesh::setGeometryDrawer(const Pointer<GeometryDrawer>& drawer) {
+  _geoDrawer = drawer;
+}
+
+void Mesh::setBatchDrawer(const Pointer<BatchDrawer>& drawer) {
+  _batchDrawer = drawer;
+}
+
+Pointer<Geometry>& Mesh::getGeometry() {
   return _geometry;
+}
+
+Pointer<GeometryDrawer>& Mesh::getGeometryDrawer() {
+  return _geoDrawer;
+}
+
+Pointer<BatchDrawer>& Mesh::getBatchDrawer() {
+  return _batchDrawer;
 }
 
 void Mesh::updateColor() {

@@ -22,13 +22,13 @@
 #define HX3D_WINDOW_GAME
 
 #include "hx3d/window/screen.hpp"
-#include "hx3d/gui/text.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"
-#include "hx3d/graphics/batch.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/batches/simple_batch.hpp"
 #include "hx3d/graphics/viewports/viewport.hpp"
+#include "hx3d/graphics/transitions/transition.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/transition.hpp"
+#include "hx3d/gui/text.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/object_map.hpp"
@@ -114,14 +114,14 @@ public:
 
   @param viewport Viewport
   */
-  void setViewport(const Pointer<graphics::viewports::Viewport>& viewport);
+  void setViewport(const Pointer<graphics::Viewport>& viewport);
 
   /**
   @brief Get the current viewport
 
   @return Viewport
   */
-  const Pointer<graphics::viewports::Viewport>& getViewport();
+  const Pointer<graphics::Viewport>& getViewport();
 
   /**
   @brief Get the session
@@ -151,16 +151,16 @@ private:
   bool _running;
   Pointer<Screen> _screen;
   Pointer<Screen> _nextScreen;
-  Pointer<gui::Text> _deltaText;
-  Pointer<gui::Text> _fpsText;
+  PrivateReference<gui::Text> _deltaText;
+  PrivateReference<gui::Text> _fpsText;
 
-  Pointer<graphics::OrthographicCamera> _camera;
-  Pointer<graphics::Batch> _batch;
+  PrivateReference<graphics::OrthographicCamera> _camera;
+  PrivateReference<graphics::SimpleBatch> _batch;
 
-  Pointer<graphics::Framebuffer> _currentFB;
-  Pointer<graphics::Framebuffer> _nextFB;
+  PrivateReference<graphics::Framebuffer> _currentFB;
+  PrivateReference<graphics::Framebuffer> _nextFB;
   Pointer<graphics::Transition> _currentTransition;
-  Pointer<graphics::viewports::Viewport> _currentViewport;
+  Pointer<graphics::Viewport> _currentViewport;
 
   ObjectMap _session;
 

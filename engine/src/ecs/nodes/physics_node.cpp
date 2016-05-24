@@ -38,7 +38,7 @@ PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::C
 
   auto& matrix = _world->getCollisionMatrix();
 
-  auto poly = Make<physics2d::colliders::Polygon>(type);
+  auto poly = Make<physics2d::Polygon>(type);
   poly->setAsBox(
     w / _world->getPhysRatio(),
     h / _world->getPhysRatio()
@@ -59,7 +59,7 @@ void PhysicsNode::update(float delta) {
   }
 }
 
-void PhysicsNode::draw(const Pointer<graphics::BaseBatch>& batch) {
+void PhysicsNode::draw(const Pointer<graphics::Batch>& batch) {
   if (_texture) {
     batch->draw(_sprite);
   }

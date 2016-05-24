@@ -27,7 +27,7 @@ namespace graphics {
 
 Sprite::Sprite():
 Mesh() {
-  _geometry = Make<geom::SpriteGeometry>();
+  _geometry = Make<SpriteGeometry>();
   _geometry->setFaceCulling(Culling::Back);
 
   setTint(Color::White);
@@ -40,7 +40,7 @@ void Sprite::setTexture(const Pointer<Texture>& texture) {
   transform.size.y = _texture->getHeight();
 
   /* Set the correct texture coordinates, in case of previous framebuffer. */
-  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
   spriteGeo->activateTextureMode();
 
   _geometry->uploadAll();
@@ -53,7 +53,7 @@ void Sprite::setTexture(const Pointer<Framebuffer>& buffer) {
   transform.size.y = _texture->getHeight();
 
   /* Reverse the framebuffer ! */
-  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
   spriteGeo->activateFramebufferMode();
 
   _geometry->uploadAll();
@@ -65,7 +65,7 @@ void Sprite::setTexture(const Pointer<TextureRegion>& region) {
   transform.size.x = region->getMaxX() - region->getMinX();
   transform.size.y = region->getMaxY() - region->getMinY();
 
-  Pointer<geom::SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<geom::SpriteGeometry>(_geometry);
+  Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
   spriteGeo->setFromRegion(region);
 
   _geometry->uploadAll();

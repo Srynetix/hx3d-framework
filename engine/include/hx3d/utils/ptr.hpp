@@ -35,6 +35,9 @@ public: \
     return Pointer<klass>(new klass(args...)); \
   }
 
+#define HX3D_ONLY_PTR(klass) \
+  using Ptr = hx3d::Pointer<klass>;
+
 namespace hx3d {
 
 /**

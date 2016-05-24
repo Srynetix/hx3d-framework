@@ -4,7 +4,6 @@
 
 namespace hx3d {
 namespace physics2d {
-namespace colliders {
 
 Polygon::Polygon(const Type colliderType):
   Collider(Shape::Polygon, colliderType),
@@ -163,6 +162,5 @@ void Polygon::computeMass(float density) {
   massData.setInertia(I * density);
 }
 
-}
-}
+} /* physics2d */
 } /* hx3d */

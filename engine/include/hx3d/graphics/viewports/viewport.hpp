@@ -36,11 +36,6 @@ namespace hx3d {
 namespace graphics {
 
 /**
-@brief Viewport types.
-*/
-namespace viewports {
-
-/**
 @brief Camera viewport.
 */
 class Viewport {
@@ -109,7 +104,6 @@ protected:
   virtual void internalUpdate(const Pointer<Camera>& camera) = 0;
 };
 
-} /* viewports */
 } /* graphics */
 } /* hx3d */
 

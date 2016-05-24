@@ -36,7 +36,7 @@
 #include "hx3d/physics/2d/attractors/zone_attractor.hpp"
 #include "hx3d/physics/2d/collision_listener.hpp"
 
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 #include <set>
 
@@ -51,6 +51,8 @@ namespace physics2d {
 @brief Physical world. Manages colliders and attractors.
 */
 class World {
+  HX3D_PTR(World)
+  
 public:
   /**
   @brief Create a world with a global gravity, iterations and the physical ratio.
@@ -101,7 +103,7 @@ public:
 
   @param batch Batch
   */
-  void render(const Pointer<graphics::BaseBatch>& batch);
+  void render(const Pointer<graphics::Batch>& batch);
 
   /**
   @brief Get the physical ratio

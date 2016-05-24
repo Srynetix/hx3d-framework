@@ -26,7 +26,7 @@
 #include "hx3d/physics/2d/world.hpp"
 #include "hx3d/physics/2d/collider.hpp"
 
-#include "hx3d/graphics/base_batch.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/texture.hpp"
 
@@ -43,7 +43,7 @@ public:
   */
   PhysicsNode(std::string name, physics2d::World* world, physics2d::Collider::Type type, float x, float y, float w, float h, std::string category = "", std::string mask = "", const Pointer<graphics::Texture> texture = nullptr);
 
-  virtual void draw(const Pointer<graphics::BaseBatch>& batch) override;
+  virtual void draw(const Pointer<graphics::Batch>& batch) override;
   virtual void update(float delta) override;
 
 protected:

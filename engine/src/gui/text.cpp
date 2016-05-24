@@ -24,6 +24,7 @@
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/graphics/font.hpp"
+#include "hx3d/graphics/drawers/simple_text_batch_drawer.hpp"
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/assets.hpp"
@@ -48,6 +49,7 @@ void Text::init() {
     setFont(_font);
   }
 
+  _batchDrawer = Make<SimpleTextBatchDrawer>();
   _centerAligned = true;
 }
 
@@ -60,6 +62,14 @@ void Text::setFont(Pointer<Font> font) {
 void Text::setCharacterSize(int size) {
   _characterSize = size;
   _length = calculateLength();
+}
+
+void Text::setFunction(math::Function function) {
+  _function = function;
+}
+
+void Text::setFunctionInit(float value) {
+  _function.setInit(value);
 }
 
 void Text::setContent(std::string content) {
@@ -88,6 +98,11 @@ bool Text::isCenterAligned() {
 }
 
 void Text::draw(const Pointer<Shader>& shader) {
+
+  if (_function.isEnabled()) {
+    functionDraw(shader);
+    return;
+  }
 
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
@@ -159,13 +174,13 @@ float Text::calculateLength() {
   return pen.x;
 }
 
-void Text::functionDraw(const Pointer<Shader>& shader, math::Function function) {
+void Text::functionDraw(const Pointer<Shader>& shader) {
   std::wstring wtext(_content.begin(), _content.end());
   glm::vec2 pen(0, 0);
 
   Font::Data& fontData = _font->getFontData(_characterSize);
 
-  function.reset();
+  _function.reset();
 
   for (unsigned int i = 0; i < _content.size(); ++i) {
     texture_glyph_t *glyph = texture_font_get_glyph(fontData.font, &_content[i]);
@@ -175,7 +190,7 @@ void Text::functionDraw(const Pointer<Shader>& shader, math::Function function) 
         kerning = texture_glyph_get_kerning(glyph, &_content[i-1]);
       }
 
-      pen += function.sample();
+      pen += _function.sample();
       pen.x += kerning;
 
       float x0 = pen.x + glyph->offset_x;
@@ -206,7 +221,7 @@ void Text::functionDraw(const Pointer<Shader>& shader, math::Function function) 
       Mesh::draw(shader);
 
       pen.x += glyph->advance_x;
-      function.step();
+      _function.step();
     }
   }
 }

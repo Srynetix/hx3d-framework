@@ -27,11 +27,6 @@ namespace hx3d {
 namespace physics2d {
 
 /**
-@brief 2D collider types
-*/
-namespace colliders {
-
-/**
 @brief Circle shaped collider
 */
 struct Circle: public Collider {
@@ -51,7 +46,6 @@ struct Circle: public Collider {
   float radius;
 };
 
-} /* colliders */
 } /* physics2d */
 } /* hx3d */
 

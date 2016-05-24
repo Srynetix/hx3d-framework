@@ -24,7 +24,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 OriginGeometry::OriginGeometry(): Geometry() {
 
@@ -212,6 +211,5 @@ OriginGeometry::OriginGeometry(): Geometry() {
   uploadAll();
 }
 
-} /* geom */
 } /* graphics */
 } /* hx3d */

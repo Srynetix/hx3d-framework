@@ -27,7 +27,6 @@
 
 namespace hx3d {
 namespace physics2d {
-namespace colliders {
 
 /**
 @brief Polygon or box shaped collider
@@ -80,7 +79,6 @@ struct Polygon: public Collider {
   bool box;
 };
 
-} /* colliders */
 } /* physics2d */
 } /* hx3d */
 

@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-
 #include "hx3d/window/application.hpp"
 
 #include "tests/test_game.hpp"

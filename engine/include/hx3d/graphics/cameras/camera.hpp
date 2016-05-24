@@ -40,7 +40,7 @@ namespace graphics {
 @see PerspectiveCamera
 */
 class Camera {
-  HX3D_PTR(Camera)
+  HX3D_ONLY_PTR(Camera)
 
 public:
   /**

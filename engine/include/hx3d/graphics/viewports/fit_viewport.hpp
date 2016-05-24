@@ -28,7 +28,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace viewports {
 
 /**
 @brief Fit the screen resolution.
@@ -49,7 +48,6 @@ public:
 
 };
 
-} /* viewports */
 } /* graphics */
 } /* hx3d */
 

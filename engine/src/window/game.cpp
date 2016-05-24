@@ -34,15 +34,6 @@ namespace window {
 Game::Game():
 _running(true), _screen(nullptr), _showStats(false)
 {
-  _batch = Make<graphics::Batch>();
-  _camera = Make<graphics::OrthographicCamera>();
-
-  _deltaText = Make<gui::Text>();
-  _fpsText = Make<gui::Text>();
-
-  _currentFB = Make<graphics::Framebuffer>();
-  _nextFB = Make<graphics::Framebuffer>();
-
   _deltaText->transform.position.x = Core::App()->getWidth() / 2;
   _deltaText->transform.position.y = 100;
   _deltaText->transform.position.z = 0.95f;
@@ -77,7 +68,7 @@ void Game::setTransition(const Pointer<graphics::Transition>& transition) {
   _currentTransition = transition;
 }
 
-void Game::setViewport(const Pointer<graphics::viewports::Viewport>& viewport) {
+void Game::setViewport(const Pointer<graphics::Viewport>& viewport) {
   if (viewport) {
     auto world_size = viewport->getWorldSize();
     _currentFB->resize(world_size.x, world_size.y);
@@ -90,7 +81,7 @@ void Game::setViewport(const Pointer<graphics::viewports::Viewport>& viewport) {
   updateStats();
 }
 
-const Pointer<graphics::viewports::Viewport>& Game::getViewport() {
+const Pointer<graphics::Viewport>& Game::getViewport() {
   return _currentViewport;
 }
 
@@ -124,7 +115,6 @@ void Game::render() {
   else {
     if (_currentTransition) {
       if (_currentTransition->isFinished()) {
-        _screen->hide();
         _screen->dispose();
         _screen = _nextScreen;
         _screen->resume();
@@ -155,7 +145,7 @@ void Game::render() {
     else {
       _screen->hide();
       _screen = _nextScreen;
-      _screen->resume();
+      _screen->show();
       _nextScreen = nullptr;
 
       _screen->render();
@@ -209,8 +199,6 @@ void Game::stop() {
 }
 
 void Game::setScreen(const Pointer<Screen>& screen) {
-
-  Core::Events()->setInputHandler(nullptr);
   auto size = Core::App()->getSize();
 
   if (screen) {
@@ -221,7 +209,7 @@ void Game::setScreen(const Pointer<Screen>& screen) {
       _screen = screen;
     } else {
       _nextScreen = screen;
-      _screen->pause();
+      _screen->hide();
       _nextScreen->pause();
 
       if (_currentTransition) {

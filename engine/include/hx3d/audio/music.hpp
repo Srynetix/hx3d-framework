@@ -1,5 +1,5 @@
 /*
-    Music management.
+    Music.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,70 +18,8 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_MUSIC
-#define HX3D_AUDIO_MUSIC
+#pragma once
 
-#include "hx3d/utils/file.hpp"
-
-namespace hx3d {
-namespace audio {
-
-/**
-@brief Single music management.
-
-Permit to play/stop one music.
-*/
-class Music {
-
-public:
-  /**
-  @brief Create an uninitialized music.
-
-  @see initialize.
-  */
-  Music();
-
-  /**
-  @brief Load a music from a path.
-
-  @param pathToFile Path to audio file.
-  */
-  explicit Music(const std::string pathToFile);
-  ~Music();
-
-  /**
-  @brief Initialize a music with a path.
-
-  @param pathToFile Path to audio file
-  */
-  void initialize(const std::string pathToFile);
-
-  /**
-  @brief Play the music.
-  */
-  void play();
-
-  /**
-  @brief Stop the music.
-  */
-  void stop();
-
-  /**
-  @brief Test if the music is playing.
-  */
-  bool isPlaying();
-
-private:
-  /// @brief File pointer
-  Pointer<File> _file;
-
-#ifdef HX3D_AUDIO_MUSIC_INJECTION
-  HX3D_AUDIO_MUSIC_INJECTION
-#endif
-
-};
-
-} /* audio */
-} /* hx3d */
-
+#if SDL2_AUDIO_PROVIDER
+  #include "hx3d/audio/impl/sdl2/music.hpp"
 #endif

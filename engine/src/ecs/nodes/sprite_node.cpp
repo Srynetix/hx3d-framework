@@ -31,7 +31,7 @@ SpriteNode::SpriteNode(std::string name, const Pointer<graphics::Texture>& textu
 
 void SpriteNode::update(float delta) {}
 
-void SpriteNode::draw(const Pointer<graphics::BaseBatch>& batch) {
+void SpriteNode::draw(const Pointer<graphics::Batch>& batch) {
   batch->draw(_sprite);
 }
 

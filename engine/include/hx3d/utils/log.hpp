@@ -38,6 +38,8 @@ class LogImpl {
     Info,
     /// @brief Shader message
     Shader,
+    /// @brief Debug message
+    Debug,
     /// @brief Error message
     Error
   };
@@ -67,6 +69,13 @@ public:
   @param ... Arguments
   */
   void Shader(const std::string fmt, ...);
+  /**
+  @brief Write a debug message.
+
+  @param fmt Text
+  @param ... Arguments
+  */
+  void Debug(const std::string fmt, ...);
   /**
   @brief Write an error message.
 

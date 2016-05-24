@@ -27,7 +27,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 /**
 @brief Three centered axis VBO geometry
@@ -37,7 +36,6 @@ public:
   OriginGeometry();
 };
 
-} /* geom */
 } /* graphics */
 } /* hx3d */
 

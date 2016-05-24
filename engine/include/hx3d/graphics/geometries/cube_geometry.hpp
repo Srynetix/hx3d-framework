@@ -25,7 +25,6 @@
 
 namespace hx3d {
 namespace graphics {
-namespace geom {
 
 /**
 @brief Cube shape VBO geometry
@@ -36,7 +35,6 @@ public:
   CubeGeometry();
 };
 
-} /* geom */
 } /* graphics */
 } /* hx3d */
 
