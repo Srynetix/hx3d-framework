@@ -1,5 +1,5 @@
 /*
-    GL inclusions.
+    Vertex Array.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,57 +18,34 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GL
-#define HX3D_GRAPHICS_GL
+#pragma once
 
-#ifdef __IPHONE_NA
+#include "hx3d/graphics/gl.hpp"
 
-  #include <OpenGLES/ES2/gl.h>
+namespace hx3d {
+namespace graphics {
 
-#elif __ANDROID__
+class VertexArray {
+public:
+  VertexArray() {
+    glGenVertexArrays(1, &_id);
+  }
 
-  #include <GLES2/gl2.h>
+  static void use(const VertexArray& array) {
+    glBindVertexArray(array.getID());
+  }
 
-#elif _WIN32
+  static void disable() {
+    glBindVertexArray(0);
+  }
 
-  #define DESKTOP_OPENGL
-  #define WIN32_LEAN_AND_MEAN
-  #include <WinDef.h>
-  #include <WinGDI.h>
+  GLuint getID() const {
+    return _id;
+  }
 
-  /* Thanks Windows... ! */
-  #undef near
-  #undef far
+private:
+  GLuint _id;
+};
 
-  #include <GL/glew.h>
-
-#elif __APPLE__
-
-  #include "TargetConditionals.h"
-
-    #if TARGET_IPHONE_SIMULATOR
-
-      #include <OpenGLES/ES2/gl.h>
-
-    #elif TARGET_OS_IPHONE
-
-      #include <OpenGLES/ES2/gl.h>
-
-    #elif TARGET_OS_MAC
-
-      #define DESKTOP_OPENGL
-      #include <GL/glew.h>
-
-    #endif
-
-#elif __linux__
-
-  #define DESKTOP_OPENGL
-  #include <epoxy/gl.h>
-  // #include <epoxy/glx.h>
-
-#endif
-
-#include <SDL2/SDL.h>
-
-#endif
+} /* graphics */
+} /* hx3d */

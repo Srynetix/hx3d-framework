@@ -65,11 +65,15 @@ Culling& Geometry::getFaceCulling() {
 }
 
 void Geometry::uploadAll() {
+  VertexArray::use(_array);
+
   for (auto& a: _attributes) {
     a.second.upload();
   }
 
   _indices.upload();
+
+  VertexArray::disable();
 }
 
 } /* graphics */

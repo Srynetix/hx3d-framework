@@ -38,7 +38,7 @@ set(
   ${COMMON_LIBRARIES}
   "-lSDL2\
   -lSDL2_mixer\
-  -lGLEW\
+  -lepoxy\
   -lGL"
 )
 

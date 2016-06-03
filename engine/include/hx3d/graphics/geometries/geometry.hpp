@@ -23,6 +23,7 @@
 
 #include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
 #include "hx3d/graphics/buffers/index_array_buffer.hpp"
+#include "hx3d/graphics/buffers/vertex_array.hpp"
 #include "hx3d/graphics/shader.hpp"
 
 using namespace hx3d::graphics::buffers;
@@ -115,6 +116,10 @@ public:
   */
   void uploadAll();
 
+  VertexArray& getVertexArray() {
+    return _array;
+  }
+
 protected:
   /// @brief Attributes map
   std::map<std::string, AttributeArrayBuffer> _attributes;
@@ -122,6 +127,8 @@ protected:
   IndexArrayBuffer _indices;
   /// @brief Current culling
   Culling _cullingType;
+  /// @brief Vertex array
+  VertexArray _array;
 };
 
 } /* graphics */

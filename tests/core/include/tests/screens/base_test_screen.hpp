@@ -28,6 +28,14 @@ public:
     Core::Events()->unregisterHandler(this);
   }
 
+  virtual void pause() override {
+    Core::Events()->unregisterHandler(this);
+  }
+
+  virtual void resume() override {
+    Core::Events()->registerHandler(this);
+  }
+
   virtual void onKeyReleased(KeyEvent::Key key) override {
     if (key == KeyEvent::Key::Escape || key == KeyEvent::Key::AndroidBack) {
       Core::CurrentGame()->setScreen(Make<MenuScreen>());

@@ -47,6 +47,8 @@ void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Sha
       break;
   }
 
+  VertexArray::use(geom->getVertexArray());
+
   for (auto& attr_pair: geom->getAttributes()) {
     attr_pair.second.begin(shader);
   }
@@ -63,6 +65,8 @@ void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Sha
   for (auto& attr_pair: geom->getAttributes()) {
     attr_pair.second.end(shader);
   }
+
+  VertexArray::disable();
 }
 
 } /* graphics */

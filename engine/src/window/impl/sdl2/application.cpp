@@ -44,6 +44,9 @@
 
 #include <ctime>
 
+#include "hx3d/graphics/cameras/perspective_camera.hpp"
+#include "hx3d/graphics/error.hpp"
+
 using namespace hx3d::graphics;
 
 namespace hx3d {
@@ -70,7 +73,7 @@ Application::Application() {
     bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
     int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
       Log.Error("SDL Init Error: %s", SDL_GetError());
       SDL_Quit();
 
@@ -100,7 +103,13 @@ Application::Application() {
 
   #ifdef DESKTOP_OPENGL
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 0);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+
+    if (Core::Config()->get<bool>("log", "debug")) {
+      SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+    }
 
     auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
     _window = SDL_CreateWindow(_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, window_flags);
@@ -122,14 +131,7 @@ Application::Application() {
 
     SDL_GL_MakeCurrent(_window, _context);
 
-   #ifdef DESKTOP_OPENGL
-    GLenum init = glewInit();
-    if (init != GLEW_OK) {
-        Log.Error("GLEW error: %s", glewGetErrorString(init));
-        exit(1);
-    }
-  #endif
-
+    Log.Info("OpenGL Version: %d", epoxy_gl_version());
     Log.Info("Screen: %d x %d", _width, _height);
 
     glViewport(0, 0, _width, _height);
@@ -157,6 +159,8 @@ Application::Application() {
     Core::Assets()->create<Shader>("base", "shaders/base");
     Core::Assets()->create<Shader>("text", "shaders/text");
     Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
+
+    GL_ERROR_CHECK();
   }
 
 Application::~Application() {
@@ -187,6 +191,8 @@ void Application::start(const Pointer<Game>& game) {
   Uint32 frameTime = 0;
   Uint32 frameStart;
   Uint32 frameEnd;
+
+  glClearColor(0, 0, 0, 1.f);
 
   _running = true;
   while (_running) {
