@@ -29,6 +29,10 @@
 namespace hx3d {
 namespace window {
 
+EventManager::EventManager() {
+  SDL_StopTextInput();
+}
+
 void EventManager::poll() {
   SDL_Event event;
 

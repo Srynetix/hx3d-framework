@@ -1,0 +1,24 @@
+TODO
+======
+
+## Physics
+- End Chipmunk tests
+- Implement Chipmunk physics
+
+## Game
+- End Skeleton tests
+- Implement Skeleton classes
+
+## Dep-fetch
+- Fix dep fetch for Linux
+- Fix dep fetch for Android
+
+## Scripting
+- Start mruby tests
+- Implement scripting classes
+
+## Tests
+- Fix all tests
+
+## Android
+- Compat Android
