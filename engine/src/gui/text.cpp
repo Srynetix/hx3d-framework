@@ -75,6 +75,10 @@ void Text::setFunctionInit(float value) {
 void Text::setContent(std::string content) {
   _content = content;
   _length = calculateLength();
+
+  auto& data = _font->getFontData(_characterSize);
+  texture_font_load_glyphs(data.font, _content.c_str());
+  texture_atlas_upload(data.font->atlas);
 }
 
 Pointer<Font> Text::getFont() {

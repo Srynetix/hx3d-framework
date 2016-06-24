@@ -21,7 +21,9 @@
 #ifndef HX3D_GRAPHICS_FONT
 #define HX3D_GRAPHICS_FONT
 
+#define FREETYPE_GL_NO_GLEW
 #include <freetype-gl/freetype-gl.h>
+
 #include <string>
 #include <map>
 
