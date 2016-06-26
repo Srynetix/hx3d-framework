@@ -28,36 +28,49 @@ namespace graphics {
 
 class Joint {
 public:
-  Joint(Bone* boneA, Bone* boneB, glm::vec2 anchorA, glm::vec2 anchorB): boneA(boneA), boneB(boneB), anchorA(anchorA), anchorB(anchorB) {}
+  Joint(const Pointer<Bone>& a, const Pointer<Bone>& b, glm::vec2 anchorA, glm::vec2 anchorB, glm::vec2 limit, bool fixed = false): a(a), b(b), anchorA(anchorA), anchorB(anchorB), limit(limit), fixed(fixed) {}
 
   void update() {
-    auto vec = boneA->size * (anchorA - boneA->c_rotation_offset);
-    auto s = sin(boneA->c_rotation);
-    auto c = cos(boneA->c_rotation);
-    auto nvec = glm::vec2(vec.x * c - vec.y * s, vec.x * s + vec.y * c);
+    auto posA = a->c_position + a->displacement;
+    auto mvec = a->size * (anchorA - a->c_offset);
+    auto si = sin(glm::radians(a->c_rotation));
+    auto co = cos(glm::radians(a->c_rotation));
+    auto nvec = glm::vec2(mvec.x * co - mvec.y * si, mvec.x * si + mvec.y * co);
 
-    boneB->c_position = boneA->c_position + nvec;
-    boneB->c_rotation_offset = anchorB;
-    boneB->c_rotation = boneA->c_rotation + boneB->rotation;
+    b->c_position = posA + nvec + b->displacement;
+    b->c_offset = anchorB;
 
-    for (auto& joint: boneB->children) {
+    if (fixed) {
+      b->c_rotation = b->rotation;
+    } else {
+      b->c_rotation = a->c_rotation + b->rotation;
+    }
+
+    for (auto& joint: b->children) {
       joint->update();
     }
   }
 
   void rotate(float angle) {
-    boneB->rotation = math::mclamp(boneB->rotation + angle, 0, 360);
+    if (limit.x == 0 && limit.y == 360) {
+      b->rotation = math::mclamp(b->rotation + angle, limit.x, limit.y);
+    } else {
+      b->rotation = math::clamp(b->rotation + angle, limit.x, limit.y);
+    }
+
     this->update();
   }
 
   void draw(const Pointer<Batch>& batch) {
-    boneB->draw(batch);
+    b->draw(batch);
   }
 
-  Bone* boneA;
-  Bone* boneB;
+  Pointer<Bone> a;
+  Pointer<Bone> b;
   glm::vec2 anchorA;
   glm::vec2 anchorB;
+  glm::vec2 limit;
+  bool fixed;
 };
 
 } /* graphics */

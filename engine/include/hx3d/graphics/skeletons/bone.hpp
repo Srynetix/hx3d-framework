@@ -29,39 +29,43 @@ namespace graphics {
 class Joint;
 class Bone {
 public:
-  Bone(float w, float h, float init_rotation): size(w, h), rotation(init_rotation) {
-    parent = nullptr;
+  Bone(float w, float h, float rot, float depth = 0.f):
+    size(w, h), rotation(rot), depth(depth) {
+
     sprite->setTexture(Core::Assets()->get<Texture>("box"));
-    sprite->setTint(Color::Red);
     sprite->transform.size.x = size.x;
     sprite->transform.size.y = size.y;
+    parent = nullptr;
 
+    displacement = glm::vec2(0, 0);
     c_position = glm::vec2(0, 0);
-    c_rotation_offset = glm::vec2(0, 0);
+    c_offset = glm::vec2(0.5f, 0.5f);
     c_rotation = rotation;
   }
 
   void draw(const Pointer<Batch>& batch) {
-    Log.Info("O: %f / %f", c_position.x, c_position.y);
-    auto bottomLeft = glm::vec2(c_position.x + size.x / 2, c_position.y + size.y / 2);
-    bottomLeft -= size * c_rotation_offset;
+    auto off = size * (0.5f - c_offset);
+    auto si = sin(glm::radians(c_rotation));
+    auto co = cos(glm::radians(c_rotation));
+    auto di = glm::vec2(off.x * co - off.y * si, off.x * si + off.y * co);
 
-    Log.Info("B: %f / %f", bottomLeft.x, bottomLeft.y);
-
-    sprite->transform.position.x = bottomLeft.x;
-    sprite->transform.position.y = bottomLeft.y;
-    sprite->transform.rotation.z = c_rotation;
+    auto pos = c_position + displacement + di;
+    sprite->transform.position.x = pos.x;
+    sprite->transform.position.y = pos.y;
+    sprite->transform.rotation.z = glm::radians(c_rotation);
 
     batch->draw(sprite);
   }
 
-  Joint* parent;
-  std::vector<Joint*> children;
+  Pointer<Joint> parent;
+  std::vector<Pointer<Joint>> children;
 
   glm::vec2 size;
   float rotation;
+  glm::vec2 displacement;
+  float depth;
 
-  glm::vec2 c_rotation_offset;
+  glm::vec2 c_offset;
   glm::vec2 c_position;
   float c_rotation;
 

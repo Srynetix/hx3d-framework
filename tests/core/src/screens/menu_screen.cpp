@@ -30,6 +30,7 @@ Screens list.
 // #include "tests/screens/test18_2d_3d.hpp"
 #include "tests/screens/test19_chipmunk.hpp"
 #include "tests/screens/test20_skeleton.hpp"
+#include "tests/screens/test21_console.hpp"
 
 MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
@@ -79,7 +80,8 @@ MenuScreen::MenuScreen():
     // {"Physics 1", [](){Core::CurrentGame()->setScreen(Make<Test17>());}},
     // {"2D + 3D", [](){Core::CurrentGame()->setScreen(Make<Test18>());}}
     {"Chipmunk", [](){Core::CurrentGame()->setScreen(Make<Test19>());}},
-    {"Skeleton", [](){Core::CurrentGame()->setScreen(Make<Test20>());}}
+    {"Skeleton", [](){Core::CurrentGame()->setScreen(Make<Test20>());}},
+    {"Console", [](){Core::CurrentGame()->setScreen(Make<Test21>());}}
   };
 
   buttonCount = worldSize.y / buttonHeight;

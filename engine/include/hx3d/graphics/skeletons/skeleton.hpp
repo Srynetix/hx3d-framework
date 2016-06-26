@@ -21,36 +21,88 @@
 #pragma once
 
 #include "hx3d/graphics/skeletons/joint.hpp"
+#include "hx3d/utils/resource.hpp"
+#include "hx3d/utils/yaml.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-class Skeleton {
+class Skeleton: public Resource {
   HX3D_PTR(Skeleton)
 
 public:
   Skeleton(float rootW, float rootH, float rootRotation) {
-    bones["ROOT"] = new Bone(rootW, rootH, rootRotation);
-    bones["ROOT"]->c_rotation_offset = glm::vec2(0.5, 0.5);
+    bones["root"] = Make<Bone>(rootW, rootH, rootRotation);
+    bones["root"]->c_offset = glm::vec2(0.5, 0.5);
+  }
+
+  Skeleton(std::string pathToConfig) {
+    // Config file
+    auto rootCfg = yaml::loadFromFile(pathToConfig);
+
+    // Root
+    auto rootNode = yaml::getNode(rootCfg, "root");
+    float rootW = yaml::getValue<float>(rootNode, "w");
+    float rootH = yaml::getValue<float>(rootNode, "h");
+    float rootRot = yaml::getValue<float>(rootNode, "r", 0.f);
+    bones["root"] = Make<Bone>(rootW, rootH, rootRot);
+
+    // Bones
+    auto rootBones = yaml::getNode(rootCfg, "bones");
+    for (auto pair: rootBones) {
+      auto& bone = pair.second;
+
+      float boneW = yaml::getValue<float>(bone, "w");
+      float boneH = yaml::getValue<float>(bone, "h");
+      float boneRot = yaml::getValue<float>(bone, "r", 0.f);
+      float boneDep = yaml::getValue<float>(bone, "d", 0.f);
+      std::string boneName = pair.first.as<std::string>();
+
+      this->addBone(boneName, boneW, boneH, boneRot, boneDep);
+    }
+
+    // Joints
+    auto rootJoints = yaml::getNode(rootCfg, "joints");
+    for (auto pair: rootJoints) {
+      std::string jointName = pair.first.as<std::string>();
+      auto& joint = pair.second;
+
+      std::string a = yaml::getValue<std::string>(joint, "a");
+      std::string b = yaml::getValue<std::string>(joint, "b");
+      auto anchorA = yaml::getNode(joint, "anchorA");
+      auto anchorB = yaml::getNode(joint, "anchorB");
+      float anchorAx = yaml::getListValue<float>(anchorA, 0);
+      float anchorAy = yaml::getListValue<float>(anchorA, 1);
+      float anchorBx = yaml::getListValue<float>(anchorB, 0);
+      float anchorBy = yaml::getListValue<float>(anchorB, 1);
+      glm::vec2 limit = {0, 360};
+
+      if (joint["limit"]) {
+        limit.x = joint["limit"][0].as<float>();
+        limit.y = joint["limit"][1].as<float>();
+      }
+
+      this->addJoint(jointName, a, b, glm::vec2(anchorAx, anchorAy), glm::vec2(anchorBx, anchorBy), limit);
+    }
   }
 
   void setPosition(float x, float y) {
-    bones["ROOT"]->c_position.x = x;
-    bones["ROOT"]->c_position.y = y;
+    bones["root"]->c_position.x = x;
+    bones["root"]->c_position.y = y;
 
     for (auto& pair: joints) {
       pair.second->update();
     }
   }
 
-  void addBone(std::string name, float w, float h, float rotation) {
-    bones[name] = new Bone(w, h, rotation);
+  void addBone(std::string name, float w, float h, float rotation, float depth = 0) {
+    bones[name] = Make<Bone>(w, h, rotation, depth);
   }
 
-  void addJoint(std::string name, std::string a, std::string b, glm::vec2 anchorA, glm::vec2 anchorB) {
+  void addJoint(std::string name, std::string a, std::string b, glm::vec2 anchorA, glm::vec2 anchorB, glm::vec2 limit = {0, 360}) {
     auto& boneA = bones[a];
     auto& boneB = bones[b];
-    auto joint = new Joint(boneA, boneB, anchorA, anchorB);
+    Pointer<Joint> joint = Make<Joint>(boneA, boneB, anchorA, anchorB, limit);
 
     boneA->children.push_back(joint);
     boneB->parent = joint;
@@ -60,7 +112,7 @@ public:
   }
 
   void rotateRoot(float angle) {
-    auto& root = bones["ROOT"];
+    auto& root = bones["root"];
     root->rotation = math::mclamp(root->rotation + angle, 0, 360);
     root->c_rotation = root->rotation;
 
@@ -70,7 +122,7 @@ public:
   }
 
   void draw(const Pointer<Batch>& batch) {
-    bones["ROOT"]->draw(batch);
+    bones["root"]->draw(batch);
 
     for (auto& pair: joints) {
       pair.second->draw(batch);
@@ -81,8 +133,8 @@ public:
     joints[name]->rotate(angle);
   }
 
-  std::map<std::string, Bone*> bones;
-  std::map<std::string, Joint*> joints;
+  std::map<std::string, Pointer<Bone>> bones;
+  std::map<std::string, Pointer<Joint>> joints;
 };
 
 } /* graphics */

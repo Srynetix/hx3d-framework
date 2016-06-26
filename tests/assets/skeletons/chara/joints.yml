@@ -1,0 +1,149 @@
+root:
+  w: 50
+  h: 60
+  r: 0
+
+bones:
+  head:
+    w: 45
+    h: 40
+  body:
+    w: 50
+    h: 60
+
+  l-sho:
+    w: 20
+    h: 40
+    r: -10
+    d: -3
+  l-arm:
+    w: 20
+    h: 40
+    r: 10
+    d: -2
+  l-hand:
+    w: 20
+    h: 20
+    d: -1
+  l-uleg:
+    w: 25
+    h: 50
+    d: -6
+  l-bleg:
+    w: 25
+    h: 50
+    d: -5
+  l-foot:
+    w: 30
+    h: 20
+    d: -4
+
+  r-sho:
+    w: 20
+    h: 40
+    r: 10
+    d: -3
+  r-arm:
+    w: 20
+    h: 40
+    r: -10
+    d: -2
+  r-hand:
+    w: 20
+    h: 20
+    d: -1
+  r-uleg:
+    w: 25
+    h: 50
+    d: -6
+  r-bleg:
+    w: 25
+    h: 50
+    d: -5
+  r-foot:
+    w: 30
+    h: 20
+    f: -4
+
+joints:
+  neck:
+    a: root
+    b: head
+    anchorA: [0.5, 1]
+    anchorB: [0.5, 0]
+    limit: [-45, 45]
+  body:
+    a: root
+    b: body
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+    limit: [-45, 45]
+
+  l-sho:
+    a: root
+    b: l-sho
+    anchorA: [0, 0.75]
+    anchorB: [0.5, 1]
+  l-arm:
+    a: l-sho
+    b: l-arm
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  l-hand:
+    a: l-arm
+    b: l-hand
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  l-uleg:
+    a: body
+    b: l-uleg
+    anchorA: [0.25, 0]
+    anchorB: [0.5, 1]
+  l-bleg:
+    a: l-uleg
+    b: l-bleg
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  l-foot:
+    a: l-bleg
+    b: l-foot
+    anchorA: [0.25, 0]
+    anchorB: [0.25, 1]
+
+  r-sho:
+    a: root
+    b: r-sho
+    anchorA: [1, 0.75]
+    anchorB: [0.5, 1]
+  r-arm:
+    a: r-sho
+    b: r-arm
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  r-hand:
+    a: r-arm
+    b: r-hand
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  r-uleg:
+    a: body
+    b: r-uleg
+    anchorA: [0.75, 0]
+    anchorB: [0.5, 1]
+  r-bleg:
+    a: r-uleg
+    b: r-bleg
+    anchorA: [0.5, 0]
+    anchorB: [0.5, 1]
+  r-foot:
+    a: r-bleg
+    b: r-foot
+    anchorA: [0.25, 0]
+    anchorB: [0.25, 1]
+
+# animations:
+#   walk:
+#     - joint: l-uleg
+#       speed: 0.1
+#       target: -110
+#       easing: quartOut
