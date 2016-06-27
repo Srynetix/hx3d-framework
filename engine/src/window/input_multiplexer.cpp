@@ -106,5 +106,11 @@ void InputMultiplexer::onKeyReleased(KeyEvent::Key key) {
   }
 }
 
+void InputMultiplexer::onTextInput(std::string text) {
+  for (auto& handler: _handlers) {
+    handler->onTextInput(text);
+  }
+}
+
 } /* window */
 } /* hx3d */

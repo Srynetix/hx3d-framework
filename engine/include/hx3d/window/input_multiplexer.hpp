@@ -47,6 +47,7 @@ public:
 
   virtual void onKeyPressed(KeyEvent::Key key) override;
   virtual void onKeyReleased(KeyEvent::Key key) override;
+  virtual void onTextInput(std::string text) override;
 
 private:
   std::vector<InputHandler*> _handlers;

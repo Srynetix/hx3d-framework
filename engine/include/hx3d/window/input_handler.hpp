@@ -23,6 +23,7 @@
 
 #include "hx3d/window/events.hpp"
 
+#include <string>
 #include <glm/glm.hpp>
 
 namespace hx3d {
@@ -110,6 +111,13 @@ public:
   @param key Key
   */
   virtual void onKeyReleased(KeyEvent::Key key);
+
+  /**
+  @brief When input is entered
+
+  @param text String
+  */
+  virtual void onTextInput(std::string text);
 };
 
 } /* window */

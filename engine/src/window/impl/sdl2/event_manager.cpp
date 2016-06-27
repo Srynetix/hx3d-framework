@@ -29,7 +29,13 @@
 namespace hx3d {
 namespace window {
 
-EventManager::EventManager() {
+void EventManager::beginTextInput() {
+  _textInputMode = true;
+  SDL_StartTextInput();
+}
+
+void EventManager::endTextInput() {
+  _textInputMode = false;
   SDL_StopTextInput();
 }
 
@@ -55,6 +61,13 @@ void EventManager::poll() {
       _windowEvents[static_cast<unsigned int>(type)] = true;
       if (_currentHandler) {
         _currentHandler->onWindowEvent(type);
+      }
+    }
+
+    else if (event.type == SDL_TEXTINPUT) {
+      _currentWrittenText = event.text.text;
+      if (_currentHandler) {
+        _currentHandler->onTextInput(_currentWrittenText);
       }
     }
 

@@ -35,6 +35,7 @@ void InputHandler::onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovemen
 
 void InputHandler::onKeyPressed(KeyEvent::Key key) {}
 void InputHandler::onKeyReleased(KeyEvent::Key key) {}
+void InputHandler::onTextInput(std::string text) {}
 
 } /* window */
 } /* hx3d */

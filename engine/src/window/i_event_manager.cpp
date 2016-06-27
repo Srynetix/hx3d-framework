@@ -42,9 +42,12 @@ IEventManager::IEventManager() {
   _screenTouched = false;
   _screenReleased = false;
   _touchPressure = 0.f;
+  _textInputMode = false;
 
   _touchSimulation = false;
   _currentHandler = Make<InputMultiplexer>();
+
+  endTextInput();
 }
 
 IEventManager::~IEventManager() {
@@ -172,6 +175,10 @@ glm::vec2 IEventManager::getTouchPosition() {
   return _touchPosition;
 }
 
+bool IEventManager::isTextInputActivated() {
+  return _textInputMode;
+}
+
 glm::vec2 IEventManager::getScreenConvertedTouchPosition() {
   auto screen_size = Core::App()->getSize();
   auto viewport = Core::CurrentGame()->getViewport();
@@ -186,6 +193,16 @@ glm::vec2 IEventManager::getTouchMovement() {
 
 float IEventManager::getTouchPressure() {
   return _touchPressure;
+}
+
+std::string IEventManager::getWrittenText() {
+  return _currentWrittenText;
+}
+
+void IEventManager::beginTextInput() {
+}
+
+void IEventManager::endTextInput() {
 }
 
 void IEventManager::emulateTouchWithMouse(bool value) {

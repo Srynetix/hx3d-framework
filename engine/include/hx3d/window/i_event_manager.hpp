@@ -152,6 +152,12 @@ public:
     @return True/False
     */
     bool isKeyJustReleased(KeyEvent::Key key);
+    /**
+    @brief Test if text has been written
+
+    @return True/False
+    */
+    bool isTextInputActivated();
 
     /**
     @brief Get the current mouse position.
@@ -196,6 +202,22 @@ public:
     @return Touch pressure
     */
     float getTouchPressure();
+    /**
+    @brief Get the written text
+
+    @return Text
+    */
+    std::string getWrittenText();
+
+    /**
+    @brief Begin to input text
+    */
+    virtual void beginTextInput();
+
+    /**
+    @brief End to input text
+    */
+    virtual void endTextInput();
 
     /**
     @brief Emulate the touch system with the mouse.
@@ -246,6 +268,11 @@ public:
     bool _screenTouched;
     /// @brief Screen released ?
     bool _screenReleased;
+
+    /// @brief Inputting text ?
+    bool _textInputMode;
+    /// @brief Current written text
+    std::string _currentWrittenText;
 
     /// @brief Mouse position
     glm::vec2 _mousePosition;

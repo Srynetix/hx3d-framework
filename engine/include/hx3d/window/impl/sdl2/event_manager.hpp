@@ -27,8 +27,8 @@ namespace window {
 
 class EventManager: public IEventManager {
 public:
-  EventManager();
-  
+  virtual void beginTextInput() override;
+  virtual void endTextInput() override;
   virtual void poll() override;
 };
 
