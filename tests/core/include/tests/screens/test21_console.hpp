@@ -13,9 +13,43 @@ using namespace hx3d::scripting;
 
 class GUIWidget: public std::enable_shared_from_this<GUIWidget>, public InputHandler {
 public:
+  class Placement {
+  public:
+    enum class Type {
+      Fill = 0,
+      Relative,
+      Absolute
+    };
+
+    Placement() {
+      _coords = {0, 0, 0, 0};
+    }
+
+    static Placement Fill() {
+      Placement p;
+      p._type = Type::Absolute;
+      return p;
+    }
+
+    static Placement Relative(float min_x, float min_y, float max_x, float max_y) {
+      Placement p;
+      p._type = Type::Relative;
+      p._coords = {min_x, min_y, max_x, max_y};
+      return p;
+    }
+
+    static Placement Absolute() {
+      Placement p;
+      p._type = Type::Absolute;
+      return p;
+    }
+
+    glm::vec4 _coords;
+    Type _type;
+  };
+
   GUIWidget() {
     _sprite = Make<Sprite>();
-    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
 
     _visible = true;
     _propagate = true;
@@ -123,17 +157,28 @@ public:
   }
 
   template <class Type, class... Args>
-  Pointer<Type> createChild(Args&&... args) {
+  Pointer<Type> createChild(Placement placement, Args&&... args) {
     Pointer<Type> child = Make<Type>(args...);
     child->_parent = shared_from_this();
     _children.push_back(child);
+
+    if (placement._type == Placement::Type::Fill) {
+      child->_sprite->transform.position.x = this->_sprite->transform.position.x;
+      child->_sprite->transform.position.y = this->_sprite->transform.position.y;
+      child->_sprite->transform.size.x = this->_sprite->transform.size.x;
+      child->_sprite->transform.size.y = this->_sprite->transform.size.y;
+    } else if (placement._type == Placement::Type::Absolute) {
+      // Do nothing
+    } else if (placement._type == Placement::Type::Relative) {
+      // Calcul
+    }
 
     return child;
   }
 
   template <class Type, class... Args>
-  Pointer<Type> createHiddenChild(Args&&... args) {
-    Pointer<Type> child = createChild<Type>(args...);
+  Pointer<Type> createHiddenChild(Placement placement, Args&&... args) {
+    Pointer<Type> child = createChild<Type>(placement, args...);
     child->_visible = false;
 
     return child;
@@ -192,12 +237,15 @@ public:
 class ConsolePanel: public GUIWidget {
 public:
   ConsolePanel(float x, float y, float w, float h) {
-    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
     _sprite->transform.position.x = x;
     _sprite->transform.position.y = y;
     _sprite->transform.position.z = 0.01;
     _sprite->transform.size.x = w;
     _sprite->transform.size.y = h;
+
+    _scrollback->transform.position.x = x;
+    _scrollback->transform.position.y = y - 25;
+    _scrollback->transform.position.z = 0.08;
 
     _sprite->setTint(Color(127, 127, 127, 127));
 
@@ -234,12 +282,28 @@ public:
 
     GUIWidget::onKeyPressed(key);
   }
+
+  void addText(std::string text) {
+    _scrollback->setContent(text);
+  }
+
+  virtual void draw(const Pointer<Batch>& batch) override {
+    if (_visible) {
+      batch->draw(_sprite);
+      batch->draw(_scrollback);
+    }
+
+    for (auto& child: _children) {
+      child->draw(batch);
+    }
+  }
+
+  PrivateReference<gui::Text> _scrollback;
 };
 
 class GUITextbox: public GUIWidget {
 public:
   GUITextbox() {
-    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
     _sprite->transform.position.x = Core::App()->getWidth() / 2;
     _sprite->transform.position.y = Core::App()->getHeight() - Core::App()->getHeight() / 8;
     _sprite->transform.position.z = 0.02;
@@ -344,19 +408,24 @@ public:
     REPL::Config config;
     config.scripter = &scripter;
     repl = Make<REPL>(config);
+    repl->begin();
 
     gui = Make<GUISystem>();
     batch->setCamera(camera);
 
     auto top_center = glm::vec2(Core::App()->getWidth() / 2, Core::App()->getHeight() - Core::App()->getHeight() / 8);
-    auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
+    auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(GUIWidget::Placement::Fill(), top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
     consolepanel->setActive();
 
-    auto textbox = consolepanel->createHiddenChild<GUITextbox>();
-    textbox->on("validate", [this,textbox](Pointer<GUIWidget> widget) {
-      Log.Info("Executing `%s` script...", textbox->getText().c_str());
-      textbox->setText("");
-      // repl->start();
+    auto textbox = consolepanel->createHiddenChild<GUITextbox>(GUIWidget::Placement::Absolute());
+    textbox->on("validate", [this,consolepanel,textbox](Pointer<GUIWidget> widget) {
+      auto txt = textbox->getText();
+      if (txt.size() > 0) {
+        std::string ret = repl->execute_line(txt);
+
+        consolepanel->addText(ret);
+        textbox->setText("");
+      }
     });
 
     consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
@@ -371,6 +440,7 @@ public:
   }
 
   virtual void dispose() {
+    repl->end();
   }
 
   virtual void update(float delta) override {

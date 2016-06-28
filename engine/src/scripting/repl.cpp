@@ -1,6 +1,7 @@
 #include "hx3d/scripting/repl.hpp"
 
 #include <iostream>
+#include <sstream>
 #include <cstring>
 #include <csignal>
 
@@ -13,10 +14,11 @@
 namespace hx3d {
 namespace scripting {
 
-REPL::REPL(Config config) {
+REPL::REPL(Config& config) {
   _config = config;
   _context = config.scripter->get_context();
   _state = config.scripter->get_state();
+  _code_block_open = FALSE;
 }
 
 void REPL::_show_value(mrb_value obj, int prompt)
@@ -36,6 +38,27 @@ void REPL::_show_value(mrb_value obj, int prompt)
     val = mrb_obj_as_string(_state, obj);
   }
   std::cout << RSTRING_PTR(val) << std::endl;
+}
+
+std::string REPL::_show_value_str(mrb_value obj, int prompt)
+{
+  std::ostringstream oss;
+  mrb_value val;
+
+  val = mrb_funcall(_state, obj, "inspect", 0);
+  if (prompt) {
+    if (!_state->exc) {
+      oss << " => ";
+    }
+    else {
+      val = mrb_funcall(_state, mrb_obj_value(_state->exc), "inspect", 0);
+    }
+  }
+  if (!mrb_string_p(val)) {
+    val = mrb_obj_as_string(_state, obj);
+  }
+  oss << RSTRING_PTR(val) << std::endl;
+  return oss.str();
 }
 
 /* Guess if the user might want to enter more
@@ -157,6 +180,19 @@ void REPL::_print_cmdline(int code_block_open)
   std::cout.flush();
 }
 
+std::string REPL::show_prompt() {
+
+  std::ostringstream oss;
+
+  if (_code_block_open) {
+    oss << "* ";
+  } else {
+    oss << "> ";
+  }
+
+  return oss.str();
+}
+
 int REPL::_check_keyword(const char *buf, const char *word)
 {
   const char *p = buf;
@@ -186,7 +222,110 @@ void ctrl_c_handler(int signo)
   input_canceled = 1;
 }
 
-void REPL::start()
+void REPL::begin() {
+  _ai = mrb_gc_arena_save(_state);
+  _running = TRUE;
+}
+
+void REPL::end() {
+  _running = FALSE;
+}
+
+std::string REPL::execute_line(std::string line) {
+
+  std::string result;
+  _current_line = line + "\n";
+
+  if (_code_block_open) {
+    _ruby_code += _current_line;
+  }
+
+  else {
+    if (_check_keyword(_current_line.c_str(), "quit") || _check_keyword(_current_line.c_str(), "exit")) {
+      _running = FALSE;
+      result = "exiting...";
+    }
+
+    else {
+      _ruby_code += _current_line;
+    }
+  }
+
+  _utf8 = mrb_utf8_from_locale(_ruby_code.c_str(), -1);
+  if (!_utf8) abort();
+
+  return _parse_current_code();
+}
+
+std::string REPL::_parse_current_code() {
+  /* parse code */
+  auto parser = mrb_parser_new(_state);
+  if (parser == NULL) {
+    return "create parser state error\n";
+  }
+
+  std::ostringstream oss;
+  std::string str = "";
+
+  parser->s = _utf8;
+  parser->send = _utf8 + strlen(_utf8);
+  parser->lineno = _context->lineno;
+  mrb_parser_parse(parser, _context);
+  _code_block_open = _is_code_block_open(parser);
+  mrb_utf8_free(_utf8);
+
+  if (_code_block_open) {
+    /* no evaluation of code */
+    return "* ";
+  }
+  else {
+    if (0 < parser->nerr) {
+      /* syntax error */
+      oss << "line " << parser->error_buffer[0].lineno << ": " << parser->error_buffer[0].message << "\n";
+      return oss.str();
+    }
+    else {
+      /* generate bytecode */
+      RProc *proc = mrb_generate_code(_state, parser);
+      if (proc == NULL) {
+        oss << "codegen error\n";
+        mrb_parser_free(parser);
+        return oss.str();
+      }
+
+      /* pass a proc for evaulation */
+      /* evaluate the bytecode */
+      auto stack_keep = proc->body.irep->nlocals;
+      auto result = mrb_vm_run(_state,
+          proc,
+          mrb_top_self(_state),
+          stack_keep);
+      /* did an exception occur? */
+      if (_state->exc) {
+        str = _show_value_str(mrb_obj_value(_state->exc), 0);
+        _state->exc = 0;
+      }
+      else {
+        /* no */
+        if (!mrb_respond_to(_state, result, mrb_intern_lit(_state, "inspect"))){
+          result = mrb_any_to_s(_state, result);
+        }
+        str = _show_value_str(result, 1);
+      }
+    }
+
+    _ruby_code = "";
+    _current_line = "";
+    mrb_gc_arena_restore(_state, _ai);
+  }
+
+  mrb_parser_free(parser);
+  _context->lineno++;
+
+  return str;
+}
+
+void REPL::start_auto()
 {
   char ruby_code[4096] = { 0 };
   char last_code_line[1024] = { 0 };
@@ -312,6 +451,7 @@ void REPL::start()
     _context->lineno++;
   }
 }
+
 
 } /* scripting */
 } /* hx3d */
