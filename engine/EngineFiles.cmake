@@ -160,6 +160,14 @@ set(
 )
 
 set(
+  SCRIPTING_FILES
+
+  "${ENGINE_SRC}/scripting/scripter.cpp"
+  "${ENGINE_SRC}/scripting/scripter_factory.cpp"
+  "${ENGINE_SRC}/scripting/repl.cpp"
+)
+
+set(
   TWEENS_FILES
 
   "${ENGINE_SRC}/tweens/base_tween.cpp"

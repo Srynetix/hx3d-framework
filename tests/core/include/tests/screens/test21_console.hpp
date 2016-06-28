@@ -1,16 +1,24 @@
 #include "./base_test_screen.hpp"
+#include "hx3d/scripting/scripter.hpp"
+#include "hx3d/scripting/repl.hpp"
 
 #include <string>
 
 using namespace hx3d;
+using namespace hx3d::scripting;
+
+/*******************
+  GUI
+********************/
 
 class GUIWidget: public std::enable_shared_from_this<GUIWidget>, public InputHandler {
 public:
   GUIWidget() {
     _sprite = Make<Sprite>();
-    _sprite->setTexture(Core::Assets()->get<Texture>("box"));
+    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
 
     _visible = true;
+    _propagate = true;
     _activeChild = nullptr;
   }
 
@@ -18,6 +26,7 @@ public:
   std::vector<Pointer<GUIWidget>> _children;
   Pointer<GUIWidget> _parent;
   bool _visible;
+  bool _propagate;
   Pointer<GUIWidget> _activeChild;
   std::map<std::string, std::function<void(Pointer<GUIWidget>)>> _actions;
 
@@ -27,7 +36,39 @@ public:
   virtual void onExit() {}
 
   void setVisible(bool value) {
-    this->_visible = value;
+    if (value != _visible) {
+      if (value) this->onShow();
+      else this->onHide();
+    }
+
+    _visible = value;
+  }
+
+  void setActive() {
+    if (_parent) {
+      auto parent_active = _parent->_activeChild;
+      auto self = shared_from_this();
+
+      if (parent_active && parent_active != self) {
+        parent_active->onExit();
+      }
+
+      if (parent_active != self) {
+        self->onFocus();
+        _parent->_activeChild = self;
+      }
+    }
+  }
+
+  void setInactive() {
+    if (_parent) {
+      auto self = shared_from_this();
+      auto parent_active = _parent->_activeChild;
+      if (parent_active == self) {
+        _parent->_activeChild = nullptr;
+        self->onExit();
+      }
+    }
   }
 
   void registerAction(std::string action) {
@@ -57,12 +98,43 @@ public:
     }
   }
 
+  virtual bool setFocus(glm::vec2 position) {
+    for (auto& child: _children) {
+      if (child->setFocus(position)) {
+        if (_activeChild && _activeChild != child) {
+          _activeChild->onExit();
+        }
+
+        if (_activeChild != child) {
+          _activeChild = child;
+          _activeChild->onFocus();
+        }
+
+        return true;
+      }
+    }
+
+    if (_activeChild) {
+      _activeChild->onExit();
+      _activeChild = nullptr;
+    }
+
+    return checkBounds(position);
+  }
+
   template <class Type, class... Args>
   Pointer<Type> createChild(Args&&... args) {
     Pointer<Type> child = Make<Type>(args...);
     child->_parent = shared_from_this();
-    _activeChild = child;
     _children.push_back(child);
+
+    return child;
+  }
+
+  template <class Type, class... Args>
+  Pointer<Type> createHiddenChild(Args&&... args) {
+    Pointer<Type> child = createChild<Type>(args...);
+    child->_visible = false;
 
     return child;
   }
@@ -78,28 +150,28 @@ public:
   }
 
   virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
-    for (auto& child: _children) {
-      if (child->checkBounds(mousePosition)) {
+    if (_propagate) {
+      if (_activeChild) {
+        _activeChild->onMouseClicked(button, mousePosition);
+      }
+    }
 
-        if (_activeChild) {
-          if (_activeChild != child) {
-            child->onExit();
-            _activeChild = child;
-            child->onFocus();
-          }
-        } else {
-          _activeChild = child;
-          child->onFocus();
-        }
+    // setFocus(mousePosition);
+  }
 
-        return;
+  virtual void onTextInput(std::string text) {
+    if (_propagate) {
+      if (_activeChild) {
+        _activeChild->onTextInput(text);
       }
     }
   }
 
   virtual void onKeyPressed(KeyEvent::Key key) override {
-    for (auto& child: _children) {
-      child->onKeyPressed(key);
+    if (_propagate) {
+      if (_activeChild) {
+        _activeChild->onKeyPressed(key);
+      }
     }
   }
 
@@ -117,23 +189,81 @@ public:
   }
 };
 
+class ConsolePanel: public GUIWidget {
+public:
+  ConsolePanel(float x, float y, float w, float h) {
+    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
+    _sprite->transform.position.x = x;
+    _sprite->transform.position.y = y;
+    _sprite->transform.position.z = 0.01;
+    _sprite->transform.size.x = w;
+    _sprite->transform.size.y = h;
+
+    _sprite->setTint(Color(127, 127, 127, 127));
+
+    registerAction("show");
+    registerAction("hide");
+  }
+
+  virtual void onFocus() override {
+    Log.Info("Console Panel active");
+  }
+
+  virtual void onExit() override {
+    Log.Info("Console Panel inactive");
+  }
+
+  virtual void onShow() override {
+    Core::Events()->endTextInput();
+
+    Log.Info("Tweening Down");
+    send("show");
+  }
+
+  virtual void onHide() override {
+    Log.Info("Tweening Up");
+    send("hide");
+  }
+
+  virtual void onKeyPressed(KeyEvent::Key key) override {
+    if (key == KeyEvent::Key::ConsoleKey) {
+      Log.Info("Console !");
+
+      setVisible(!_visible);
+    }
+
+    GUIWidget::onKeyPressed(key);
+  }
+};
+
 class GUITextbox: public GUIWidget {
 public:
   GUITextbox() {
-    _sprite->setTexture(Core::Assets()->get<Texture>("box"));
+    // _sprite->setTexture(Core::Assets()->get<Texture>("box"));
     _sprite->transform.position.x = Core::App()->getWidth() / 2;
-    _sprite->transform.position.y = Core::App()->getHeight() / 2;
+    _sprite->transform.position.y = Core::App()->getHeight() - Core::App()->getHeight() / 8;
+    _sprite->transform.position.z = 0.02;
+    _sprite->transform.size.x = 256;
+    _sprite->transform.size.y = 48;
+    _sprite->transform.scale = glm::vec3(0.25);
+
+    _display = Make<gui::Text>();
+    _display->transform.position.x = _sprite->transform.position.x;
+    _display->transform.position.y = _sprite->transform.position.y;
+    _display->transform.position.z = _sprite->transform.position.z + 0.01;
 
     registerAction("validate");
   }
 
   virtual void onFocus() override {
     Log.Info("Focus !");
+    _sprite->setTint(Color(127, 0, 127));
     Core::Events()->beginTextInput();
   }
 
   virtual void onExit() override {
     Log.Info("Exit !");
+    _sprite->setTint(Color(127, 127, 127));
     Core::Events()->endTextInput();
   }
 
@@ -141,9 +271,43 @@ public:
     if (key == KeyEvent::Key::Return) {
       send("validate");
     }
+
+    else if (key == KeyEvent::Key::Backspace) {
+      if (_enteredText.size() > 0) {
+        _enteredText.pop_back();
+      }
+
+      _updateText();
+    }
+  }
+
+  virtual void onTextInput(std::string text) override {
+    _enteredText += text;
+    _updateText();
+  }
+
+  std::string getText() const {
+    return _enteredText;
+  }
+
+  void setText(std::string txt) {
+    _enteredText = txt;
+    _updateText();
+  }
+
+  void _updateText() {
+    _display->setContent(_enteredText);
+  }
+
+  virtual void draw(const Pointer<Batch>& batch) {
+    if (_visible) {
+      batch->draw(_sprite);
+      batch->draw(_display);
+    }
   }
 
   std::string _enteredText;
+  Pointer<gui::Text> _display;
 };
 
 class GUISystem {
@@ -169,16 +333,40 @@ public:
   Pointer<GUIWidget> _root;
 };
 
+/*******************
+  Test
+********************/
+
 class Test21: public BaseTestScreen {
 public:
   Test21()
   {
+    REPL::Config config;
+    config.scripter = &scripter;
+    repl = Make<REPL>(config);
+
     gui = Make<GUISystem>();
     batch->setCamera(camera);
 
-    auto textbox = gui->getContent()->createChild<GUITextbox>();
-    textbox->on("validate", [](Pointer<GUIWidget> widget) {
-      Log.Info("Executing script...");
+    auto top_center = glm::vec2(Core::App()->getWidth() / 2, Core::App()->getHeight() - Core::App()->getHeight() / 8);
+    auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
+    consolepanel->setActive();
+
+    auto textbox = consolepanel->createHiddenChild<GUITextbox>();
+    textbox->on("validate", [this,textbox](Pointer<GUIWidget> widget) {
+      Log.Info("Executing `%s` script...", textbox->getText().c_str());
+      textbox->setText("");
+      // repl->start();
+    });
+
+    consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
+      textbox->setVisible(true);
+      textbox->setActive();
+    });
+
+    consolepanel->on("hide", [textbox](Pointer<GUIWidget> widget) {
+      textbox->setVisible(false);
+      textbox->setInactive();
     });
   }
 
@@ -201,5 +389,7 @@ private:
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
   SimpleBatch::Ref batch;
+  Scripter scripter;
+  Pointer<REPL> repl;
   Pointer<GUISystem> gui;
 };

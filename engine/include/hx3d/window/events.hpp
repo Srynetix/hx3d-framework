@@ -57,6 +57,7 @@ namespace window {
       Left, Right, Up, Down,
       Space, Escape, Return,
       AndroidBack, AndroidMenu,
+      ConsoleKey, Backspace,
       None
     };
   };

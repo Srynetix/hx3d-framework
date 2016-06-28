@@ -31,6 +31,8 @@ Mesh() {
   _geometry->setFaceCulling(Culling::Back);
 
   setTint(Color::White);
+
+  this->setTexture(Texture::Blank);
 }
 
 void Sprite::setTexture(const Pointer<Texture>& texture) {

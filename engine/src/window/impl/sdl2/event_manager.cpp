@@ -285,6 +285,11 @@ void EventManager::poll() {
         case SDLK_MENU:
           key = KeyEvent::Key::AndroidMenu;
           break;
+        case SDLK_BACKSPACE:
+          key = KeyEvent::Key::Backspace;
+          break;
+        case 178:
+          key = KeyEvent::Key::ConsoleKey;
         default:
           break;
       }

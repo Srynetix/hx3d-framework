@@ -39,6 +39,7 @@ set(
   "-lSDL2\
   -lSDL2_mixer\
   -lepoxy\
+  -lmruby\
   -lGL"
 )
 
@@ -142,6 +143,7 @@ set(
   ${NET_FILES}
   ${PHYSICS2D_FILES}
   ${ECS_FILES}
+  ${SCRIPTING_FILES}
   ${TWEENS_FILES}
 )
 
