@@ -11,6 +11,58 @@ using namespace hx3d::scripting;
   GUI
 ********************/
 
+class NWidget: public std::enable_shared_from_this<NWidget>, public InputHandler {
+public:
+  class FocusHandler: public InputHandler {
+  public:
+    FocusHandler(NWidget* widget): _widget(widget) {}
+
+    virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override {
+      if (_widget->_propagateEvent) {
+        Log.Info("CLIC");
+        if (_widget->_activeChild) {
+          _widget->_activeChild->_focusHandler->onMouseClicked(button, mousePosition);
+        }
+      }
+    }
+
+    virtual void onKeyPressed(KeyEvent::Key key) override {
+
+    }
+
+    virtual void onTextInput(std::string text) override {
+
+    }
+
+    NWidget* _widget;
+  };
+
+  NWidget(Pointer<NWidget> parent = nullptr) {
+    _focusHandler = Make<FocusHandler>(this);
+    _parent = parent;
+    _activeChild = nullptr;
+
+    _visible = true;
+    _propagateEvent = true;
+    _conserveFocus = true;
+  }
+
+  virtual void updateTransform() {}
+  virtual void draw(const Pointer<Batch>& batch) {}
+
+  Transform _transform;
+  std::vector<Pointer<NWidget>> _children;
+  Pointer<NWidget> _parent;
+  Pointer<FocusHandler> _focusHandler;
+
+  bool _visible;
+  bool _propagateEvent;
+  bool _conserveFocus;
+
+  Pointer<NWidget> _activeChild;
+  std::map<std::string, std::function<void(Pointer<NWidget>)>> _actions;
+};
+
 class GUIWidget: public std::enable_shared_from_this<GUIWidget>, public InputHandler {
 public:
   class Placement {
@@ -200,8 +252,6 @@ public:
         _activeChild->onMouseClicked(button, mousePosition);
       }
     }
-
-    // setFocus(mousePosition);
   }
 
   virtual void onTextInput(std::string text) {
@@ -387,7 +437,9 @@ public:
   }
 
   void draw(const Pointer<Batch>& batch) {
+    glDisable(GL_DEPTH_TEST);
     _root->draw(batch);
+    glEnable(GL_DEPTH_TEST);
   }
 
   const Pointer<GUIWidget>& getContent() {
@@ -405,41 +457,46 @@ class Test21: public BaseTestScreen {
 public:
   Test21()
   {
+    batch->setCamera(camera);
+
     REPL::Config config;
     config.scripter = &scripter;
     repl = Make<REPL>(config);
     repl->begin();
 
-    gui = Make<GUISystem>();
-    batch->setCamera(camera);
+    widg = Make<NWidget>();
+    Core::Events()->registerHandler(widg->_focusHandler.get());
 
-    auto top_center = glm::vec2(Core::App()->getWidth() / 2, Core::App()->getHeight() - Core::App()->getHeight() / 8);
-    auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(GUIWidget::Placement::Fill(), top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
-    consolepanel->setActive();
-
-    auto textbox = consolepanel->createHiddenChild<GUITextbox>(GUIWidget::Placement::Absolute());
-    textbox->on("validate", [this,consolepanel,textbox](Pointer<GUIWidget> widget) {
-      auto txt = textbox->getText();
-      if (txt.size() > 0) {
-        std::string ret = repl->execute_line(txt);
-
-        consolepanel->addText(ret);
-        textbox->setText("");
-      }
-    });
-
-    consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
-      textbox->setVisible(true);
-      textbox->setActive();
-    });
-
-    consolepanel->on("hide", [textbox](Pointer<GUIWidget> widget) {
-      textbox->setVisible(false);
-      textbox->setInactive();
-    });
+    // gui = Make<GUISystem>();
+    //
+    // auto top_center = glm::vec2(Core::App()->getWidth() / 2, Core::App()->getHeight() - Core::App()->getHeight() / 8);
+    // auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(GUIWidget::Placement::Fill(), top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
+    // consolepanel->setActive();
+    //
+    // auto textbox = consolepanel->createHiddenChild<GUITextbox>(GUIWidget::Placement::Absolute());
+    // textbox->on("validate", [this,consolepanel,textbox](Pointer<GUIWidget> widget) {
+    //   auto txt = textbox->getText();
+    //   if (txt.size() > 0) {
+    //     std::string ret = repl->execute_line(txt);
+    //
+    //     consolepanel->addText(ret);
+    //     textbox->setText("");
+    //   }
+    // });
+    //
+    // consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
+    //   textbox->setVisible(true);
+    //   textbox->setActive();
+    // });
+    //
+    // consolepanel->on("hide", [textbox](Pointer<GUIWidget> widget) {
+    //   textbox->setVisible(false);
+    //   textbox->setInactive();
+    // });
   }
 
   virtual void dispose() {
+    Core::Events()->unregisterHandler(widg->_focusHandler.get());
     repl->end();
   }
 
@@ -451,7 +508,7 @@ public:
     Framebuffer::clear(Color::Black);
 
     batch->begin();
-    gui->draw(batch);
+    // gui->draw(batch);
     batch->end();
   }
 
@@ -462,4 +519,6 @@ private:
   Scripter scripter;
   Pointer<REPL> repl;
   Pointer<GUISystem> gui;
+
+  Pointer<NWidget> widg;
 };
