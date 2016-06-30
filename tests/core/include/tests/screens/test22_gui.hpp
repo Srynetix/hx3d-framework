@@ -1,68 +1,181 @@
-// #include "./base_test_screen.hpp"
-// #include "hx3d/scripting/scripter.hpp"
-// #include "hx3d/scripting/repl.hpp"
-//
-// #include <string>
-//
-// using namespace hx3d;
-// using namespace hx3d::scripting;
-//
-// /*******************
-//   GUI
-// ********************/
-//
-// class NWidget: public std::enable_shared_from_this<NWidget>, public InputHandler {
-// public:
-//   class FocusHandler: public InputHandler {
-//   public:
-//     FocusHandler(NWidget* widget): _widget(widget) {}
-//
-//     virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override {
-//       if (_widget->_propagateEvent) {
-//         Log.Info("CLIC");
-//         if (_widget->_activeChild) {
-//           _widget->_activeChild->_focusHandler->onMouseClicked(button, mousePosition);
-//         }
-//       }
-//     }
-//
-//     virtual void onKeyPressed(KeyEvent::Key key) override {
-//
-//     }
-//
-//     virtual void onTextInput(std::string text) override {
-//
-//     }
-//
-//     NWidget* _widget;
-//   };
-//
-//   NWidget(Pointer<NWidget> parent = nullptr) {
-//     _focusHandler = Make<FocusHandler>(this);
-//     _parent = parent;
-//     _activeChild = nullptr;
-//
-//     _visible = true;
-//     _propagateEvent = true;
-//     _conserveFocus = true;
-//   }
-//
-//   virtual void updateTransform() {}
-//   virtual void draw(const Pointer<Batch>& batch) {}
-//
-//   Transform _transform;
-//   std::vector<Pointer<NWidget>> _children;
-//   Pointer<NWidget> _parent;
-//   Pointer<FocusHandler> _focusHandler;
-//
-//   bool _visible;
-//   bool _propagateEvent;
-//   bool _conserveFocus;
-//
-//   Pointer<NWidget> _activeChild;
-//   std::map<std::string, std::function<void(Pointer<NWidget>)>> _actions;
-// };
-//
+#include "./base_test_screen.hpp"
+#include "hx3d/scripting/scripter.hpp"
+#include "hx3d/scripting/repl.hpp"
+
+#include <string>
+
+using namespace hx3d;
+using namespace hx3d::scripting;
+
+/*******************
+  GUI
+********************/
+
+
+class NWidget: public std::enable_shared_from_this<NWidget>, public InputHandler {
+  HX3D_ONLY_PTR(NWidget)
+
+public:
+  NWidget(Pointer<NWidget> parent = nullptr) {
+    _parent = parent;
+    _visible = true;
+
+    _sprite->setTexture(Texture::Blank);
+    _sprite->setTint(Color(127, 127, 127));
+  }
+
+  virtual void update() {
+    _sprite->transform.position.x = _transform.position.x;
+    _sprite->transform.position.y = _transform.position.y;
+    _sprite->transform.size.x = _transform.size.x;
+    _sprite->transform.size.y = _transform.size.y;
+  }
+
+  virtual void draw(const Pointer<Batch>& batch) {
+    batch->draw(_sprite);
+  }
+
+  Transform _transform;
+  Sprite::Ref _sprite;
+  Pointer<NWidget> _parent;
+
+  bool _visible;
+
+  std::map<std::string, std::function<void(Pointer<NWidget>)>> _actions;
+
+  bool checkBounds(glm::vec2 position) {
+    float lx = _transform.position.x - ((_transform.size.x / 2) * _transform.scale.x);
+    float hx = _transform.position.x + ((_transform.size.x / 2) * _transform.scale.x);
+    float ly = _transform.position.y - ((_transform.size.y / 2) * _transform.scale.y);
+    float hy = _transform.position.y + ((_transform.size.y / 2) * _transform.scale.y);
+
+    if (position.x >= lx && position.x <= hx && position.y >= ly && position.y <= hy) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  ///////////////////
+  // Input handler
+
+  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override {
+    mouseClicked(button, mousePosition);
+  }
+
+  virtual void onKeyPressed(KeyEvent::Key key) override {
+    keyPressed(key);
+  }
+
+  virtual void onTextInput(std::string text) override {
+    textInput(text);
+  }
+
+  /////////////////////
+  // Widget handlers
+
+  virtual void mouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+
+  }
+
+  virtual void keyPressed(KeyEvent::Key key) {
+
+  }
+
+  virtual void textInput(std::string text) {
+
+  }
+};
+
+class NContainer: public NWidget {
+  HX3D_ONLY_PTR(NContainer)
+
+public:
+  bool _propagateEvent;
+  NWidget::Ptr _activeChild;
+  std::vector<NWidget::Ptr> _children;
+
+  NContainer(const NWidget::Ptr& parent = nullptr): NWidget(parent) {
+    _propagateEvent = true;
+    _activeChild = nullptr;
+  }
+
+  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override {
+    mouseClicked(button, mousePosition);
+
+    if (_propagateEvent) {
+      if (_activeChild && _activeChild->checkBounds(mousePosition)) {
+        _activeChild->onMouseClicked(button, mousePosition);
+      } else {
+        // New active child
+        for (auto& child: _children) {
+          if (child != _activeChild && child->checkBounds(mousePosition)) {
+            _activeChild = child;
+            child->onMouseClicked(button, mousePosition);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  virtual void onKeyPressed(KeyEvent::Key key) override {
+    keyPressed(key);
+
+    if (_propagateEvent) {
+      if (_activeChild) {
+        _activeChild->onKeyPressed(key);
+      }
+    }
+  }
+
+  virtual void onTextInput(std::string text) override {
+    textInput(text);
+
+    if (_propagateEvent) {
+      if (_activeChild) {
+        _activeChild->onTextInput(text);
+      }
+    }
+  }
+
+  virtual void update() override {
+    NWidget::update();
+    for (auto& child: _children) {
+      child->update();
+    }
+  }
+};
+
+class NLabel: public NWidget {
+  HX3D_ONLY_PTR(NLabel)
+
+public:
+  gui::Text::Ptr _text;
+
+  NLabel(const NWidget::Ptr& parent = nullptr): NWidget(parent) {
+    _text = Make<gui::Text>();
+  }
+
+  virtual void update() override {
+    NWidget::update();
+
+    _text->transform.position.x = _transform.position.x;
+    _text->transform.position.y = _transform.position.y;
+  }
+
+  virtual void draw(const Pointer<Batch>& batch) override {
+    NWidget::draw(batch);
+
+    batch->draw(_text);
+  }
+};
+
+class NPanel: public NContainer {
+  HX3D_ONLY_PTR(NPanel)
+
+};
+
 // class GUIWidget: public std::enable_shared_from_this<GUIWidget>, public InputHandler {
 // public:
 //   class Placement {
@@ -423,7 +536,7 @@
 //   std::string _enteredText;
 //   Pointer<gui::Text> _display;
 // };
-//
+
 // class GUISystem {
 // public:
 //   GUISystem() {
@@ -448,77 +561,42 @@
 //
 //   Pointer<GUIWidget> _root;
 // };
-//
-// /*******************
-//   Test
-// ********************/
-//
-// class Test21: public BaseTestScreen {
-// public:
-//   Test21()
-//   {
-//     batch->setCamera(camera);
-//
-//     REPL::Config config;
-//     config.scripter = &scripter;
-//     repl = Make<REPL>(config);
-//     repl->begin();
-//
-//     widg = Make<NWidget>();
-//     Core::Events()->registerHandler(widg->_focusHandler.get());
-//
-//     // gui = Make<GUISystem>();
-//     //
-//     // auto top_center = glm::vec2(Core::App()->getWidth() / 2, Core::App()->getHeight() - Core::App()->getHeight() / 8);
-//     // auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(GUIWidget::Placement::Fill(), top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
-//     // consolepanel->setActive();
-//     //
-//     // auto textbox = consolepanel->createHiddenChild<GUITextbox>(GUIWidget::Placement::Absolute());
-//     // textbox->on("validate", [this,consolepanel,textbox](Pointer<GUIWidget> widget) {
-//     //   auto txt = textbox->getText();
-//     //   if (txt.size() > 0) {
-//     //     std::string ret = repl->execute_line(txt);
-//     //
-//     //     consolepanel->addText(ret);
-//     //     textbox->setText("");
-//     //   }
-//     // });
-//     //
-//     // consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
-//     //   textbox->setVisible(true);
-//     //   textbox->setActive();
-//     // });
-//     //
-//     // consolepanel->on("hide", [textbox](Pointer<GUIWidget> widget) {
-//     //   textbox->setVisible(false);
-//     //   textbox->setInactive();
-//     // });
-//   }
-//
-//   virtual void dispose() {
-//     Core::Events()->unregisterHandler(widg->_focusHandler.get());
-//     repl->end();
-//   }
-//
-//   virtual void update(float delta) override {
-//     camera->update();
-//   }
-//
-//   virtual void render() override {
-//     Framebuffer::clear(Color::Black);
-//
-//     batch->begin();
-//     // gui->draw(batch);
-//     batch->end();
-//   }
-//
-// private:
-//   OrthographicCamera::Ref camera;
-//   Sprite::Ref sprite;
-//   SimpleBatch::Ref batch;
-//   Scripter scripter;
-//   Pointer<REPL> repl;
-//   Pointer<GUISystem> gui;
-//
-//   Pointer<NWidget> widg;
-// };
+
+/*******************
+  Test
+********************/
+
+class Test22: public BaseTestScreen {
+public:
+  Test22()
+  {
+    batch->setCamera(camera);
+    label = Make<NLabel>();
+    label->_transform.position.x = Core::App()->getWidth() / 2;
+    label->_transform.position.y = Core::App()->getHeight() / 2;
+    label->_transform.size.x = 100;
+    label->_transform.size.y = 100;
+    label->_text->setContent("Hello");
+  }
+
+  virtual void update(float delta) override {
+    camera->update();
+    label->update();
+  }
+
+  virtual void render() override {
+    Framebuffer::clear(Color::Black);
+
+    batch->begin();
+    glDisable(GL_DEPTH_TEST);
+    label->draw(batch);
+    glEnable(GL_DEPTH_TEST);
+    batch->end();
+  }
+
+private:
+  OrthographicCamera::Ref camera;
+  Sprite::Ref sprite;
+  SimpleBatch::Ref batch;
+  NLabel::Ptr label;
+};

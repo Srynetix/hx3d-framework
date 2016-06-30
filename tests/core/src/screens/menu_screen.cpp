@@ -30,7 +30,10 @@ Screens list.
 // #include "tests/screens/test18_2d_3d.hpp"
 #include "tests/screens/test19_chipmunk.hpp"
 #include "tests/screens/test20_skeleton.hpp"
-#include "tests/screens/test21_console.hpp"
+// #include "tests/screens/test21_console.hpp"
+#include "tests/screens/test22_gui.hpp"
+
+#define LOAD_SCREEN(name, klass) {name, [](){Core::CurrentGame()->setScreen(Make<klass>());}}
 
 MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
@@ -61,27 +64,28 @@ MenuScreen::MenuScreen():
   logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
-    {"Simple 3D", [](){Core::CurrentGame()->setScreen(Make<Test1>());}},
-    {"Simple 3D 2", [](){Core::CurrentGame()->setScreen(Make<Test2>());}},
-    {"Simple 2D", [](){Core::CurrentGame()->setScreen(Make<Test3>());}},
-    // {"Simple ECS", [](){Core::CurrentGame()->setScreen(Make<Test4>());}},
-    {"Framebuffer", [](){Core::CurrentGame()->setScreen(Make<Test5>());}},
-    // {"Fast Batch 2D", [](){Core::CurrentGame()->setScreen(Make<Test6>());}},
-    // {"Sound", [](){Core::CurrentGame()->setScreen(Make<Test7>());}},
-    // {"Image", [](){Core::CurrentGame()->setScreen(Make<Test8>());}},
-    // {"Interpolations", [](){Core::CurrentGame()->setScreen(Make<Test9>());}},
-    {"Stencil", [](){Core::CurrentGame()->setScreen(Make<Test10>());}},
-    // {"Tweening", [](){Core::CurrentGame()->setScreen(Make<Test11>());}},
-    // {"Particles", [](){Core::CurrentGame()->setScreen(Make<Test12>());}},
-    // {"Gravity", [](){Core::CurrentGame()->setScreen(Make<Test13>());}},
-    {"Buffer test", [](){Core::CurrentGame()->setScreen(Make<Test14>());}},
-    // {"Timers", [](){Core::CurrentGame()->setScreen(Make<Test15>());}},
-    // {"Basic Shading", [](){Core::CurrentGame()->setScreen(Make<Test16>());}},
-    // {"Physics 1", [](){Core::CurrentGame()->setScreen(Make<Test17>());}},
-    // {"2D + 3D", [](){Core::CurrentGame()->setScreen(Make<Test18>());}}
-    {"Chipmunk", [](){Core::CurrentGame()->setScreen(Make<Test19>());}},
-    {"Skeleton", [](){Core::CurrentGame()->setScreen(Make<Test20>());}},
-    {"Console", [](){Core::CurrentGame()->setScreen(Make<Test21>());}}
+    LOAD_SCREEN("Simple 3D", Test1),
+    LOAD_SCREEN("Simple 3D 2", Test2),
+    LOAD_SCREEN("Simple 2D", Test3),
+    // LOAD_SCREEN("Simple ECS", Test4),
+    LOAD_SCREEN("Framebuffer", Test5),
+    // LOAD_SCREEN("Fast Batch 2D", Test6),
+    // LOAD_SCREEN("Sound", Test7),
+    // LOAD_SCREEN("Image", Test8),
+    // LOAD_SCREEN("Interpolations", Test9),
+    LOAD_SCREEN("Stencil", Test10),
+    // LOAD_SCREEN("Tweening", Test11),
+    // LOAD_SCREEN("Particles", Test12),
+    // LOAD_SCREEN("Gravity", Test13),
+    LOAD_SCREEN("Buffer test", Test14),
+    // LOAD_SCREEN("Timers", Test15),
+    // LOAD_SCREEN("Basic shading", Test16),
+    // LOAD_SCREEN("Physics 1", Test17),
+    // LOAD_SCREEN("2D + 3D", Test18),
+    LOAD_SCREEN("Chipmunk", Test19),
+    LOAD_SCREEN("Skeleton", Test20),
+    // LOAD_SCREEN("Console", Test21),
+    LOAD_SCREEN("GUI", Test22)
   };
 
   buttonCount = worldSize.y / buttonHeight;

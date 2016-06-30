@@ -27,8 +27,8 @@
 
 #define HX3D_PTR(klass) \
 public: \
-  using Ptr = hx3d::Pointer<klass>; \
-  using Ref = hx3d::PrivateReference<klass>; \
+  using Ptr = Pointer<klass>; \
+  using Ref = PrivateReference<klass>; \
   \
   template <class... Args> \
   static Pointer<klass> Create(Args&&... args) { \
@@ -36,7 +36,8 @@ public: \
   }
 
 #define HX3D_ONLY_PTR(klass) \
-  using Ptr = hx3d::Pointer<klass>;
+public: \
+  using Ptr = Pointer<klass>;
 
 namespace hx3d {
 
