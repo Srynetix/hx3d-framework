@@ -24,7 +24,7 @@ public:
     _sprite->setTint(Color(127, 127, 127));
   }
 
-  virtual void update() {
+  virtual void update(float delta) {
     _sprite->transform.position.x = _transform.position.x;
     _sprite->transform.position.y = _transform.position.y;
     _sprite->transform.size.x = _transform.size.x;
@@ -33,6 +33,22 @@ public:
 
   virtual void draw(const Pointer<Batch>& batch) {
     batch->draw(_sprite);
+  }
+
+  virtual void onFocusEnter() {
+    Log.Info("NWidget Focus Enter");
+  }
+
+  virtual void onFocusExit() {
+    Log.Info("NWidget Focus Exit");
+  }
+
+  virtual void onShow() {
+    Log.Info("NWidget Show");
+  }
+
+  virtual void onHide() {
+    Log.Info("NWidget Hide");
   }
 
   Transform _transform;
@@ -110,7 +126,10 @@ public:
         // New active child
         for (auto& child: _children) {
           if (child != _activeChild && child->checkBounds(mousePosition)) {
+            if (_activeChild) _activeChild->onFocusExit();
+
             _activeChild = child;
+            child->onFocusEnter();
             child->onMouseClicked(button, mousePosition);
             break;
           }
@@ -139,10 +158,10 @@ public:
     }
   }
 
-  virtual void update() override {
-    NWidget::update();
+  virtual void update(float delta) override {
+    NWidget::update(delta);
     for (auto& child: _children) {
-      child->update();
+      child->update(delta);
     }
   }
 };
@@ -157,8 +176,8 @@ public:
     _text = Make<gui::Text>();
   }
 
-  virtual void update() override {
-    NWidget::update();
+  virtual void update(float delta) override {
+    NWidget::update(delta);
 
     _text->transform.position.x = _transform.position.x;
     _text->transform.position.y = _transform.position.y;
@@ -562,6 +581,52 @@ class NPanel: public NContainer {
 //   Pointer<GUIWidget> _root;
 // };
 
+class NSystem {
+  HX3D_ONLY_PTR(NSystem)
+
+public:
+  NSystem(const NWidget::Ptr& content = nullptr) {
+    setContent(content);
+  }
+
+  void setContent(const NWidget::Ptr& content) {
+    if (_content) unregisterHandler();
+    _content = content;
+
+    if (_content->_visible) {
+      _content->onShow();
+      _content->onFocusEnter();
+    }
+
+    registerHandler();
+  }
+
+  void registerHandler() {
+    if (_content)
+      Core::Events()->registerHandler(_content.get());
+  }
+
+  void unregisterHandler() {
+    if (_content)
+      Core::Events()->unregisterHandler(_content.get());
+  }
+
+  void update(float delta) {
+    if (_content)
+      _content->update(delta);
+  }
+
+  void draw(const Pointer<Batch>& batch) {
+    if (_content) {
+      glDisable(GL_DEPTH_TEST);
+      _content->draw(batch);
+      glEnable(GL_DEPTH_TEST);
+    }
+  }
+
+  NWidget::Ptr _content;
+};
+
 /*******************
   Test
 ********************/
@@ -571,26 +636,28 @@ public:
   Test22()
   {
     batch->setCamera(camera);
-    label = Make<NLabel>();
+
+    auto label = Make<NLabel>();
     label->_transform.position.x = Core::App()->getWidth() / 2;
     label->_transform.position.y = Core::App()->getHeight() / 2;
     label->_transform.size.x = 100;
     label->_transform.size.y = 100;
     label->_text->setContent("Hello");
+
+    system = Make<NSystem>(label);
   }
 
   virtual void update(float delta) override {
     camera->update();
-    label->update();
+
+    system->update(delta);
   }
 
   virtual void render() override {
     Framebuffer::clear(Color::Black);
 
     batch->begin();
-    glDisable(GL_DEPTH_TEST);
-    label->draw(batch);
-    glEnable(GL_DEPTH_TEST);
+    system->draw(batch);
     batch->end();
   }
 
@@ -598,5 +665,5 @@ private:
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
   SimpleBatch::Ref batch;
-  NLabel::Ptr label;
+  NSystem::Ptr system;
 };
