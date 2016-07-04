@@ -89,6 +89,11 @@ public:
   void setContent(std::string content);
 
   /**
+  @brief Get the text content.
+  */
+  const std::string& getContent() const;
+
+  /**
   @brief Set the math function.
 
   @param function Math function

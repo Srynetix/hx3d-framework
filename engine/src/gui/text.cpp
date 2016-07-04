@@ -81,6 +81,11 @@ void Text::setContent(std::string content) {
   texture_atlas_upload(data.font->atlas);
 }
 
+const std::string& Text::getContent() const {
+  return _content;
+}
+
+
 Pointer<Font> Text::getFont() {
   return _font;
 }
