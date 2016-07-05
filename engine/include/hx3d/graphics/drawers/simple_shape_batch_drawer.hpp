@@ -1,5 +1,5 @@
 /*
-    GUI header.
+    Simple shape batch drawer.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,11 +18,19 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#pragma once
 
-#include "hx3d/gui/image_button.hpp"
-#include "hx3d/gui/system.hpp"
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/graphics/drawers/batch_drawer.hpp"
 
-#endif /* HX3D_MAIN_GUI */
+namespace hx3d {
+namespace graphics {
+
+class SimpleShapeBatchDrawer: public BatchDrawer {
+public:
+  SimpleShapeBatchDrawer();
+
+  virtual void drawWithBatch(Batch* batch, Mesh* mesh) override;
+};
+
+} /* graphics */
+} /* hx3d */

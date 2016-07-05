@@ -1,5 +1,5 @@
 /*
-    Sprite model.
+    Batch.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,40 +18,43 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
+#include "hx3d/graphics/batches/simple_batch_2d.hpp"
 
-#include "hx3d/graphics/geometries/quad_geometry.hpp"
-#include "hx3d/graphics/texture_region.hpp"
+#include "hx3d/core/core.hpp"
+
+#include "hx3d/graphics/cameras/camera.hpp"
+#include "hx3d/graphics/shader.hpp"
+#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace graphics {
 
-/**
-@brief Sprite defined VBO geometry
-*/
-class SpriteGeometry: public QuadGeometry {
+SimpleBatch2D::SimpleBatch2D(): Batch() {}
 
-public:
-  SpriteGeometry();
+void SimpleBatch2D::begin() {
+  if (_shader == nullptr) {
+    Log.Error("Attempt to draw without shader.");
+    return;
+  }
 
-  /**
-  @brief Prepare the sprite for render-to-texture mode.
-  */
-  void activateFramebufferMode();
+  Shader::use(_shader);
+  _shader->setUniformMatrix4f("u_projection", _camera->projection);
+  _shader->setUniformMatrix4f("u_view", _camera->view);
 
-  /**
-  @brief Prepare the sprite for simple texture mode.
-  */
-  void activateTextureMode();
+  glDisable(GL_DEPTH_TEST);
+}
 
-  /**
-  @brief Set the geometry for a texture region.
-  */
-  void setFromRegion(const Pointer<TextureRegion>& region);
-};
+void SimpleBatch2D::end() {
+  Shader::disable();
+
+  glEnable(GL_DEPTH_TEST);
+}
+
+void SimpleBatch2D::draw(const Pointer<Mesh>& mesh) {
+  auto& drawer = mesh->getBatchDrawer();
+  drawer->drawWithBatch(this, mesh.get());
+}
 
 } /* graphics */
 } /* hx3d */
-
-#endif

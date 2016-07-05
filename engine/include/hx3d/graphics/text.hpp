@@ -20,21 +20,20 @@
     USA
 */
 
-#ifndef HX3D_GUI_TEXT
-#define HX3D_GUI_TEXT
+#ifndef HX3D_GRAPHICS_TEXT
+#define HX3D_GRAPHICS_TEXT
 
-#include "hx3d/gui/widget.hpp"
-
+#include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/font.hpp"
 #include "hx3d/math/function.hpp"
 
 namespace hx3d {
-namespace gui {
+namespace graphics {
 
 /**
-@brief Text GUI element
+@brief Text element
 */
-class Text: public Widget {
+class Text: public Mesh {
   HX3D_PTR(Text)
 
 public:
@@ -51,14 +50,6 @@ public:
   @param font Font (Ptr)
   */
   Text(Pointer<Font> font);
-
-  /**
-  @brief Create a text from a parent widget and a font.
-
-  @param parent Widget (Ptr)
-  @param font   Font (Ptr)
-  */
-  Text(Widget* parent, Pointer<Font> font);
 
   /**
   @brief Set the font.
@@ -171,7 +162,7 @@ protected:
   math::Function _function;
 };
 
-} /* gui */
+} /* graphics */
 } /* hx3d */
 
 #endif

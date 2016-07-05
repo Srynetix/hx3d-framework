@@ -1,5 +1,4 @@
 /*
-    GUI text.
     Render text.
 
     Copyright (C) 2015 Denis BOURGE
@@ -20,30 +19,31 @@
     USA
 */
 
-#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/text.hpp"
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/graphics/font.hpp"
+#include "hx3d/graphics/geometries/text_geometry.hpp"
 #include "hx3d/graphics/drawers/simple_text_batch_drawer.hpp"
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/assets.hpp"
 
 namespace hx3d {
-namespace gui {
+namespace graphics {
 
 Text::Text():
   Text(Core::Assets()->get<Font>("default")) {}
 
 Text::Text(Pointer<Font> font):
-  Text(nullptr, font) {}
-
-Text::Text(Widget* parent, Pointer<Font> font):
-  Widget(parent), _font(font), _content("") {
+  Mesh(), _font(font), _content("") {
     init();
 }
 
 void Text::init() {
+  _geometry = Make<TextGeometry>();
+  _geometry->setFaceCulling(Culling::Back);
+
   setTint(Color::White);
   if (_font) {
     setFont(_font);
@@ -235,5 +235,5 @@ void Text::functionDraw(const Pointer<Shader>& shader) {
   }
 }
 
-} /* gui */
+} /* graphics */
 } /* hx3d */

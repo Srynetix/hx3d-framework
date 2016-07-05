@@ -37,6 +37,7 @@
 #include "hx3d/graphics/texture_atlas.hpp"
 #include "hx3d/graphics/texture_region.hpp"
 #include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/text.hpp"
 #include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/graphics/batches/simple_batch.hpp"
@@ -44,7 +45,6 @@
 #include "hx3d/graphics/batches/fast_batch.hpp"
 #include "hx3d/graphics/batches/particle_batch.hpp"
 #include "hx3d/graphics/batches/ordered_batch.hpp"
-
 
 #include "hx3d/graphics/buffers/array_buffer.hpp"
 #include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
@@ -62,6 +62,7 @@
 #include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/graphics/geometries/origin_geometry.hpp"
 #include "hx3d/graphics/geometries/sprite_geometry.hpp"
+#include "hx3d/graphics/geometries/quad_geometry.hpp"
 #include "hx3d/graphics/geometries/star_geometry.hpp"
 
 #include "hx3d/graphics/transitions/fade_transition.hpp"

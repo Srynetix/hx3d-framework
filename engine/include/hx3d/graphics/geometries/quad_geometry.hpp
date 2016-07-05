@@ -1,5 +1,7 @@
 /*
-    GUI header.
+    Quad model.
+    Used at point (0, 0, 0) to show the origin.
+
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,11 +20,20 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#pragma once
 
-#include "hx3d/gui/image_button.hpp"
-#include "hx3d/gui/system.hpp"
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
-#endif /* HX3D_MAIN_GUI */
+namespace hx3d {
+namespace graphics {
+
+/**
+@brief Quad geometry
+*/
+class QuadGeometry: public Geometry {
+public:
+  QuadGeometry();
+};
+
+} /* graphics */
+} /* hx3d */

@@ -33,7 +33,7 @@
 
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
 
-#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/text.hpp"
 
 #include <functional>
 #include <vector>
@@ -70,8 +70,8 @@ private:
   Sprite::Ref sprite;
   SimpleBatch::Ref batch;
 
-  gui::Text::Ref text;
-  gui::Text::Ref instructions;
+  Text::Ref text;
+  Text::Ref instructions;
 
   std::vector<ScreenInfo> screens;
 

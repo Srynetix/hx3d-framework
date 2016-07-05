@@ -28,7 +28,7 @@
 #include "hx3d/graphics/transitions/transition.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/text.hpp"
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/object_map.hpp"
@@ -151,8 +151,8 @@ private:
   bool _running;
   Pointer<Screen> _screen;
   Pointer<Screen> _nextScreen;
-  PrivateReference<gui::Text> _deltaText;
-  PrivateReference<gui::Text> _fpsText;
+  PrivateReference<graphics::Text> _deltaText;
+  PrivateReference<graphics::Text> _fpsText;
 
   PrivateReference<graphics::OrthographicCamera> _camera;
   PrivateReference<graphics::SimpleBatch> _batch;

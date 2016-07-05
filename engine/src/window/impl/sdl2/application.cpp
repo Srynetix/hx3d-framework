@@ -157,6 +157,7 @@ Application::Application() {
     Texture::generateBlankTexture();
 
     Core::Assets()->create<Shader>("base", "shaders/base");
+    Core::Assets()->create<Shader>("base_border", "shaders/base_border");
     Core::Assets()->create<Shader>("text", "shaders/text");
     Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
 

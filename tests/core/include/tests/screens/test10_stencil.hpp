@@ -69,7 +69,7 @@ public:
 
     batch->draw(sprite);
     batch->draw(text);
-    
+
     batch->end();
   }
 
@@ -79,7 +79,7 @@ private:
   Stencil::Ref stencil;
   Sprite::Ref sprite;
   Sprite::Ref stencilSprite;
-  gui::Text::Ref text;
+  Text::Ref text;
 
   SimpleBatch::Ref batch;
 

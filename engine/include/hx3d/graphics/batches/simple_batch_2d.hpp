@@ -1,5 +1,5 @@
 /*
-    GUI header.
+    Simple Batch 2D.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,11 +18,29 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#pragma once
 
-#include "hx3d/gui/image_button.hpp"
-#include "hx3d/gui/system.hpp"
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
-#endif /* HX3D_MAIN_GUI */
+namespace hx3d {
+namespace graphics {
+
+class Shader;
+class Camera;
+
+/**
+@brief Simple base batch implementation without Z. Draw at each draw call.
+*/
+class SimpleBatch2D: public Batch {
+  HX3D_PTR(SimpleBatch2D)
+
+public:
+  SimpleBatch2D();
+
+  virtual void begin() override;
+  virtual void end() override;
+  virtual void draw(const Pointer<Mesh>& mesh) override;
+};
+
+} /* graphics */
+} /* hx3d */

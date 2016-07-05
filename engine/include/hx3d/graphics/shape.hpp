@@ -1,5 +1,5 @@
 /*
-    GUI header.
+    Shape.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,11 +18,40 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#pragma once
 
-#include "hx3d/gui/image_button.hpp"
-#include "hx3d/gui/system.hpp"
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/color.hpp"
 
-#endif /* HX3D_MAIN_GUI */
+namespace hx3d {
+namespace graphics {
+
+/**
+@brief 2D shape manipulation.
+*/
+class Shape: public Mesh {
+  HX3D_PTR(Shape)
+
+public:
+
+  /**
+  @brief Create a shape.
+  */
+  Shape();
+
+  void setBorderWidth(float width);
+  float getBorderWidth() const;
+  void setBorderColor(Color color);
+  Color& getBorderColor();
+
+  virtual void draw(const Pointer<Shader>& shader) override;
+
+private:
+  /// @brief Border width
+  float _borderWidth;
+  /// @brief Border color
+  Color _borderColor;
+};
+
+} /* graphics */
+} /* hx3d */

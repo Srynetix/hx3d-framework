@@ -1,5 +1,5 @@
 /*
-    GUI header.
+    Text model.
     Copyright (C) 2015 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
@@ -18,11 +18,41 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#include "hx3d/graphics/geometries/text_geometry.hpp"
 
-#include "hx3d/gui/image_button.hpp"
-#include "hx3d/gui/system.hpp"
-#include "hx3d/gui/widget.hpp"
+namespace hx3d {
+namespace graphics {
 
-#endif /* HX3D_MAIN_GUI */
+TextGeometry::TextGeometry(): Geometry() {
+
+  setAttribute("Position", std::vector<float> {
+    -0.5f, 0.5f, 0.f,
+    0.5, 0.5f, 0.f,
+    -0.5f, -0.5f, 0.f,
+    0.5f, -0.5f, 0.f
+  });
+
+  setIndices(std::vector<GLushort> {
+    0, 1, 2,
+    0, 2, 3
+  });
+
+  setAttribute("Color", std::vector<float> {
+    1, 1, 1, 1,
+    1, 1, 1, 1,
+    1, 1, 1, 1,
+    1, 1, 1, 1
+  });
+
+  setAttribute("Texture", std::vector<float> {
+    0, 0,
+    0, 1,
+    1, 0,
+    1, 1
+  });
+
+  uploadAll();
+}
+
+} /* graphics */
+} /* hx3d */

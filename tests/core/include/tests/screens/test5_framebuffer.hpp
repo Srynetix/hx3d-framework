@@ -7,7 +7,7 @@
 
 #include "hx3d/math/number_utils.hpp"
 #include "hx3d/graphics/font.hpp"
-#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/text.hpp"
 
 using namespace hx3d;
 
@@ -90,7 +90,7 @@ private:
   Framebuffer::Ref framebuffer;
   OrthographicCamera::Ref camera;
 
-  gui::Text::Ref text;
+  Text::Ref text;
 
   SimpleBatch::Ref batch;
   Sprite::Ref sprite;

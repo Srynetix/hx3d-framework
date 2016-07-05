@@ -201,7 +201,7 @@ private:
   PerspectiveCamera::Ref camera;
   Mesh::Ref mesh;
 
-  gui::Text::Ref fps;
+  Text::Ref fps;
 
   SimpleBatch::Ref batch;
 };

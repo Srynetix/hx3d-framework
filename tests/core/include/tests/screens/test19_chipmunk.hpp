@@ -766,10 +766,10 @@ public:
 
 private:
   OrthographicCamera::Ref camera;
-  gui::Text::Ref text;
+  Text::Ref text;
 
-  gui::Text::Ref p1dmg;
-  gui::Text::Ref p2dmg;
+  Text::Ref p1dmg;
+  Text::Ref p2dmg;
 
   DebugDrawer drawer;
   SimpleBatch::Ref batch;

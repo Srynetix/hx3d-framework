@@ -5,7 +5,9 @@
 #include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/input_handler.hpp"
 #include "hx3d/window/screen.hpp"
+#include "hx3d/graphics/shape.hpp"
 
+#include "hx3d/graphics/batches/simple_batch_2d.hpp"
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
 
 #include "./menu_screen.hpp"

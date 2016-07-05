@@ -70,17 +70,20 @@ set(
   "${ENGINE_SRC}/graphics/particle_manager.cpp"
   "${ENGINE_SRC}/graphics/particle.cpp"
   "${ENGINE_SRC}/graphics/shader.cpp"
+  "${ENGINE_SRC}/graphics/shape.cpp"
   "${ENGINE_SRC}/graphics/sprite.cpp"
   "${ENGINE_SRC}/graphics/stencil.cpp"
   "${ENGINE_SRC}/graphics/texture_atlas.cpp"
   "${ENGINE_SRC}/graphics/texture_region.cpp"
   "${ENGINE_SRC}/graphics/texture.cpp"
+  "${ENGINE_SRC}/graphics/text.cpp"
   "${ENGINE_SRC}/graphics/transform.cpp"
 
   "${ENGINE_SRC}/graphics/drawers/geometry_drawer.cpp"
   "${ENGINE_SRC}/graphics/drawers/batch_drawer.cpp"
   "${ENGINE_SRC}/graphics/drawers/mesh_drawer.cpp"
   "${ENGINE_SRC}/graphics/drawers/simple_mesh_batch_drawer.cpp"
+  "${ENGINE_SRC}/graphics/drawers/simple_shape_batch_drawer.cpp"
   "${ENGINE_SRC}/graphics/drawers/simple_text_batch_drawer.cpp"
 
   "${ENGINE_SRC}/graphics/transitions/fade_transition.cpp"
@@ -89,6 +92,7 @@ set(
 
   "${ENGINE_SRC}/graphics/batches/batch.cpp"
   "${ENGINE_SRC}/graphics/batches/simple_batch.cpp"
+  "${ENGINE_SRC}/graphics/batches/simple_batch_2d.cpp"
   "${ENGINE_SRC}/graphics/batches/ordered_batch.cpp"
 
   "${ENGINE_SRC}/graphics/viewports/fit_viewport.cpp"
@@ -107,15 +111,16 @@ set(
   "${ENGINE_SRC}/graphics/geometries/cube_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/origin_geometry.cpp"
+  "${ENGINE_SRC}/graphics/geometries/quad_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/sprite_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/star_geometry.cpp"
+  "${ENGINE_SRC}/graphics/geometries/text_geometry.cpp"
 )
 
 set(
   GUI_FILES
 
   "${ENGINE_SRC}/gui/system.cpp"
-  "${ENGINE_SRC}/gui/text.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"
 )
 

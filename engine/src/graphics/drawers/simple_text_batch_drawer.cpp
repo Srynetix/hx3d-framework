@@ -23,7 +23,7 @@
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/texture.hpp"
 
-#include "hx3d/gui/text.hpp"
+#include "hx3d/graphics/text.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -33,7 +33,7 @@ SimpleTextBatchDrawer::SimpleTextBatchDrawer(): BatchDrawer() {}
 void SimpleTextBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
 
   // Should be a text
-  auto text = (gui::Text*)mesh;
+  auto text = (Text*)mesh;
 
   Texture::use(text->getFont(), text->getCharacterSize());
   Pointer<Shader> currentShader = batch->getShader();

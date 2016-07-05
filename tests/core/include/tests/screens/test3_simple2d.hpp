@@ -88,7 +88,7 @@ public:
 
 private:
   OrthographicCamera::Ref camera;
-  gui::Text::Ref text;
+  Text::Ref text;
 
   SimpleBatch::Ref batch;
   Sprite::Ref sprite;

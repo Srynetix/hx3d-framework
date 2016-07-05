@@ -25,43 +25,7 @@
 namespace hx3d {
 namespace graphics {
 
-SpriteGeometry::SpriteGeometry(): Geometry() {
-
-  setAttribute("Position", std::vector<float> {
-    -0.5f, 0.5f, 0.f,
-    0.5, 0.5f, 0.f,
-    0.5f, -0.5f, 0.f,
-    -0.5f, -0.5f, 0.f
-  });
-
-  setIndices(std::vector<GLushort> {
-    0, 2, 1,
-    0, 3, 2
-  });
-
-  setAttribute("Color", std::vector<float> {
-    1, 1, 1, 1,
-    1, 1, 1, 1,
-    1, 1, 1, 1,
-    1, 1, 1, 1
-  });
-
-  setAttribute("Texture", std::vector<float> {
-    0, 0,
-    1, 0,
-    1, 1,
-    0, 1
-  });
-
-  // setAttribute("Normal", std::vector<float> {
-  //   0.f, 0.f, 1.f,
-  //   0.f, 0.f, 1.f,
-  //   0.f, 0.f, 1.f,
-  //   0.f, 0.f, 1.f
-  // });
-
-  uploadAll();
-}
+SpriteGeometry::SpriteGeometry(): QuadGeometry() {}
 
 void SpriteGeometry::activateFramebufferMode() {
   setAttribute("Texture", std::vector<float> {

@@ -5,6 +5,7 @@
 #include <string>
 
 using namespace hx3d;
+using namespace hx3d::graphics;
 using namespace hx3d::scripting;
 
 /*******************
@@ -20,9 +21,7 @@ public:
   NWidget(Pointer<NWidget> parent = nullptr) {
     _parent = parent;
     _visible = true;
-
-    _sprite->setTexture(Texture::Blank);
-    _sprite->setTint(Color(127, 127, 127));
+    _shape->setTint(Color(127, 127, 127));
   }
 
   virtual ~NWidget() {
@@ -31,14 +30,14 @@ public:
   }
 
   virtual void update(float delta) {
-    _sprite->transform.position.x = _transform.position.x;
-    _sprite->transform.position.y = _transform.position.y;
-    _sprite->transform.size.x = _transform.size.x;
-    _sprite->transform.size.y = _transform.size.y;
+    _shape->transform.position.x = _transform.position.x;
+    _shape->transform.position.y = _transform.position.y;
+    _shape->transform.size.x = _transform.size.x;
+    _shape->transform.size.y = _transform.size.y;
   }
 
   virtual void draw(const Pointer<Batch>& batch) {
-    batch->draw(_sprite);
+    batch->draw(_shape);
   }
 
   virtual void onFocusEnter() {
@@ -85,7 +84,7 @@ public:
   }
 
   Transform _transform;
-  Sprite::Ref _sprite;
+  Shape::Ref _shape;
   Pointer<NWidget> _parent;
 
   bool _visible;
@@ -288,10 +287,10 @@ class NLabel: public NWidget {
   HX3D_ONLY_PTR(NLabel)
 
 public:
-  gui::Text::Ptr _text;
+  Text::Ptr _text;
 
   NLabel(const NWidget::Ptr& parent = nullptr): NWidget(parent) {
-    _text = Make<gui::Text>();
+    _text = Make<Text>();
   }
 
   virtual void update(float delta) override {
@@ -321,7 +320,7 @@ class NPanel: public NContainer {
 
 public:
   NPanel(const NWidget::Ptr& parent = nullptr): NContainer(parent) {
-    _sprite->setTint(Color(0, 127, 127));
+    _shape->setTint(Color(0, 127, 127));
   }
 };
 
@@ -331,18 +330,26 @@ class NTextBox: public NLabel {
 public:
   NTextBox(const NWidget::Ptr& parent = nullptr): NLabel(parent) {
     registerAction("validate");
+    _text->setCenterAlignment(false);
   }
 
   virtual void onFocusEnter() {
-    _sprite->setTint(Color(127, 127, 0));
+    _shape->setTint(Color(127, 127, 0));
 
     Core::Events()->beginTextInput();
   }
 
   virtual void onFocusExit() {
-    _sprite->setTint(Color(127, 127, 127));
+    _shape->setTint(Color(127, 127, 127));
 
     Core::Events()->endTextInput();
+  }
+
+  virtual void update(float delta) override {
+    NWidget::update(delta);
+
+    _text->transform.position.x = _transform.position.x - _transform.size.x / 2;
+    _text->transform.position.y = _transform.position.y;
   }
 
   virtual void keyPressed(KeyEvent::Key key) override {
@@ -413,9 +420,7 @@ public:
 
   void draw(const Pointer<Batch>& batch) {
     if (_content) {
-      glDisable(GL_DEPTH_TEST);
       _content->draw(batch);
-      glEnable(GL_DEPTH_TEST);
     }
   }
 
@@ -464,6 +469,6 @@ public:
 private:
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
-  SimpleBatch::Ref batch;
+  SimpleBatch2D::Ref batch;
   NSystem::Ptr system;
 };
