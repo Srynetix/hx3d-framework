@@ -1,8 +1,7 @@
 /*
-    GUI system.
-    Manage a GUI instance.
+    GUI label.
 
-    Copyright (C) 2015 Denis BOURGE
+    Copyright (C) 2016 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,32 +19,35 @@
     USA
 */
 
-#pragma once
-
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/label.hpp"
 
 namespace hx3d {
 namespace gui {
 
-class System {
-  HX3D_ONLY_PTR(System)
+Label::Label(const Widget::Ptr& parent): Widget(parent) {
+  _text = Make<Text>();
+}
 
-public:
-  System(const Widget::Ptr& content = nullptr);
-  ~System();
+void Label::update(float delta) {
+  Widget::update(delta);
 
-  void setContent(const Widget::Ptr& content);
-  const Widget::Ptr& getContent();
+  _text->transform.position.x = _transform.position.x;
+  _text->transform.position.y = _transform.position.y;
+}
 
-  void registerHandler();
-  void unregisterHandler();
+void Label::draw(const Pointer<Batch>& batch) {
+  Widget::draw(batch);
 
-  void update(float delta);
-  void draw(const Pointer<Batch>& batch);
+  batch->draw(_text);
+}
 
-private:
-  Widget::Ptr _content;
-};
+void Label::setText(const std::string& text) {
+  _text->setContent(text);
+}
+
+const std::string& Label::getText() {
+  return _text->getContent();
+}
 
 } /* gui */
 } /* hx3d */

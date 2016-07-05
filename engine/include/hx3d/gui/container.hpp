@@ -1,6 +1,7 @@
 /*
-    Image button.
-    Copyright (C) 2015 Denis BOURGE
+    GUI container.
+
+    Copyright (C) 2016 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,47 +19,33 @@
     USA
 */
 
-#ifndef HX3D_GUI_IMAGE_BUTTON
-#define HX3D_GUI_IMAGE_BUTTON
+#pragma once
 
-#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/gui/widget.hpp"
 
 namespace hx3d {
 namespace gui {
 
-/**
-@brief GUI image button.
-*/
-class ImageButton: public graphics::Sprite {
-  public:
-    ImageButton() {}
+class Container: public Widget {
+  HX3D_ONLY_PTR(Container)
 
-    /**
-    @brief Set the on click callback
+public:
+  Container(const Pointer<Widget>& parent = nullptr);
 
-    @param func Function
-    */
-    void setOnClickCallback(std::function<void()> func) {
-      this->func = func;
-    }
+  void addChild(const Widget::Ptr& widget);
 
-    /**
-    @brief On click check
+  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
+  virtual void onKeyPressed(KeyEvent::Key key) override;
+  virtual void onTextInput(std::string text) override;
 
-    @param position Click position
-    */
-    void onClick(glm::vec2 position) {
-      if (transform.contains(position)) {
-        if (func) func();
-      }
-    }
+  virtual void update(float delta) override;
+  virtual void draw(const Pointer<Batch>& batch) override;
 
-  private:
-    /// @brief Function
-    std::function<void()> func;
+protected:
+  bool _propagateEvent;
+  Pointer<Widget> _activeChild;
+  std::vector<Pointer<Widget>> _children;
 };
 
 } /* gui */
 } /* hx3d */
-
-#endif /* HX3D_GUI_IMAGE_BUTTON */

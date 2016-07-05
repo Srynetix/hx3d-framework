@@ -18,50 +18,72 @@
     USA
 */
 
-#ifndef HX3D_GUI_WIDGET
-#define HX3D_GUI_WIDGET
+#pragma once
 
-#include "hx3d/graphics/mesh.hpp"
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/window/input_handler.hpp"
+#include "hx3d/utils/log.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+#include "hx3d/graphics/shape.hpp"
+#include "hx3d/window/events.hpp"
 
 namespace hx3d {
+
+using namespace hx3d::graphics;
+using namespace hx3d::window;
 
 /**
 @brief 2D/3D GUI components
 */
 namespace gui {
 
-using namespace ::hx3d::graphics;
+class Widget: public std::enable_shared_from_this<Widget>, public window::InputHandler {
+  HX3D_ONLY_PTR(Widget)
 
-/**
-@brief Base GUI element
-*/
-class Widget: public graphics::Mesh {
 public:
-  /**
-  @brief Construct a widget from a parent widget.
+  Widget(Pointer<Widget> parent = nullptr);
+  virtual ~Widget();
 
-  @param parent Widget (Ptr)
-  */
-  Widget(Widget* parent);
+  virtual void update(float delta);
+  virtual void draw(const Pointer<Batch>& batch);
 
-  /**
-  @brief Add a widget to the list.
+  void on(std::string action, std::function<void()> func);
+  bool isVisible() const;
 
-  @param widget Widget (Ptr)
-  */
-  void add(Pointer<Widget> widget);
+  friend class System;
+  friend class Container;
+  friend class Placement;
 
-  virtual void draw(const Pointer<Shader>& shader) override;
+protected:
+  virtual void onFocusEnter();
+  virtual void onFocusExit();
+  virtual void onShow();
+  virtual void onHide();
 
-private:
-  /// @brief Parent widget
-  Widget* _parent;
-  /// @brief Children widgets
-  std::vector<Pointer<Widget>> _children;
+  void registerAction(std::string action);
+  void send(std::string action);
+
+  Transform _transform;
+  Shape::Ref _shape;
+  Pointer<Widget> _parent;
+  bool _visible;
+  std::map<std::string, std::function<void()>> _actions;
+
+  bool checkBounds(glm::vec2 position);
+
+  ///////////////////
+  // Input handler
+
+  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
+  virtual void onKeyPressed(KeyEvent::Key key) override;
+  virtual void onTextInput(std::string text) override;
+
+  /////////////////////
+  // Widget handlers
+
+  virtual void mouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition);
+  virtual void keyPressed(KeyEvent::Key key);
+  virtual void textInput(std::string text);
 };
 
 } /* gui */
 } /* hx3d */
-
-#endif

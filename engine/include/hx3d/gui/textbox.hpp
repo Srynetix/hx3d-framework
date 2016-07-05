@@ -1,8 +1,7 @@
 /*
-    GUI system.
-    Manage a GUI instance.
+    GUI textbox.
 
-    Copyright (C) 2015 Denis BOURGE
+    Copyright (C) 2016 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -22,29 +21,29 @@
 
 #pragma once
 
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/label.hpp"
 
 namespace hx3d {
 namespace gui {
 
-class System {
-  HX3D_ONLY_PTR(System)
+class TextBox: public Label {
+  HX3D_ONLY_PTR(TextBox)
 
 public:
-  System(const Widget::Ptr& content = nullptr);
-  ~System();
+  TextBox(const Widget::Ptr& parent = nullptr);
 
-  void setContent(const Widget::Ptr& content);
-  const Widget::Ptr& getContent();
+  virtual void onFocusEnter() override;
+  virtual void onFocusExit() override;
 
-  void registerHandler();
-  void unregisterHandler();
+  virtual void update(float delta) override;
 
-  void update(float delta);
-  void draw(const Pointer<Batch>& batch);
+  virtual void keyPressed(KeyEvent::Key key) override;
+  virtual void textInput(std::string text) override;
 
 private:
-  Widget::Ptr _content;
+  void _updateText();
+
+  std::string _content;
 };
 
 } /* gui */

@@ -21,16 +21,56 @@
 */
 
 #include "hx3d/gui/system.hpp"
+#include "hx3d/core/core.hpp"
+
+#include "hx3d/window/event_manager.hpp"
 
 namespace hx3d {
 namespace gui {
 
-System::System():
-  _content(Make<Widget>(nullptr))
-  {}
+System::System(const Widget::Ptr& content) {
+  setContent(content);
+}
 
-Pointer<Widget> System::getContent() {
+System::~System() {
+  unregisterHandler();
+}
+
+void System::setContent(const Widget::Ptr& content) {
+  if (_content) unregisterHandler();
+  _content = content;
+
+  if (_content->_visible) {
+    _content->onShow();
+    _content->onFocusEnter();
+  }
+
+  registerHandler();
+}
+
+const Widget::Ptr& System::getContent() {
   return _content;
+}
+
+void System::registerHandler() {
+  if (_content)
+    Core::Events()->registerHandler(_content.get());
+}
+
+void System::unregisterHandler() {
+  if (_content)
+    Core::Events()->unregisterHandler(_content.get());
+}
+
+void System::update(float delta) {
+  if (_content)
+    _content->update(delta);
+}
+
+void System::draw(const Pointer<Batch>& batch) {
+  if (_content) {
+    _content->draw(batch);
+  }
 }
 
 } /* gui */

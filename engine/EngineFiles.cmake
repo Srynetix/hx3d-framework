@@ -120,6 +120,11 @@ set(
 set(
   GUI_FILES
 
+  "${ENGINE_SRC}/gui/container.cpp"
+  "${ENGINE_SRC}/gui/label.cpp"
+  "${ENGINE_SRC}/gui/panel.cpp"
+  "${ENGINE_SRC}/gui/textbox.cpp"
+  "${ENGINE_SRC}/gui/placement.cpp"
   "${ENGINE_SRC}/gui/system.cpp"
   "${ENGINE_SRC}/gui/widget.cpp"
 )

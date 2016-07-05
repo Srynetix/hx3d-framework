@@ -1,8 +1,7 @@
 /*
-    GUI system.
-    Manage a GUI instance.
+    GUI placement.
 
-    Copyright (C) 2015 Denis BOURGE
+    Copyright (C) 2016 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,32 +19,23 @@
     USA
 */
 
-#pragma once
-
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/placement.hpp"
 
 namespace hx3d {
 namespace gui {
 
-class System {
-  HX3D_ONLY_PTR(System)
+Placement::Placement(const Pointer<Widget>& widget) {
+  _widget = widget;
+}
 
-public:
-  System(const Widget::Ptr& content = nullptr);
-  ~System();
+Pointer<Widget> Placement::apply() {
+  _widget->_transform.position.x = _position.x;
+  _widget->_transform.position.y = _position.y;
+  _widget->_transform.size.x = _size.x;
+  _widget->_transform.size.y = _size.y;
 
-  void setContent(const Widget::Ptr& content);
-  const Widget::Ptr& getContent();
-
-  void registerHandler();
-  void unregisterHandler();
-
-  void update(float delta);
-  void draw(const Pointer<Batch>& batch);
-
-private:
-  Widget::Ptr _content;
-};
+  return _widget;
+}
 
 } /* gui */
 } /* hx3d */

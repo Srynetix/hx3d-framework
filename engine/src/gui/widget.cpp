@@ -20,52 +20,121 @@
 
 #include "hx3d/gui/widget.hpp"
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/core/core.hpp"
+#include "hx3d/window/application.hpp"
 
 namespace hx3d {
 namespace gui {
 
-Widget::Widget(Widget* parent): Mesh(),
-  _parent(parent)
- {
-  _geometry = Make<graphics::Geometry>();
-
-  _geometry->setAttribute("Position", std::vector<float> {
-    -0.5f, 0.5f, 0.f,
-    0.5, 0.5f, 0.f,
-    -0.5f, -0.5f, 0.f,
-    0.5f, -0.5f, 0.f
-  });
-
-  _geometry->setIndices(std::vector<GLushort> {
-    0, 1, 2,
-    0, 2, 3
-  });
-
-  _geometry->setAttribute("Color", std::vector<float> {
-    1, 1, 1, 1,
-    1, 1, 1, 1,
-    1, 1, 1, 1,
-    1, 1, 1, 1
-  });
-
-  _geometry->setAttribute("Texture", std::vector<float> {
-    0, 0,
-    0, 1,
-    1, 0,
-    1, 1
-  });
-
-  _geometry->uploadAll();
+Widget::Widget(Pointer<Widget> parent) {
+  _parent = parent;
+  _visible = true;
+  _shape->setTint(Color(127, 127, 127));
 }
 
-void Widget::add(Pointer<Widget> widget) {
-  widget->_parent = this;
-  _children.push_back(widget);
+Widget::~Widget() {
+  onFocusExit();
+  onHide();
 }
 
-void Widget::draw(const Pointer<Shader>& shader) {
-  Mesh::draw(shader);
+void Widget::update(float delta) {
+  _shape->transform.position.x = _transform.position.x;
+  _shape->transform.position.y = _transform.position.y;
+  _shape->transform.size.x = _transform.size.x;
+  _shape->transform.size.y = _transform.size.y;
+}
+
+void Widget::draw(const Pointer<Batch>& batch) {
+  batch->draw(_shape);
+}
+
+void Widget::onFocusEnter() {
+}
+
+void Widget::onFocusExit() {
+}
+
+void Widget::onShow() {
+}
+
+void Widget::onHide() {
+}
+
+bool Widget::isVisible() const {
+  return _visible;
+}
+
+void Widget::registerAction(std::string action) {
+  if (_actions.find(action) != _actions.end()) {
+    Log.Error("action %s already registered", action.c_str());
+  } else {
+    _actions[action] = nullptr;
+  }
+}
+
+void Widget::send(std::string action) {
+  if (_actions.find(action) == _actions.end()) {
+    Log.Error("action %s do not exist", action.c_str());
+  } else {
+    auto act = _actions[action];
+    if (act != nullptr) {
+      act();
+    }
+  }
+}
+
+void Widget::on(std::string action, std::function<void()> func) {
+  if (_actions.find(action) == _actions.end()) {
+    Log.Error("action %s do not exist", action.c_str());
+  } else {
+    _actions[action] = func;
+  }
+}
+
+bool Widget::checkBounds(glm::vec2 position) {
+  float lx = _transform.position.x - ((_transform.size.x / 2) * _transform.scale.x);
+  float hx = _transform.position.x + ((_transform.size.x / 2) * _transform.scale.x);
+  float ly = _transform.position.y - ((_transform.size.y / 2) * _transform.scale.y);
+  float hy = _transform.position.y + ((_transform.size.y / 2) * _transform.scale.y);
+
+  auto x_pos = position.x;
+  auto y_pos = Core::App()->getHeight() - position.y;
+
+  if (x_pos >= lx && x_pos <= hx && y_pos >= ly && y_pos <= hy) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+///////////////////
+// Input handler
+
+void Widget::onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+  mouseClicked(button, mousePosition);
+}
+
+void Widget::onKeyPressed(KeyEvent::Key key) {
+  keyPressed(key);
+}
+
+void Widget::onTextInput(std::string text) {
+  textInput(text);
+}
+
+/////////////////////
+// Widget handlers
+
+void Widget::mouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+
+}
+
+void Widget::keyPressed(KeyEvent::Key key) {
+
+}
+
+void Widget::textInput(std::string text) {
+
 }
 
 } /* gui */

@@ -1,8 +1,7 @@
 /*
-    GUI system.
-    Manage a GUI instance.
+    GUI label.
 
-    Copyright (C) 2015 Denis BOURGE
+    Copyright (C) 2016 Denis BOURGE
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,32 +19,14 @@
     USA
 */
 
-#pragma once
-
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/panel.hpp"
 
 namespace hx3d {
 namespace gui {
 
-class System {
-  HX3D_ONLY_PTR(System)
-
-public:
-  System(const Widget::Ptr& content = nullptr);
-  ~System();
-
-  void setContent(const Widget::Ptr& content);
-  const Widget::Ptr& getContent();
-
-  void registerHandler();
-  void unregisterHandler();
-
-  void update(float delta);
-  void draw(const Pointer<Batch>& batch);
-
-private:
-  Widget::Ptr _content;
-};
+Panel::Panel(const Widget::Ptr& parent): Container(parent) {
+  _shape->setTint(Color(0, 127, 127));
+}
 
 } /* gui */
 } /* hx3d */

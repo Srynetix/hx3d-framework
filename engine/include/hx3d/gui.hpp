@@ -21,7 +21,6 @@
 #ifndef HX3D_MAIN_GUI
 #define HX3D_MAIN_GUI
 
-#include "hx3d/gui/image_button.hpp"
 #include "hx3d/gui/system.hpp"
 #include "hx3d/gui/widget.hpp"
 
