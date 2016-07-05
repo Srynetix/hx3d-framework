@@ -35,6 +35,8 @@ public:
   virtual void onFocusEnter() override;
   virtual void onFocusExit() override;
 
+  void setText(std::string text);
+  
   virtual void update(float delta) override;
 
   virtual void keyPressed(KeyEvent::Key key) override;

@@ -51,6 +51,12 @@ void TextBox::update(float delta) {
   _text->transform.position.y = _transform.position.y;
 }
 
+void TextBox::setText(std::string text) {
+  Label::setText(text);
+
+  _content = text;
+}
+
 void TextBox::keyPressed(KeyEvent::Key key) {
   if (key == KeyEvent::Key::Return) {
     send("validate");
