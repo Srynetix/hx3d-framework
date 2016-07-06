@@ -21,10 +21,13 @@
 
 #pragma once
 
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/utils/ptr.hpp"
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace gui {
+
+class Widget;
 
 class Placement {
 

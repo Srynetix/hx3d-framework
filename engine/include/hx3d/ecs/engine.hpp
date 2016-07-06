@@ -18,22 +18,22 @@
     USA
 */
 
-#ifndef HX3D_ECS_ENGINE
-#define HX3D_ECS_ENGINE
+#pragma once
 
-#include "hx3d/ecs/system.hpp"
-#include "hx3d/ecs/entity.hpp"
-#include "hx3d/ecs/component.hpp"
-
-#include "hx3d/utils/log.hpp"
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/bitset.hpp"
 
 #include <map>
 #include <typeindex>
 #include <functional>
+#include <vector>
 
 namespace hx3d {
 namespace ecs {
+
+class Component;
+class Entity;
+class System;
 
 /**
 @brief Manages entity in a world.
@@ -222,5 +222,3 @@ private:
 } /* hx3d */
 
 #include "hx3d/ecs/_inline/engine.inl.hpp"
-
-#endif

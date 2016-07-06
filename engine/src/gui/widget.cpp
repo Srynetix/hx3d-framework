@@ -21,7 +21,10 @@
 #include "hx3d/gui/widget.hpp"
 
 #include "hx3d/core/core.hpp"
+#include "hx3d/graphics/shape.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/window/application.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace gui {
@@ -29,7 +32,8 @@ namespace gui {
 Widget::Widget(Pointer<Widget> parent) {
   _parent = parent;
   _visible = true;
-  _shape->setTint(Color(127, 127, 127));
+  _shape = Make<graphics::Shape>();
+  _shape->setTint(graphics::Color(127, 127, 127));
 }
 
 Widget::~Widget() {
@@ -44,7 +48,7 @@ void Widget::update(float delta) {
   _shape->transform.size.y = _transform.size.y;
 }
 
-void Widget::draw(const Pointer<Batch>& batch) {
+void Widget::draw(const Pointer<graphics::Batch>& batch) {
   batch->draw(_shape);
 }
 
@@ -110,11 +114,11 @@ bool Widget::checkBounds(glm::vec2 position) {
 ///////////////////
 // Input handler
 
-void Widget::onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+void Widget::onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) {
   mouseClicked(button, mousePosition);
 }
 
-void Widget::onKeyPressed(KeyEvent::Key key) {
+void Widget::onKeyPressed(window::KeyEvent::Key key) {
   keyPressed(key);
 }
 
@@ -125,11 +129,11 @@ void Widget::onTextInput(std::string text) {
 /////////////////////
 // Widget handlers
 
-void Widget::mouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+void Widget::mouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) {
 
 }
 
-void Widget::keyPressed(KeyEvent::Key key) {
+void Widget::keyPressed(window::KeyEvent::Key key) {
 
 }
 

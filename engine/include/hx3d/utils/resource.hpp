@@ -18,10 +18,8 @@
     USA
 */
 
-#ifndef HX3D_CORE_RESOURCE
-#define HX3D_CORE_RESOURCE
 
-#include "hx3d/utils/ptr.hpp"
+#pragma once
 
 namespace hx3d {
 
@@ -34,5 +32,3 @@ public:
 };
 
 } /* hx3d */
-
-#endif

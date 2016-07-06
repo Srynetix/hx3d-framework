@@ -18,16 +18,14 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_SHADER
-#define HX3D_GRAPHICS_SHADER
+#pragma once
 
 #include "hx3d/graphics/gl.hpp"
 
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/reference.hpp"
 #include "hx3d/utils/resource.hpp"
 
-#include <glm/glm.hpp>
-
+#include <glm/mat3x3.hpp>
 #include <string>
 #include <map>
 
@@ -217,5 +215,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

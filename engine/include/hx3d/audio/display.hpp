@@ -18,16 +18,16 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_DISPLAY
-#define HX3D_AUDIO_DISPLAY
+#pragma once
 
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/graphics/image.hpp"
 
-#include "hx3d/utils/timer.hpp"
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/timer.hpp"
 
 namespace hx3d {
+
 namespace audio {
 
 /**
@@ -80,7 +80,7 @@ public:
   @param length Length of the stream
   @param delta Delta time
   */
-  virtual void update(const Sint16* stream, const int length, const float delta) = 0;
+  virtual void update(const short int* stream, const int length, const float delta) = 0;
 
   /**
   @brief Use this to execute code after initialization.
@@ -110,5 +110,3 @@ protected:
 
 } /* audio */
 } /* hx3d */
-
-#endif

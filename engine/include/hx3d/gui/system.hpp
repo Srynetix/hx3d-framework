@@ -22,29 +22,36 @@
 
 #pragma once
 
-#include "hx3d/gui/widget.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
+
+namespace graphics {
+  class Batch;
+}
+
 namespace gui {
 
+class Widget;
+
 class System {
-  HX3D_ONLY_PTR(System)
+  HX3D_PTR_REF(System)
 
 public:
-  System(const Widget::Ptr& content = nullptr);
+  System(const Pointer<Widget>& content = nullptr);
   ~System();
 
-  void setContent(const Widget::Ptr& content);
-  const Widget::Ptr& getContent();
+  void setContent(const Pointer<Widget>& content);
+  const Pointer<Widget>& getContent();
 
   void registerHandler();
   void unregisterHandler();
 
   void update(float delta);
-  void draw(const Pointer<Batch>& batch);
+  void draw(const Pointer<graphics::Batch>& batch);
 
 private:
-  Widget::Ptr _content;
+  Pointer<Widget> _content;
 };
 
 } /* gui */

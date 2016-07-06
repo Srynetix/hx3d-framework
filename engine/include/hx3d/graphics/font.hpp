@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_FONT
-#define HX3D_GRAPHICS_FONT
+#pragma once
 
 #define FREETYPE_GL_NO_GLEW
 #include <freetype-gl/freetype-gl.h>
@@ -27,13 +26,16 @@
 #include <string>
 #include <map>
 
-#include "hx3d/graphics/shader.hpp"
 #include "hx3d/utils/resource.hpp"
 #include "hx3d/utils/ptr.hpp"
-#include "hx3d/utils/file.hpp"
 
 namespace hx3d {
+
+class File;
+
 namespace graphics {
+
+class Shader;
 
 /**
 @brief Font management.
@@ -107,5 +109,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

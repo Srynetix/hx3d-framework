@@ -21,7 +21,6 @@
 #pragma once
 
 #include "hx3d/graphics/transitions/transition.hpp"
-#include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
 namespace graphics {

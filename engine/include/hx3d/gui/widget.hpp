@@ -21,15 +21,16 @@
 #pragma once
 
 #include "hx3d/window/input_handler.hpp"
-#include "hx3d/utils/log.hpp"
-#include "hx3d/graphics/batches/batch.hpp"
+
 #include "hx3d/graphics/shape.hpp"
-#include "hx3d/window/events.hpp"
+
+#include <map>
 
 namespace hx3d {
 
-using namespace hx3d::graphics;
-using namespace hx3d::window;
+namespace graphics {
+  class Batch;
+}
 
 /**
 @brief 2D/3D GUI components
@@ -37,14 +38,14 @@ using namespace hx3d::window;
 namespace gui {
 
 class Widget: public std::enable_shared_from_this<Widget>, public window::InputHandler {
-  HX3D_ONLY_PTR(Widget)
+  HX3D_PTR_REF(Widget)
 
 public:
   Widget(Pointer<Widget> parent = nullptr);
   virtual ~Widget();
 
   virtual void update(float delta);
-  virtual void draw(const Pointer<Batch>& batch);
+  virtual void draw(const Pointer<graphics::Batch>& batch);
 
   void on(std::string action, std::function<void()> func);
   bool isVisible() const;
@@ -62,8 +63,8 @@ protected:
   void registerAction(std::string action);
   void send(std::string action);
 
-  Transform _transform;
-  Shape::Ref _shape;
+  graphics::Transform _transform;
+  Pointer<graphics::Shape> _shape;
   Pointer<Widget> _parent;
   bool _visible;
   std::map<std::string, std::function<void()>> _actions;
@@ -73,15 +74,15 @@ protected:
   ///////////////////
   // Input handler
 
-  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
-  virtual void onKeyPressed(KeyEvent::Key key) override;
+  virtual void onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
+  virtual void onKeyPressed(window::KeyEvent::Key key) override;
   virtual void onTextInput(std::string text) override;
 
   /////////////////////
   // Widget handlers
 
-  virtual void mouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition);
-  virtual void keyPressed(KeyEvent::Key key);
+  virtual void mouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition);
+  virtual void keyPressed(window::KeyEvent::Key key);
   virtual void textInput(std::string text);
 };
 

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_ALGORITHM
-#define HX3D_UTILS_ALGORITHM
+#pragma once
 
 #include <vector>
 
@@ -107,5 +106,3 @@ Type reduce(Container& container, Type init, Operation operation);
 } /* hx3d */
 
 #include "hx3d/utils/_inline/algorithm.inl.hpp"
-
-#endif /* HX3D_UTILS_ALGORITHM */

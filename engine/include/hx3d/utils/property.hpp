@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_PROPERTY
-#define HX3D_UTILS_PROPERTY
+#pragma once
 
 #include <vector>
 #include <functional>
@@ -120,5 +119,3 @@ public:
 } /* hx3d */
 
 #include "hx3d/utils/_inline/property.inl.hpp"
-
-#endif /* HX3D_UTILS_PROPERTY */

@@ -18,16 +18,17 @@
     USA
 */
 
-#ifndef HX3D_ECS_NODES_SPRITENODE
-#define HX3D_ECS_NODES_SPRITENODE
+#pragma once
 
 #include "hx3d/ecs/node.hpp"
 
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/batches/batch.hpp"
-
 namespace hx3d {
+
+namespace graphics {
+  class Texture;
+  class Sprite;
+}
+
 namespace ecs {
 
 /**
@@ -53,5 +54,3 @@ protected:
 
 } /* ecs */
 } /* hx3d */
-
-#endif /* HX3D_ECS_NODES_SPRITENODE */

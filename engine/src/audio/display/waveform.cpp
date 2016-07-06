@@ -30,7 +30,7 @@ Waveform::Waveform(): Waveform(50) {}
 Waveform::Waveform(const int refreshDelay): Display(refreshDelay) {}
 Waveform::~Waveform() {}
 
-void Waveform::update(const Sint16* stream, const int length, const float delta) {
+void Waveform::update(const short int* stream, const int length, const float delta) {
 
   if (!_initialized)
     return;

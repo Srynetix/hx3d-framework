@@ -18,18 +18,21 @@
     USA
 */
 
-#ifndef HX3D_ECS_NODE
-#define HX3D_ECS_NODE
 
-#include "hx3d/ecs/entity.hpp"
+#pragma once
+
 #include "hx3d/utils/ptr.hpp"
+#include "hx3d/ecs/entity.hpp"
 
 #include "hx3d/graphics/transform.hpp"
-#include "hx3d/graphics/batches/batch.hpp"
 
 #include <vector>
 
 namespace hx3d {
+
+namespace graphics {
+  class Batch;
+}
 
 /**
 @brief Entity-Component-System & Scene Graph components
@@ -164,5 +167,3 @@ protected:
 } /* hx3d */
 
 #include "hx3d/ecs/_inline/node.inl.hpp"
-
-#endif

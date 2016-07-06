@@ -18,29 +18,28 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_MESH
-#define HX3D_GRAPHICS_MESH
+#pragma once
 
 #include "hx3d/graphics/color.hpp"
-
-#include "hx3d/graphics/geometries/geometry.hpp"
-#include "hx3d/graphics/drawers/geometry_drawer.hpp"
-#include "hx3d/graphics/drawers/batch_drawer.hpp"
 #include "hx3d/graphics/transform.hpp"
 
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
 namespace graphics {
 
 class Shader;
+class Batch;
+class Geometry;
+class BatchDrawer;
+class GeometryDrawer;
 class Color;
 
 /**
 @brief Displayable 2D/3D element.
 */
 class Mesh {
-  HX3D_PTR(Mesh)
+  HX3D_PTR_REF(Mesh)
 
 public:
   Mesh();
@@ -140,5 +139,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

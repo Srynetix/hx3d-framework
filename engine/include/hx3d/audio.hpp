@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_AUDIO
-#define HX3D_MAIN_AUDIO
+#pragma once
 
 #include "hx3d/audio/audio.hpp"
 #include "hx3d/audio/display.hpp"
@@ -31,5 +30,3 @@
 #include "hx3d/audio/display/waveform.hpp"
 
 #include "hx3d/audio/converters/s16_converter.hpp"
-
-#endif /* HX3D_MAIN_AUDIO */

@@ -18,11 +18,9 @@
     USA
 */
 
-#ifndef HX3D_ECS_SCENEGRAPH
-#define HX3D_ECS_SCENEGRAPH
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
-#include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/ecs/engine.hpp"
 
 #include <string>
@@ -30,6 +28,11 @@
 #include <map>
 
 namespace hx3d {
+
+namespace graphics {
+  class Batch;
+}
+
 namespace ecs {
 
 class Node;
@@ -172,5 +175,3 @@ protected:
 } /* hx3d */
 
 #include "hx3d/ecs/_inline/scene_graph.inl.hpp"
-
-#endif

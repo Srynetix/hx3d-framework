@@ -1,5 +1,7 @@
 #include "hx3d/scripting/repl.hpp"
 
+#include "hx3d/scripting/scripter.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <cstring>
@@ -13,6 +15,11 @@
 
 namespace hx3d {
 namespace scripting {
+
+REPL::Config::Config() {
+  motd = "Welcome to mIRB.";
+  scripter = nullptr;
+}
 
 REPL::REPL(Config& config) {
   _config = config;

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_DISPLAY_WAVEFORM
-#define HX3D_AUDIO_DISPLAY_WAVEFORM
+#pragma once
 
 #include "hx3d/audio/display.hpp"
 
@@ -77,10 +76,8 @@ public:
   Waveform(const int refreshDelay);
   ~Waveform();
 
-  virtual void update(const Sint16* stream, const int length, const float delta) override;
+  virtual void update(const short int* stream, const int length, const float delta) override;
 };
 
 } /* audio */
 } /* hx3d */
-
-#endif

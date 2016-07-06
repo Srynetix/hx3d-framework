@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iostream>
+#include <string>
+
 #include <mruby.h>
 #include <mruby/compile.h>
 

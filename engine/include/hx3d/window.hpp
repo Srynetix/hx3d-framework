@@ -18,14 +18,12 @@
     USA
 */
 
-#ifndef HX3D_MAIN_WINDOW
-#define HX3D_MAIN_WINDOW
+#pragma once
 
 #include "hx3d/window/application.hpp"
 #include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/events.hpp"
 #include "hx3d/window/game.hpp"
 #include "hx3d/window/input_handler.hpp"
+#include "hx3d/window/input_multiplexer.hpp"
 #include "hx3d/window/screen.hpp"
-
-#endif /* HX3D_MAIN_WINDOW */

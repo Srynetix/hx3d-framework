@@ -20,8 +20,9 @@
 
 #pragma once
 
-#include "hx3d/window/i_application.hpp"
 #include <SDL2/SDL.h>
+
+#include "hx3d/window/i_application.hpp"
 
 namespace hx3d {
 namespace window {

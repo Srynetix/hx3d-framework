@@ -18,13 +18,12 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_FRAMEBUFFER
-#define HX3D_GRAPHICS_FRAMEBUFFER
+#pragma once
 
 #include "hx3d/graphics/gl.hpp"
 #include "hx3d/graphics/color.hpp"
 
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/reference.hpp"
 
 #include <stack>
 
@@ -37,7 +36,7 @@ class Texture;
 @brief Render-to-texture buffer.
 */
 class Framebuffer {
-  HX3D_PTR(Framebuffer)
+  HX3D_PTR_REF(Framebuffer)
 
 public:
   /**
@@ -133,5 +132,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

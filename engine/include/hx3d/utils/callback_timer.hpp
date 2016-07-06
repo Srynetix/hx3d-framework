@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_CALLBACKTIMER
-#define HX3D_UTILS_CALLBACKTIMER
+#pragma once
 
 #include "hx3d/utils/timer.hpp"
 
@@ -97,5 +96,3 @@ private:
 };
 
 } /* hx3d */
-
-#endif

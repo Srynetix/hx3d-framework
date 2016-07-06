@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_NUMBERUTILS
-#define HX3D_UTILS_NUMBERUTILS
+#pragma once
 
 namespace hx3d {
 namespace math {
@@ -71,5 +70,3 @@ float log2(int a);
 
 } /* math */
 } /* hx3d */
-
-#endif

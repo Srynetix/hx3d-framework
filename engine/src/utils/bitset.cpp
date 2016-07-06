@@ -20,6 +20,8 @@
 
 #include "hx3d/utils/bitset.hpp"
 
+#include <cmath>
+
 namespace hx3d {
 
 Bitset::Bitset(): _bits(0)

@@ -21,6 +21,7 @@
 #pragma once
 
 #include "hx3d/graphics/batches/batch.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -32,7 +33,7 @@ class Camera;
 @brief Simple base batch implementation. Draw at each draw call.
 */
 class SimpleBatch: public Batch {
-  HX3D_PTR(SimpleBatch)
+  HX3D_PTR_REF(SimpleBatch)
 
 public:
   SimpleBatch();

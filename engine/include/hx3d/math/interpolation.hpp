@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MATH_INTERPOLATION
-#define HX3D_MATH_INTERPOLATION
+#pragma once
 
 #include <glm/vec2.hpp>
 #include <functional>
@@ -97,5 +96,3 @@ inline graphics::Color interpolate(graphics::Color a, graphics::Color b, float t
 } /* hx3d */
 
 #include "hx3d/math/_inline/interpolation.inl.hpp"
-
-#endif

@@ -20,10 +20,10 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_CAMERAS_PERSPECTIVECAMERA
-#define HX3D_GRAPHICS_CAMERAS_PERSPECTIVECAMERA
+#pragma once
 
 #include "hx3d/graphics/cameras/camera.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -32,7 +32,7 @@ namespace graphics {
 @brief 3D perspective camera.
 */
 class PerspectiveCamera: public Camera {
-  HX3D_PTR(PerspectiveCamera)
+  HX3D_PTR_REF(PerspectiveCamera)
 
 public:
   /**
@@ -77,5 +77,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

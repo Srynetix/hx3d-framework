@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_UTILS
-#define HX3D_MAIN_UTILS
+#pragma once
 
 #include "hx3d/utils/algorithm.hpp"
 #include "hx3d/utils/assets.hpp"
@@ -38,5 +37,4 @@
 #include "hx3d/utils/string.hpp"
 #include "hx3d/utils/timer_manager.hpp"
 #include "hx3d/utils/timer.hpp"
-
-#endif /* HX3D_MAIN_UTILS */
+#include "hx3d/utils/yaml.hpp"

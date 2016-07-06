@@ -19,6 +19,8 @@
 */
 
 #include "hx3d/ecs/scene_graph.hpp"
+#include "hx3d/utils/string.hpp"
+
 #include <stack>
 
 namespace hx3d {

@@ -18,13 +18,13 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_BASEGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_BASEGEOMETRY
+#pragma once
 
 #include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
 #include "hx3d/graphics/buffers/index_array_buffer.hpp"
 #include "hx3d/graphics/buffers/vertex_array.hpp"
-#include "hx3d/graphics/shader.hpp"
+
+#include <map>
 
 using namespace hx3d::graphics::buffers;
 
@@ -133,5 +133,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

@@ -18,14 +18,14 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_SPRITEGEOMETRY
+#pragma once
 
 #include "hx3d/graphics/geometries/quad_geometry.hpp"
-#include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
 namespace graphics {
+
+class TextureRegion;
 
 /**
 @brief Sprite defined VBO geometry
@@ -53,5 +53,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

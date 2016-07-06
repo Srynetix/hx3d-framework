@@ -20,6 +20,8 @@
 
 #include "hx3d/graphics/transitions/transition.hpp"
 
+#include "hx3d/graphics/sprite.hpp"
+
 namespace hx3d {
 namespace graphics {
 
@@ -29,6 +31,9 @@ Transition::Transition(window::Game* game) {
   _running = false;
 
   _game = game;
+
+  _currentSprite = Make<Sprite>();
+  _nextSprite = Make<Sprite>();
 }
 
 void Transition::start() {

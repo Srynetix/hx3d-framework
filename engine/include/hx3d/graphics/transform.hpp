@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TRANSFORM
-#define HX3D_GRAPHICS_TRANSFORM
+#pragma once
 
 #include <glm/vec3.hpp>
 #include <glm/mat2x2.hpp>
@@ -88,5 +87,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

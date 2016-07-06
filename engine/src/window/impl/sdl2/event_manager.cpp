@@ -22,6 +22,8 @@
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/application.hpp"
+
+#include "hx3d/window/input_multiplexer.hpp"
 #include "hx3d/window/input_handler.hpp"
 
 #include <SDL2/SDL_events.h>

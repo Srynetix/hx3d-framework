@@ -20,6 +20,8 @@
 
 #include "hx3d/graphics/particle_manager.hpp"
 
+#include "hx3d/graphics/gl.hpp"
+
 namespace hx3d {
 namespace graphics {
 

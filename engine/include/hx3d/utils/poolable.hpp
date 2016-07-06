@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_POOLABLE
-#define HX3D_UTILS_POOLABLE
+#pragma once
 
 namespace hx3d {
 
@@ -54,5 +53,3 @@ private:
 };
 
 } /* hx3d */
-
-#endif

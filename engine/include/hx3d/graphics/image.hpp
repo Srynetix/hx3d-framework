@@ -18,11 +18,9 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_IMAGE
-#define HX3D_GRAPHICS_IMAGE
+#pragma once
 
 #include "hx3d/graphics/color.hpp"
-
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
@@ -141,5 +139,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

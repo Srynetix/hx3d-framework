@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_CONVERTERS_S16CONVERTER
-#define HX3D_AUDIO_CONVERTERS_S16CONVERTER
+#pragma once
 
 #include "hx3d/audio/effect.hpp"
 
@@ -69,5 +68,3 @@ public:
 
 } /* audio */
 } /* hx3d */
-
-#endif

@@ -18,10 +18,7 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_AUDIO
-#define HX3D_AUDIO_AUDIO
-
-#include "hx3d/utils/ptr.hpp"
+#pragma once
 
 namespace hx3d {
 
@@ -101,5 +98,3 @@ private:
 
 } /* audio */
 } /* hx3d */
-
-#endif

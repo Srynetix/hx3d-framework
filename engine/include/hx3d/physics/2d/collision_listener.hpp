@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLISION_LISTENER
-#define HX3D_PHYSICS_2D_COLLISION_LISTENER
+#pragma once
 
 #include "hx3d/physics/2d/manifold.hpp"
 
@@ -55,5 +54,3 @@ public:
 
 } /* physics2d */
 } /* hx3d */
-
-#endif /* HX3D_PHYSICS_2D_COLLISION_LISTENER */

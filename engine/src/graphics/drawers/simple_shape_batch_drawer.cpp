@@ -22,9 +22,11 @@
 
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/shape.hpp"
-#include "hx3d/core/core.hpp"
 #include "hx3d/utils/assets.hpp"
+
+#include "hx3d/core/core.hpp"
 
 namespace hx3d {
 namespace graphics {

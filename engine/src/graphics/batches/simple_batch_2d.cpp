@@ -25,6 +25,7 @@
 #include "hx3d/graphics/cameras/camera.hpp"
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/mesh.hpp"
+#include "hx3d/graphics/drawers/batch_drawer.hpp"
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {

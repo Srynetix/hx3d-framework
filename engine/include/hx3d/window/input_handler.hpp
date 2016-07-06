@@ -18,13 +18,12 @@
     USA
 */
 
-#ifndef HX3D_WINDOW_INPUTHANDLER
-#define HX3D_WINDOW_INPUTHANDLER
+#pragma once
 
 #include "hx3d/window/events.hpp"
 
 #include <string>
-#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace window {
@@ -122,5 +121,3 @@ public:
 
 } /* window */
 } /* hx3d */
-
-#endif /* HX3D_WINDOW_INPUTHANDLER */

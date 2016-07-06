@@ -20,21 +20,21 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TEXT
-#define HX3D_GRAPHICS_TEXT
+#pragma once
 
 #include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/font.hpp"
 #include "hx3d/math/function.hpp"
 
 namespace hx3d {
 namespace graphics {
 
+class Font;
+
 /**
 @brief Text element
 */
 class Text: public Mesh {
-  HX3D_PTR(Text)
+  HX3D_PTR_REF(Text)
 
 public:
 
@@ -164,5 +164,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

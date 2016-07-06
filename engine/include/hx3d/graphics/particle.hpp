@@ -18,18 +18,21 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_PARTICLE
-#define HX3D_GRAPHICS_PARTICLE
+#pragma once
+
+#include "hx3d/graphics/color.hpp"
 
 #include "hx3d/utils/poolable.hpp"
 #include "hx3d/utils/ptr.hpp"
 
-#include "hx3d/graphics/batches/batch.hpp"
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/sprite.hpp"
+#include <glm/vec3.hpp>
 
 namespace hx3d {
 namespace graphics {
+
+class Texture;
+class Sprite;
+class Batch;
 
 /**
 @brief Poolable 2D/3D particle.
@@ -94,5 +97,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

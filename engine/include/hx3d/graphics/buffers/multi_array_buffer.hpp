@@ -24,8 +24,7 @@
     > Finish the class.
 */
 
-#ifndef HX3D_GRAPHICS_BUFFERS_MULTIARRAYBUFFER
-#define HX3D_GRAPHICS_BUFFERS_MULTIARRAYBUFFER
+#pragma once
 
 #include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
 
@@ -102,5 +101,3 @@ private:
 } /* buffers */
 } /* graphics */
 } /* hx3d */
-
-#endif

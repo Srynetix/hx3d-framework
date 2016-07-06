@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MATH_FUNCTION
-#define HX3D_MATH_FUNCTION
+#pragma once
 
 #include <glm/vec2.hpp>
 #include <functional>
@@ -109,5 +108,3 @@ private:
 
 } /* math */
 } /* hx3d */
-
-#endif

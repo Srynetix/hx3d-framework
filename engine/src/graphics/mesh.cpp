@@ -24,6 +24,8 @@
 #include "hx3d/graphics/drawers/mesh_drawer.hpp"
 #include "hx3d/graphics/drawers/simple_mesh_batch_drawer.hpp"
 
+#include "hx3d/graphics/geometries/geometry.hpp"
+
 namespace hx3d {
 namespace graphics {
 

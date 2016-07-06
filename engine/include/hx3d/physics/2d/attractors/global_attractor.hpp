@@ -18,10 +18,11 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_ATTRACTORS_GLOBAL_ATTRACTOR
-#define HX3D_PHYSICS_2D_ATTRACTORS_GLOBAL_ATTRACTOR
+#pragma once
 
 #include "hx3d/physics/2d/attractor.hpp"
+
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace physics2d {
@@ -47,5 +48,3 @@ struct GlobalAttractor: public Attractor {
 
 } /* physics2d */
 } /* hx3d*/
-
-#endif

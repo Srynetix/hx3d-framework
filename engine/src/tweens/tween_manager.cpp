@@ -20,6 +20,7 @@
 */
 
 #include "hx3d/tweens/tween_manager.hpp"
+#include "hx3d/tweens/base_tween.hpp"
 
 namespace hx3d {
 namespace tweens {

@@ -22,8 +22,10 @@
 
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/shader.hpp"
 
 #include "hx3d/graphics/text.hpp"
+#include "hx3d/graphics/font.hpp"
 
 namespace hx3d {
 namespace graphics {

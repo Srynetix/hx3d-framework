@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_ERROR
-#define HX3D_GRAPHICS_ERROR
+#pragma once
 
 namespace hx3d {
 namespace graphics {
@@ -36,5 +35,3 @@ void checkGLError(const char* file, int line);
 } /* hx3d*/
 
 #define GL_ERROR_CHECK(x) x; hx3d::graphics::checkGLError(__FILE__, __LINE__);
-
-#endif /* HX3D_GRAPHICS_ERROR */

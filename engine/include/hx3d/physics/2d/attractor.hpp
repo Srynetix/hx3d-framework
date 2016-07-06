@@ -18,15 +18,14 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_ATTRACTOR
-#define HX3D_PHYSICS_2D_ATTRACTOR
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 
-#include "hx3d/physics/2d/collider.hpp"
-
 namespace hx3d {
 namespace physics2d {
+
+class Collider;
 
 /**
 @brief Physical gravity attractor
@@ -95,5 +94,3 @@ struct Attractor {
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

@@ -18,11 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_BITSET
-#define HX3D_UTILS_BITSET
-
-#include <cmath>
-#include <vector>
+#pragma once
 
 namespace hx3d {
 
@@ -54,5 +50,3 @@ private:
 };
 
 } /* hx3d */
-
-#endif

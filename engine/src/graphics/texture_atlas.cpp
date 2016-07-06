@@ -21,7 +21,10 @@
 #include "hx3d/graphics/texture_atlas.hpp"
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/file.hpp"
+
 #include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/texture_region.hpp"
 
 #include <rapidjson/document.h>
 

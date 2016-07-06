@@ -20,8 +20,9 @@
 
 #pragma once
 
-#include "hx3d/utils/algorithm.hpp"
 #include "hx3d/window/input_handler.hpp"
+
+#include <vector>
 
 namespace hx3d {
 namespace window {

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_FILE
-#define HX3D_UTILS_FILE
+#pragma once
 
 #include <string>
 
@@ -166,5 +165,3 @@ private:
 };
 
 } /* hx3d */
-
-#endif

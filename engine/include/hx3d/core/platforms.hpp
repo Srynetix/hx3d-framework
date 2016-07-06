@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_CORE_PLATFORMS
-#define HX3D_CORE_PLATFORMS
+#pragma once
 
 #ifdef __IPHONE_NA
   #define __IOS__
@@ -30,6 +29,4 @@
     #elif TARGET_OS_IPHONE
       #define __IOS__
     #endif
-#endif
-
 #endif

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_TWEENS
-#define HX3D_MAIN_TWEENS
+#pragma once
 
 #include "hx3d/tweens/base_tween.hpp"
 #include "hx3d/tweens/callback.hpp"
@@ -28,5 +27,3 @@
 #include "hx3d/tweens/sequence.hpp"
 #include "hx3d/tweens/tween_manager.hpp"
 #include "hx3d/tweens/tween.hpp"
-
-#endif /* HX3D_MAIN_TWEENS */

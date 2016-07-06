@@ -18,8 +18,8 @@
     USA
 */
 
-#ifndef HX3D_MAIN_HEADER
-#define HX3D_MAIN_HEADER
+
+#pragma once
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/core/configuration.hpp"
@@ -34,5 +34,3 @@
 #include "hx3d/tweens.hpp"
 #include "hx3d/utils.hpp"
 #include "hx3d/window.hpp"
-
-#endif /* HX3D_MAIN_HEADER */

@@ -18,6 +18,10 @@
     USA
 */
 
+#include "hx3d/utils/log.hpp"
+
+namespace hx3d {
+
 template <class Asset, class... Args>
 void AssetManager::create(std::string name, Args... args) {
   auto& type = typeid(Asset);
@@ -52,3 +56,5 @@ Pointer<Asset> AssetManager::get(std::string name) {
 
   return std::dynamic_pointer_cast<Asset>(_assets[type][name]);
 }
+
+} /* hx3d */

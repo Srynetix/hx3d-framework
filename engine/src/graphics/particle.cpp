@@ -20,6 +20,9 @@
 
 #include "hx3d/graphics/particle.hpp"
 
+#include "hx3d/graphics/batches/batch.hpp"
+#include "hx3d/graphics/sprite.hpp"
+
 #include "hx3d/math/interpolation.hpp"
 
 namespace hx3d {

@@ -23,6 +23,7 @@
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/event_manager.hpp"
+#include "hx3d/graphics/text.hpp"
 
 namespace hx3d {
 namespace gui {
@@ -33,13 +34,13 @@ TextBox::TextBox(const Widget::Ptr& parent): Label(parent) {
 }
 
 void TextBox::onFocusEnter() {
-  _shape->setTint(Color(127, 127, 0));
+  _shape->setTint(graphics::Color(127, 127, 0));
 
   Core::Events()->beginTextInput();
 }
 
 void TextBox::onFocusExit() {
-  _shape->setTint(Color(127, 127, 127));
+  _shape->setTint(graphics::Color(127, 127, 127));
 
   Core::Events()->endTextInput();
 }
@@ -57,12 +58,12 @@ void TextBox::setText(std::string text) {
   _content = text;
 }
 
-void TextBox::keyPressed(KeyEvent::Key key) {
-  if (key == KeyEvent::Key::Return) {
+void TextBox::keyPressed(window::KeyEvent::Key key) {
+  if (key == window::KeyEvent::Key::Return) {
     send("validate");
   }
 
-  else if (key == KeyEvent::Key::Backspace) {
+  else if (key == window::KeyEvent::Key::Backspace) {
     if (_content.size() > 0) {
       _content.pop_back();
     }

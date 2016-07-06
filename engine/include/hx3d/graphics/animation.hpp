@@ -18,14 +18,16 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_ANIMATION
-#define HX3D_GRAPHICS_ANIMATION
+#pragma once
 
 #include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/texture_atlas.hpp"
+
+#include <vector>
 
 namespace hx3d {
 namespace graphics {
+
+class TextureAtlas;
 
 /**
 @brief Animated texture-atlas based sprite
@@ -75,5 +77,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif /* HX3D_GRAPHICS_ANIMATION */

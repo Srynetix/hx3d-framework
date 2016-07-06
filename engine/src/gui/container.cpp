@@ -34,7 +34,7 @@ void Container::addChild(const Widget::Ptr& widget) {
   _children.push_back(widget);
 }
 
-void Container::onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
+void Container::onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) {
   mouseClicked(button, mousePosition);
 
   if (_propagateEvent) {
@@ -62,7 +62,7 @@ void Container::onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mouseP
   }
 }
 
-void Container::onKeyPressed(KeyEvent::Key key) {
+void Container::onKeyPressed(window::KeyEvent::Key key) {
   keyPressed(key);
 
   if (_propagateEvent) {
@@ -89,7 +89,7 @@ void Container::update(float delta) {
   }
 }
 
-void Container::draw(const Pointer<Batch>& batch) {
+void Container::draw(const Pointer<graphics::Batch>& batch) {
   Widget::draw(batch);
   for (auto& child: _children) {
     child->draw(batch);

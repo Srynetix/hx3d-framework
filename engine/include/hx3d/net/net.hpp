@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_NET_NET
-#define HX3D_NET_NET
+#pragma once
 
 namespace hx3d {
 
@@ -43,5 +42,3 @@ public:
 
 } /* net */
 } /* hx3d */
-
-#endif

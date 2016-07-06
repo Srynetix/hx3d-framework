@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_PARTICLEEMITTER
-#define HX3D_GRAPHICS_PARTICLEEMITTER
+#pragma once
 
 #include "hx3d/graphics/particle.hpp"
 #include "hx3d/utils/pool.hpp"
@@ -109,5 +108,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

@@ -21,11 +21,12 @@
 
 #include "hx3d/gui/panel.hpp"
 
+
 namespace hx3d {
 namespace gui {
 
 Panel::Panel(const Widget::Ptr& parent): Container(parent) {
-  _shape->setTint(Color(0, 127, 127));
+  _shape->setTint(graphics::Color(0, 127, 127));
 }
 
 } /* gui */

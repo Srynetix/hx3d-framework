@@ -24,16 +24,16 @@
     > Add more viewport types.
 */
 
-#ifndef HX3D_GRAPHICS_VIEWPORTS_VIEWPORT
-#define HX3D_GRAPHICS_VIEWPORTS_VIEWPORT
+#pragma once
 
 #include <glm/vec2.hpp>
 
-#include "hx3d/graphics/cameras/camera.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace graphics {
+
+class Camera;
 
 /**
 @brief Camera viewport.
@@ -106,5 +106,3 @@ protected:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

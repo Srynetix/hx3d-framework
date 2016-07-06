@@ -18,6 +18,8 @@
     USA
 */
 
+#include "hx3d/tweens/tween.hpp"
+
 namespace hx3d {
 namespace tweens {
 

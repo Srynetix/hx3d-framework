@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "hx3d/utils/file.hpp"
+#include <string>
 
 namespace hx3d {
 namespace audio {

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_ECS
-#define HX3D_MAIN_ECS
+#pragma once
 
 #include "hx3d/ecs/component.hpp"
 #include "hx3d/ecs/engine.hpp"
@@ -30,5 +29,3 @@
 
 #include "hx3d/ecs/nodes/sprite_node.hpp"
 #include "hx3d/ecs/nodes/physics_node.hpp"
-
-#endif /* HX3D_MAIN_ECS */

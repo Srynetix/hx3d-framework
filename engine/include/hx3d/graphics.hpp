@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GRAPHICS
-#define HX3D_MAIN_GRAPHICS
+#pragma once
 
 #include "hx3d/graphics/animation.hpp"
 #include "hx3d/graphics/color.hpp"
@@ -70,5 +69,3 @@
 
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
 #include "hx3d/graphics/viewports/viewport.hpp"
-
-#endif /* HX3D_MAIN_GRAPHICS */

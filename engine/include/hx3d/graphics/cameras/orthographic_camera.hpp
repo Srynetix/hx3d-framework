@@ -20,10 +20,10 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_CAMERAS_ORTHOGRAPHICCAMERA
-#define HX3D_GRAPHICS_CAMERAS_ORTHOGRAPHICCAMERA
+#pragma once
 
 #include "hx3d/graphics/cameras/camera.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -32,7 +32,7 @@ namespace graphics {
 @brief 2D orthographic camera w/ Z-buffer.
 */
 class OrthographicCamera: public Camera {
-  HX3D_PTR(OrthographicCamera)
+  HX3D_PTR_REF(OrthographicCamera)
 
 public:
   /**
@@ -64,5 +64,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

@@ -21,9 +21,12 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "hx3d/audio/i_music.hpp"
-#include "hx3d/utils/file.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
+
+class File;
+
 namespace audio {
 
 class Music: public IMusic {

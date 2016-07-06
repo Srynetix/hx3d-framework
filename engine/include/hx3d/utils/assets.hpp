@@ -18,17 +18,16 @@
     USA
 */
 
-#ifndef HX3D_UTILS_ASSETS
-#define HX3D_UTILS_ASSETS
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
-#include "hx3d/utils/resource.hpp"
-#include "hx3d/utils/log.hpp"
 
 #include <typeindex>
 #include <map>
 
 namespace hx3d {
+
+class Resource;
 
 /**
 @brief Asset management
@@ -70,8 +69,6 @@ private:
   std::map<std::type_index, std::map<std::string, Pointer<Resource>>> _assets;
 };
 
-#include "hx3d/utils/_inline/assets.inl.hpp"
-
 } /* hx3d */
 
-#endif
+#include "hx3d/utils/_inline/assets.inl.hpp"

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MATH_RANDOM
-#define HX3D_MATH_RANDOM
+#pragma once
 
 #include <functional>
 #include <vector>
@@ -114,5 +113,3 @@ bool flip_coin();
 } /* hx3d */
 
 #include "hx3d/math/_inline/random.inl.hpp"
-
-#endif

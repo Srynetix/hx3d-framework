@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_ECS_ENTITY
-#define HX3D_ECS_ENTITY
+#pragma once
 
 namespace hx3d {
 namespace ecs {
@@ -58,5 +57,3 @@ private:
 
 } /* ecs */
 } /* hx3d */
-
-#endif

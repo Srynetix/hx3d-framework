@@ -18,10 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_GUI
-#define HX3D_MAIN_GUI
+#pragma once
 
 #include "hx3d/gui/system.hpp"
 #include "hx3d/gui/widget.hpp"
-
-#endif /* HX3D_MAIN_GUI */

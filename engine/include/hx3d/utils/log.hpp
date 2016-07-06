@@ -18,10 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_LOG
-#define HX3D_UTILS_LOG
-
-#include "hx3d/utils/string.hpp"
+#pragma once
 
 #include <string>
 
@@ -100,5 +97,3 @@ private:
 static hx3d::LogImpl Log;
 
 } /* hx3d */
-
-#endif

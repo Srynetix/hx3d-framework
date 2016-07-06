@@ -18,20 +18,18 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TEXTURE
-#define HX3D_GRAPHICS_TEXTURE
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/resource.hpp"
 
-#include "hx3d/graphics/font.hpp"
-#include "hx3d/graphics/image.hpp"
 #include "hx3d/graphics/gl.hpp"
-
-#include <string>
+#include "hx3d/graphics/image.hpp"
 
 namespace hx3d {
 namespace graphics {
+
+class Font;
 
 /**
 @brief 2D/3D texture management.
@@ -138,7 +136,7 @@ public:
   @param h    Height
   @param data Data
   */
-  void updateZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Uint8* data);
+  void updateZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h, unsigned char* data);
 
   /**
   @brief Get the texture width.
@@ -213,5 +211,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

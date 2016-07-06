@@ -18,12 +18,12 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLIDERS_POLYGON
-#define HX3D_PHYSICS_2D_COLLIDERS_POLYGON
+#pragma once
 
 #include "hx3d/physics/2d/collider.hpp"
 
 #include <vector>
+#include <glm/mat2x2.hpp>
 
 namespace hx3d {
 namespace physics2d {
@@ -81,5 +81,3 @@ struct Polygon: public Collider {
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

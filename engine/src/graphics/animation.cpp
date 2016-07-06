@@ -19,6 +19,7 @@
 */
 
 #include "hx3d/graphics/animation.hpp"
+#include "hx3d/graphics/texture_atlas.hpp"
 
 namespace hx3d {
 namespace graphics {

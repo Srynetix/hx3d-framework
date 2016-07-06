@@ -22,8 +22,12 @@
 
 #include "hx3d/graphics/transitions/alpha_fade_transition.hpp"
 
-#include "hx3d/graphics/sprite.hpp"
 #include "hx3d/core/core.hpp"
+
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+
 #include "hx3d/window/game.hpp"
 #include "hx3d/window/application.hpp"
 

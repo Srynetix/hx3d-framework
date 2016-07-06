@@ -18,6 +18,9 @@
     USA
 */
 
+namespace hx3d {
+namespace physics2d {
+
 template <class... Categories>
 void CollisionMatrix::addMask(std::string name, std::string category, Categories... others) {
   addOneMask(name, category);
@@ -27,4 +30,7 @@ void CollisionMatrix::addMask(std::string name, std::string category, Categories
 template <class... Categories>
 void CollisionMatrix::addMask(std::string name, std::string category, typename std::enable_if<sizeof...(Categories) == 0>::type* test) {
   addOneMask(name, category);
+}
+
+}
 }

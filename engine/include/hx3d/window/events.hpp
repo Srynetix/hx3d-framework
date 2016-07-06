@@ -23,8 +23,7 @@
     > Gesture management
 */
 
-#ifndef HX3D_WINDOW_EVENTS
-#define HX3D_WINDOW_EVENTS
+#pragma once
 
 namespace hx3d {
 namespace window {
@@ -155,5 +154,3 @@ namespace window {
 
 } /* window */
 } /* hx3d */
-
-#endif /* HX3D_WINDOW_EVENTS */

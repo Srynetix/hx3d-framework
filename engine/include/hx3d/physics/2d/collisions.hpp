@@ -1,10 +1,13 @@
-#ifndef HX3D_PHYSICS_2D_COLLISIONS
-#define HX3D_PHYSICS_2D_COLLISIONS
+#pragma once
 
 #include "hx3d/physics/2d/manifold.hpp"
 
 namespace hx3d {
 namespace physics2d {
+
+class Circle;
+class Polygon;
+
 
 /**
 @brief Collision test between two circles.
@@ -52,5 +55,3 @@ bool checkCollisions(Manifold& m, Pointer<Polygon> a, Pointer<Polygon> b);
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

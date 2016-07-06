@@ -20,8 +20,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TEXTUREREGION
-#define HX3D_GRAPHICS_TEXTUREREGION
+#pragma once
 
 #include <glm/vec2.hpp>
 
@@ -121,5 +120,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

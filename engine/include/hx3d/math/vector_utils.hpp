@@ -18,10 +18,10 @@
     USA
 */
 
-#ifndef HX3D_MATH_VECTORUTILS
-#define HX3D_MATH_VECTORUTILS
+#pragma once
 
-#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
 namespace hx3d {
 namespace math {
@@ -110,5 +110,3 @@ inline bool epsEqual(T v1, T v2);
 } /* hx3d */
 
 #include "hx3d/math/_inline/vector_utils.inl.hpp"
-
-#endif

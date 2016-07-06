@@ -19,16 +19,16 @@
     USA
 */
 
-#ifndef HX3D_TWEENS_TWEENMANAGER
-#define HX3D_TWEENS_TWEENMANAGER
+#pragma once
 
-#include "hx3d/tweens/base_tween.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 #include <vector>
 
 namespace hx3d {
 namespace tweens {
+
+class BaseTween;
 
 /**
 @brief Tweens management and update
@@ -70,5 +70,3 @@ private:
 
 } /* tween */
 } /* hx3d */
-
-#endif

@@ -22,6 +22,8 @@
 
 #include "hx3d/utils/log.hpp"
 
+#include <algorithm>
+
 namespace hx3d {
 namespace window {
 

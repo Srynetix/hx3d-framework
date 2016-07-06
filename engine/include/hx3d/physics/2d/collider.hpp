@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLIDER
-#define HX3D_PHYSICS_2D_COLLIDER
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/object_map.hpp"
@@ -27,7 +26,7 @@
 #include "hx3d/physics/2d/mass.hpp"
 #include "hx3d/physics/2d/material.hpp"
 
-#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace physics2d {
@@ -39,7 +38,7 @@ struct Attractor;
 */
 class Collider {
 public:
-  HX3D_ONLY_PTR(Collider)
+  HX3D_PTR(Collider)
 
   /**
   @brief Collider type
@@ -183,5 +182,3 @@ public:
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

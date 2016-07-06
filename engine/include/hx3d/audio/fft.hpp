@@ -20,8 +20,7 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_FFT
-#define HX3D_AUDIO_FFT
+#pragma once
 
 #include "hx3d/math/constants.hpp"
 
@@ -57,5 +56,3 @@ public:
 
 } /* audio */
 } /* hx3d */
-
-#endif

@@ -27,7 +27,7 @@ namespace hx3d {
 namespace gui {
 
 class Panel: public Container {
-  HX3D_ONLY_PTR(Panel)
+  HX3D_PTR_REF(Panel)
 
 public:
   Panel(const Widget::Ptr& parent = nullptr);

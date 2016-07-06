@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_OBJECT_MAP
-#define HX3D_UTILS_OBJECT_MAP
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 
@@ -71,5 +70,3 @@ class ObjectMap {
 } /* hx3d */
 
 #include "hx3d/utils/_inline/object_map.inl.hpp"
-
-#endif /* HX3D_UTILS_OBJECT_MAP */

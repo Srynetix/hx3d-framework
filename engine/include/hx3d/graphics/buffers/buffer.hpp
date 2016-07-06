@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BUFFERS_BUFFER
-#define HX3D_GRAPHICS_BUFFERS_BUFFER
+#pragma once
 
 #include <vector>
 
@@ -121,5 +120,3 @@ protected:
 } /* hx3d */
 
 #include "hx3d/graphics/buffers/_inline/buffer.inl.hpp"
-
-#endif

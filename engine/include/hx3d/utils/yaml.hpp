@@ -1,39 +1,20 @@
 #pragma once
 
-#include "hx3d/utils/file.hpp"
 #include <yaml-cpp/yaml.h>
 
 namespace hx3d {
 namespace yaml {
 
-YAML::Node loadFromFile(std::string pathToFile) {
-  auto content = File::loadAsciiFile(pathToFile)->toString();
-  auto rootNode = YAML::Load(content);
-
-  return rootNode;
-}
+YAML::Node loadFromFile(std::string pathToFile);
+YAML::Node getNode(YAML::Node& node, std::string name);
 
 template <class T>
-T getValue(YAML::Node& node, std::string name, T defaultValue = T()) {
-  if (node[name]) {
-    return node[name].template as<T>();
-  }
-
-  return defaultValue;
-}
+T getValue(YAML::Node& node, std::string name, T defaultValue = T());
 
 template <class T>
-T getListValue(YAML::Node& node, int i, T defaultValue = T()) {
-  if (node[i]) {
-    return node[i].template as<T>();
-  }
-
-  return defaultValue;
-}
-
-YAML::Node getNode(YAML::Node& node, std::string name) {
-  return node[name];
-}
+T getListValue(YAML::Node& node, int i, T defaultValue = T());
 
 } /* yaml */
 } /* hx3d */
+
+#include "hx3d/utils/_inline/yaml.inl.hpp"

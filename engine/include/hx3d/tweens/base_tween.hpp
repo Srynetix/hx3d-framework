@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_TWEENS_BASETWEEN
-#define HX3D_TWEENS_BASETWEEN
+#pragma once
 
 namespace hx3d {
 
@@ -62,7 +61,5 @@ protected:
   bool _infinite;
 };
 
-} /* math */
+} /* tweens */
 } /* hx3d */
-
-#endif

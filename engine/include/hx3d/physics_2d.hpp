@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_PHYSICS_2D
-#define HX3D_MAIN_PHYSICS_2D
+#pragma once
 
 #include "hx3d/physics/2d/attractor.hpp"
 #include "hx3d/physics/2d/collider.hpp"
@@ -37,5 +36,3 @@
 
 #include "hx3d/physics/2d/colliders/circle.hpp"
 #include "hx3d/physics/2d/colliders/polygon.hpp"
-
-#endif /* HX3D_MAIN_PHYSICS_2D */

@@ -18,6 +18,12 @@
     USA
 */
 
+#include "hx3d/ecs/entity.hpp"
+#include "hx3d/ecs/component.hpp"
+#include "hx3d/ecs/system.hpp"
+
+#include "hx3d/utils/log.hpp"
+
 namespace hx3d {
 namespace ecs {
 

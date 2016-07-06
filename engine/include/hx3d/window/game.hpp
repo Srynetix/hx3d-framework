@@ -18,23 +18,28 @@
     USA
 */
 
-#ifndef HX3D_WINDOW_GAME
-#define HX3D_WINDOW_GAME
-
-#include "hx3d/window/screen.hpp"
-#include "hx3d/graphics/cameras/orthographic_camera.hpp"
-#include "hx3d/graphics/batches/simple_batch.hpp"
-#include "hx3d/graphics/viewports/viewport.hpp"
-#include "hx3d/graphics/transitions/transition.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
-#include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/text.hpp"
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/utils/object_map.hpp"
 
+#include <glm/vec2.hpp>
+
 namespace hx3d {
+
+namespace graphics {
+  class Sprite;
+  class Framebuffer;
+  class Batch;
+  class Transition;
+  class Viewport;
+  class Camera;
+  class Text;
+}
+
 namespace window {
+
+class Screen;
 
 /**
 @brief Game main class: multiple screens management
@@ -151,14 +156,14 @@ private:
   bool _running;
   Pointer<Screen> _screen;
   Pointer<Screen> _nextScreen;
-  PrivateReference<graphics::Text> _deltaText;
-  PrivateReference<graphics::Text> _fpsText;
+  Pointer<graphics::Text> _deltaText;
+  Pointer<graphics::Text> _fpsText;
 
-  PrivateReference<graphics::OrthographicCamera> _camera;
-  PrivateReference<graphics::SimpleBatch> _batch;
+  Pointer<graphics::Camera> _camera;
+  Pointer<graphics::Batch> _batch;
 
-  PrivateReference<graphics::Framebuffer> _currentFB;
-  PrivateReference<graphics::Framebuffer> _nextFB;
+  Pointer<graphics::Framebuffer> _currentFB;
+  Pointer<graphics::Framebuffer> _nextFB;
   Pointer<graphics::Transition> _currentTransition;
   Pointer<graphics::Viewport> _currentViewport;
 
@@ -171,5 +176,3 @@ private:
 
 } /* window */
 } /* hx3d */
-
-#endif /* HX3D_WINDOW_GAME */

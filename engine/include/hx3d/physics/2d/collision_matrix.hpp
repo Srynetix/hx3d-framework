@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLISIONMATRIX
-#define HX3D_PHYSICS_2D_COLLISIONMATRIX
+#pragma once
 
 #include <string>
 #include <map>
@@ -88,9 +87,7 @@ private:
   void addOneMask(std::string name, std::string category);
 };
 
-#include "hx3d/physics/2d/_inline/collision_matrix.inl.hpp"
-
 } /* physics2d */
 } /* hx3d */
 
-#endif
+#include "hx3d/physics/2d/_inline/collision_matrix.inl.hpp"

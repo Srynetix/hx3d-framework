@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "hx3d/graphics/geometries/geometry.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 namespace graphics {

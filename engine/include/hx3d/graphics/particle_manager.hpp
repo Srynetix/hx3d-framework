@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_PARTICLEMANAGER
-#define HX3D_GRAPHICS_PARTICLEMANAGER
+#pragma once
 
 #include "hx3d/graphics/particle_emitter.hpp"
 
@@ -61,5 +60,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

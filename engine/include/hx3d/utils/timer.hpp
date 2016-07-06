@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER
-#define HX3D_UTILS_TIMER
+#pragma once
 
 #include <chrono>
 
@@ -98,5 +97,3 @@ private:
 };
 
 } /* hx3d */
-
-#endif

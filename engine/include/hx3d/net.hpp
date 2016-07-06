@@ -18,9 +18,6 @@
     USA
 */
 
-#ifndef HX3D_MAIN_NET
-#define HX3D_MAIN_NET
+#pragma once
 
 #include "hx3d/net/net.hpp"
-
-#endif /* HX3D_MAIN_NET */

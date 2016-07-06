@@ -2,6 +2,7 @@ set(
   CORE_FILES
 
   "${ENGINE_SRC}/core/core.cpp"
+  "${ENGINE_SRC}/core/configuration.cpp"
 )
 
 set(
@@ -45,6 +46,7 @@ set(
   "${ENGINE_SRC}/utils/string.cpp"
   "${ENGINE_SRC}/utils/timer_manager.cpp"
   "${ENGINE_SRC}/utils/timer.cpp"
+  "${ENGINE_SRC}/utils/yaml.cpp"
 )
 
 set(

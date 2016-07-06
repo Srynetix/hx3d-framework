@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_STARGEOMETRY
+#pragma once
 
 #include "hx3d/graphics/geometries/geometry.hpp"
 
@@ -37,5 +36,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

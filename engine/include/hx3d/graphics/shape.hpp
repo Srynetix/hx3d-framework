@@ -21,7 +21,6 @@
 #pragma once
 
 #include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/color.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -30,7 +29,7 @@ namespace graphics {
 @brief 2D shape manipulation.
 */
 class Shape: public Mesh {
-  HX3D_PTR(Shape)
+  HX3D_PTR_REF(Shape)
 
 public:
 

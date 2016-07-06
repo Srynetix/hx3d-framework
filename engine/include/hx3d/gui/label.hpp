@@ -22,25 +22,29 @@
 #pragma once
 
 #include "hx3d/gui/widget.hpp"
-#include "hx3d/graphics/text.hpp"
 
 namespace hx3d {
+
+namespace graphics {
+  class Text;
+}
+
 namespace gui {
 
 class Label: public Widget {
-  HX3D_ONLY_PTR(Label)
+  HX3D_PTR_REF(Label)
 
 public:
   Label(const Widget::Ptr& parent = nullptr);
 
   virtual void update(float delta) override;
-  virtual void draw(const Pointer<Batch>& batch) override;
+  virtual void draw(const Pointer<graphics::Batch>& batch) override;
 
   void setText(const std::string& text);
   const std::string& getText();
 
 protected:
-  Text::Ptr _text;
+  Pointer<graphics::Text> _text;
 };
 
 } /* gui */

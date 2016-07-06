@@ -20,9 +20,7 @@
 
 #pragma once
 
-#include "hx3d/graphics/batches/batch.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
-#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
 
@@ -31,6 +29,10 @@ namespace window {
 }
 
 namespace graphics {
+
+class Sprite;
+class Framebuffer;
+class Batch;
 
 /**
 @brief Transition between two screens.
@@ -120,9 +122,9 @@ protected:
   window::Game* _game;
 
   /// @brief Current sprite
-  PrivateReference<Sprite> _currentSprite;
+  Pointer<Sprite> _currentSprite;
   /// @brief Next sprite
-  PrivateReference<Sprite> _nextSprite;
+  Pointer<Sprite> _nextSprite;
 
 };
 

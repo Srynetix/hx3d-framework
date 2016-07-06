@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_COLLIDERS_CIRCLE
-#define HX3D_PHYSICS_2D_COLLIDERS_CIRCLE
+#pragma once
 
 #include "hx3d/physics/2d/collider.hpp"
 
@@ -48,5 +47,3 @@ struct Circle: public Collider {
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

@@ -1,5 +1,6 @@
 #include "hx3d/scripting/scripter_factory.hpp"
 
+#include <iostream>
 #include <mruby/value.h>
 #include <mruby/string.h>
 

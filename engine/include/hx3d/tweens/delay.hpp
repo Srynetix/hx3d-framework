@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_TWEENS_DELAY
-#define HX3D_TWEENS_DELAY
+#pragma once
 
 #include "hx3d/tweens/base_tween.hpp"
 
@@ -52,5 +51,3 @@ private:
 
 } /* tween */
 } /* hx3d */
-
-#endif

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_EFFECT
-#define HX3D_AUDIO_EFFECT
+#pragma once
 
 namespace hx3d {
 namespace audio {
@@ -97,5 +96,3 @@ protected:
 
 } /* audio */
 } /* hx3d */
-
-#endif

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_BENCHMARK
-#define HX3D_UTILS_BENCHMARK
+#pragma once
 
 #include <functional>
 #include <chrono>
@@ -103,5 +102,3 @@ private:
 } /* hx3d */
 
 #include "hx3d/utils/_inline/benchmark.inl.hpp"
-
-#endif /* HX3D_UTILS_BENCHMARK */

@@ -18,11 +18,10 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_STENCIL
-#define HX3D_GRAPHICS_STENCIL
+#pragma once
 
 #include "hx3d/graphics/gl.hpp"
-#include "hx3d/utils/ptr.hpp"
+#include "hx3d/utils/reference.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -33,7 +32,7 @@ namespace graphics {
 Use this to hide/show elements following a shape or to apply a function over a specified shape.
 */
 class Stencil {
-  HX3D_PTR(Stencil)
+  HX3D_PTR_REF(Stencil)
 
 public:
   /**
@@ -139,5 +138,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

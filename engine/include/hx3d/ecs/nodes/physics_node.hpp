@@ -18,19 +18,24 @@
     USA
 */
 
-#ifndef HX3D_ECS_NODES_PHYSICSNODE
-#define HX3D_ECS_NODES_PHYSICSNODE
+
+#pragma once
 
 #include "hx3d/ecs/node.hpp"
 
-#include "hx3d/physics/2d/world.hpp"
 #include "hx3d/physics/2d/collider.hpp"
 
-#include "hx3d/graphics/batches/batch.hpp"
-#include "hx3d/graphics/sprite.hpp"
-#include "hx3d/graphics/texture.hpp"
-
 namespace hx3d {
+
+namespace physics2d {
+  class World;
+}
+
+namespace graphics {
+  class Texture;
+  class Sprite;
+}
+
 namespace ecs {
 
 /**
@@ -56,5 +61,3 @@ protected:
 
 } /* ecs */
 } /* hx3d */
-
-#endif /* HX3D_ECS_NODES_PHYSICSNODE */

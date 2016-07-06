@@ -27,7 +27,7 @@ namespace hx3d {
 namespace gui {
 
 class TextBox: public Label {
-  HX3D_ONLY_PTR(TextBox)
+  HX3D_PTR_REF(TextBox)
 
 public:
   TextBox(const Widget::Ptr& parent = nullptr);
@@ -36,10 +36,10 @@ public:
   virtual void onFocusExit() override;
 
   void setText(std::string text);
-  
+
   virtual void update(float delta) override;
 
-  virtual void keyPressed(KeyEvent::Key key) override;
+  virtual void keyPressed(window::KeyEvent::Key key) override;
   virtual void textInput(std::string text) override;
 
 private:

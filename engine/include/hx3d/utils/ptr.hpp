@@ -20,22 +20,11 @@
     USA
 */
 
-#ifndef HX3D_UTILS_PTR
-#define HX3D_UTILS_PTR
+#pragma once
 
 #include <memory>
 
 #define HX3D_PTR(klass) \
-public: \
-  using Ptr = Pointer<klass>; \
-  using Ref = PrivateReference<klass>; \
-  \
-  template <class... Args> \
-  static Pointer<klass> Create(Args&&... args) { \
-    return Pointer<klass>(new klass(args...)); \
-  }
-
-#define HX3D_ONLY_PTR(klass) \
 public: \
   using Ptr = Pointer<klass>;
 
@@ -67,64 +56,4 @@ Pointer<T> Make(Args&&... args) {
   return std::make_shared<T>(args...);
 }
 
-template <class T>
-class Reference {
-public:
-  template <class... Args>
-  Reference(Args&&... args) {
-    if (!this->_ptr) {
-      this->_ptr = Make<T>(args...);
-    }
-  }
-
-  T* operator->() const {
-    return this->_ptr.operator->();
-  }
-
-  T& operator*() const {
-    return this->_ptr.operator*();
-  }
-
-  operator Pointer<T>() const {
-    return this->_ptr;
-  }
-
-private:
-  Pointer<T> _ptr;
-};
-
-template <class T>
-class PrivateReference {
-public:
-  template <class... Args>
-  PrivateReference(Args&&... args) {
-    if (!this->_ptr) {
-      this->_ptr = T::Create(args...);
-    }
-  }
-
-  T* operator->() const {
-    return this->_ptr.operator->();
-  }
-
-  T& operator*() const {
-    return this->_ptr.operator*();
-  }
-
-  Pointer<T>& get() {
-    return this->_ptr;
-  }
-
-  template <class U,
-          typename = typename std::enable_if<std::is_base_of<U, T>::value>::type>
-  operator Pointer<U>() {
-    return this->_ptr;
-  }
-
-private:
-  Pointer<T> _ptr;
-};
-
 } /* hx3d */
-
-#endif

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_POOL
-#define HX3D_UTILS_POOL
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 
@@ -80,5 +79,3 @@ private:
 } /* hx3d */
 
 #include "hx3d/utils/_inline/pool.inl.hpp"
-
-#endif

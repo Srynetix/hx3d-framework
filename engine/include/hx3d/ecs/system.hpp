@@ -18,11 +18,8 @@
     USA
 */
 
-#ifndef HX3D_ECS_SYSTEM
-#define HX3D_ECS_SYSTEM
 
-#include "hx3d/ecs/component.hpp"
-#include "hx3d/ecs/entity.hpp"
+#pragma once
 
 #include "hx3d/utils/ptr.hpp"
 
@@ -31,6 +28,7 @@ namespace ecs {
 
 class Entity;
 class Engine;
+
 /**
 @brief Entity processing systems.
 
@@ -86,5 +84,3 @@ private:
 } /* hx3d */
 
 #include "hx3d/ecs/_inline/system.inl.hpp"
-
-#endif

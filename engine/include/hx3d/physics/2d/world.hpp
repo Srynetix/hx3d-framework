@@ -24,35 +24,34 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_WORLD
-#define HX3D_PHYSICS_2D_WORLD
+#pragma once
 
 #include "hx3d/physics/2d/manifold.hpp"
-#include "hx3d/physics/2d/collider.hpp"
 #include "hx3d/physics/2d/collision_matrix.hpp"
-
-#include "hx3d/physics/2d/attractors/global_attractor.hpp"
-#include "hx3d/physics/2d/attractors/point_attractor.hpp"
-#include "hx3d/physics/2d/attractors/zone_attractor.hpp"
-#include "hx3d/physics/2d/collision_listener.hpp"
-
-#include "hx3d/graphics/batches/batch.hpp"
 
 #include <set>
 
 namespace hx3d {
+
+namespace graphics {
+  class Batch;
+}
 
 /**
 @brief 2D physics components
 */
 namespace physics2d {
 
+class Attractor;
+class CollisionListener;
+class GlobalAttractor;
+
 /**
 @brief Physical world. Manages colliders and attractors.
 */
 class World {
   HX3D_PTR(World)
-  
+
 public:
   /**
   @brief Create a world with a global gravity, iterations and the physical ratio.
@@ -181,5 +180,3 @@ private:
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

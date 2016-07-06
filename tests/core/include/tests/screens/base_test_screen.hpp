@@ -2,10 +2,15 @@
 #define HX3D_TESTS_BASETESTSCREEN
 
 #include "hx3d/core/core.hpp"
+
 #include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/input_handler.hpp"
 #include "hx3d/window/screen.hpp"
+
+#include "hx3d/utils/string.hpp"
+
 #include "hx3d/graphics/shape.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 
 #include "hx3d/graphics/batches/simple_batch_2d.hpp"
 #include "hx3d/graphics/viewports/fit_viewport.hpp"

@@ -23,23 +23,25 @@
 
 #include "hx3d/gui/widget.hpp"
 
+#include <vector>
+
 namespace hx3d {
 namespace gui {
 
 class Container: public Widget {
-  HX3D_ONLY_PTR(Container)
+  HX3D_PTR_REF(Container)
 
 public:
   Container(const Pointer<Widget>& parent = nullptr);
 
   void addChild(const Widget::Ptr& widget);
 
-  virtual void onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
-  virtual void onKeyPressed(KeyEvent::Key key) override;
+  virtual void onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
+  virtual void onKeyPressed(window::KeyEvent::Key key) override;
   virtual void onTextInput(std::string text) override;
 
   virtual void update(float delta) override;
-  virtual void draw(const Pointer<Batch>& batch) override;
+  virtual void draw(const Pointer<graphics::Batch>& batch) override;
 
 protected:
   bool _propagateEvent;

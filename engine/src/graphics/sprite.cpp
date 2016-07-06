@@ -21,6 +21,10 @@
 #include "hx3d/graphics/sprite.hpp"
 
 #include "hx3d/graphics/geometries/sprite_geometry.hpp"
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/shader.hpp"
+#include "hx3d/graphics/texture_region.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 
 namespace hx3d {
 namespace graphics {

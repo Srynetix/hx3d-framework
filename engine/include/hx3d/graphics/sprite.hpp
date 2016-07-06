@@ -18,16 +18,16 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_SPRITE
-#define HX3D_GRAPHICS_SPRITE
+#pragma once
 
 #include "hx3d/graphics/mesh.hpp"
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
-#include "hx3d/graphics/texture_region.hpp"
 
 namespace hx3d {
 namespace graphics {
+
+class Framebuffer;
+class TextureRegion;
+class Texture;
 
 /**
 @brief 2D texture manipulation.
@@ -60,7 +60,7 @@ batch.end();
 
 */
 class Sprite: public Mesh {
-  HX3D_PTR(Sprite)
+  HX3D_PTR_REF(Sprite)
 
 public:
 
@@ -113,5 +113,3 @@ private:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

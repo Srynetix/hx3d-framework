@@ -19,6 +19,7 @@
 */
 
 #include "hx3d/utils/log.hpp"
+#include "hx3d/utils/string.hpp"
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/core/configuration.hpp"

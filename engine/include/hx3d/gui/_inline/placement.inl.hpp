@@ -21,6 +21,8 @@
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/application.hpp"
 
+#include "hx3d/gui/widget.hpp"
+
 namespace hx3d {
 namespace gui {
 

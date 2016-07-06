@@ -19,6 +19,9 @@
 */
 
 #include "hx3d/ecs/nodes/sprite_node.hpp"
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 namespace hx3d {
 namespace ecs {

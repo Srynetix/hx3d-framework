@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_ECS_COMPONENT
-#define HX3D_ECS_COMPONENT
+#pragma once
 
 #include "hx3d/utils/bitset.hpp"
 
@@ -78,9 +77,7 @@ private:
   static Bitset getFamilyInternal(typename std::enable_if<sizeof...(Types) == 0>::type* test = nullptr);
 };
 
-#include "hx3d/ecs/_inline/component.inl.hpp"
-
 } /* ecs */
 } /* hx3d */
 
-#endif
+#include "hx3d/ecs/_inline/component.inl.hpp"

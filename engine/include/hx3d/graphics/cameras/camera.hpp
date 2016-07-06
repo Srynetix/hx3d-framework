@@ -20,14 +20,12 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_CAMERAS_CAMERA
-#define HX3D_GRAPHICS_CAMERAS_CAMERA
+#pragma once
 
 #include <glm/vec3.hpp>
 #include <glm/mat2x2.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "hx3d/graphics/color.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
@@ -40,7 +38,7 @@ namespace graphics {
 @see PerspectiveCamera
 */
 class Camera {
-  HX3D_ONLY_PTR(Camera)
+  HX3D_PTR(Camera)
 
 public:
   /**
@@ -116,5 +114,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

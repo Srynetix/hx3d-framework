@@ -1,6 +1,19 @@
 #include "hx3d/physics/2d/world.hpp"
 
+#include "hx3d/physics/2d/collider.hpp"
+#include "hx3d/physics/2d/colliders/polygon.hpp"
+#include "hx3d/physics/2d/colliders/circle.hpp"
+
+#include "hx3d/physics/2d/attractor.hpp"
+#include "hx3d/physics/2d/attractors/zone_attractor.hpp"
+#include "hx3d/physics/2d/attractors/global_attractor.hpp"
+#include "hx3d/physics/2d/attractors/point_attractor.hpp"
+
+#include "hx3d/physics/2d/collision_listener.hpp"
+
 #include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
 
 #include "hx3d/math/vector_utils.hpp"
 #include "hx3d/utils/algorithm.hpp"

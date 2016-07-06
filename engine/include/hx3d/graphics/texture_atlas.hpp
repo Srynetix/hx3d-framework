@@ -18,18 +18,18 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_TEXTURE_ATLAS
-#define HX3D_GRAPHICS_TEXTURE_ATLAS
+#pragma once
 
-#include "hx3d/utils/file.hpp"
 #include "hx3d/utils/resource.hpp"
-
-#include "hx3d/graphics/texture_region.hpp"
+#include "hx3d/utils/ptr.hpp"
 
 #include <map>
 
 namespace hx3d {
 namespace graphics {
+
+class TextureRegion;
+class Texture;
 
 /**
 @brief Multi-elements texture atlas.
@@ -70,5 +70,3 @@ class TextureAtlas: public Resource {
 
 } /* graphics */
 } /* hx3d */
-
-#endif /* HX3D_GRAPHICS_TEXTURE_ATLAS */

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GL
-#define HX3D_GRAPHICS_GL
+#pragma once
 
 #ifdef __IPHONE_NA
 
@@ -70,5 +69,3 @@
 #endif
 
 #include <SDL2/SDL.h>
-
-#endif

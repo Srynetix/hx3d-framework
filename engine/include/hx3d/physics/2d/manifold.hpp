@@ -18,14 +18,17 @@
     USA
 */
 
-#ifndef HX3D_PHYSICS_2D_MANIFOLD
-#define HX3D_PHYSICS_2D_MANIFOLD
+#pragma once
 
-#include "hx3d/physics/2d/colliders/polygon.hpp"
-#include "hx3d/physics/2d/colliders/circle.hpp"
+#include "hx3d/utils/ptr.hpp"
+
+#include <glm/vec2.hpp>
+#include <vector>
 
 namespace hx3d {
 namespace physics2d {
+
+class Collider;
 
 /**
 @brief Contact manifold definition
@@ -100,5 +103,3 @@ bool operator<(const Manifold& m1, const Manifold& m2);
 
 } /* physics2d */
 } /* hx3d */
-
-#endif

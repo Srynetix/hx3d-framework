@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_TWEENS_CALLBACK
-#define HX3D_TWEENS_CALLBACK
+#pragma once
 
 #include "hx3d/tweens/base_tween.hpp"
 
@@ -64,5 +63,3 @@ private:
 
 } /* tween */
 } /* hx3d */
-
-#endif

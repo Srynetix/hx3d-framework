@@ -18,10 +18,10 @@
     USA
 */
 
-#ifndef HX3D_UTILS_TIMER_MANAGER
-#define HX3D_UTILS_TIMER_MANAGER
+#pragma once
 
 #include "hx3d/utils/callback_timer.hpp"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -119,5 +119,3 @@ class TimerManager {
 };
 
 } /* hx3d */
-
-#endif /* HX3D_UTILS_TIMER_MANAGER */

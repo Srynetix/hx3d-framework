@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_COLOR
-#define HX3D_GRAPHICS_COLOR
+#pragma once
 
 #include <glm/vec4.hpp>
 
@@ -27,7 +26,7 @@ namespace hx3d {
 namespace graphics {
 
 /**
-@brief Four [0..255] components defined color 
+@brief Four [0..255] components defined color
 */
 class Color {
 
@@ -117,5 +116,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

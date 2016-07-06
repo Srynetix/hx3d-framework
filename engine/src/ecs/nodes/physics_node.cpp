@@ -20,6 +20,12 @@
 
 #include "hx3d/ecs/nodes/physics_node.hpp"
 
+#include "hx3d/physics/2d/colliders/polygon.hpp"
+#include "hx3d/physics/2d/world.hpp"
+
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+
 namespace hx3d {
 namespace ecs {
 

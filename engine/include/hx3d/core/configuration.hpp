@@ -22,48 +22,27 @@
 
 #include <yaml-cpp/yaml.h>
 
-#include "hx3d/utils/file.hpp"
-
 namespace hx3d {
 
 class Configuration {
 public:
-  Configuration() {
-    std::string config_text = File::loadAsciiFile("config.yml")->toString();
-    _root = YAML::Load(config_text);
-  }
-
-  ~Configuration() {
-
-  }
+  Configuration();
+  ~Configuration();
 
   template <class T, class... Keys>
-  T get(const std::string& key, Keys... keys) {
-    auto node = _getNode(_root, key, keys...);
-    return node.template as<T>();
-  }
+  T get(const std::string& key, Keys... keys);
 
   template <class T>
-  T get(const std::string& key) {
-    return _root[key].as<T>();
-  }
+  T get(const std::string& key);
 
 private:
   template <class... Keys>
-  YAML::Node _getNode(YAML::Node& node, const std::string& key, Keys... keys) {
-    auto next = _getNode(node, key);
-    return _getNode(next, keys...);
-  }
-
-  YAML::Node _getNode(YAML::Node& node, const std::string& key) {
-    if (node.IsMap()) {
-      return node[key];
-    } else {
-      return node;
-    }
-  }
+  YAML::Node _getNode(YAML::Node& node, const std::string& key, Keys... keys);
+  YAML::Node _getNode(YAML::Node& node, const std::string& key);
 
   YAML::Node _root;
 };
 
 } /* hx3d */
+
+#include "hx3d/core/_inline/configuration.inl.hpp"

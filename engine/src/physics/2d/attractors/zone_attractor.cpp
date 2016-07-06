@@ -1,5 +1,7 @@
 #include "hx3d/physics/2d/attractors/zone_attractor.hpp"
 
+#include "hx3d/physics/2d/collider.hpp"
+
 namespace hx3d {
 namespace physics2d {
 

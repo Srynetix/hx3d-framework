@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+
 #include <mruby.h>
 #include <mruby/compile.h>
 
-#include "hx3d/scripting/scripter.hpp"
-
 namespace hx3d {
 namespace scripting {
+
+class Scripter;
 
 class REPL {
 public:
@@ -15,10 +16,7 @@ public:
     std::string motd;
     Scripter* scripter;
 
-    Config() {
-      motd = "Welcome to mIRB.";
-      scripter = nullptr;
-    }
+    Config();
   };
 
   REPL(Config& wrapper);

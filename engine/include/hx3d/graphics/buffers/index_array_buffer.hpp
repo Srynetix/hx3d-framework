@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
-#define HX3D_GRAPHICS_BUFFERS_INDEXARRAYBUFFER
+#pragma once
 
 #include "hx3d/graphics/buffers/array_buffer.hpp"
 
@@ -54,5 +53,3 @@ public:
 } /* buffers */
 } /* graphics */
 } /* hx3d */
-
-#endif

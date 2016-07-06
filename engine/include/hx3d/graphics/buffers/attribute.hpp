@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_BUFFERS_ATTRIBUTE
-#define HX3D_GRAPHICS_BUFFERS_ATTRIBUTE
+#pragma once
 
 #include "hx3d/graphics/gl.hpp"
 
@@ -82,5 +81,3 @@ private:
 } /* buffers */
 } /* graphics */
 } /* hx3d */
-
-#endif

@@ -20,8 +20,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
-#define HX3D_GRAPHICS_GEOMETRIES_ORIGINGEOMETRY
+#pragma once
 
 #include "hx3d/graphics/geometries/geometry.hpp"
 
@@ -38,5 +37,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

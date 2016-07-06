@@ -21,8 +21,7 @@
     USA
 */
 
-#ifndef HX3D_GRAPHICS_VIEWPORTS_FITVIEWPORT
-#define HX3D_GRAPHICS_VIEWPORTS_FITVIEWPORT
+#pragma once
 
 #include "hx3d/graphics/viewports/viewport.hpp"
 
@@ -50,5 +49,3 @@ public:
 
 } /* graphics */
 } /* hx3d */
-
-#endif

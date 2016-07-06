@@ -20,15 +20,16 @@
 
 #pragma once
 
-#include <glm/vec2.hpp>
-
 #include "hx3d/utils/ptr.hpp"
 #include "hx3d/window/events.hpp"
 
-#include "hx3d/window/input_multiplexer.hpp"
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace window {
+
+class InputMultiplexer;
+class InputHandler;
 
 /**
 @brief Manage real-time inputs

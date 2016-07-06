@@ -74,7 +74,7 @@ void Spectrum::onInitialization() {
   }
 }
 
-void Spectrum::update(const Sint16* stream, const int length, const float delta) {
+void Spectrum::update(const short int* stream, const int length, const float delta) {
 
   if (!_initialized || length == 0)
     return;

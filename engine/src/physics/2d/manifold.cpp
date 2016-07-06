@@ -1,8 +1,14 @@
 #include "hx3d/physics/2d/manifold.hpp"
 
 #include "hx3d/physics/2d/collisions.hpp"
+#include "hx3d/physics/2d/collider.hpp"
+
+#include "hx3d/physics/2d/colliders/polygon.hpp"
+#include "hx3d/physics/2d/colliders/circle.hpp"
 
 #include "hx3d/math/vector_utils.hpp"
+
+#include <glm/glm.hpp>
 
 namespace hx3d {
 namespace physics2d {

@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_UTILS_STRING
-#define HX3D_UTILS_STRING
+#pragma once
 
 #include <string>
 #include <cstdarg>
@@ -69,5 +68,3 @@ std::vector<std::string>& split(const std::string &s, char delim, std::vector<st
 std::vector<std::string> split(const std::string &s, char delim);
 
 } /* hx3d */
-
-#endif

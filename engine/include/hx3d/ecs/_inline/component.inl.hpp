@@ -18,6 +18,9 @@
     USA
 */
 
+namespace hx3d {
+namespace ecs {
+
 template <class T>
 unsigned int ComponentBits::get(typename std::enable_if<std::is_base_of<Component, T>::value>::type* test) {
   auto& type = typeid(T);
@@ -45,3 +48,6 @@ template <class... Types>
 unsigned int ComponentBits::getFamily() {
   return getFamilyInternal<Types...>().getBits();
 }
+
+} /* ecs */
+} /* hx3d */

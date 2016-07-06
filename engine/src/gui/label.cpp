@@ -21,11 +21,14 @@
 
 #include "hx3d/gui/label.hpp"
 
+#include "hx3d/graphics/text.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+
 namespace hx3d {
 namespace gui {
 
 Label::Label(const Widget::Ptr& parent): Widget(parent) {
-  _text = Make<Text>();
+  _text = Make<graphics::Text>();
 }
 
 void Label::update(float delta) {
@@ -35,7 +38,7 @@ void Label::update(float delta) {
   _text->transform.position.y = _transform.position.y;
 }
 
-void Label::draw(const Pointer<Batch>& batch) {
+void Label::draw(const Pointer<graphics::Batch>& batch) {
   Widget::draw(batch);
 
   batch->draw(_text);

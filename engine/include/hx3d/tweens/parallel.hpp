@@ -18,13 +18,10 @@
     USA
 */
 
-#ifndef HX3D_TWEENS_PARALLEL
-#define HX3D_TWEENS_PARALLEL
+#pragma once
 
 #include "hx3d/math/interpolation.hpp"
-
-#include "hx3d/tweens/tween.hpp"
-
+#include "hx3d/tweens/base_tween.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 #include <vector>
@@ -82,5 +79,3 @@ private:
 } /* hx3d */
 
 #include "hx3d/tweens/_inline/parallel.inl.hpp"
-
-#endif

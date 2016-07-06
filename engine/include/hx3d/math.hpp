@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MAIN_MATH
-#define HX3D_MAIN_MATH
+#pragma once
 
 #include "hx3d/math/constants.hpp"
 #include "hx3d/math/function.hpp"
@@ -27,5 +26,3 @@
 #include "hx3d/math/number_utils.hpp"
 #include "hx3d/math/random.hpp"
 #include "hx3d/math/vector_utils.hpp"
-
-#endif /* HX3D_MAIN_MATH */

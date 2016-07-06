@@ -24,11 +24,13 @@
 #include "hx3d/core/core.hpp"
 
 #include "hx3d/window/event_manager.hpp"
+#include "hx3d/graphics/batches/batch.hpp"
+#include "hx3d/gui/widget.hpp"
 
 namespace hx3d {
 namespace gui {
 
-System::System(const Widget::Ptr& content) {
+System::System(const Pointer<Widget>& content) {
   setContent(content);
 }
 
@@ -36,7 +38,7 @@ System::~System() {
   unregisterHandler();
 }
 
-void System::setContent(const Widget::Ptr& content) {
+void System::setContent(const Pointer<Widget>& content) {
   if (_content) unregisterHandler();
   _content = content;
 
@@ -48,7 +50,7 @@ void System::setContent(const Widget::Ptr& content) {
   registerHandler();
 }
 
-const Widget::Ptr& System::getContent() {
+const Pointer<Widget>& System::getContent() {
   return _content;
 }
 
@@ -67,7 +69,7 @@ void System::update(float delta) {
     _content->update(delta);
 }
 
-void System::draw(const Pointer<Batch>& batch) {
+void System::draw(const Pointer<graphics::Batch>& batch) {
   if (_content) {
     _content->draw(batch);
   }

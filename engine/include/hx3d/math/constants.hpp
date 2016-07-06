@@ -18,8 +18,7 @@
     USA
 */
 
-#ifndef HX3D_MATH_CONSTANTS
-#define HX3D_MATH_CONSTANTS
+#pragma once
 
 #include <complex>
 
@@ -39,5 +38,3 @@ const double PI = 3.141592653589793238460;
 
 } /* math */
 } /* hx3d */
-
-#endif

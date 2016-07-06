@@ -19,6 +19,8 @@
 */
 
 #include "hx3d/tweens/sequence.hpp"
+#include "hx3d/tweens/callback.hpp"
+#include "hx3d/tweens/delay.hpp"
 
 namespace hx3d {
 namespace tweens {

@@ -26,6 +26,8 @@
 #include "hx3d/window/input_multiplexer.hpp"
 #include "hx3d/window/input_handler.hpp"
 
+#include "hx3d/graphics/viewports/viewport.hpp"
+
 namespace hx3d {
 namespace window {
 

@@ -25,8 +25,19 @@
 
 #include "hx3d/utils/log.hpp"
 #include "hx3d/utils/timer_manager.hpp"
-#include "hx3d/tweens/tween_manager.hpp"
+#include "hx3d/utils/string.hpp"
+
 #include "hx3d/window/event_manager.hpp"
+#include "hx3d/window/screen.hpp"
+
+#include "hx3d/tweens/tween_manager.hpp"
+
+#include "hx3d/graphics/text.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
+#include "hx3d/graphics/viewports/viewport.hpp"
+#include "hx3d/graphics/cameras/orthographic_camera.hpp"
+#include "hx3d/graphics/transitions/transition.hpp"
+#include "hx3d/graphics/batches/simple_batch.hpp"
 
 namespace hx3d {
 namespace window {
@@ -34,6 +45,14 @@ namespace window {
 Game::Game():
 _running(true), _screen(nullptr), _showStats(false)
 {
+
+  _deltaText = Make<graphics::Text>();
+  _fpsText = Make<graphics::Text>();
+  _camera = Make<graphics::OrthographicCamera>();
+  _batch = Make<graphics::SimpleBatch>();
+  _currentFB = Make<graphics::Framebuffer>();
+  _nextFB = Make<graphics::Framebuffer>();
+
   _deltaText->transform.position.x = Core::App()->getWidth() / 2;
   _deltaText->transform.position.y = 100;
   _deltaText->transform.position.z = 0.95f;

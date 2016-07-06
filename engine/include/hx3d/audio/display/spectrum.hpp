@@ -18,11 +18,12 @@
     USA
 */
 
-#ifndef HX3D_AUDIO_DISPLAY_SPECTRUM
-#define HX3D_AUDIO_DISPLAY_SPECTRUM
+#pragma once
 
 #include "hx3d/audio/display.hpp"
 #include "hx3d/math/constants.hpp"
+
+#include <vector>
 
 namespace hx3d {
 namespace audio {
@@ -89,7 +90,7 @@ public:
   Spectrum(const unsigned int minFreq, const unsigned int maxFreq, const unsigned int barCount, const int refreshDelay);
   ~Spectrum();
 
-  virtual void update(const Sint16* stream, const int length, const float delta) override;
+  virtual void update(const short int* stream, const int length, const float delta) override;
   virtual void onInitialization() override;
 
   /**
@@ -220,5 +221,3 @@ private:
 
 } /* audio */
 } /* hx3d */
-
-#endif
