@@ -45,6 +45,9 @@ void SimpleTextBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
   batch->begin();
 
   float oldX = text->transform.position.x;
+  float oldY = text->transform.position.y;
+
+  text->transform.position.y -= text->getCharacterSize() / 4;
 
   if (text->isCenterAligned()) {
     text->transform.position.x -= text->getLength() / 2;
@@ -52,6 +55,7 @@ void SimpleTextBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
 
   auto model = text->transform.compute();
   text->transform.position.x = oldX;
+  text->transform.position.y = oldY;
 
   textShader->setUniformMatrix4f("u_model", model);
   text->draw(textShader);

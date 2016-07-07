@@ -23,6 +23,7 @@
 
 #include "hx3d/utils/ptr.hpp"
 #include <glm/vec2.hpp>
+#include <functional>
 
 namespace hx3d {
 namespace gui {
@@ -35,20 +36,19 @@ public:
   Placement(const Pointer<Widget>& widget);
   Pointer<Widget> apply();
 
-  template <class W>
-  static Pointer<W> None(const Pointer<Widget>& widget);
-  template <class W>
-  static Pointer<W> Fill(const Pointer<Widget>& widget);
-  template <class W>
-  static Pointer<W> Relative(const Pointer<Widget>& widget, glm::vec2 relativePos, glm::vec2 relativeSize);
+  static Placement None(const Pointer<Widget>& widget);
+  static Placement Fill(const Pointer<Widget>& widget);
+  static Placement Relative(const Pointer<Widget>& widget, glm::vec2 relativePos, glm::vec2 relativeSize);
+
+  friend class Container;
 
 private:
   Pointer<Widget> _widget;
   glm::vec2 _size;
   glm::vec2 _position;
+
+  std::function<void(Placement&)> _func;
 };
 
 } /* gui */
 } /* hx3d */
-
-#include "hx3d/gui/_inline/placement.inl.hpp"

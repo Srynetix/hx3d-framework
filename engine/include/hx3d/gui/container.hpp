@@ -22,6 +22,7 @@
 #pragma once
 
 #include "hx3d/gui/widget.hpp"
+#include "hx3d/gui/placement.hpp"
 
 #include <vector>
 
@@ -35,6 +36,7 @@ public:
   Container(const Pointer<Widget>& parent = nullptr);
 
   void addChild(const Widget::Ptr& widget);
+  void addChild(Placement placement);
 
   virtual void onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) override;
   virtual void onKeyPressed(window::KeyEvent::Key key) override;

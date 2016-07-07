@@ -33,15 +33,10 @@ public:
     auto textbox = Make<TextBox>();
     auto label = Make<Label>();
 
-    gui = Make<System>(Placement::Fill<Panel>(panel));
-    // gui = Make<System>(Placement::Relative<Panel>(panel, {0.5, 0.75}, {1, 0.25}));
-    panel->addChild(Placement::Relative<Label>(label, {0.75, 0.75}, {0.5, 0.15}));
-    panel->addChild(Placement::Relative<TextBox>(textbox, {0.5, 0.25}, {0.95, 0.15}));
+    gui = Make<System>(Placement::Relative(panel, {0.5, 0.5}, {0.5, 0.5}).apply());
+    panel->addChild(Placement::Relative(label, {0.5, 0.25}, {0.75, 0.1}));
+    panel->addChild(Placement::Relative(textbox, {0.5, 0.75}, {0.75, 0.1}));
 
-    // auto consolepanel = gui->getContent()->createHiddenChild<ConsolePanel>(GUIWidget::Placement::Fill(), top_center.x, top_center.y, Core::App()->getWidth(), Core::App()->getHeight() / 4);
-    // consolepanel->setActive();
-    //
-    // auto textbox = consolepanel->createHiddenChild<GUITextbox>(GUIWidget::Placement::Absolute());
     textbox->on("validate", [this,textbox,label]() {
       auto txt = textbox->getText();
       if (txt.size() > 0) {
@@ -50,16 +45,6 @@ public:
         label->setText(ret);
       }
     });
-    //
-    // consolepanel->on("show", [textbox](Pointer<GUIWidget> widget) {
-    //   textbox->setVisible(true);
-    //   textbox->setActive();
-    // });
-    //
-    // consolepanel->on("hide", [textbox](Pointer<GUIWidget> widget) {
-    //   textbox->setVisible(false);
-    //   textbox->setInactive();
-    // });
 
     gui->update(1/60.f);
   }

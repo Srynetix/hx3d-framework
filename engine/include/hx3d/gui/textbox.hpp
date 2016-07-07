@@ -22,6 +22,7 @@
 #pragma once
 
 #include "hx3d/gui/label.hpp"
+#include "hx3d/utils/timer.hpp"
 
 namespace hx3d {
 namespace gui {
@@ -35,7 +36,8 @@ public:
   virtual void onFocusEnter() override;
   virtual void onFocusExit() override;
 
-  void setText(std::string text);
+  const std::string& getText();
+  void setText(const std::string& text);
 
   virtual void update(float delta) override;
 
@@ -46,6 +48,9 @@ private:
   void _updateText();
 
   std::string _content;
+  bool _shownCursor;
+
+  Timer _timer;
 };
 
 } /* gui */

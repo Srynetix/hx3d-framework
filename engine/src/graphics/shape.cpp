@@ -35,7 +35,7 @@ Mesh() {
   _batchDrawer = Make<SimpleShapeBatchDrawer>();
 
   _borderColor = Color(255, 0, 0);
-  _borderWidth = 5.f;
+  _borderWidth = 1.f;
 
   setTint(Color::White);
 }

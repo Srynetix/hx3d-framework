@@ -32,6 +32,7 @@ namespace gui {
 Widget::Widget(Pointer<Widget> parent) {
   _parent = parent;
   _visible = true;
+  _hasFocus = false;
   _shape = Make<graphics::Shape>();
   _shape->setTint(graphics::Color(127, 127, 127));
 }

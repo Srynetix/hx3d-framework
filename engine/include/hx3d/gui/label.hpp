@@ -45,6 +45,7 @@ public:
 
 protected:
   Pointer<graphics::Text> _text;
+  glm::vec2 _offset;
 };
 
 } /* gui */

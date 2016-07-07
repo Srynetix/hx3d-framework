@@ -29,13 +29,19 @@ namespace gui {
 
 Label::Label(const Widget::Ptr& parent): Widget(parent) {
   _text = Make<graphics::Text>();
+  _offset = {5.f, 0};
 }
 
 void Label::update(float delta) {
   Widget::update(delta);
 
-  _text->transform.position.x = _transform.position.x;
-  _text->transform.position.y = _transform.position.y;
+  glm::vec2 new_pos = {_transform.position.x, _transform.position.y};
+  if (!_text->isCenterAligned()) {
+    new_pos += _offset;
+  }
+
+  _text->transform.position.x = new_pos.x;
+  _text->transform.position.y = new_pos.y;
 }
 
 void Label::draw(const Pointer<graphics::Batch>& batch) {

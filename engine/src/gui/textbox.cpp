@@ -31,28 +31,57 @@ namespace gui {
 TextBox::TextBox(const Widget::Ptr& parent): Label(parent) {
   registerAction("validate");
   _text->setCenterAlignment(false);
+  _timer.initialize(600);
+
+  _shownCursor = false;
 }
 
 void TextBox::onFocusEnter() {
-  _shape->setTint(graphics::Color(127, 127, 0));
+  _shape->setTint(graphics::Color(127, 64, 0));
+  _text->setContent(_text->getContent() + "_");
+  _shownCursor = true;
 
   Core::Events()->beginTextInput();
 }
 
 void TextBox::onFocusExit() {
   _shape->setTint(graphics::Color(127, 127, 127));
+  _timer.reset();
+  _shownCursor = false;
+  _updateText();
 
   Core::Events()->endTextInput();
 }
 
 void TextBox::update(float delta) {
-  Widget::update(delta);
+  Label::update(delta);
 
-  _text->transform.position.x = _transform.position.x - _transform.size.x / 2;
-  _text->transform.position.y = _transform.position.y;
+  if (_hasFocus) {
+    _timer.update(delta);
+
+    if (_shownCursor) {
+      if (_timer.hasEnded()) {
+        _updateText();
+        _timer.reset();
+        _shownCursor = false;
+      }
+    } else {
+      if (_timer.hasEnded()) {
+        _text->setContent(_text->getContent() + "_");
+        _timer.reset();
+        _shownCursor = true;
+      }
+    }
+  }
+
+  _text->transform.position.x -= _transform.size.x / 2;
 }
 
-void TextBox::setText(std::string text) {
+const std::string& TextBox::getText() {
+  return _content;
+}
+
+void TextBox::setText(const std::string& text) {
   Label::setText(text);
 
   _content = text;

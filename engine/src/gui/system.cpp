@@ -43,6 +43,7 @@ void System::setContent(const Pointer<Widget>& content) {
   _content = content;
 
   if (_content->_visible) {
+    _content->_hasFocus = true;
     _content->onShow();
     _content->onFocusEnter();
   }
@@ -60,8 +61,10 @@ void System::registerHandler() {
 }
 
 void System::unregisterHandler() {
-  if (_content)
+  if (_content) {
+    _content->_hasFocus = false;
     Core::Events()->unregisterHandler(_content.get());
+  }
 }
 
 void System::update(float delta) {

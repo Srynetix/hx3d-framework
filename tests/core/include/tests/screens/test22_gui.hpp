@@ -32,9 +32,9 @@ public:
       label->setText(textbox->getText());
     });
 
-    system = Make<System>(Placement::Fill<Panel>(panel));
-    panel->addChild(Placement::Relative<Label>(label, {0.75, 0.15}, {0.25, 0.15}));
-    panel->addChild(Placement::Relative<TextBox>(textbox, {0.5, 0.85}, {0.25, 0.05}));
+    system = Make<System>(Placement::Fill(panel).apply());
+    panel->addChild(Placement::Relative(label, {0.75, 0.15}, {0.25, 0.15}));
+    panel->addChild(Placement::Relative(textbox, {0.5, 0.85}, {0.25, 0.05}));
   }
 
   virtual void update(float delta) override {

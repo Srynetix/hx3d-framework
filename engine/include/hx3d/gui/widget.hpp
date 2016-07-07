@@ -67,6 +67,7 @@ protected:
   Pointer<graphics::Shape> _shape;
   Pointer<Widget> _parent;
   bool _visible;
+  bool _hasFocus;
   std::map<std::string, std::function<void()>> _actions;
 
   bool checkBounds(glm::vec2 position);

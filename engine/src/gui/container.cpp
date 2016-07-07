@@ -34,6 +34,12 @@ void Container::addChild(const Widget::Ptr& widget) {
   _children.push_back(widget);
 }
 
+void Container::addChild(Placement placement) {
+  auto widget = placement._widget;
+  widget->_parent = shared_from_this();
+  _children.push_back(placement.apply());
+}
+
 void Container::onMouseClicked(window::MouseButtonEvent::Button button, glm::vec2 mousePosition) {
   mouseClicked(button, mousePosition);
 
@@ -44,9 +50,13 @@ void Container::onMouseClicked(window::MouseButtonEvent::Button button, glm::vec
       // New active child
       for (auto& child: _children) {
         if (child != _activeChild && child->checkBounds(mousePosition)) {
-          if (_activeChild) _activeChild->onFocusExit();
+          if (_activeChild) {
+            _activeChild->onFocusExit();
+            _activeChild->_hasFocus = false;
+          }
 
           _activeChild = child;
+          child->_hasFocus = true;
           child->onFocusEnter();
           child->onMouseClicked(button, mousePosition);
           return;
@@ -56,6 +66,7 @@ void Container::onMouseClicked(window::MouseButtonEvent::Button button, glm::vec
       // No active child
       if (_activeChild) {
         _activeChild->onFocusExit();
+        _activeChild->_hasFocus = false;
         _activeChild = nullptr;
       }
     }
