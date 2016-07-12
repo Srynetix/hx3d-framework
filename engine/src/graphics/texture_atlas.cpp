@@ -26,7 +26,7 @@
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/texture_region.hpp"
 
-#include <rapidjson/document.h>
+// #include <rapidjson/document.h>
 
 namespace hx3d {
 namespace graphics {
@@ -40,46 +40,46 @@ Pointer<TextureRegion>& TextureAtlas::getRegion(std::string name) {
 }
 
 void TextureAtlas::loadFromJSON(std::string pathToAtlas) {
-  auto file = File::loadAsciiFile(pathToAtlas);
-  std::string content = file->toString();
-
-  rapidjson::Document d;
-  d.Parse(content.c_str());
-
-  std::string image = d["image"].GetString();
-  std::string type = d["type"].GetString();
-
-  Log.Info("Loading texture atlas `%s`...", pathToAtlas.c_str());
-  Log.Info("\tImage: %s", image.c_str());
-  Log.Info("\tType: %s", type == "pure" ? "Pure" : "Animated");
-
-  if (type == "pure") {
-    _texture = Make<Texture>(image);
-
-    const rapidjson::Value& frames = d["frames"];
-    for (auto it = frames.Begin(); it != frames.End(); ++it) {
-      const rapidjson::Value& val = *it;
-      std::string name = val["name"].GetString();
-      int x = std::atoi(val["x"].GetString());
-      int y = std::atoi(val["y"].GetString());
-      int w = std::atoi(val["w"].GetString());
-      int h = std::atoi(val["h"].GetString());
-
-      auto region = Make<TextureRegion>(
-        _texture,
-        x,
-        x + w,
-        y,
-        y + h
-      );
-
-      _regions.emplace(std::make_pair(name, region));
-    }
-
-  } else {
-    Log.Error("/!\\ Animated atlas not supported yet.");
-    return;
-  }
+  // auto file = File::loadAsciiFile(pathToAtlas);
+  // std::string content = file->toString();
+  //
+  // rapidjson::Document d;
+  // d.Parse(content.c_str());
+  //
+  // std::string image = d["image"].GetString();
+  // std::string type = d["type"].GetString();
+  //
+  // Log.Info("Loading texture atlas `%s`...", pathToAtlas.c_str());
+  // Log.Info("\tImage: %s", image.c_str());
+  // Log.Info("\tType: %s", type == "pure" ? "Pure" : "Animated");
+  //
+  // if (type == "pure") {
+  //   _texture = Make<Texture>(image);
+  //
+  //   const rapidjson::Value& frames = d["frames"];
+  //   for (auto it = frames.Begin(); it != frames.End(); ++it) {
+  //     const rapidjson::Value& val = *it;
+  //     std::string name = val["name"].GetString();
+  //     int x = std::atoi(val["x"].GetString());
+  //     int y = std::atoi(val["y"].GetString());
+  //     int w = std::atoi(val["w"].GetString());
+  //     int h = std::atoi(val["h"].GetString());
+  //
+  //     auto region = Make<TextureRegion>(
+  //       _texture,
+  //       x,
+  //       x + w,
+  //       y,
+  //       y + h
+  //     );
+  //
+  //     _regions.emplace(std::make_pair(name, region));
+  //   }
+  //
+  // } else {
+  //   Log.Error("/!\\ Animated atlas not supported yet.");
+  //   return;
+  // }
 }
 
 } /* graphics */

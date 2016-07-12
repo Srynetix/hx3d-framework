@@ -14,6 +14,23 @@ using namespace hx3d;
 using namespace hx3d::scripting;
 using namespace hx3d::gui;
 
+class ConsolePanel: public Panel {
+public:
+  ConsolePanel(const Pointer<Widget>& widget = nullptr): Panel(widget) {
+    _visible = false;
+  }
+};
+
+class ConsoleTextBox: public TextBox {
+public:
+  ConsoleTextBox(const Pointer<Widget>& widget = nullptr): TextBox(widget) {}
+};
+
+class ConsoleBuffer: public Label {
+public:
+  ConsoleBuffer(const Pointer<Widget>& widget = nullptr): Label(widget) {}
+};
+
 /*******************
   Test
 ********************/
@@ -29,20 +46,20 @@ public:
     repl = Make<REPL>(config);
     repl->begin();
 
-    auto panel = Make<Panel>();
-    auto textbox = Make<TextBox>();
-    auto label = Make<Label>();
+    console = Make<ConsolePanel>();
+    auto textbox = Make<ConsoleTextBox>();
+    auto buffer = Make<ConsoleBuffer>();
 
-    gui = Make<System>(Placement::Relative(panel, {0.5, 0.5}, {0.5, 0.5}).apply());
-    panel->addChild(Placement::Relative(label, {0.5, 0.25}, {0.75, 0.1}));
-    panel->addChild(Placement::Relative(textbox, {0.5, 0.75}, {0.75, 0.1}));
+    gui = Make<System>(Placement::Relative(console, {0.5, 0.5}, {0.5, 0.5}).apply());
+    console->addChild(Placement::Relative(buffer, {0.5, 0.25}, {0.75, 0.1}));
+    console->addChild(Placement::Relative(textbox, {0.5, 0.75}, {0.75, 0.1}));
 
-    textbox->on("validate", [this,textbox,label]() {
+    textbox->on("validate", [this,textbox,buffer]() {
       auto txt = textbox->getText();
       if (txt.size() > 0) {
         std::string ret = repl->execute_line(txt);
         textbox->setText("");
-        label->setText(ret);
+        buffer->setText(ret);
       }
     });
 
@@ -67,6 +84,25 @@ public:
     batch->end();
   }
 
+  virtual void onKeyPressed(KeyEvent::Key key) {
+    BaseTestScreen::onKeyPressed(key);
+
+    if (key == KeyEvent::Key::ConsoleKey) {
+      if (console->isVisible()) {
+        gui->exitFocus();
+        console->hide();
+        console->exitFocus();
+      }
+
+      else {
+        Log.Info("SHOW");
+        gui->enterFocus();
+        console->show();
+        console->enterFocus();
+      }
+    }
+  }
+
 private:
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
@@ -74,4 +110,5 @@ private:
   Scripter scripter;
   System::Ptr gui;
   Pointer<REPL> repl;
+  Pointer<ConsolePanel> console;
 };

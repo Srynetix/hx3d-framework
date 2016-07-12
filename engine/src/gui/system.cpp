@@ -43,16 +43,27 @@ void System::setContent(const Pointer<Widget>& content) {
   _content = content;
 
   if (_content->_visible) {
-    _content->_hasFocus = true;
-    _content->onShow();
-    _content->onFocusEnter();
+    _content->enterFocus();
+    registerHandler();
   }
-
-  registerHandler();
 }
 
 const Pointer<Widget>& System::getContent() {
   return _content;
+}
+
+void System::enterFocus() {
+  if (_content && !_content->_hasFocus) {
+    _content->enterFocus();
+    registerHandler();
+  }
+}
+
+void System::exitFocus() {
+  if (_content && _content->_hasFocus) {
+    _content->exitFocus();
+    unregisterHandler();
+  }
 }
 
 void System::registerHandler() {
@@ -62,7 +73,6 @@ void System::registerHandler() {
 
 void System::unregisterHandler() {
   if (_content) {
-    _content->_hasFocus = false;
     Core::Events()->unregisterHandler(_content.get());
   }
 }

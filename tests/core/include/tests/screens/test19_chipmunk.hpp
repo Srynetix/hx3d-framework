@@ -82,8 +82,8 @@ public:
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-  	glEnable(GL_LINE_SMOOTH);
-  	glEnable(GL_POINT_SMOOTH);
+  	// glEnable(GL_LINE_SMOOTH);
+  	// glEnable(GL_POINT_SMOOTH);
 
   	// glEnable(GL_BLEND);
   	// glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);

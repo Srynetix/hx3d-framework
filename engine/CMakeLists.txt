@@ -28,6 +28,7 @@ set(
 
   "-lfreetype-gl\
   -lfreetype\
+  -lmruby\
   -lchipmunk\
   -lyaml-cpp"
 )
@@ -39,7 +40,6 @@ set(
   "-lSDL2\
   -lSDL2_mixer\
   -lepoxy\
-  -lmruby\
   -lGL"
 )
 
@@ -76,7 +76,7 @@ set(
   ${COMMON_LIBRARIES}
   "-lSDL2\
   -lSDL2_mixer\
-  -lGLESv2\
+  -lGLESv3\
   -llog\
   -landroid"
 )

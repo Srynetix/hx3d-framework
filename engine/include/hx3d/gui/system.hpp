@@ -44,6 +44,9 @@ public:
   void setContent(const Pointer<Widget>& content);
   const Pointer<Widget>& getContent();
 
+  void enterFocus();
+  void exitFocus();
+
   void registerHandler();
   void unregisterHandler();
 

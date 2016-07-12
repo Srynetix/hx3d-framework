@@ -32,7 +32,7 @@ ENDIF()
 
 set(DEPENDENCIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../dependencies)
 
-include_directories(SYSTEM ../dependencies/common/include)
+include_directories(SYSTEM ../dependencies/include)
 
 if(ANDROID)
   link_directories(${DEPENDENCIES_DIR}/android/lib/armeabi)

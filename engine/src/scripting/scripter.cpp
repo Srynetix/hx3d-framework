@@ -2,6 +2,8 @@
 
 #include "hx3d/utils/log.hpp"
 
+#include <cstdlib>
+
 namespace hx3d {
 namespace scripting {
 

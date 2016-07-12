@@ -102,8 +102,11 @@ void Container::update(float delta) {
 
 void Container::draw(const Pointer<graphics::Batch>& batch) {
   Widget::draw(batch);
-  for (auto& child: _children) {
-    child->draw(batch);
+
+  if (_visible) {
+    for (auto& child: _children) {
+      child->draw(batch);
+    }
   }
 }
 

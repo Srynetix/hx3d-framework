@@ -50,6 +50,12 @@ public:
   void on(std::string action, std::function<void()> func);
   bool isVisible() const;
 
+  void show();
+  void hide();
+
+  void enterFocus();
+  void exitFocus();
+
   friend class System;
   friend class Container;
   friend class Placement;
@@ -71,7 +77,6 @@ protected:
   std::map<std::string, std::function<void()>> _actions;
 
   bool checkBounds(glm::vec2 position);
-
   ///////////////////
   // Input handler
 

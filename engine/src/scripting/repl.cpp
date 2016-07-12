@@ -6,6 +6,7 @@
 #include <sstream>
 #include <cstring>
 #include <csignal>
+#include <cstdlib>
 
 #include <mruby.h>
 #include <mruby/array.h>

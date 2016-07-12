@@ -3,6 +3,7 @@
 #include <iostream>
 #include <mruby/value.h>
 #include <mruby/string.h>
+#include <cstdlib>
 
 namespace hx3d {
 namespace scripting {

@@ -50,7 +50,29 @@ void Widget::update(float delta) {
 }
 
 void Widget::draw(const Pointer<graphics::Batch>& batch) {
-  batch->draw(_shape);
+  if (_visible) {
+    batch->draw(_shape);
+  }
+}
+
+void Widget::show() {
+  _visible = true;
+  onShow();
+}
+
+void Widget::hide() {
+  _visible = false;
+  onHide();
+}
+
+void Widget::enterFocus() {
+  _hasFocus = true;
+  onFocusEnter();
+}
+
+void Widget::exitFocus() {
+  _hasFocus = false;
+  onFocusExit();
 }
 
 void Widget::onFocusEnter() {
