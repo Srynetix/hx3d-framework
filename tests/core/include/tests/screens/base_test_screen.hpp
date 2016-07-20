@@ -24,23 +24,15 @@ public:
   BaseTestScreen()
   {}
 
-  // virtual void resize(int width, int height) override {
-  // }
-
-  virtual void show() override {
-    Core::Events()->registerHandler(this);
-  }
-
-  virtual void hide() override {
-    Core::Events()->unregisterHandler(this);
-  }
-
   virtual void pause() override {
     Core::Events()->unregisterHandler(this);
   }
 
   virtual void resume() override {
     Core::Events()->registerHandler(this);
+  }
+
+  virtual void dispose() override {
   }
 
   virtual void onKeyReleased(KeyEvent::Key key) override {

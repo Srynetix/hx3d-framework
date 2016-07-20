@@ -28,7 +28,7 @@ Screens list.
 // #include "tests/screens/test16_basicshading.hpp"
 // #include "tests/screens/test17_physics_1.hpp"
 // #include "tests/screens/test18_2d_3d.hpp"
-#include "tests/screens/test19_chipmunk.hpp"
+// #include "tests/screens/test19_chipmunk.hpp"
 #include "tests/screens/test20_skeleton.hpp"
 #include "tests/screens/test21_console.hpp"
 #include "tests/screens/test22_gui.hpp"
@@ -82,7 +82,7 @@ MenuScreen::MenuScreen():
     // LOAD_SCREEN("Basic shading", Test16),
     // LOAD_SCREEN("Physics 1", Test17),
     // LOAD_SCREEN("2D + 3D", Test18),
-    LOAD_SCREEN("Chipmunk", Test19),
+    // LOAD_SCREEN("Chipmunk", Test19),
     LOAD_SCREEN("Skeleton", Test20),
     LOAD_SCREEN("Console", Test21),
     LOAD_SCREEN("GUI", Test22)
@@ -93,11 +93,11 @@ MenuScreen::MenuScreen():
   text->setCharacterSize(16);
 }
 
-void MenuScreen::show() {
+void MenuScreen::resume() {
   Core::Events()->registerHandler(this);
 }
 
-void MenuScreen::hide() {
+void MenuScreen::pause() {
   Core::Events()->unregisterHandler(this);
 }
 

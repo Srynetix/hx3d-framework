@@ -72,6 +72,31 @@ public:
   };
 
   /**
+  @brief Start the asset manager
+  */
+  static void startAssets();
+
+  /**
+  @brief Start the network manager
+  */
+  static void startNetwork();
+
+  /**
+  @brief Start the audio device
+  */
+  static void startAudio();
+
+  /**
+  @brief Start the event system
+  */
+  static void startEvents();
+
+  /**
+  @brief Start the configuration system
+  */
+  static void startConfiguration();
+
+  /**
   @brief Get the application instance
 
   @return Application

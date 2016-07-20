@@ -27,7 +27,6 @@ public:
       y = std::sin(t) * 5.f;
     }));
 
-    stencil->enable();
     stencil->setFunction(
       Stencil::Function::Never,
       1,
@@ -43,7 +42,13 @@ public:
     angle = 0.f;
   }
 
-  virtual void hide() override {
+  virtual void resume() override {
+    BaseTestScreen::resume();
+    stencil->enable();
+  }
+
+  virtual void pause() override {
+    BaseTestScreen::pause();
     stencil->disable();
   }
 

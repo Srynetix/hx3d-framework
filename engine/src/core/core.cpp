@@ -62,13 +62,7 @@ namespace hx3d {
 
 Core* Core::_instance(nullptr);
 
-Core::Core() {
-  _assets = Make<AssetManager>();
-  _net = Make<net::Net>();
-  _audio = Make<audio::AudioDevice>();
-  _events = Make<window::EventManager>();
-  _config = Make<Configuration>();
-}
+Core::Core() {}
 
 Core::~Core() {
   _game.reset();
@@ -78,6 +72,36 @@ Core::~Core() {
   _net.reset();
   _audio.reset();
   _config.reset();
+}
+
+void Core::startAssets() {
+  if (!get()->_assets) {
+    get()->_assets = Make<AssetManager>();
+  }
+}
+
+void Core::startNetwork() {
+  if (!get()->_net) {
+    get()->_net = Make<net::Net>();
+  }
+}
+
+void Core::startAudio() {
+  if (!get()->_audio) {
+    get()->_audio = Make<audio::AudioDevice>();
+  }
+}
+
+void Core::startEvents() {
+  if (!get()->_events) {
+    get()->_events = Make<window::EventManager>();
+  }
+}
+
+void Core::startConfiguration() {
+  if (!get()->_config) {
+    get()->_config = Make<Configuration>();
+  }
 }
 
 window::Application* Core::App() {

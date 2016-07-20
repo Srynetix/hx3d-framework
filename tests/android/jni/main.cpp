@@ -5,7 +5,7 @@
 using namespace hx3d;
 using namespace hx3d::window;
 
-int SDL_main(int argc, char* argv[]) {
+extern "C" int SDL_main(int argc, char* argv[]) {
   Application app;
   app.start(Make<TestGame>());
 

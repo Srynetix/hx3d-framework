@@ -62,8 +62,11 @@ Application::Application() {
   _elapsedTime = 0;
   _deltaTime = 0;
 
-    Core::initialize(this);
     srand(time(0));
+    Core::initialize(this);
+
+    Core::startConfiguration();
+    Core::startAssets();
 
     _width = Core::Config()->get<int>("window", "width");
     _height = Core::Config()->get<int>("window", "height");
@@ -164,6 +167,10 @@ Application::Application() {
     Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
 
     GL_ERROR_CHECK();
+
+    Core::startEvents();
+    Core::startAudio();
+    Core::startNetwork();
   }
 
 Application::~Application() {

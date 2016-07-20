@@ -104,6 +104,11 @@ set(
   "${ENGINE_SRC}/graphics/cameras/orthographic_camera.cpp"
   "${ENGINE_SRC}/graphics/cameras/perspective_camera.cpp"
 
+  "${ENGINE_SRC}/graphics/skeletons/bone.cpp"
+  "${ENGINE_SRC}/graphics/skeletons/joint.cpp"
+  "${ENGINE_SRC}/graphics/skeletons/joint_animation.cpp"
+  "${ENGINE_SRC}/graphics/skeletons/skeleton.cpp"
+
   "${ENGINE_SRC}/graphics/buffers/attribute_array_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/attribute_stream_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/attribute.cpp"

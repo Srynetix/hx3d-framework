@@ -23,12 +23,16 @@
 #include <yaml-cpp/yaml.h>
 
 #include "hx3d/utils/file.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
 Configuration::Configuration() {
+  Log.Info("Loading configuration...");
   std::string config_text = File::loadAsciiFile("config.yml")->toString();
+  Log.Info(config_text);
   _root = YAML::Load(config_text);
+  Log.Info("Configuration loaded.");
 }
 
 Configuration::~Configuration() {

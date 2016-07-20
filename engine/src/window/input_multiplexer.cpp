@@ -50,67 +50,67 @@ void InputMultiplexer::clearInputs() {
 
 void InputMultiplexer::onWindowEvent(WindowEvent::Type type) {
   for (auto& handler: _handlers) {
-    handler->onWindowEvent(type);
+    if (handler) handler->onWindowEvent(type);
   }
 }
 
 void InputMultiplexer::onMouseClicked(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
   for (auto& handler: _handlers) {
-    handler->onMouseClicked(button, mousePosition);
+    if (handler) handler->onMouseClicked(button, mousePosition);
   }
 }
 
 void InputMultiplexer::onMouseReleased(MouseButtonEvent::Button button, glm::vec2 mousePosition) {
   for (auto& handler: _handlers) {
-    handler->onMouseReleased(button, mousePosition);
+    if (handler) handler->onMouseReleased(button, mousePosition);
   }
 }
 
 void InputMultiplexer::onMouseWheel(MouseWheelEvent::Direction direction, glm::vec2 wheelMovement) {
   for (auto& handler: _handlers) {
-    handler->onMouseWheel(direction, wheelMovement);
+    if (handler) handler->onMouseWheel(direction, wheelMovement);
   }
 }
 
 void InputMultiplexer::onMouseMotion(glm::vec2 mousePosition, glm::vec2 mouseMovement) {
   for (auto& handler: _handlers) {
-    handler->onMouseMotion(mousePosition, mouseMovement);
+    if (handler) handler->onMouseMotion(mousePosition, mouseMovement);
   }
 }
 
 void InputMultiplexer::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
   for (auto& handler: _handlers) {
-    handler->onTouchDown(touchPosition, touchPressure);
+    if (handler) handler->onTouchDown(touchPosition, touchPressure);
   }
 }
 
 void InputMultiplexer::onTouchUp(glm::vec2 touchPosition, float touchPressure) {
   for (auto& handler: _handlers) {
-    handler->onTouchUp(touchPosition, touchPressure);
+    if (handler) handler->onTouchUp(touchPosition, touchPressure);
   }
 }
 
 void InputMultiplexer::onTouchMotion(glm::vec2 touchPosition, glm::vec2 touchMovement, float touchPressure) {
   for (auto& handler: _handlers) {
-    handler->onTouchMotion(touchPosition, touchMovement, touchPressure);
+    if (handler) handler->onTouchMotion(touchPosition, touchMovement, touchPressure);
   }
 }
 
 void InputMultiplexer::onKeyPressed(KeyEvent::Key key) {
   for (auto& handler: _handlers) {
-    handler->onKeyPressed(key);
+    if (handler) handler->onKeyPressed(key);
   }
 }
 
 void InputMultiplexer::onKeyReleased(KeyEvent::Key key) {
   for (auto& handler: _handlers) {
-    handler->onKeyReleased(key);
+    if (handler) handler->onKeyReleased(key);
   }
 }
 
 void InputMultiplexer::onTextInput(std::string text) {
   for (auto& handler: _handlers) {
-    handler->onTextInput(text);
+    if (handler) handler->onTextInput(text);
   }
 }
 

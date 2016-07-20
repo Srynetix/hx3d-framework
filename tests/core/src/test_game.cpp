@@ -34,6 +34,9 @@ void TestGame::create() {
 
   Core::Events()->emulateTouchWithMouse(true);
 
+  // auto viewport = Make<FitViewport>(1024, 768);
+  // this->setViewport(viewport);
+
   auto transition = Make<FadeTransition>(this, Color::Black);
   transition->setDuration(1.f);
 

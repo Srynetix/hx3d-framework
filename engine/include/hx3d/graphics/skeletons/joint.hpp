@@ -20,50 +20,22 @@
 
 #pragma once
 
-#include "hx3d/graphics/skeletons/bone.hpp"
-#include "hx3d/math/number_utils.hpp"
+#include "hx3d/utils/ptr.hpp"
+#include <glm/vec2.hpp>
 
 namespace hx3d {
 namespace graphics {
 
+class Bone;
+class Batch;
+
 class Joint {
 public:
-  Joint(const Pointer<Bone>& a, const Pointer<Bone>& b, glm::vec2 anchorA, glm::vec2 anchorB, glm::vec2 limit, bool fixed = false): a(a), b(b), anchorA(anchorA), anchorB(anchorB), limit(limit), fixed(fixed) {}
+  Joint(const Pointer<Bone>& a, const Pointer<Bone>& b, glm::vec2 anchorA, glm::vec2 anchorB, glm::vec2 limit, bool fixed = false);
 
-  void update() {
-    auto posA = a->c_position + a->displacement;
-    auto mvec = a->size * (anchorA - a->c_offset);
-    auto si = sin(glm::radians(a->c_rotation));
-    auto co = cos(glm::radians(a->c_rotation));
-    auto nvec = glm::vec2(mvec.x * co - mvec.y * si, mvec.x * si + mvec.y * co);
-
-    b->c_position = posA + nvec + b->displacement;
-    b->c_offset = anchorB;
-
-    if (fixed) {
-      b->c_rotation = b->rotation;
-    } else {
-      b->c_rotation = a->c_rotation + b->rotation;
-    }
-
-    for (auto& joint: b->children) {
-      joint->update();
-    }
-  }
-
-  void rotate(float angle) {
-    if (limit.x == 0 && limit.y == 360) {
-      b->rotation = math::mclamp(b->rotation + angle, limit.x, limit.y);
-    } else {
-      b->rotation = math::clamp(b->rotation + angle, limit.x, limit.y);
-    }
-
-    this->update();
-  }
-
-  void draw(const Pointer<Batch>& batch) {
-    b->draw(batch);
-  }
+  void update();
+  void rotate(float angle);
+  void draw(const Pointer<Batch>& batch);
 
   Pointer<Bone> a;
   Pointer<Bone> b;

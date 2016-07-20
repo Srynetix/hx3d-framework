@@ -134,13 +134,20 @@ void Game::render() {
   else {
     if (_currentTransition) {
       if (_currentTransition->isFinished()) {
+        // Remove old screen
         _screen->dispose();
+
+        // Update screen
         _screen = _nextScreen;
-        _screen->resume();
-        _currentTransition->reset();
         _nextScreen = nullptr;
 
+        // Resume new screen
+        _screen->resume();
+
+        // Draw new screen
         _screen->render();
+
+        _currentTransition->reset();
       }
 
       else {
@@ -162,11 +169,17 @@ void Game::render() {
     }
 
     else {
-      _screen->hide();
+      // Remove old screen
+      _screen->dispose();
+
+      // Update screen
       _screen = _nextScreen;
-      _screen->show();
       _nextScreen = nullptr;
 
+      // Resume new screen
+      _screen->resume();
+
+      // Draw new screen
       _screen->render();
     }
   }
@@ -192,6 +205,10 @@ void Game::update(float delta) {
   else {
     if (_currentTransition) {
       if (_currentTransition->isRunning()) {
+        // Update screens
+        _screen->update(delta);
+        _nextScreen->update(delta);
+
         _currentTransition->update(delta);
       }
     }
@@ -221,20 +238,27 @@ void Game::setScreen(const Pointer<Screen>& screen) {
   auto size = Core::App()->getSize();
 
   if (screen) {
-    screen->show();
-    screen->resize(size.x, size.y);
 
+    // First screen ?
     if (!_screen) {
       _screen = screen;
+      _screen->resume();
+
     } else {
       _nextScreen = screen;
-      _screen->hide();
+
+      // Pause current screen (remove input)
+      _screen->pause();
+      // Pause next screen (remove input if taken)
       _nextScreen->pause();
 
       if (_currentTransition) {
         _currentTransition->start();
       }
     }
+
+    // Resize new screen
+    screen->resize(size.x, size.y);
   }
 }
 

@@ -213,7 +213,7 @@ namespace hx3d {
     // Si elle n'existe pas
 
     if(asset == NULL) {
-      __android_log_print(ANDROID_LOG_WARN, "SDL", "File \"%s\" does not exists", path.c_str());
+      __android_log_print(ANDROID_LOG_WARN, "hx3d", "File \"%s\" does not exists", path.c_str());
       return "";
     }
 

@@ -81,12 +81,12 @@ void LogImpl::Error(const std::string fmt, ...) {
 }
 
 void LogImpl::Debug(const std::string fmt, ...) {
-  if (Core::Config()->get<bool>("log", "debug")) {
+  // if (Core::Config()->get<bool>("log", "debug")) {
     va_list args;
     va_start(args, fmt);
     write(format(fmt, args), Status::Debug);
     va_end(args);
-  }
+  // }
 }
 
 //////////////////////////////
