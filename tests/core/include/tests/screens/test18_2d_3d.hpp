@@ -4,6 +4,7 @@
 #include "hx3d/graphics/sprite.hpp"
 #include "hx3d/window/game.hpp"
 #include "hx3d/utils/algorithm.hpp"
+#include "hx3d/utils/timer_manager.hpp"
 #include "hx3d/tweens.hpp"
 
 #include "hx3d/physics/2d/world.hpp"
@@ -11,7 +12,7 @@
 
 using namespace hx3d;
 
-class SGeo2: public geom::Geometry {
+class SGeo2: public Geometry {
 public:
   SGeo2(unsigned int tris) {
     std::vector<float> positions;
@@ -112,39 +113,38 @@ public:
     glm::vec2 worldSize = Core::CurrentGame()->getSize();
 
     constexpr int tileSize = 8;
-    constexpr int qty = 320;
+    constexpr int qty = 100;
     tilesToClear = algo::range(0, (int)(std::ceil(worldSize.x / (float)tileSize) * std::ceil(worldSize.y / (float)tileSize)));
 
-    camera3d.translate(glm::vec3(0.f, 0.f, -1000.f));
-    camera3d.rotate(180.f, glm::vec3(0, 1, 0));
-    camera3d.update();
+    camera3d->translate(glm::vec3(0.f, 0.f, -1000.f));
+    camera3d->rotate(180.f, glm::vec3(0, 1, 0));
+    camera3d->update();
 
-    batch2d.setShader(Core::Assets()->get<Shader>("base"));
-    batch2d.setCamera(camera2d);
+    batch2d->setCamera(camera2d);
+    batch3d->setCamera(camera3d);
 
-    batch3d.setShader(Core::Assets()->get<Shader>("base"));
-    batch3d.setCamera(camera3d);
-
-    mesh.setGeometry(Make<SGeo2>(16000));
-    mesh.transform.size = glm::vec3(2);
-    mesh.transform.position = glm::vec3(0);
+    mesh->setGeometry(Make<SGeo2>(16000));
+    mesh->transform.size = glm::vec3(2);
+    mesh->transform.position = glm::vec3(0);
 
     image.create(Core::CurrentGame()->getSize().x, Core::CurrentGame()->getSize().y);
     image.setRect(0, 0, Core::CurrentGame()->getSize().x-1, Core::CurrentGame()->getSize().y-1, Color::White);
     image.buildTexture();
 
-    sprite.setTexture(Core::Assets()->get<Texture>("logo"));
-    sprite.transform.position.x = Core::CurrentGame()->getSize().x / 2;
-    sprite.transform.position.y = Core::CurrentGame()->getSize().y / 2;
-    sprite.transform.position.z = 0.1f;
+    sprite->setTexture(Core::Assets()->get<Texture>("logo"));
+    sprite->transform.scale.x = 0.3f;
+    sprite->transform.scale.y = 0.3f;
+    sprite->transform.position.x = Core::CurrentGame()->getSize().x / 2;
+    sprite->transform.position.y = Core::CurrentGame()->getSize().y / 2;
+    sprite->transform.position.z = 0.1f;
 
-    sprImage.setTexture(image.getTexture());
-    sprImage.transform.position.x = Core::CurrentGame()->getSize().x / 2;
-    sprImage.transform.position.y = Core::CurrentGame()->getSize().y / 2;
-    sprImage.transform.position.z = 0.5f;
+    sprImage->setTexture(image.getTexture());
+    sprImage->transform.position.x = Core::CurrentGame()->getSize().x / 2;
+    sprImage->transform.position.y = Core::CurrentGame()->getSize().y / 2;
+    sprImage->transform.position.z = 0.5f;
 
     auto seq = Make<tweens::Sequence>(true);
-    seq->addTween(sprite.transform.rotation.z, 2 * 3.14f, 5, math::Interpolation::InOutElastic);
+    seq->addTween(sprite->transform.rotation.z, 2 * 3.14f, 5, math::Interpolation::InOutElastic);
     tweens.add(seq);
 
     timers.createNamedTimer("carr", 1, [this, worldSize, tileSize](){
@@ -171,8 +171,8 @@ public:
   }
 
   virtual void update(float delta) override {
-    camera3d.rotateAround(glm::vec3(0, 0, 0), 1.f, glm::vec3(0, 1, 0));
-    camera3d.update();
+    camera3d->rotateAround(glm::vec3(0, 0, 0), 1.f, glm::vec3(0, 1, 0));
+    camera3d->update();
 
     tweens.update(delta);
     timers.update(delta);
@@ -181,30 +181,30 @@ public:
   virtual void render() override {
     Framebuffer::clear(Color(0, 0, 0));
 
-    batch3d.begin();
-    batch3d.draw(mesh);
-    batch3d.end();
+    batch3d->begin();
+    batch3d->draw(mesh);
+    batch3d->end();
 
-    batch2d.begin();
-    batch2d.draw(sprite);
-    batch2d.draw(sprImage);
-    batch2d.end();
+    batch2d->begin();
+    batch2d->draw(sprite);
+    batch2d->draw(sprImage);
+    batch2d->end();
   }
 
 private:
-  OrthographicCamera camera2d;
-  PerspectiveCamera camera3d;
+  OrthographicCamera::Ref camera2d;
+  PerspectiveCamera::Ref camera3d;
 
-  Mesh mesh;
+  Mesh::Ref mesh;
   Image image;
-  Sprite sprImage;
-  Sprite sprite;
+  Sprite::Ref sprImage;
+  Sprite::Ref sprite;
   tweens::TweenManager tweens;
 
   std::vector<int> tilesToClear;
 
   TimerManager timers;
 
-  Batch batch2d;
-  Batch batch3d;
+  SimpleBatch::Ref batch2d;
+  SimpleBatch::Ref batch3d;
 };

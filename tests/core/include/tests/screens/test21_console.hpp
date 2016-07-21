@@ -50,6 +50,10 @@ public:
     auto textbox = Make<ConsoleTextBox>();
     auto buffer = Make<ConsoleBuffer>();
 
+    text->transform.position.x = Core::App()->getWidth() / 2;
+    text->transform.position.y = Core::App()->getHeight() / 2;
+    text->setContent("Press ²");
+
     gui = Make<System>(Placement::Relative(console, {0.5, 0.5}, {0.5, 0.5}).apply());
     console->addChild(Placement::Relative(buffer, {0.5, 0.25}, {0.75, 0.1}));
     console->addChild(Placement::Relative(textbox, {0.5, 0.75}, {0.75, 0.1}));
@@ -80,6 +84,7 @@ public:
     Framebuffer::clear(Color::Black);
 
     batch->begin();
+    batch->draw(text);
     gui->draw(batch);
     batch->end();
   }
@@ -104,6 +109,8 @@ public:
   }
 
 private:
+  Text::Ref text;
+
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
   SimpleBatch2D::Ref batch;
