@@ -39,6 +39,8 @@ Mesh::Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>&
   _batchDrawer = batchDrawer;
 }
 
+Mesh::~Mesh() {}
+
 void Mesh::draw(const Pointer<Shader>& shader) {
   if (!_geometry || !_geoDrawer) {
     return;

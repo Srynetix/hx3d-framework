@@ -3,35 +3,40 @@
 #include "hx3d/core/core.hpp"
 #include "hx3d/window/application.hpp"
 #include "hx3d/window/events.hpp"
+#include "hx3d/window/event_manager.hpp"
 #include "hx3d/window/game.hpp"
+#include "hx3d/graphics/texture.hpp"
+#include "hx3d/graphics/framebuffer.hpp"
 
 #include "hx3d/utils/assets.hpp"
+
+#include <unistd.h>
 
 /**
 Screens list.
 */
-#include "tests/screens/test1_simple3d.hpp"
-#include "tests/screens/test2_simple3d2.hpp"
-#include "tests/screens/test3_simple2d.hpp"
+// #include "tests/screens/test1_simple3d.hpp"
+// #include "tests/screens/test2_simple3d2.hpp"
+// #include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
-#include "tests/screens/test5_framebuffer.hpp"
+// #include "tests/screens/test5_framebuffer.hpp"
 // #include "tests/screens/test6_fastbatch.hpp"
 // #include "tests/screens/test7_sound.hpp"
 // #include "tests/screens/test8_image.hpp"
 // #include "tests/screens/test9_interpolation.hpp"
-#include "tests/screens/test10_stencil.hpp"
+// #include "tests/screens/test10_stencil.hpp"
 // #include "tests/screens/test11_tweening.hpp"
 // #include "tests/screens/test12_particles.hpp"
 // #include "tests/screens/test13_gravity.hpp"
-#include "tests/screens/test14_buffertest.hpp"
+// #include "tests/screens/test14_buffertest.hpp"
 // #include "tests/screens/test15_timers.hpp"
 // #include "tests/screens/test16_basicshading.hpp"
 // #include "tests/screens/test17_physics_1.hpp"
-#include "tests/screens/test18_2d_3d.hpp"
+// #include "tests/screens/test18_2d_3d.hpp"
 // #include "tests/screens/test19_chipmunk.hpp"
-#include "tests/screens/test20_skeleton.hpp"
+// #include "tests/screens/test20_skeleton.hpp"
 #include "tests/screens/test21_console.hpp"
-#include "tests/screens/test22_gui.hpp"
+// #include "tests/screens/test22_gui.hpp"
 
 #define LOAD_SCREEN(name, klass) {name, [](){Core::CurrentGame()->setScreen(Make<klass>());}}
 
@@ -39,6 +44,13 @@ MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
   pixShader(Core::Assets()->get<Shader>("pix2D"))
 {
+  // camera = Make<OrthographicCamera>();
+  // logoSprite = Make<Sprite>();
+  // sprite = Make<Sprite>();
+  // batch = Make<SimpleBatch>();
+  // text = Make<Text>();
+  // instructions = Make<Text>();
+
   sprite->setTexture(Core::Assets()->get<Texture>("box"));
   sprite->setTint(Color(0, 0, 64));
 
@@ -64,33 +76,36 @@ MenuScreen::MenuScreen():
   logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
-    LOAD_SCREEN("Simple 3D", Test1),
-    LOAD_SCREEN("Simple 3D 2", Test2),
-    LOAD_SCREEN("Simple 2D", Test3),
+    // LOAD_SCREEN("Simple 3D", Test1),
+    // LOAD_SCREEN("Simple 3D 2", Test2),
+    // LOAD_SCREEN("Simple 2D", Test3),
     // LOAD_SCREEN("Simple ECS", Test4),
-    LOAD_SCREEN("Framebuffer", Test5),
+    // LOAD_SCREEN("Framebuffer", Test5),
     // LOAD_SCREEN("Fast Batch 2D", Test6),
     // LOAD_SCREEN("Sound", Test7),
     // LOAD_SCREEN("Image", Test8),
     // LOAD_SCREEN("Interpolations", Test9),
-    LOAD_SCREEN("Stencil", Test10),
+    // LOAD_SCREEN("Stencil", Test10),
     // LOAD_SCREEN("Tweening", Test11),
     // LOAD_SCREEN("Particles", Test12),
     // LOAD_SCREEN("Gravity", Test13),
-    LOAD_SCREEN("Buffer test", Test14),
+    // LOAD_SCREEN("Buffer test", Test14),
     // LOAD_SCREEN("Timers", Test15),
     // LOAD_SCREEN("Basic shading", Test16),
     // LOAD_SCREEN("Physics 1", Test17),
-    LOAD_SCREEN("2D + 3D", Test18),
+    // LOAD_SCREEN("2D + 3D", Test18),
     // LOAD_SCREEN("Chipmunk", Test19),
-    LOAD_SCREEN("Skeleton", Test20),
+    // LOAD_SCREEN("Skeleton", Test20),
     LOAD_SCREEN("Console", Test21),
-    LOAD_SCREEN("GUI", Test22)
+    // LOAD_SCREEN("GUI", Test22)
   };
 
   buttonCount = worldSize.y / buttonHeight;
 
   text->setCharacterSize(16);
+}
+
+MenuScreen::~MenuScreen() {
 }
 
 void MenuScreen::resume() {

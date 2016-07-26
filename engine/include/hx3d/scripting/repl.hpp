@@ -20,6 +20,8 @@ public:
   };
 
   REPL(Config& wrapper);
+  ~REPL();
+  
   void start_auto();
 
   void begin();

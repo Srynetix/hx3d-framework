@@ -31,7 +31,7 @@
 namespace hx3d {
 namespace physics2d {
 
-struct Attractor;
+class Attractor;
 
 /**
 @brief Physical collider

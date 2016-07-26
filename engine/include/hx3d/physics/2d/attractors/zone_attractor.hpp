@@ -30,8 +30,9 @@ namespace physics2d {
 /**
 @brief Zone attractor
 */
-struct ZoneAttractor: public Attractor {
-
+class ZoneAttractor: public Attractor {
+public:
+  
   /**
   @brief Zone attractor definition
   */

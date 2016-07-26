@@ -30,8 +30,9 @@ namespace physics2d {
 /**
 @brief Point attractor
 */
-struct PointAttractor: public Attractor {
-
+class PointAttractor: public Attractor {
+public:
+  
   PointAttractor();
 
   virtual bool overlaps(const Pointer<Collider>& collider) override;

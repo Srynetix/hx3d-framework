@@ -29,6 +29,10 @@ REPL::REPL(Config& config) {
   _code_block_open = FALSE;
 }
 
+REPL::~REPL() {
+  
+}
+
 void REPL::_show_value(mrb_value obj, int prompt)
 {
   mrb_value val;

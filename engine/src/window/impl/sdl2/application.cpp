@@ -67,15 +67,25 @@ Application::Application() {
 
     Core::startConfiguration();
     Core::startAssets();
+    Core::startEvents();
+    Core::startAudio();
+    Core::startNetwork();
 
-    _width = Core::Config()->get<int>("window", "width");
-    _height = Core::Config()->get<int>("window", "height");
-    _fullscreen  = Core::Config()->get<bool>("window", "fullscreen");
-    _title = Core::Config()->get<std::string>("window", "title");
+    // _width = Core::Config()->get<int>("window", "width");
+    // _height = Core::Config()->get<int>("window", "height");
+    // _fullscreen  = Core::Config()->get<bool>("window", "fullscreen");
+    // _title = Core::Config()->get<std::string>("window", "title");
+    //
+    // bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
+    // int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
 
-    bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
-    int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
-
+    _width = 1024;
+    _height = 768;
+    _fullscreen = false;
+    _title = "Hello";
+  //   bool msaaActivated = false;
+  //   int msaaSamples = 4;
+  //
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
       Log.Error("SDL Init Error: %s", SDL_GetError());
       SDL_Quit();
@@ -94,53 +104,47 @@ Application::Application() {
      +/+    +/+  +/+    +/+   *+++++/    *++++++/\n";
 
     Log.Info(hello);
-
+  //
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-    if (msaaActivated) {
-      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaaSamples);
-    }
-
+  //
+  //   if (msaaActivated) {
+  //     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+  //     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaaSamples);
+  //   }
+  //
   #ifdef DESKTOP_OPENGL
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 
-    if (Core::Config()->get<bool>("log", "debug")) {
+    // if (Core::Config()->get<bool>("log", "debug")) {
       SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
-    }
+    // }
 
     auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
     _window = SDL_CreateWindow(_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, window_flags);
-  #else
-    _window = SDL_CreateWindow("", 0, 0, 0, 0, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 
-    SDL_GetWindowSize(_window, &_width, &_height);
+  #else
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+    _window = SDL_CreateWindow("", 0, 0, 0, 0, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
   #endif
+  //
 
-    _context = SDL_GL_CreateContext(_window);
-    if (_context == 0) {
-     Log.Error("OpenGL Context Error: %s", SDL_GetError());
-     SDL_Quit();
-    }
+    SDL_GetWindowSize(_window, &_width, &_height);
+    SDL_GL_CreateContext(_window);
+  //
+  // #ifndef __ANDROID__
+  //   Log.Info("OpenGL Version: %d", epoxy_gl_version());
+  // #endif
 
-    SDL_GL_MakeCurrent(_window, _context);
-
-  #ifndef __ANDROID__
-    Log.Info("OpenGL Version: %d", epoxy_gl_version());
-  #endif
     Log.Info("Screen: %d x %d", _width, _height);
-
+  //
     glViewport(0, 0, _width, _height);
-
+  //
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 
@@ -149,11 +153,11 @@ Application::Application() {
     // }
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //
 
     // Stencil bitplanes
     int bitplanes = 0;
     glGetIntegerv(GL_STENCIL_BITS, &bitplanes);
-
     Log.Info("Stencil bitplanes: %d", bitplanes);
 
     /** Initializations **/
@@ -167,28 +171,22 @@ Application::Application() {
     Core::Assets()->create<Font>("default", "fonts/default.otf", 14);
 
     GL_ERROR_CHECK();
-
-    Core::startEvents();
-    Core::startAudio();
-    Core::startNetwork();
   }
 
 Application::~Application() {
 
   Core::shutdown();
 
-  if (_window) {
-    SDL_DestroyWindow(_window);
-  }
-
   SDL_GL_DeleteContext(_context);
+  SDL_DestroyWindow(_window);
+
   SDL_Quit();
 
-  Log.Info("> END");
+  // Log.Info("> END");
 
-  #if defined(__ANDROID__)
-    exit(0);
-  #endif
+  // #if defined(__ANDROID__)
+  //   exit(0);
+  // #endif
 
   /* Stop the static classes */
   //.........

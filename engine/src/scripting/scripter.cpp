@@ -24,8 +24,8 @@ Scripter::Scripter(std::string context_name) {
 }
 
 Scripter::~Scripter() {
-  mrbc_context_free(_state, _context);
-  mrb_close(_state);
+  // mrbc_context_free(_state, _context);
+  // mrb_close(_state);
 }
 
 void Scripter::add_global_variable(std::string name, mrb_value value) {

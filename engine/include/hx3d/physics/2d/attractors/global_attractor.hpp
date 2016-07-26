@@ -30,8 +30,9 @@ namespace physics2d {
 /**
 @brief Global attractor
 */
-struct GlobalAttractor: public Attractor {
-
+class GlobalAttractor: public Attractor {
+public:
+  
   /**
   @brief Create a global attractor
 

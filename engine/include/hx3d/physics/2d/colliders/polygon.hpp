@@ -31,8 +31,9 @@ namespace physics2d {
 /**
 @brief Polygon or box shaped collider
 */
-struct Polygon: public Collider {
-
+class Polygon: public Collider {
+public:
+  
   /**
   @brief Create a polygon.
 

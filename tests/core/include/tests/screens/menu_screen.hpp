@@ -51,6 +51,7 @@ public:
   };
 
   MenuScreen();
+  virtual ~MenuScreen();
 
   virtual void onTouchDown(glm::vec2 touchPosition, float touchPressure) override;
 

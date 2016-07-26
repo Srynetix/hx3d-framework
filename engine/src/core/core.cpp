@@ -65,13 +65,12 @@ Core* Core::_instance(nullptr);
 Core::Core() {}
 
 Core::~Core() {
-  _game.reset();
-
-  _events.reset();
-  _assets.reset();
-  _net.reset();
-  _audio.reset();
-  _config.reset();
+  // _game = nullptr;
+  _events = nullptr;
+  _assets = nullptr;
+  _net = nullptr;
+  _audio = nullptr;
+  _config = nullptr;
 }
 
 void Core::startAssets() {

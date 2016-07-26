@@ -31,7 +31,7 @@ public:
     batch->setCamera(camera);
   }
 
-  virtual void dispose() {
+  virtual void dispose() override {
   }
 
   virtual void update(float delta) override {

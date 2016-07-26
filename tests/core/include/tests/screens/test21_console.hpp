@@ -70,10 +70,6 @@ public:
     gui->update(1/60.f);
   }
 
-  virtual void dispose() {
-    repl->end();
-  }
-
   virtual void update(float delta) override {
     camera->update();
 
@@ -89,7 +85,7 @@ public:
     batch->end();
   }
 
-  virtual void onKeyPressed(KeyEvent::Key key) {
+  virtual void onKeyPressed(KeyEvent::Key key) override {
     BaseTestScreen::onKeyPressed(key);
 
     if (key == KeyEvent::Key::ConsoleKey) {

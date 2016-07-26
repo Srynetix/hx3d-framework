@@ -30,8 +30,9 @@ class Collider;
 /**
 @brief Physical gravity attractor
 */
-struct Attractor {
-
+class Attractor {
+public:
+  
   /**
   @brief Attractor type
   */

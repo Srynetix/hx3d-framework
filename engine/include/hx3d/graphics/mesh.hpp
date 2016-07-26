@@ -44,6 +44,7 @@ class Mesh {
 public:
   Mesh();
   Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>& batchDrawer);
+  virtual ~Mesh();
 
   /**
   @brief Draw the mesh using a shader.

@@ -28,8 +28,9 @@ namespace physics2d {
 /**
 @brief Circle shaped collider
 */
-struct Circle: public Collider {
-
+class Circle: public Collider {
+public:
+  
   /**
   @brief Create a circle
 
