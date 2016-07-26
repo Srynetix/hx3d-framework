@@ -20,30 +20,16 @@
 
 #include "hx3d/core/configuration.hpp"
 
-#include <yaml-cpp/yaml.h>
-
-#include "hx3d/utils/file.hpp"
 #include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 
 Configuration::Configuration() {
   Log.Info("Loading configuration...");
-  // std::string config_text = File::loadAsciiFile("config.yml")->toString();
-  // _root = YAML::Load(config_text);
+  _document = yaml::Document::loadFromFile("config.yml");
   Log.Info("Configuration loaded.");
 }
 
-Configuration::~Configuration() {
-}
-
-
-YAML::Node Configuration::_getNode(YAML::Node& node, const std::string& key) {
-  if (node.IsMap()) {
-    return node[key];
-  } else {
-    return node;
-  }
-}
+Configuration::~Configuration() {}
 
 } /* hx3d */

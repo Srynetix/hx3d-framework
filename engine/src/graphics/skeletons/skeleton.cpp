@@ -36,49 +36,50 @@ Skeleton::Skeleton(float rootW, float rootH, float rootRotation) {
 
 Skeleton::Skeleton(std::string pathToConfig) {
   // Config file
-  auto rootCfg = yaml::loadFromFile(pathToConfig);
+  auto document = yaml::Document::loadFromFile(pathToConfig);
 
   // Root
-  auto rootNode = yaml::getNode(rootCfg, "root");
-  float rootW = yaml::getValue<float>(rootNode, "w");
-  float rootH = yaml::getValue<float>(rootNode, "h");
-  float rootRot = yaml::getValue<float>(rootNode, "r", 0.f);
+  float rootW = document.fetch<float>("root", "w");
+  float rootH = document.fetch<float>("root", "h");
+  float rootRot = document.fetch<float>("root", "r");
+
   bones["root"] = Make<Bone>(rootW, rootH, rootRot);
 
   // Bones
-  auto rootBones = yaml::getNode(rootCfg, "bones");
-  for (auto pair: rootBones) {
-    auto& bone = pair.second;
+  auto rootBones = document.fetchNode("bones");
+  for (auto pair: document.listPairs(rootBones)) {
+    auto bone = pair.second;
 
-    float boneW = yaml::getValue<float>(bone, "w");
-    float boneH = yaml::getValue<float>(bone, "h");
-    float boneRot = yaml::getValue<float>(bone, "r", 0.f);
-    float boneDep = yaml::getValue<float>(bone, "d", 0.f);
-    std::string boneName = pair.first.as<std::string>();
+    float boneW = document.fetch<float>(bone, "w");
+    float boneH = document.fetch<float>(bone, "h");
+    float boneRot = 0.f;
+    float boneDep = 0.f;
+    std::string boneName = pair.first;
 
     this->addBone(boneName, boneW, boneH, boneRot, boneDep);
   }
 
   // Joints
-  auto rootJoints = yaml::getNode(rootCfg, "joints");
-  for (auto pair: rootJoints) {
-    std::string jointName = pair.first.as<std::string>();
-    auto& joint = pair.second;
+  auto rootJoints = document.fetchNode("joints");
+  for (auto pair: document.listPairs(rootJoints)) {
+    std::string jointName = pair.first;
+    auto joint = pair.second;
 
-    std::string a = yaml::getValue<std::string>(joint, "a");
-    std::string b = yaml::getValue<std::string>(joint, "b");
-    auto anchorA = yaml::getNode(joint, "anchorA");
-    auto anchorB = yaml::getNode(joint, "anchorB");
-    float anchorAx = yaml::getListValue<float>(anchorA, 0);
-    float anchorAy = yaml::getListValue<float>(anchorA, 1);
-    float anchorBx = yaml::getListValue<float>(anchorB, 0);
-    float anchorBy = yaml::getListValue<float>(anchorB, 1);
+    std::string a = document.fetch<std::string>(joint, "a");
+    std::string b = document.fetch<std::string>(joint, "b");
+    auto anchorA = document.fetchNode(joint, "anchorA");
+    auto anchorB = document.fetchNode(joint, "anchorB");
+    float anchorAx = document.fetchIndex<float>(anchorA, 0);
+    float anchorAy = document.fetchIndex<float>(anchorA, 1);
+    float anchorBx = document.fetchIndex<float>(anchorB, 0);
+    float anchorBy = document.fetchIndex<float>(anchorB, 1);
+
     glm::vec2 limit = {0, 360};
 
-    if (joint["limit"]) {
-      limit.x = joint["limit"][0].as<float>();
-      limit.y = joint["limit"][1].as<float>();
-    }
+    // if (joint["limit"]) {
+      // limit.x = joint["limit"][0].as<float>();
+      // limit.y = joint["limit"][1].as<float>();
+    // }
 
     this->addJoint(jointName, a, b, glm::vec2(anchorAx, anchorAy), glm::vec2(anchorBx, anchorBy), limit);
   }

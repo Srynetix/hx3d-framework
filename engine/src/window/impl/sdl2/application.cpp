@@ -43,6 +43,7 @@
 #include "hx3d/net/net.hpp"
 
 #include <ctime>
+#include <unistd.h>
 
 #include "hx3d/graphics/cameras/perspective_camera.hpp"
 #include "hx3d/graphics/error.hpp"
@@ -62,37 +63,6 @@ Application::Application() {
   _elapsedTime = 0;
   _deltaTime = 0;
 
-    srand(time(0));
-    Core::initialize(this);
-
-    Core::startConfiguration();
-    Core::startAssets();
-    Core::startEvents();
-    Core::startAudio();
-    Core::startNetwork();
-
-    // _width = Core::Config()->get<int>("window", "width");
-    // _height = Core::Config()->get<int>("window", "height");
-    // _fullscreen  = Core::Config()->get<bool>("window", "fullscreen");
-    // _title = Core::Config()->get<std::string>("window", "title");
-    //
-    // bool msaaActivated = Core::Config()->get<bool>("graphics", "msaa", "active");
-    // int msaaSamples = Core::Config()->get<int>("graphics", "msaa", "samples");
-
-    _width = 1024;
-    _height = 768;
-    _fullscreen = false;
-    _title = "Hello";
-  //   bool msaaActivated = false;
-  //   int msaaSamples = 4;
-  //
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-      Log.Error("SDL Init Error: %s", SDL_GetError());
-      SDL_Quit();
-
-      exit(1);
-    }
-
     std::string hello =
     "\n\
                               *++++++!           +\n\
@@ -104,22 +74,48 @@ Application::Application() {
      +/+    +/+  +/+    +/+   *+++++/    *++++++/\n";
 
     Log.Info(hello);
-  //
+
+    srand(time(0));
+    Core::initialize(this);
+
+    Core::startConfiguration();
+    Core::startAssets();
+    Core::startEvents();
+    Core::startAudio();
+    Core::startNetwork();
+
+    // sleep(5);
+
+    _width = Core::Config()->fetch<int>("window", "width");
+    _height = Core::Config()->fetch<int>("window", "height");
+    _fullscreen  = Core::Config()->fetch<bool>("window", "fullscreen");
+    _title = Core::Config()->fetch<std::string>("window", "title");
+
+    bool msaaActivated = Core::Config()->fetch<bool>("graphics", "msaa", "active");
+    int msaaSamples = Core::Config()->fetch<int>("graphics", "msaa", "samples");
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+      Log.Error("SDL Init Error: %s", SDL_GetError());
+      SDL_Quit();
+
+      exit(1);
+    }
+
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  //
-  //   if (msaaActivated) {
-  //     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-  //     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaaSamples);
-  //   }
-  //
+
+    if (msaaActivated) {
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, msaaSamples);
+    }
+
   #ifdef DESKTOP_OPENGL
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    // if (Core::Config()->get<bool>("log", "debug")) {
+    if (Core::Config()->fetch<bool>("log", "debug")) {
       SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
-    // }
+    }
 
     auto window_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | (_fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
     _window = SDL_CreateWindow(_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, window_flags);

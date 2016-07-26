@@ -37,10 +37,10 @@ void TestGame::create() {
   // auto viewport = Make<FitViewport>(1024, 768);
   // this->setViewport(viewport);
 
-  // auto transition = Make<FadeTransition>(this, Color::Black);
-  // transition->setDuration(1.f);
+  auto transition = Make<FadeTransition>(this, Color::Black);
+  transition->setDuration(1.f);
 
   this->activateStats(true);
-  // this->setTransition(transition);
+  this->setTransition(transition);
   this->setScreen(Make<MenuScreen>());
 }

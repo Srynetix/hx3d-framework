@@ -1,18 +1,54 @@
 #pragma once
 
-#include <yaml-cpp/yaml.h>
+// #include <yaml-cpp/yaml.h>
+#include <string>
+#include <yaml.h>
+#include <sstream>
+#include <vector>
+// #include <utility>
+
+#include "hx3d/utils/file.hpp"
+#include "hx3d/utils/log.hpp"
 
 namespace hx3d {
 namespace yaml {
 
-YAML::Node loadFromFile(std::string pathToFile);
-YAML::Node getNode(YAML::Node& node, std::string name);
+class Document {
+public:
+  Document();
+  ~Document();
 
-template <class T>
-T getValue(YAML::Node& node, std::string name, T defaultValue = T());
+  static Document loadFromFile(const std::string& pathToFile);
 
-template <class T>
-T getListValue(YAML::Node& node, int i, T defaultValue = T());
+  std::vector<yaml_node_t*> listChildren(yaml_node_t* node);
+  std::vector<std::pair<std::string, yaml_node_t*>> listPairs(yaml_node_t* node);
+
+  template <class Type>
+  Type cast(yaml_node_t* node);
+
+  template <class Type, class ...Args>
+  Type fetch(const std::string& str, Args... args);
+  template <class Type, class ...Args>
+  Type fetch(yaml_node_t* node, const std::string& str, Args... args);
+
+  template <class Type>
+  Type fetchIndex(yaml_node_t* node, int idx);
+
+  template <class ...Args>
+  yaml_node_t* fetchNode(const std::string& str, Args... args);
+  template <class ...Args>
+  yaml_node_t* fetchNode(yaml_node_t* node, const std::string& str, Args... args);
+
+  template <class ...Args>
+  yaml_node_t* fetchN(yaml_node_t* node, const std::string& str, Args... args);
+  yaml_node_t* fetchN(yaml_node_t* node, const std::string& str);
+
+private:
+  yaml_node_t* _getChild(yaml_node_t* node, const std::string& name);
+
+  yaml_node_t* _root;
+  yaml_document_t _document;
+};
 
 } /* yaml */
 } /* hx3d */

@@ -30,7 +30,7 @@ set(
   -lfreetype\
   -lmruby\
   -lchipmunk\
-  -lyaml-cpp"
+  -lyaml"
 )
 
 set(

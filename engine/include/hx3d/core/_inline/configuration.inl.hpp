@@ -20,21 +20,9 @@
 
 namespace hx3d {
 
-template <class T, class... Keys>
-T Configuration::get(const std::string& key, Keys... keys) {
-  auto node = _getNode(_root, key, keys...);
-  return node.template as<T>();
-}
-
-template <class T>
-T Configuration::get(const std::string& key) {
-  return _root[key].as<T>();
-}
-
-template <class... Keys>
-YAML::Node Configuration::_getNode(YAML::Node& node, const std::string& key, Keys... keys) {
-  auto next = _getNode(node, key);
-  return _getNode(next, keys...);
+template <class Type, class... Args>
+Type Configuration::fetch(const std::string& str, Args... args) {
+  return _document.fetch<Type>(str, args...);
 }
 
 } /* hx3d */

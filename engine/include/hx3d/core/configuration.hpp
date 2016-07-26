@@ -17,10 +17,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
 */
-
+//
 #pragma once
 
-#include <yaml-cpp/yaml.h>
+#include "hx3d/utils/yaml.hpp"
 
 namespace hx3d {
 
@@ -29,18 +29,11 @@ public:
   Configuration();
   ~Configuration();
 
-  template <class T, class... Keys>
-  T get(const std::string& key, Keys... keys);
-
-  template <class T>
-  T get(const std::string& key);
+  template <class Type, class... Args>
+  Type fetch(const std::string& str, Args... args);
 
 private:
-  template <class... Keys>
-  YAML::Node _getNode(YAML::Node& node, const std::string& key, Keys... keys);
-  YAML::Node _getNode(YAML::Node& node, const std::string& key);
-
-  YAML::Node _root;
+  yaml::Document _document;
 };
 
 } /* hx3d */

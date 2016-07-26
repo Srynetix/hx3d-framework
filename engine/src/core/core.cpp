@@ -65,7 +65,8 @@ Core* Core::_instance(nullptr);
 Core::Core() {}
 
 Core::~Core() {
-  // _game = nullptr;
+  _game = nullptr;
+  
   _events = nullptr;
   _assets = nullptr;
   _net = nullptr;
