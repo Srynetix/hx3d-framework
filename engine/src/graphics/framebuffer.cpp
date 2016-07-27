@@ -46,6 +46,8 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height):
 }
 
 Framebuffer::~Framebuffer() {
+  auto Log = Logger::getLogger("graphics");
+
   if (glIsFramebuffer(_id) == GL_TRUE)
     glDeleteFramebuffers(1, &_id);
   if (glIsRenderbuffer(_depthBuffer) == GL_TRUE)
@@ -66,31 +68,33 @@ void Framebuffer::fetchDefaultFramebuffer() {
 }
 
 void Framebuffer::create() {
+  auto Log = Logger::getLogger("graphics");
+
   if (glIsFramebuffer(_id) == GL_TRUE)
-      glDeleteFramebuffers(1, &_id);
+    glDeleteFramebuffers(1, &_id);
 
-    // Génération d'un id
-    glGenFramebuffers(1, &_id);
+  // Génération d'un id
+  glGenFramebuffers(1, &_id);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, _id);
+  glBindFramebuffer(GL_FRAMEBUFFER, _id);
 
-    _colorBuffer = Texture::createColorBuffer(_width, _height);
-    createRenderBuffer(_depthBuffer, GL_DEPTH_COMPONENT16);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _colorBuffer->getID(), 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+  _colorBuffer = Texture::createColorBuffer(_width, _height);
+  createRenderBuffer(_depthBuffer, GL_DEPTH_COMPONENT16);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _colorBuffer->getID(), 0);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
 
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    {
-      glDeleteFramebuffers(1, &_id);
-      glDeleteRenderbuffers(1, &_depthBuffer);
+  if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+  {
+    glDeleteFramebuffers(1, &_id);
+    glDeleteRenderbuffers(1, &_depthBuffer);
 
-      Log.Error("FBO creation Error.");
-    }
-    else {
-      Log.Debug("FBO %p created (size: %dx%d).", this, _width, _height);
-    }
+    Log.Error("FBO creation Error.");
+  }
+  else {
+    Log.Debug("FBO %p created (size: %dx%d).", this, _width, _height);
+  }
 
-    glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
+  glBindFramebuffer(GL_FRAMEBUFFER, _defaultID);
 }
 
 void Framebuffer::push(const Pointer<Framebuffer>& buffer) {

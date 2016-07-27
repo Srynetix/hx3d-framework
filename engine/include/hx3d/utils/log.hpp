@@ -21,6 +21,9 @@
 #pragma once
 
 #include <string>
+#include <map>
+
+#include "hx3d/utils/file.hpp"
 
 namespace hx3d {
 
@@ -42,7 +45,7 @@ class LogImpl {
   };
 
 public:
-  LogImpl();
+  LogImpl(const std::string& name);
   virtual ~LogImpl();
 
   /**
@@ -83,6 +86,8 @@ public:
 
 private:
   bool _consoleOutput;
+  std::string _name;
+  Pointer<File> _file;
 
   /**
   @brief Write a message.
@@ -93,7 +98,15 @@ private:
   void write(std::string text, Status status);
 };
 
-/// @brief Current log implementation
-static hx3d::LogImpl Log;
+class Logger {
+public:
+  static LogImpl& getLogger(const std::string& name);
+
+private:
+  static std::map<std::string, Pointer<LogImpl>> _logs;
+};
+
+// / @brief Current log implementation
+// static hx3d::LogImpl Log;
 
 } /* hx3d */

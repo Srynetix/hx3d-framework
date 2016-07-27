@@ -30,12 +30,14 @@ namespace ecs {
 template <class T>
 Pointer<T> Engine::getComponent(const Pointer<Entity>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("No entity %ld", entity->getId());
     return nullptr;
   }
 
   std::map<std::type_index, Pointer<Component>>& compMap = _components[entity->getId()];
   if (compMap.find(typeid(T)) == compMap.end()) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("No component of type %s in entity %ld", typeid(T).name(), entity->getId());
     return nullptr;
   }
@@ -60,6 +62,7 @@ void Engine::addInternalComponent(const unsigned int entityId, const Pointer<Com
   const auto& type = typeid(T);
 
   if (_components.find(entityId) == _components.end()) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("No entity %ld", entityId);
     return;
   }

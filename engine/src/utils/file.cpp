@@ -77,12 +77,12 @@ Pointer<File> File::loadInternalAsciiFile(std::string path) {
   return loadAsciiFileDesktop(path);
 }
 
-void File::writeInternalAsciiFile(std::string path, std::string content) {
+void File::writeInternalAsciiFile(std::string path, std::string content, bool erase) {
   #if defined(__ANDROID__)
     path = getInternalPath() + "/" + path;
   #endif
 
-  std::ofstream file(path);
+  std::ofstream file(path, erase ? std::ios::trunc : std::ios::app);
   file << content;
   file.close();
 }
@@ -109,6 +109,7 @@ Pointer<File> File::loadAsciiFileDesktop(std::string path) {
     return fileptr;
   }
 
+  auto Log = Logger::getLogger("main");
   Log.Error("Bad path: %s", path.c_str());
 
   return nullptr;
@@ -132,6 +133,7 @@ Pointer<File> File::loadBinaryFileDesktop(std::string path) {
     return fileptr;
   }
 
+  auto Log = Logger::getLogger("main");
   Log.Error("Bad path: %s", path.c_str());
 
   return nullptr;

@@ -39,6 +39,7 @@ MultiArrayBuffer::~MultiArrayBuffer()
 void MultiArrayBuffer::addAttribute(const std::string name, const Attribute attribute) {
 
   if (_attributes.find(name) != _attributes.end()) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("MultiArrayBuffer: Attribute %s already exists.", name.c_str());
     return;
   }

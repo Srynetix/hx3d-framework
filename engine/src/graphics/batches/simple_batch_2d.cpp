@@ -35,6 +35,7 @@ SimpleBatch2D::SimpleBatch2D(): Batch() {}
 
 void SimpleBatch2D::begin() {
   if (_shader == nullptr) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Attempt to draw without shader.");
     return;
   }

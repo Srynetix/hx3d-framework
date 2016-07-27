@@ -4,9 +4,11 @@
 namespace hx3d {
 
 TEST_F(Tests, InfoWrite) {
-    Log.Info("Ceci est une info.");
-    Log.Error("Ceci est une erreur.");
-    Log.Shader("Ceci est une info du shader.");
+  auto Log = Logger::getLogger("tests");
+
+  Log.Info("Ceci est une info.");
+  Log.Error("Ceci est une erreur.");
+  Log.Shader("Ceci est une info du shader.");
 }
 
 }

@@ -1,4 +1,5 @@
 #ifdef GL_ES
+  #extension GL_OES_standard_derivatives : require
   precision mediump float;
 #endif
 

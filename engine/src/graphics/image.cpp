@@ -52,9 +52,11 @@ void Image::set(unsigned int x, unsigned int y, Color color) {
 void Image::setRect(unsigned int x, unsigned int y, unsigned int w, unsigned int h, Color color) {
 
   if (x + w > _width) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Image: can't rect. width is too high.");
     return;
   } else if (y + h > _height) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Image: can't rect. height is too high.");
     return;
   }
@@ -72,8 +74,10 @@ Color Image::get(unsigned int x, unsigned int y) {
 }
 
 Pointer<Texture> Image::getTexture() {
-  if (!_texture)
+  if (!_texture) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Image: attempt to access a non-created texture.");
+  }
 
   return _texture;
 }
@@ -84,6 +88,7 @@ void Image::buildTexture() {
 
 void Image::updateTextureZone(unsigned int x, unsigned int y, unsigned int w, unsigned int h) {
   if (!_texture) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Image: attempt to update a non-created texture.");
     return;
   }

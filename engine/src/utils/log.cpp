@@ -49,7 +49,10 @@
 
 namespace hx3d {
 
-LogImpl::LogImpl(): _consoleOutput(true) {
+std::map<std::string, Pointer<LogImpl>> Logger::_logs;
+
+LogImpl::LogImpl(const std::string& name): _consoleOutput(true), _name(name) {
+  File::writeInternalAsciiFile(name + ".log", "", true);
 }
 
 LogImpl::~LogImpl() {
@@ -92,29 +95,38 @@ void LogImpl::Debug(const std::string fmt, ...) {
 //////////////////////////////
 
 void LogImpl::write(std::string text, Status status) {
+  std::ostringstream oss;
+  if (status == Status::Error) {
+    oss << "E /!\\> ";
+  }
 
-    std::ostringstream oss;
-    if (status == Status::Error) {
-      oss << "E /!\\> ";
-    }
+  else if (status == Status::Shader) {
+    oss << "S> ";
+  }
 
-    else if (status == Status::Shader) {
-      oss << "S> ";
-    }
+  else if (status == Status::Info) {
+    oss << "I> ";
+  }
 
-    else if (status == Status::Info) {
-      oss << "I> ";
-    }
+  else if (status == Status::Debug) {
+    oss << "D> ";
+  }
 
-    else if (status == Status::Debug) {
-      oss << "D> ";
-    }
+  oss << text;
 
-    oss << text;
+  if (_consoleOutput) {
+    LOG(oss.str().c_str());
+  }
 
-    if (_consoleOutput) {
-      LOG(oss.str().c_str());
-    }
+  File::writeInternalAsciiFile(_name + ".log", oss.str() + "\n");
+}
+
+LogImpl& Logger::getLogger(const std::string& name) {
+  if (_logs.find(name) == _logs.end()) {
+    _logs[name] = Make<LogImpl>(name);
+  }
+
+  return *_logs[name];
 }
 
 }

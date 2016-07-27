@@ -33,6 +33,7 @@ template <class T, class... Args>
 Pointer<T> SceneGraph::create(const std::string path, Args... args) {
   const Pointer<Node>& container = pathExists(path);
   if (container == nullptr) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("SceneGraph: could not create at `%s`.", path.c_str());
     return nullptr;
   }
@@ -51,6 +52,7 @@ Pointer<T> SceneGraph::createNodeChild(const Pointer<Node>& container, Args... a
   const Pointer<T>& object = Make<T>(args...);
   auto obj_name = object->getName();
   if (container->childNameExists(obj_name)) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("Node: a child of `%s` is already named `%s`.", container->_name.c_str(), obj_name.c_str());
     return nullptr;
   }

@@ -66,7 +66,7 @@ Core::Core() {}
 
 Core::~Core() {
   _game = nullptr;
-  
+
   _events = nullptr;
   _assets = nullptr;
   _net = nullptr;
@@ -151,6 +151,8 @@ void Core::shutdown() {
 
 Core* Core::get() {
   if (!_instance) {
+    auto Log = Logger::getLogger("main");
+    
     Log.Error("Attempt to use the Core without initializing it.");
     exit(1);
   }

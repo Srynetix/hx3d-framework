@@ -35,6 +35,7 @@ void WeightedRandom::define(int i, int weight, std::function<void()> f) {
     _weights[i] = weight;
     _map[i] = f;
   } else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("WeightedRandom: Already defined '%d'", i);
   }
 }

@@ -31,6 +31,7 @@ namespace audio {
 int AudioDevice::PostChannel = MIX_CHANNEL_POST;
 
 AudioDevice::AudioDevice() {
+  auto Log = Logger::getLogger("audio");
 
   Log.Info("Audio device initialization.");
 
@@ -67,6 +68,8 @@ AudioDevice::AudioDevice() {
 }
 
 AudioDevice::~AudioDevice() {
+  auto Log = Logger::getLogger("audio");
+  
   Mix_Quit();
   Log.Info("> Audio QUIT");
 }

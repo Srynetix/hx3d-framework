@@ -35,6 +35,8 @@ Shader::Shader(std::string pathToShader):
   _fragmentID(0),
   _programID(0)
 {
+  auto Log = Logger::getLogger("graphics");
+
   std::string vertexFile = pathToShader + ".vert.glsl";
   std::string fragmentFile = pathToShader + ".frag.glsl";
 
@@ -75,6 +77,7 @@ Shader::~Shader() {
 }
 
 bool Shader::compile(const std::string& vert, const std::string& frag) {
+  auto Log = Logger::getLogger("graphics");
 
   if (!compile(_vertexID, GL_VERTEX_SHADER, vert)) {
     return false;
@@ -97,6 +100,7 @@ bool Shader::compile(const std::string& vert, const std::string& frag) {
 }
 
 bool Shader::compile(GLuint &shaderId, GLenum type, const std::string& content) {
+  auto Log = Logger::getLogger("graphics");
 
   shaderId = glCreateShader(type);
   const GLchar* code = content.c_str();
@@ -127,6 +131,8 @@ bool Shader::compile(GLuint &shaderId, GLenum type, const std::string& content) 
 }
 
 bool Shader::createProgram() {
+  auto Log = Logger::getLogger("graphics");
+
   _programID = glCreateProgram();
 
   glAttachShader(_programID, _vertexID);
@@ -172,6 +178,7 @@ GLint Shader::getAttribute(std::string name) {
   if (_activeAttributes.find(name) != _activeAttributes.end()) {
     return _activeAttributes[name];
   } else {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Attribute `%s` does not exists", name.c_str());
     return -1;
   }
@@ -181,12 +188,14 @@ GLint Shader::getUniform(std::string name) {
   if (_activeUniforms.find(name) != _activeUniforms.end()) {
     return _activeUniforms[name];
   } else {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Uniform `%s` does not exists", name.c_str());
     return -1;
   }
 }
 
 void Shader::analyzeAttributes() {
+  auto Log = Logger::getLogger("graphics");
   GLint attributesNum(0);
   GLint attributeMaxSize(0);
 
@@ -224,6 +233,7 @@ void Shader::analyzeAttributes() {
 }
 
 void Shader::analyzeUniforms() {
+  auto Log = Logger::getLogger("graphics");
   GLint uniformsNum(0);
   GLint uniformMaxSize(0);
 

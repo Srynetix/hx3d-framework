@@ -91,6 +91,8 @@ bool Transform::contains(glm::vec2 point) {
 }
 
 void Transform::show() {
+  auto Log = Logger::getLogger("graphics");
+  
   Log.Info("-- Transform");
   Log.Info("\t Pos: [%f, %f, %f]", position.x, position.y, position.z);
   Log.Info("\t Sca: [%f, %f, %f]", scale.x, scale.y, scale.z);

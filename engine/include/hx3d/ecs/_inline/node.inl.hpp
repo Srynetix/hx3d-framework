@@ -37,6 +37,7 @@ Pointer<T> Node::getChild(const std::string name) {
     }
   }
 
+  auto Log = Logger::getLogger("ecs");
   Log.Error("Node: child `%s` does not exists.", name.c_str());
   return nullptr;
 }

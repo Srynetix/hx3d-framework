@@ -3,6 +3,8 @@ namespace yaml {
 
 template <class Type>
 Type Document::value(yaml_node_t* node, const std::string& str, Type defaultValue) {
+  auto Log = Logger::getLogger("utils");
+
   auto n = fetch(node, str);
   if (!n) return defaultValue;
 
@@ -16,6 +18,7 @@ Type Document::value(yaml_node_t* node, const std::string& str, Type defaultValu
 
 template <class Type>
 Type Document::valueAtIndex(yaml_node_t* node, int idx, Type defaultType) {
+  auto Log = Logger::getLogger("utils");
 
   if (node->type == YAML_SEQUENCE_NODE) {
     auto list = listChildren(node);
@@ -36,11 +39,6 @@ template <class ...Args>
 yaml_node_t* Document::fetch(yaml_node_t* node, const std::string& str, Args... args) {
   return fetch(_getChild(node, str), args...);
 }
-
-// template <class ...Args>
-// yaml_node_t* Document::exists(yaml_node_t* node, const std::string& str, Args... args) {
-//   return exists(_getChild(node, str), args...);
-// }
 
 template <class Type>
 Type Document::cast(yaml_node_t* node) {

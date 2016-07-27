@@ -50,6 +50,7 @@ namespace graphics {
           msg = "Unknown";
       }
 
+      auto Log = Logger::getLogger("graphics");
       Log.Error("GL Error: %s / File: %s / Line: %d", msg.c_str(), file, line);
     }
   }

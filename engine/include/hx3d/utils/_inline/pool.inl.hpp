@@ -62,6 +62,7 @@ void Pool<T>::release(const Pointer<T>& ptr) {
   }
 
   else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("Pool: Ptr is not working.");
   }
 }

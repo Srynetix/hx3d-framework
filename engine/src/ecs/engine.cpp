@@ -36,6 +36,7 @@ Pointer<Entity> Engine::createEntity() {
 
 void Engine::registerEntity(const Pointer<Entity>& entity) {
   if (entity->getId() != 0) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("Engine: entity `%d` already registered.", entity->getId());
     return;
   }
@@ -52,6 +53,7 @@ void Engine::removeEntity(const Pointer<Entity>& entity) {
 
 unsigned int Engine::getComponentSize(const Pointer<Entity>& entity) {
   if (_components.find(entity->getId()) == _components.end()) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("No entity %ld", entity->getId());
     return 0;
   }

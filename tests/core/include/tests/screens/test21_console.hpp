@@ -96,7 +96,6 @@ public:
       }
 
       else {
-        Log.Info("SHOW");
         gui->enterFocus();
         console->show();
         console->enterFocus();

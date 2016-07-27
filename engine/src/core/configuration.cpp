@@ -25,6 +25,7 @@
 namespace hx3d {
 
 Configuration::Configuration(): _document(yaml::Document("config.yml")) {
+  auto Log = Logger::getLogger("main");
   Log.Info("Configuration loaded.");
 }
 

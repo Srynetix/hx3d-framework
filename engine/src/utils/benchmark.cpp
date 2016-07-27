@@ -41,6 +41,8 @@ void Benchmark::bench(std::string name, std::function<void()> fn) {
 
 void Benchmark::showStats(std::string name, std::chrono::time_point<std::chrono::system_clock> begin, std::chrono::time_point<std::chrono::system_clock> end) {
 
+  auto Log = Logger::getLogger("utils");
+
   float s = 0;
   int ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
   if (ms == 0) {

@@ -31,6 +31,7 @@ CollisionMatrix::CollisionMatrix() {
 
 void CollisionMatrix::addCategory(std::string name) {
   if (_categories.find(name) != _categories.end()) {
+    auto Log = Logger::getLogger("physics");
     Log.Error("Physics2D: Category `%s` already exists !", name.c_str());
     return;
   }
@@ -42,11 +43,13 @@ void CollisionMatrix::addCategory(std::string name) {
 
 void CollisionMatrix::addOneMask(std::string name, std::string category) {
   if (_categories.find(name) == _categories.end()) {
+    auto Log = Logger::getLogger("physics");
     Log.Error("Physics2D: Category `%s` does not exists !", name.c_str());
     return;
   }
 
   if (_categories.find(category) == _categories.end()) {
+    auto Log = Logger::getLogger("physics");
     Log.Error("Physics2D: Category `%s` does not exists !", category.c_str());
     return;
   }
@@ -65,6 +68,7 @@ void CollisionMatrix::addOneMask(std::string name, std::string category) {
 
 unsigned int CollisionMatrix::getCategory(std::string category) {
   if (_categories.find(category) == _categories.end()) {
+    auto Log = Logger::getLogger("physics");
     Log.Error("Physics2D: Category `%s` does not exists !", category.c_str());
     return 0;
   }
@@ -74,6 +78,7 @@ unsigned int CollisionMatrix::getCategory(std::string category) {
 
 unsigned int CollisionMatrix::getMask(std::string category) {
   if (_categories.find(category) == _categories.end()) {
+    auto Log = Logger::getLogger("physics");
     Log.Error("Physics2D: Category `%s` does not exists !", category.c_str());
     return 0;
   }

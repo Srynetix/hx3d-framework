@@ -52,6 +52,7 @@ void SceneGraph::addIndex(const Pointer<Node>& object) {
   const std::string& path = object->getPath();
   for (const auto& pair: _indices) {
     if (pair.first == object->_name) {
+      auto Log = Logger::getLogger("ecs");
       Log.Error("SceneGraph: Index `%s` already exists !", path.c_str());
       return;
     }
@@ -61,6 +62,8 @@ void SceneGraph::addIndex(const Pointer<Node>& object) {
 }
 
 void SceneGraph::showIndices() {
+  auto Log = Logger::getLogger("ecs");
+
   Log.Info("-- Graph indices");
   for (const auto& pair: _indices) {
     Log.Info("\t%s: %s", pair.first.c_str(), pair.second->_name.c_str());
@@ -108,11 +111,13 @@ void SceneGraph::update(const float delta) {
 void SceneGraph::remove(const std::string path) {
 
   if (_indices.find(path) == _indices.end()) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("SceneGraph: Index `%s` does not exists.", path.c_str());
     return;
   }
 
   if (path == "/") {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("SceneGraph: Root object can not be removed.");
     return;
   }
@@ -143,6 +148,7 @@ void SceneGraph::internalRemove(const Pointer<Node>& node) {
 
 Pointer<Node> SceneGraph::pathExists(const std::string path) {
   if (path.size() == 0 || path[0] != '/') {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("SceneGraph: ill-formed path: `%s`. Must start with `/`", path.c_str());
     return nullptr;
   }

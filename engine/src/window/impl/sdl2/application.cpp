@@ -63,6 +63,8 @@ Application::Application() {
   _elapsedTime = 0;
   _deltaTime = 0;
 
+    auto Log = Logger::getLogger("main");
+
     std::string hello =
     "\n\
                               *++++++!           +\n\

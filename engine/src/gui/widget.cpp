@@ -92,6 +92,8 @@ bool Widget::isVisible() const {
 }
 
 void Widget::registerAction(std::string action) {
+  auto Log = Logger::getLogger("gui");
+
   if (_actions.find(action) != _actions.end()) {
     Log.Error("action %s already registered", action.c_str());
   } else {
@@ -100,6 +102,8 @@ void Widget::registerAction(std::string action) {
 }
 
 void Widget::send(std::string action) {
+  auto Log = Logger::getLogger("gui");
+
   if (_actions.find(action) == _actions.end()) {
     Log.Error("action %s do not exist", action.c_str());
   } else {
@@ -111,6 +115,8 @@ void Widget::send(std::string action) {
 }
 
 void Widget::on(std::string action, std::function<void()> func) {
+  auto Log = Logger::getLogger("gui");
+
   if (_actions.find(action) == _actions.end()) {
     Log.Error("action %s do not exist", action.c_str());
   } else {

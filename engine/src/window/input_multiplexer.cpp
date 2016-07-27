@@ -31,6 +31,7 @@ InputMultiplexer::InputMultiplexer() {}
 
 void InputMultiplexer::registerInput(InputHandler* handler) {
   if (std::find(_handlers.begin(), _handlers.end(), handler) == _handlers.end()) {
+    auto Log = Logger::getLogger("window");
     Log.Debug("Registering input handler %p", handler);
     _handlers.push_back(handler);
   }
@@ -39,6 +40,7 @@ void InputMultiplexer::registerInput(InputHandler* handler) {
 void InputMultiplexer::unregisterInput(InputHandler* handler) {
   auto pos = std::find(_handlers.begin(), _handlers.end(), handler);
   if (pos != _handlers.end()) {
+    auto Log = Logger::getLogger("window");
     Log.Debug("Unregistering input handler %p", handler);
     _handlers.erase(pos);
   }

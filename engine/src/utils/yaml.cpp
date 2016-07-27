@@ -34,6 +34,7 @@ yaml_node_t* Document::_getChild(yaml_node_t* node, const std::string& name) {
     return nullptr;
 
   } else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("YAML Node is not a mapping node.");
     return nullptr;
   }
@@ -52,6 +53,7 @@ bool Document::exists(yaml_node_t* node, const std::string& name) {
       }
     }
   } else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("YAML Node is not a mapping node.");
   }
 
@@ -79,6 +81,7 @@ std::vector<std::pair<std::string, yaml_node_t*>> Document::listPairs(yaml_node_
     }
 
   } else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("YAML Node is not a sequence node");
   }
 
@@ -95,6 +98,7 @@ std::vector<yaml_node_t*> Document::listChildren(yaml_node_t* node) {
     }
 
   } else {
+    auto Log = Logger::getLogger("utils");
     Log.Error("YAML Node is not a sequence node");
   }
 

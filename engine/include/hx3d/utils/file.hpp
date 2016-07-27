@@ -69,7 +69,7 @@ public:
   @param path     Path to file
   @param content  Content
   */
-  static void writeInternalAsciiFile(std::string path, std::string content);
+  static void writeInternalAsciiFile(std::string path, std::string content, bool erase = false);
 
   /**
   @brief Load an internal ascii file.

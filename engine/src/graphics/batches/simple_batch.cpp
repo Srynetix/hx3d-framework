@@ -35,6 +35,7 @@ SimpleBatch::SimpleBatch(): Batch() {}
 
 void SimpleBatch::begin() {
   if (_shader == nullptr) {
+    auto Log = Logger::getLogger("graphics");
     Log.Error("Attempt to draw without shader.");
     return;
   }

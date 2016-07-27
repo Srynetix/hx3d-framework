@@ -70,6 +70,7 @@ Texture::~Texture()
 }
 
 bool Texture::load(std::string pathToImage) {
+  auto Log = Logger::getLogger("graphics");
   const Pointer<File>& file = File::loadBinaryFile(pathToImage);
 
   int bpp = 0;

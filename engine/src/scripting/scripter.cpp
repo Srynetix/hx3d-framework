@@ -8,6 +8,8 @@ namespace hx3d {
 namespace scripting {
 
 Scripter::Scripter(std::string context_name) {
+  auto Log = Logger::getLogger("scripting");
+
   _state = mrb_open();
   if (_state == nullptr) {
     Log.Error("Scripting: invalid mrb interpreter, exiting...");
@@ -24,8 +26,8 @@ Scripter::Scripter(std::string context_name) {
 }
 
 Scripter::~Scripter() {
-  // mrbc_context_free(_state, _context);
-  // mrb_close(_state);
+  mrbc_context_free(_state, _context);
+  mrb_close(_state);
 }
 
 void Scripter::add_global_variable(std::string name, mrb_value value) {

@@ -147,6 +147,8 @@ void Spectrum::update(const short int* stream, const int length, const float del
 }
 
 float Spectrum::getNormalizedFrequencyAmplitude(const unsigned int frequency, const unsigned int range) {
+  auto Log = Logger::getLogger("audio");
+
   unsigned int maxFrequency = _barFrequencies[_barCount - 1];
 
   if (frequency > maxFrequency) {

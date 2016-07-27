@@ -37,6 +37,7 @@ graphics::Transform Node::getFullTransform() {
 
 void Node::removeChild(SceneGraph& sg, const std::string name) {
   if (!childNameExists(name)) {
+    auto Log = Logger::getLogger("ecs");
     Log.Error("Node: child `%s` does not exists.", name.c_str());
     return;
   }
