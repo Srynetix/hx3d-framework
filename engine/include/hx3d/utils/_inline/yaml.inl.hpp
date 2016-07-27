@@ -1,46 +1,46 @@
 namespace hx3d {
 namespace yaml {
 
-template <class Type, class ...Args>
-Type Document::fetch(const std::string& str, Args... args) {
-  return fetch<Type>(_root, str, args...);
-}
+template <class Type>
+Type Document::value(yaml_node_t* node, const std::string& str, Type defaultValue) {
+  auto n = fetch(node, str);
+  if (!n) return defaultValue;
 
-template <class Type, class ...Args>
-Type Document::fetch(yaml_node_t* node, const std::string& str, Args... args) {
-  auto n = fetchNode(node, str, args...);
   if (n->type == YAML_SCALAR_NODE) {
     return cast<Type>(n);
   } else {
     Log.Error("YAML node is not scalar. Can not fetch value.");
-    return Type();
+    return defaultValue;
   }
 }
 
 template <class Type>
-Type Document::fetchIndex(yaml_node_t* node, int idx) {
+Type Document::valueAtIndex(yaml_node_t* node, int idx, Type defaultType) {
+
   if (node->type == YAML_SEQUENCE_NODE) {
-    return cast<Type>(listChildren(node)[idx]);
+    auto list = listChildren(node);
+    if (idx >= (int)list.size()) return defaultType;
+    return cast<Type>(list[idx]);
   } else {
     Log.Error("YAML node is not sequence. Can not fetch index.");
-    return Type();
+    return defaultType;
   }
 }
 
 template <class ...Args>
-yaml_node_t* Document::fetchNode(const std::string& str, Args... args) {
-  return fetchNode(_root, str, args...);
+yaml_node_t* Document::fetch(const std::string& str, Args... args) {
+  return fetch(_root, str, args...);
 }
 
 template <class ...Args>
-yaml_node_t* Document::fetchNode(yaml_node_t* node, const std::string& str, Args... args) {
-  return fetchN(node, str, args...);
+yaml_node_t* Document::fetch(yaml_node_t* node, const std::string& str, Args... args) {
+  return fetch(_getChild(node, str), args...);
 }
 
-template <class ...Args>
-yaml_node_t* Document::fetchN(yaml_node_t* node, const std::string& str, Args... args) {
-  return fetchN(_getChild(node, str), args...);
-}
+// template <class ...Args>
+// yaml_node_t* Document::exists(yaml_node_t* node, const std::string& str, Args... args) {
+//   return exists(_getChild(node, str), args...);
+// }
 
 template <class Type>
 Type Document::cast(yaml_node_t* node) {

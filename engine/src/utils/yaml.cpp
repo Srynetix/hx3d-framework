@@ -5,24 +5,18 @@
 namespace hx3d {
 namespace yaml {
 
-Document::Document() {}
-Document::~Document() {}
-
-Document Document::loadFromFile(const std::string& pathToFile) {
-  auto doc = Document();
-
+Document::Document(const std::string& pathToFile) {
   std::string content = File::loadAsciiFile(pathToFile)->toString();
   yaml_parser_t parser;
 
   yaml_parser_initialize(&parser);
   yaml_parser_set_input_string(&parser, (const unsigned char*)content.c_str(), content.size());
-  yaml_parser_load(&parser, &(doc._document));
+  yaml_parser_load(&parser, &(_document));
 
-  auto root = yaml_document_get_root_node(&(doc._document));
-  doc._root = root;
-
-  return doc;
+  _root = yaml_document_get_root_node(&(_document));
 }
+
+Document::~Document() {}
 
 yaml_node_t* Document::_getChild(yaml_node_t* node, const std::string& name) {
   if (node->type == YAML_MAPPING_NODE) {
@@ -37,16 +31,34 @@ yaml_node_t* Document::_getChild(yaml_node_t* node, const std::string& name) {
       }
     }
 
-    Log.Error("YAML Node `%s` is not found.", name.c_str());
-    return node;
+    return nullptr;
 
   } else {
     Log.Error("YAML Node is not a mapping node.");
-    return node;
+    return nullptr;
   }
 }
 
-yaml_node_t* Document::fetchN(yaml_node_t* node, const std::string& str) {
+bool Document::exists(yaml_node_t* node, const std::string& name) {
+  if (node->type == YAML_MAPPING_NODE) {
+    for (int i = 0; i < (node->data.mapping.pairs.top - node->data.mapping.pairs.start); i++) {
+      auto key_node = yaml_document_get_node(&_document, node->data.mapping.pairs.start[i].key);
+      if (key_node->type == YAML_SCALAR_NODE) {
+        auto key_node_name = std::string((const char *)key_node->data.scalar.value);
+
+        if (key_node_name == name) {
+          return true;
+        }
+      }
+    }
+  } else {
+    Log.Error("YAML Node is not a mapping node.");
+  }
+
+  return false;
+}
+
+yaml_node_t* Document::fetch(yaml_node_t* node, const std::string& str) {
   return _getChild(node, str);
 }
 

@@ -22,7 +22,8 @@ namespace hx3d {
 
 template <class Type, class... Args>
 Type Configuration::fetch(const std::string& str, Args... args) {
-  return _document.fetch<Type>(str, args...);
+  auto node = _document.fetch(str, args...);
+  return _document.cast<Type>(node);
 }
 
 } /* hx3d */

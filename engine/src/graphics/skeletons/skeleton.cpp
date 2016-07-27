@@ -36,51 +36,52 @@ Skeleton::Skeleton(float rootW, float rootH, float rootRotation) {
 
 Skeleton::Skeleton(std::string pathToConfig) {
   // Config file
-  auto document = yaml::Document::loadFromFile(pathToConfig);
+  auto document = yaml::Document(pathToConfig);
 
   // Root
-  float rootW = document.fetch<float>("root", "w");
-  float rootH = document.fetch<float>("root", "h");
-  float rootRot = document.fetch<float>("root", "r");
-
+  auto rootNode = document.fetch("root");
+  float rootW = document.value<float>(rootNode, "w");
+  float rootH = document.value<float>(rootNode, "h");
+  float rootRot = document.value<float>(rootNode, "r", 0.f);
   bones["root"] = Make<Bone>(rootW, rootH, rootRot);
 
   // Bones
-  auto rootBones = document.fetchNode("bones");
+  auto rootBones = document.fetch("bones");
   for (auto pair: document.listPairs(rootBones)) {
     auto bone = pair.second;
 
-    float boneW = document.fetch<float>(bone, "w");
-    float boneH = document.fetch<float>(bone, "h");
-    float boneRot = 0.f;
-    float boneDep = 0.f;
+    float boneW = document.value<float>(bone, "w");
+    float boneH = document.value<float>(bone, "h");
+    float boneRot = document.value<float>(bone, "r", 0.f);
+    float boneDep = document.value<float>(bone, "d", 0.f);
     std::string boneName = pair.first;
 
     this->addBone(boneName, boneW, boneH, boneRot, boneDep);
   }
 
   // Joints
-  auto rootJoints = document.fetchNode("joints");
+  auto rootJoints = document.fetch("joints");
   for (auto pair: document.listPairs(rootJoints)) {
     std::string jointName = pair.first;
     auto joint = pair.second;
 
-    std::string a = document.fetch<std::string>(joint, "a");
-    std::string b = document.fetch<std::string>(joint, "b");
-    auto anchorA = document.fetchNode(joint, "anchorA");
-    auto anchorB = document.fetchNode(joint, "anchorB");
-    float anchorAx = document.fetchIndex<float>(anchorA, 0);
-    float anchorAy = document.fetchIndex<float>(anchorA, 1);
-    float anchorBx = document.fetchIndex<float>(anchorB, 0);
-    float anchorBy = document.fetchIndex<float>(anchorB, 1);
+    std::string a = document.value<std::string>(joint, "a");
+    std::string b = document.value<std::string>(joint, "b");
+    auto anchorA = document.fetch(joint, "anchorA");
+    auto anchorB = document.fetch(joint, "anchorB");
+    float anchorAx = document.valueAtIndex<float>(anchorA, 0, 0.f);
+    float anchorAy = document.valueAtIndex<float>(anchorA, 1, 0.f);
+    float anchorBx = document.valueAtIndex<float>(anchorB, 0, 0.f);
+    float anchorBy = document.valueAtIndex<float>(anchorB, 1, 0.f);
 
     glm::vec2 limit = {0, 360};
 
-    // if (joint["limit"]) {
-      // limit.x = joint["limit"][0].as<float>();
-      // limit.y = joint["limit"][1].as<float>();
-    // }
-
+    if (document.exists(joint, "limit")) {
+      auto limit_node = document.fetch(joint, "limit");
+      limit.x = document.valueAtIndex<float>(limit_node, 0, 0.f);
+      limit.y = document.valueAtIndex<float>(limit_node, 1, 360.f);
+    }
+    
     this->addJoint(jointName, a, b, glm::vec2(anchorAx, anchorAy), glm::vec2(anchorBx, anchorBy), limit);
   }
 }

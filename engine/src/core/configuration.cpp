@@ -24,9 +24,7 @@
 
 namespace hx3d {
 
-Configuration::Configuration() {
-  Log.Info("Loading configuration...");
-  _document = yaml::Document::loadFromFile("config.yml");
+Configuration::Configuration(): _document(yaml::Document("config.yml")) {
   Log.Info("Configuration loaded.");
 }
 
