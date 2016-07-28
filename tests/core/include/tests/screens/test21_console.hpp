@@ -1,16 +1,26 @@
-#include "./base_test_screen.hpp"
+#pragma once
+
+#include "tests/screens/base_test_screen.hpp"
 #include "hx3d/scripting/scripter.hpp"
 #include "hx3d/scripting/repl.hpp"
 
 #include "hx3d/gui/panel.hpp"
 #include "hx3d/gui/textbox.hpp"
 #include "hx3d/gui/label.hpp"
-#include "hx3d/gui/placement.hpp"
 #include "hx3d/gui/system.hpp"
 
-#include <string>
+#include "hx3d/utils/log.hpp"
+#include "hx3d/math/number_utils.hpp"
+
+#include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/text.hpp"
+#include "hx3d/graphics/batches/simple_batch_2d.hpp"
+#include "hx3d/graphics/cameras/orthographic_camera.hpp"
+
+// #include <string>
 
 using namespace hx3d;
+using namespace hx3d::graphics;
 using namespace hx3d::scripting;
 using namespace hx3d::gui;
 
@@ -23,7 +33,42 @@ public:
 
 class ConsoleTextBox: public TextBox {
 public:
-  ConsoleTextBox(const Pointer<Widget>& widget = nullptr): TextBox(widget) {}
+  ConsoleTextBox(const Pointer<Widget>& widget = nullptr): TextBox(widget) {
+    _historyPos = 0;
+  }
+
+  virtual void keyPressed(KeyEvent::Key key) override {
+    // Up
+    if (key == KeyEvent::Key::Up) {
+      if (_history.size() > 0) {
+        _historyPos = math::modulo(_historyPos - 1, _history.size());
+        setText(_history[_historyPos]);
+      }
+    }
+
+    // Down
+    else if (key == KeyEvent::Key::Down) {
+      if (_history.size() > 0) {
+        _historyPos = math::modulo(_historyPos + 1, _history.size());
+        setText(_history[_historyPos]);
+      }
+    }
+
+    // History OK
+    else if (key == KeyEvent::Key::Return) {
+      auto Log = Logger::getLogger("tests");
+
+      if (_content != "") {
+        _history.push_back(_content);
+        _historyPos = _history.size();
+      }
+    }
+
+    TextBox::keyPressed(key);
+  }
+
+  std::vector<std::string> _history;
+  int _historyPos;
 };
 
 class ConsoleBuffer: public Label {
@@ -37,80 +82,21 @@ public:
 
 class Test21: public BaseTestScreen {
 public:
-  Test21()
-  {
-    batch->setCamera(camera);
+  Test21();
 
-    REPL::Config config;
-    config.scripter = &scripter;
-    repl = Make<REPL>(config);
-    repl->begin();
+  virtual void update(float delta) override;
+  virtual void render() override;
 
-    console = Make<ConsolePanel>();
-    auto textbox = Make<ConsoleTextBox>();
-    auto buffer = Make<ConsoleBuffer>();
-
-    text->transform.position.x = Core::App()->getWidth() / 2;
-    text->transform.position.y = Core::App()->getHeight() / 2;
-    text->setContent("Press ²");
-
-    gui = Make<System>(Placement::Relative(console, {0.5, 0.5}, {0.5, 0.5}).apply());
-    console->addChild(Placement::Relative(buffer, {0.5, 0.25}, {0.75, 0.1}));
-    console->addChild(Placement::Relative(textbox, {0.5, 0.75}, {0.75, 0.1}));
-
-    textbox->on("validate", [this,textbox,buffer]() {
-      auto txt = textbox->getText();
-      if (txt.size() > 0) {
-        std::string ret = repl->execute_line(txt);
-        textbox->setText("");
-        buffer->setText(ret);
-      }
-    });
-
-    gui->update(1/60.f);
-  }
-
-  virtual void update(float delta) override {
-    camera->update();
-
-    gui->update(delta);
-  }
-
-  virtual void render() override {
-    Framebuffer::clear(Color::Black);
-
-    batch->begin();
-    batch->draw(text);
-    gui->draw(batch);
-    batch->end();
-  }
-
-  virtual void onKeyPressed(KeyEvent::Key key) override {
-    BaseTestScreen::onKeyPressed(key);
-
-    if (key == KeyEvent::Key::ConsoleKey) {
-      if (console->isVisible()) {
-        gui->exitFocus();
-        console->hide();
-        console->exitFocus();
-      }
-
-      else {
-        gui->enterFocus();
-        console->show();
-        console->enterFocus();
-      }
-    }
-  }
+  virtual void onKeyPressed(KeyEvent::Key key) override;
 
 private:
   Text::Ref text;
-
   OrthographicCamera::Ref camera;
   Sprite::Ref sprite;
   SimpleBatch2D::Ref batch;
+
   Scripter scripter;
-  System::Ptr gui;
+  Pointer<System> gui;
   Pointer<REPL> repl;
   Pointer<ConsolePanel> console;
 };

@@ -60,6 +60,7 @@ public:
 
   virtual void update(float delta) override;
   virtual void render() override;
+  virtual void resize(int w, int h) override;
 
 private:
   Shader::Ptr defaultShader;
@@ -73,6 +74,7 @@ private:
 
   Text::Ref text;
   Text::Ref instructions;
+  Pointer<Viewport> viewport;
 
   std::vector<ScreenInfo> screens;
 

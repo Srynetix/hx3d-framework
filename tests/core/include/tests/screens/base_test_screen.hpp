@@ -1,48 +1,19 @@
-#ifndef HX3D_TESTS_BASETESTSCREEN
-#define HX3D_TESTS_BASETESTSCREEN
+#pragma once
 
-#include "hx3d/core/core.hpp"
-
-#include "hx3d/window/event_manager.hpp"
+#include "hx3d/window/events.hpp"
 #include "hx3d/window/input_handler.hpp"
 #include "hx3d/window/screen.hpp"
 
-#include "hx3d/utils/string.hpp"
-
-#include "hx3d/graphics/shape.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
-
-#include "hx3d/graphics/batches/simple_batch_2d.hpp"
-#include "hx3d/graphics/viewports/fit_viewport.hpp"
-
-#include "./menu_screen.hpp"
-
 using namespace hx3d;
+using namespace hx3d::window;
 
 class BaseTestScreen: public Screen, public InputHandler {
 public:
-  BaseTestScreen()
-  {}
+  BaseTestScreen();
+  virtual ~BaseTestScreen();
 
-  virtual void pause() override {
-    Core::Events()->unregisterHandler(this);
-  }
+  virtual void pause() override;
+  virtual void resume() override;
 
-  virtual void resume() override {
-    Core::Events()->registerHandler(this);
-  }
-
-  virtual void dispose() override {
-  }
-
-  virtual void onKeyReleased(KeyEvent::Key key) override {
-    if (key == KeyEvent::Key::Escape || key == KeyEvent::Key::AndroidBack) {
-      Core::CurrentGame()->setScreen(Make<MenuScreen>());
-    }
-  }
-
-  virtual void update(float delta) override {}
-  virtual void render() override {}
+  virtual void onKeyReleased(KeyEvent::Key key) override;
 };
-
-#endif

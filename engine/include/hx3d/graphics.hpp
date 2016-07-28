@@ -69,3 +69,7 @@
 
 #include "hx3d/graphics/viewports/fit_viewport.hpp"
 #include "hx3d/graphics/viewports/viewport.hpp"
+
+#include "hx3d/graphics/skeletons/skeleton.hpp"
+#include "hx3d/graphics/skeletons/joint.hpp"
+#include "hx3d/graphics/skeletons/bone.hpp"

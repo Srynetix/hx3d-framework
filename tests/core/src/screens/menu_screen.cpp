@@ -1,21 +1,11 @@
 #include "tests/screens/menu_screen.hpp"
 
-#include "hx3d/core/core.hpp"
-#include "hx3d/window/application.hpp"
-#include "hx3d/window/events.hpp"
-#include "hx3d/window/event_manager.hpp"
-#include "hx3d/window/game.hpp"
-#include "hx3d/graphics/texture.hpp"
-#include "hx3d/graphics/framebuffer.hpp"
-
-#include "hx3d/utils/assets.hpp"
-
-#include <unistd.h>
+#include "hx3d/hx3d.hpp"
 
 /**
 Screens list.
 */
-// #include "tests/screens/test1_simple3d.hpp"
+#include "tests/screens/test1_simple3d.hpp"
 // #include "tests/screens/test2_simple3d2.hpp"
 // #include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
@@ -32,7 +22,7 @@ Screens list.
 // #include "tests/screens/test15_timers.hpp"
 // #include "tests/screens/test16_basicshading.hpp"
 // #include "tests/screens/test17_physics_1.hpp"
-// #include "tests/screens/test18_2d_3d.hpp"
+#include "tests/screens/test18_2d_3d.hpp"
 // #include "tests/screens/test19_chipmunk.hpp"
 #include "tests/screens/test20_skeleton.hpp"
 #include "tests/screens/test21_console.hpp"
@@ -44,13 +34,6 @@ MenuScreen::MenuScreen():
   defaultShader(Core::Assets()->get<Shader>("base")),
   pixShader(Core::Assets()->get<Shader>("pix2D"))
 {
-  // camera = Make<OrthographicCamera>();
-  // logoSprite = Make<Sprite>();
-  // sprite = Make<Sprite>();
-  // batch = Make<SimpleBatch>();
-  // text = Make<Text>();
-  // instructions = Make<Text>();
-
   sprite->setTexture(Core::Assets()->get<Texture>("box"));
   sprite->setTint(Color(0, 0, 64));
 
@@ -76,7 +59,7 @@ MenuScreen::MenuScreen():
   logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
 
   screens = std::vector<ScreenInfo> {
-    // LOAD_SCREEN("Simple 3D", Test1),
+    LOAD_SCREEN("Simple 3D", Test1),
     // LOAD_SCREEN("Simple 3D 2", Test2),
     // LOAD_SCREEN("Simple 2D", Test3),
     // LOAD_SCREEN("Simple ECS", Test4),
@@ -93,7 +76,7 @@ MenuScreen::MenuScreen():
     // LOAD_SCREEN("Timers", Test15),
     // LOAD_SCREEN("Basic shading", Test16),
     // LOAD_SCREEN("Physics 1", Test17),
-    // LOAD_SCREEN("2D + 3D", Test18),
+    LOAD_SCREEN("2D + 3D", Test18),
     // LOAD_SCREEN("Chipmunk", Test19),
     LOAD_SCREEN("Skeleton", Test20),
     LOAD_SCREEN("Console", Test21),
@@ -114,6 +97,10 @@ void MenuScreen::resume() {
 
 void MenuScreen::pause() {
   Core::Events()->unregisterHandler(this);
+}
+
+void MenuScreen::resize(int w, int h) {
+  // viewport->update(camera, w, h);
 }
 
 void MenuScreen::onTouchDown(glm::vec2 touchPosition, float touchPressure) {
@@ -149,8 +136,6 @@ void MenuScreen::update(float delta) {
   }
 
   instructions->setFunctionInit(Core::App()->getElapsedTime() * 2);
-
-  camera->update();
 }
 
 void MenuScreen::render() {

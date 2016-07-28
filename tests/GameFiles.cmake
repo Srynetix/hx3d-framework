@@ -22,7 +22,11 @@ set(
 COMMON_FILES
 
 "${CORE_SRC}/screens/menu_screen.cpp"
+"${CORE_SRC}/screens/base_test_screen.cpp"
+"${CORE_SRC}/screens/test1_simple3d.cpp"
+"${CORE_SRC}/screens/test18_2d_3d.cpp"
+"${CORE_SRC}/screens/test20_skeleton.cpp"
+"${CORE_SRC}/screens/test21_console.cpp"
 
 "${CORE_SRC}/test_game.cpp"
-
 )

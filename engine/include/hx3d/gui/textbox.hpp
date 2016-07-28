@@ -44,7 +44,7 @@ public:
   virtual void keyPressed(window::KeyEvent::Key key) override;
   virtual void textInput(std::string text) override;
 
-private:
+protected:
   void _updateText();
 
   std::string _content;
