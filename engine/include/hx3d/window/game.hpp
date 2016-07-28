@@ -152,6 +152,15 @@ public:
   */
   bool isRunning();
 
+  template <class Type>
+  void registerScreen(std::string name) {
+    _screensFuncs[name] = [this](){this->setScreen(Make<Type>());};
+  }
+
+  void startScreen(std::string name) {
+    _screensFuncs[name]();
+  }
+
 private:
   bool _running;
   Pointer<Screen> _screen;
@@ -168,6 +177,7 @@ private:
   Pointer<graphics::Viewport> _currentViewport;
 
   ObjectMap _session;
+  std::map<std::string, std::function<void()>> _screensFuncs;
 
   bool _showStats;
 

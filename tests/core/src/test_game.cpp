@@ -1,6 +1,7 @@
 #include "tests/test_game.hpp"
 
 #include "tests/screens/menu_screen.hpp"
+#include "tests/screens/test18_2d_3d.hpp"
 
 #include "hx3d/utils/assets.hpp"
 
@@ -11,6 +12,8 @@
 #include "hx3d/graphics/transitions/alpha_fade_transition.hpp"
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/texture.hpp"
+
+
 
 using namespace hx3d;
 
@@ -34,13 +37,16 @@ void TestGame::create() {
 
   Core::Events()->emulateTouchWithMouse(true);
 
+  this->registerScreen<Test18>("2d_3d");
+  this->registerScreen<MenuScreen>("menu");
+
   // auto viewport = Make<FitViewport>(1024, 768);
   // this->setViewport(viewport);
 
   auto transition = Make<FadeTransition>(this, Color::Black);
   transition->setDuration(1.f);
 
-  this->activateStats(true);
+  // this->activateStats(true);
   this->setTransition(transition);
-  this->setScreen(Make<MenuScreen>());
+  this->startScreen("2d_3d");
 }
