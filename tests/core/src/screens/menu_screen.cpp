@@ -7,7 +7,7 @@ Screens list.
 */
 #include "tests/screens/test1_simple3d.hpp"
 // #include "tests/screens/test2_simple3d2.hpp"
-// #include "tests/screens/test3_simple2d.hpp"
+#include "tests/screens/test3_simple2d.hpp"
 // #include "tests/screens/test4_simpleecs.hpp"
 // #include "tests/screens/test5_framebuffer.hpp"
 // #include "tests/screens/test6_fastbatch.hpp"
@@ -61,7 +61,7 @@ MenuScreen::MenuScreen():
   screens = std::vector<ScreenInfo> {
     LOAD_SCREEN("Simple 3D", Test1),
     // LOAD_SCREEN("Simple 3D 2", Test2),
-    // LOAD_SCREEN("Simple 2D", Test3),
+    LOAD_SCREEN("Simple 2D", Test3),
     // LOAD_SCREEN("Simple ECS", Test4),
     // LOAD_SCREEN("Framebuffer", Test5),
     // LOAD_SCREEN("Fast Batch 2D", Test6),

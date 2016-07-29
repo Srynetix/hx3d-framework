@@ -1,97 +1,154 @@
-#include "./base_test_screen.hpp"
+#pragma once
+
+#include "tests/screens/base_test_screen.hpp"
+
+#include "hx3d/hx3d.hpp"
+#include "hx3d/graphics/drawers/mesh_drawer.hpp"
 
 using namespace hx3d;
+using namespace hx3d::graphics;
 
-class Test3: public BaseTestScreen {
+class Transform2D {
 public:
-  Test3():
-    angle(0.f)
-  {
-    batch->setCamera(camera);
+  Transform2D():
+    _dirty(true),
+    _lastCompute(1.f),
+    _position(0.f),
+    _size(1.f),
+    _scale(1.f),
+    _r(0.f)
+    {}
 
-    sprite->setTexture(Core::Assets()->get<Texture>("box"));
+  glm::mat4 compute() {
+    if (_dirty) {
+      _lastCompute = glm::mat4(1.f);
+      _lastCompute = glm::translate(_lastCompute, glm::vec3(_position.x, _position.y, 0));
+      _lastCompute = glm::rotate(_lastCompute, _r, glm::vec3(0, 0, 1));
+      _lastCompute = glm::scale(_lastCompute, glm::vec3(_size.x, _size.y, 0));
+      _lastCompute = glm::scale(_lastCompute, glm::vec3(_scale.x, _scale.y, 0));
 
-    text->transform.position.x = 100;
-    text->transform.position.y = 100;
-    text->transform.position.z = 0.9f;
+      _dirty = false;
+    }
+
+    return _lastCompute;
   }
 
-  virtual void update(float delta) override {
-    if (Core::Events()->isKeyPressed(KeyEvent::Key::Z)) {
-      camera->translate(glm::vec3(0, 2.f, 0));
-    }
-    else if (Core::Events()->isKeyPressed(KeyEvent::Key::S)) {
-      camera->translate(glm::vec3(0, -2.f, 0));
-    }
-    else if (Core::Events()->isKeyPressed(KeyEvent::Key::Q)) {
-      camera->translate(glm::vec3(-2.f, 0, 0));
-    }
-    else if (Core::Events()->isKeyPressed(KeyEvent::Key::D)) {
-      camera->translate(glm::vec3(2.f, 0, 0));
-    }
+  void setPosition(float x, float y) {
+    if (x == _position.x && y == _position.y) return;
 
-    camera->update();
-    text->setContent(format("FPS: %2.2f", 1.f/delta));
+    _position = {x, y};
+    _dirty = true;
   }
 
-  virtual void render() override {
-    Framebuffer::clear(Color::Black);
+  void setRotation(float r) {
+    if (r == _r) return;
 
-    batch->begin();
+    _r = r;
+    _dirty = true;
+  }
 
-    sprite->setTint(Color::White);
-    sprite->transform.position.z = -0.5f;
+  void setScale(float sx, float sy) {
+    if (sx == _scale.x && sy == _scale.y) return;
 
-    float boxCount = 50.f;
-    float aspectRatio = (float)Core::App()->getWidth() / Core::App()->getHeight();
-    float boxSize = (float)Core::App()->getWidth() / boxCount;
-    sprite->transform.size = std::abs(std::cos(glm::radians(angle / 2))) * glm::vec3(boxSize);
+    _scale = {sx, sy};
+    _dirty = true;
+  }
 
-    for (int j = 0; j < boxCount / aspectRatio; ++j) {
-      sprite->transform.position.y = (j * boxSize) + boxSize / 2;
+  void setSize(float w, float h) {
+    if (w == _size.x && h == _size.y) return;
 
-      for (int i = 0; i < boxCount; ++i) {
-        sprite->transform.position.x = (i * boxSize) + boxSize / 2;
-        sprite->transform.rotation.z = glm::radians(angle * 4);
-        batch->draw(sprite);
-      }
-    }
+    _size = {w, h};
+    _dirty = true;
+  }
 
-    sprite->setTint(Color::Green);
-    sprite->transform.size = glm::vec3(64);
-    sprite->transform.rotation.z = glm::radians(angle * 2);
+  void resize(float w, float h) {
+    if (w == 0 && h == 0) return;
+    setSize(_size.x + w, _size.y + h);
+  }
 
-    sprite->transform.position.x = 100.f;
-    sprite->transform.position.y = 100.f;
-    sprite->transform.position.z = 0.f;
-    batch->draw(sprite);
+  void move(float x, float y) {
+    if (x == 0 && y == 0) return;
+    setPosition(_position.x + x, _position.y + y);
+  }
 
-    sprite->transform.position.x = 125.f;
-    sprite->transform.position.y = 125.f;
-    sprite->transform.position.z = 0.1f;
-    batch->draw(sprite);
+  void scale(float sx, float sy) {
+    if (sx == 0 && sy == 0) return;
+    setScale(_scale.x + sx, _scale.y + sy);
+  }
 
-    sprite->transform.position.x = 150.f;
-    sprite->transform.position.y = 150.f;
-    sprite->transform.position.z = 0.f;
-    batch->draw(sprite);
+  void rotate(float r) {
+    if (r == 0) return;
+    setRotation(r);
+  }
 
-    batch->draw(text);
+  glm::vec2 getPosition() const {
+    return _position;
+  }
 
-    batch->end();
+  glm::vec2 getSize() const {
+    return _size;
+  }
 
-    angle += 0.5f;
-    if (angle > 360.f) {
-      angle -= 360.f;
-    }
+  glm::vec2 getScale() const {
+    return _scale;
+  }
+
+  float getRotation() const {
+    return _r;
   }
 
 private:
-  OrthographicCamera::Ref camera;
-  Text::Ref text;
+  bool _dirty;
 
-  SimpleBatch::Ref batch;
-  Sprite::Ref sprite;
+  glm::mat4 _lastCompute;
+
+  glm::vec2 _position;
+  glm::vec2 _size;
+  glm::vec2 _scale;
+  float _r;
+};
+
+class Mesh2D: public Transform2D {
+public:
+  Mesh2D() {
+    _geoDrawer = Make<MeshDrawer>();
+  }
+
+  void draw(const Pointer<Shader>& shader) {
+    if (!_geometry || !_geoDrawer) {
+      return;
+    }
+
+    if (_geometry->getAttribute("Texture").size() == 0) {
+      Texture::use(Texture::Blank);
+      _geoDrawer->drawWithShader(_geometry, shader);
+      Texture::disable();
+    }
+
+    else {
+      _geoDrawer->drawWithShader(_geometry, shader);
+    }
+  }
+
+  void setGeometry(const Pointer<Geometry>& geometry) {
+    _geometry = geometry;
+  }
+
+private:
+  Pointer<Geometry> _geometry;
+  Pointer<GeometryDrawer> _geoDrawer;
+};
+
+class Test3: public BaseTestScreen {
+public:
+  Test3();
+  virtual void update(float delta) override;
+  virtual void render() override;
+
+private:
+  Pointer<Shader> shader;
+  OrthographicCamera::Ref camera;
+  std::vector<Pointer<Mesh2D>> meshes;
 
   float angle;
 };
