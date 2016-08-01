@@ -134,9 +134,17 @@ public:
     _geometry = geometry;
   }
 
+  const Pointer<Geometry>& getGeometry() {
+    return _geometry;
+  }
+
 private:
   Pointer<Geometry> _geometry;
   Pointer<GeometryDrawer> _geoDrawer;
+};
+
+class SpriteBatch: public Batch {
+
 };
 
 class Test3: public BaseTestScreen {

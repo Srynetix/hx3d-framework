@@ -46,7 +46,7 @@ void TestGame::create() {
   auto transition = Make<FadeTransition>(this, Color::Black);
   transition->setDuration(1.f);
 
-  // this->activateStats(true);
+  this->activateStats(true);
   this->setTransition(transition);
   this->startScreen("2d_3d");
 }

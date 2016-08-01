@@ -6,7 +6,7 @@ Test18::Test18():
   glm::vec2 worldSize = Core::CurrentGame()->getSize();
 
   constexpr int tileSize = 8;
-  constexpr int qty = 100;
+  constexpr int qty = 300;
   tilesToClear = algo::range(0, (int)(std::ceil(worldSize.x / (float)tileSize) * std::ceil(worldSize.y / (float)tileSize)));
 
   camera3d->translate(glm::vec3(0.f, 0.f, -1000.f));
