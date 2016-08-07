@@ -43,8 +43,6 @@ void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Sha
       glEnable(GL_CULL_FACE);
       glCullFace(GL_BACK);
       break;
-    default:
-      break;
   }
 
   VertexArray::use(geom->getVertexArray());

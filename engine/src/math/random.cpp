@@ -72,10 +72,6 @@ float randfloat() {
   return (float)rand() / (RAND_MAX + 1.f);
 }
 
-int random(int min, int max) {
-  return rand() % (max-min + 1) + min;
-}
-
 bool flip_coin() {
   return random(0, 1) == 0;
 }

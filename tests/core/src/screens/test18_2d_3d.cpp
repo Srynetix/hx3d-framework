@@ -25,8 +25,8 @@ Test18::Test18():
   image.buildTexture();
 
   sprite->setTexture(Core::Assets()->get<Texture>("logo"));
-  sprite->transform.scale.x = 0.3f;
-  sprite->transform.scale.y = 0.3f;
+  sprite->transform.scale.x = 0.5f;
+  sprite->transform.scale.y = 0.5f;
   sprite->transform.position.x = Core::CurrentGame()->getSize().x / 2;
   sprite->transform.position.y = Core::CurrentGame()->getSize().y / 2;
   sprite->transform.position.z = 0.1f;
@@ -46,14 +46,12 @@ Test18::Test18():
       if (tilesToClear.empty())
         return;
 
-      int i = math::random(0, tilesToClear.size() - 1);
+      auto i = math::random(0UL, tilesToClear.size() - 1);
       int elem = tilesToClear[i];
       tilesToClear.erase(tilesToClear.begin() + i);
 
-      int x = elem % (int)(std::floor(worldSize.x / (float)tileSize));
-      int y = (elem / (int)(std::floor(worldSize.x / (float)tileSize)));
-
-      // Log.Info("Y: %d", y);
+      unsigned int x = elem % (unsigned int)(std::floor(worldSize.x / (float)tileSize));
+      unsigned int y = (elem / (unsigned int)(std::floor(worldSize.x / (float)tileSize)));
 
       image.setRect(x * tileSize, y * tileSize, tileSize, tileSize, Color(0, 255, 255, 0));
       image.updateTextureZone(x * tileSize, y * tileSize, tileSize, tileSize);
