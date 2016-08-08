@@ -104,7 +104,7 @@ const Pointer<graphics::Viewport>& Game::getViewport() {
   return _currentViewport;
 }
 
-glm::vec2 Game::getSize() {
+glm::uvec2 Game::getSize() {
   if (_currentViewport)
     return _currentViewport->getWorldSize();
   else

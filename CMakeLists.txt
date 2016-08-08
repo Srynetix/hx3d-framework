@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(hx3d)
 
-option(TESTS "TESTS" OFF)
+option(TESTS "TESTS" ON)
 option(GAME "GAME" OFF)
 
 add_subdirectory(engine)

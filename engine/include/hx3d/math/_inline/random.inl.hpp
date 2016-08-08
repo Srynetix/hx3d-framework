@@ -22,6 +22,16 @@ namespace hx3d {
 namespace math {
 
 template <class T>
+T random(T min, T max) {
+  return rand() % (max - min + 1) + min;
+}
+
+template <>
+inline float random(float min, float max) {
+  return rand() % (int)(max - min + 1) + (int)min;
+}
+
+template <class T>
 T random(std::vector<T>& vector) {
   int p = random(0, vector.size() - 1);
   return vector.at(p);

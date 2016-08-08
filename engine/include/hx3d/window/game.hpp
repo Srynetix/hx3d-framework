@@ -143,7 +143,7 @@ public:
 
   @return Game size
   */
-  glm::vec2 getSize();
+  glm::uvec2 getSize();
 
   /**
   @brief Test if the game is running.

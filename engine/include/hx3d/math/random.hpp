@@ -92,7 +92,9 @@ float randfloat();
 
 @return Random integer between min and max.
 */
-int random(int min, int max);
+
+template <class T>
+T random(T min, T max);
 
 /**
 @brief Return a random element.

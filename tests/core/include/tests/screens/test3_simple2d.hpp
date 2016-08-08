@@ -5,6 +5,8 @@
 #include "hx3d/hx3d.hpp"
 #include "hx3d/graphics/drawers/mesh_drawer.hpp"
 
+#include <glm/gtc/type_ptr.hpp>
+
 using namespace hx3d;
 using namespace hx3d::graphics;
 
@@ -97,6 +99,10 @@ public:
     return _r;
   }
 
+  bool isDirty() const {
+    return _dirty;
+  }
+
 private:
   bool _dirty;
 
@@ -106,6 +112,107 @@ private:
   glm::vec2 _size;
   glm::vec2 _scale;
   float _r;
+};
+
+class FastSpriteGeometry: public SpriteGeometry {
+public:
+  FastSpriteGeometry(): SpriteGeometry()
+  {
+    this->addAttribute("Model", Attribute("a_model", GL_FLOAT, 16));
+    this->uploadAll();
+  }
+
+  void updateModel(const Pointer<Transform2D>& transf) {
+    if (transf->isDirty() || this->getAttribute("Model").size() == 0) {
+
+      VertexArray::use(this->getVertexArray());
+
+      // Update model
+      auto mat = transf->compute();
+
+      this->setAttribute("Model", std::vector<float> {
+        mat[0][0], mat[1][0], mat[2][0], mat[3][0],
+        mat[0][1], mat[1][1], mat[2][1], mat[3][1],
+        mat[0][2], mat[1][2], mat[2][2], mat[3][2],
+        mat[0][3], mat[1][3], mat[2][3], mat[3][3],
+      });
+
+      this->getAttribute("Model").upload();
+
+      VertexArray::disable();
+    }
+  }
+};
+
+class FastSpriteDrawer: public MeshDrawer {
+public:
+  FastSpriteDrawer(): MeshDrawer() {}
+
+  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader) override {
+    switch (geom->getFaceCulling()) {
+      case Culling::Disabled:
+        glDisable(GL_CULL_FACE);
+        break;
+      case Culling::Front:
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
+        break;
+      case Culling::Back:
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        break;
+    }
+
+    VertexArray::use(geom->getVertexArray());
+
+    // Begin
+
+    for (auto& attr_pair: geom->getAttributes()) {
+      if (attr_pair.first != "Model") {
+        attr_pair.second.begin(shader);
+      }
+    }
+
+    // Model
+    auto& model = geom->getAttribute("Model");
+    auto model_attr = model.getAttribute();
+    const GLint loc = shader->getAttribute(model_attr.getName());
+
+    glEnableVertexAttribArray(loc);
+    glEnableVertexAttribArray(loc+1);
+    glEnableVertexAttribArray(loc+2);
+    glEnableVertexAttribArray(loc+3);
+
+    glBindBuffer(GL_ARRAY_BUFFER, model.getId());
+
+    glVertexAttribPointer(loc, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(0));
+    glVertexAttribPointer(loc+1, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 4));
+    glVertexAttribPointer(loc+2, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 8));
+    glVertexAttribPointer(loc+3, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 12));
+
+    auto& indices = geom->getIndices();
+    if (indices.size() > 0) {
+      indices.begin(shader);
+      indices.end(shader);
+    }
+
+//    glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0, 1);
+
+    // End
+
+    for (auto& attr_pair: geom->getAttributes()) {
+      if (attr_pair.first != "Model") {
+        attr_pair.second.end(shader);
+      }
+    }
+
+    glDisableVertexAttribArray(loc);
+    glDisableVertexAttribArray(loc+1);
+    glDisableVertexAttribArray(loc+2);
+    glDisableVertexAttribArray(loc+3);
+
+    VertexArray::disable();
+  }
 };
 
 class Mesh2D: public Transform2D {
@@ -128,6 +235,10 @@ public:
     else {
       _geoDrawer->drawWithShader(_geometry, shader);
     }
+  }
+
+  void setGeometryDrawer(const Pointer<GeometryDrawer>& drawer) {
+    _geoDrawer = drawer;
   }
 
   void setGeometry(const Pointer<Geometry>& geometry) {

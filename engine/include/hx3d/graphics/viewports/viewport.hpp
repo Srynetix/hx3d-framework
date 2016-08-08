@@ -81,7 +81,7 @@ public:
   /**
   @brief Get the world size.
   */
-  glm::vec2 getWorldSize();
+  glm::uvec2 getWorldSize();
 
 protected:
   /// @brief World width

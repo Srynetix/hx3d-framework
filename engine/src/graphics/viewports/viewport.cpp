@@ -67,8 +67,8 @@ glm::vec2 Viewport::screenToWorld(const glm::vec2 screenPoint) {
   return worldPoint;
 }
 
-glm::vec2 Viewport::getWorldSize() {
-  return glm::vec2(_worldWidth, _worldHeight);
+glm::uvec2 Viewport::getWorldSize() {
+  return glm::uvec2(_worldWidth, _worldHeight);
 }
 
 } /* graphics */
