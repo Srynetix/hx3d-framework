@@ -22,6 +22,7 @@
 
 #include "hx3d/core/core.hpp"
 #include "hx3d/graphics/shape.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/window/application.hpp"
 #include "hx3d/utils/log.hpp"
@@ -33,20 +34,24 @@ Widget::Widget(Pointer<Widget> parent) {
   _parent = parent;
   _visible = true;
   _hasFocus = false;
+
   _shape = Make<graphics::Shape>();
   _shape->setTint(graphics::Color(127, 127, 127));
+  _shape->getGeometry()->uploadAll();
 }
 
 Widget::~Widget() {
+//  std::enable_shared_from_this<Widget>::~enable_shared_from_this();
+
   onFocusExit();
   onHide();
 }
 
 void Widget::update(float delta) {
-  _shape->transform.position.x = _transform.position.x;
-  _shape->transform.position.y = _transform.position.y;
-  _shape->transform.size.x = _transform.size.x;
-  _shape->transform.size.y = _transform.size.y;
+  _shape->setPosition(this->get3DPosition());
+  _shape->setSize(this->get3DSize());
+  _shape->setScale(this->get3DScale());
+  _shape->setRotation(this->get3DRotation());
 }
 
 void Widget::draw(const Pointer<graphics::Batch>& batch) {
@@ -125,10 +130,10 @@ void Widget::on(std::string action, std::function<void()> func) {
 }
 
 bool Widget::checkBounds(glm::vec2 position) {
-  float lx = _transform.position.x - ((_transform.size.x / 2) * _transform.scale.x);
-  float hx = _transform.position.x + ((_transform.size.x / 2) * _transform.scale.x);
-  float ly = _transform.position.y - ((_transform.size.y / 2) * _transform.scale.y);
-  float hy = _transform.position.y + ((_transform.size.y / 2) * _transform.scale.y);
+  float lx = getPosition().x - ((getSize().x / 2) * getScale().x);
+  float hx = getPosition().x + ((getSize().x / 2) * getScale().x);
+  float ly = getPosition().y - ((getSize().y / 2) * getScale().y);
+  float hy = getPosition().y + ((getSize().y / 2) * getScale().y);
 
   auto x_pos = position.x;
   auto y_pos = Core::App()->getHeight() - position.y;

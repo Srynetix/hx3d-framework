@@ -121,6 +121,14 @@ Color Color::rgbToHsv(Color rgb)
     return hsv;
 }
 
+bool Color::operator==(const Color& color) {
+  return r == color.r && g == color.g && b == color.b && a == color.a;
+}
+
+bool Color::operator!=(const Color& color) {
+  return !(*this == color);
+}
+
 Color Color::White = Color(255, 255, 255);
 Color Color::Black = Color(0, 0, 0);
 Color Color::Red = Color(255, 0, 0);

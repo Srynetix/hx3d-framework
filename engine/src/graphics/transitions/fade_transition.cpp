@@ -21,6 +21,7 @@
 #include "hx3d/graphics/transitions/fade_transition.hpp"
 
 #include "hx3d/graphics/sprite.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/graphics/framebuffer.hpp"
 #include "hx3d/graphics/batches/batch.hpp"
 
@@ -40,17 +41,17 @@ void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuff
   _nextSprite->setTexture(nextFB);
 
   auto world_size = Core::CurrentGame()->getSize();
-  _currentSprite->transform.position.x = world_size.x / 2;
-  _currentSprite->transform.position.y = world_size.y / 2;
-  _currentSprite->transform.rotation.z = glm::radians(180.f);
+  _currentSprite->setPosition(world_size.x / 2, world_size.y / 2);
+  _currentSprite->setRotation(glm::radians(180.f));
 
-  _nextSprite->transform.position.x = world_size.x / 2;
-  _nextSprite->transform.position.y = world_size.y / 2;
-  _nextSprite->transform.rotation.z = glm::radians(180.f);
+  _nextSprite->setPosition(world_size.x / 2, world_size.y / 2);
+  _nextSprite->setRotation(glm::radians(180.f));
 
-  int alpha = (_currentTime / (_duration/2.f)) * 255;
+  int alpha = (int)((_currentTime / (_duration/2.f)) * 255.f);
+
   if (_currentTime > _duration / 2) {
     _nextSprite->setTint(Color(255, 255, 255, alpha));
+
     Framebuffer::clear(_color);
     batch->begin();
     batch->draw(_nextSprite);
@@ -59,6 +60,7 @@ void FadeTransition::render(const Pointer<Batch>& batch, const Pointer<Framebuff
 
   else {
     _currentSprite->setTint(Color(255, 255, 255, 255 - alpha));
+
     Framebuffer::clear(_color);
     batch->begin();
     batch->draw(_currentSprite);

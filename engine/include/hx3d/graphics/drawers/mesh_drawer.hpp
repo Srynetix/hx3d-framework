@@ -29,7 +29,7 @@ class MeshDrawer: public GeometryDrawer {
 public:
   MeshDrawer();
 
-  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader) override;
+  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader, const GLenum drawPrimitive) override;
 };
 
 } /* graphics */

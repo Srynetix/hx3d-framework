@@ -26,7 +26,7 @@ Screens list.
 // #include "tests/screens/test19_chipmunk.hpp"
 #include "tests/screens/test20_skeleton.hpp"
 #include "tests/screens/test21_console.hpp"
-// #include "tests/screens/test22_gui.hpp"
+#include "tests/screens/test22_gui.hpp"
 
 #define LOAD_SCREEN(name, klass) {name, [](){Core::CurrentGame()->setScreen(Make<klass>());}}
 
@@ -36,6 +36,7 @@ MenuScreen::MenuScreen():
 {
   sprite->setTexture(Core::Assets()->get<Texture>("box"));
   sprite->setTint(Color(0, 0, 64));
+  sprite->getGeometry()->getAttributeBuffer("Color").upload(GL_STATIC_DRAW);
 
   logoSprite->setTexture(Core::Assets()->get<Texture>("logo"));
 
@@ -45,18 +46,18 @@ MenuScreen::MenuScreen():
   buttonWidth = worldSize.x / 10;
   buttonHeight = worldSize.y / 10;
 
-  sprite->transform.size = glm::vec3(buttonWidth, buttonHeight, 0);
+  sprite->setSize(glm::vec3(buttonWidth, buttonHeight, 0));
 
   instructions->setContent("touch test to launch. then ESC or Back to go back. ESC or Back here to quit.");
-  instructions->transform.position = glm::vec3(worldSize.x / 2.f, 40, 0);
+  instructions->setPosition(glm::vec3(worldSize.x / 2.f, 40, 0));
 
   instructions->setFunction(math::Function(0, 0.5f, [](float& x, float& y, float t) {
     y = std::sin(t) * 2.f;
     x = std::cos(t / 2.f);
   }));
 
-  logoSprite->transform.scale = glm::vec3(0.25, 0.25, 0);
-  logoSprite->transform.position = glm::vec3(worldSize.x - 150, worldSize.y - 150, 0);
+  logoSprite->setScale(glm::vec3(0.25, 0.25, 0));
+  logoSprite->setPosition(glm::vec3(worldSize.x - 150, worldSize.y - 150, 0));
 
   screens = std::vector<ScreenInfo> {
     LOAD_SCREEN("Simple 3D", Test1),
@@ -80,7 +81,7 @@ MenuScreen::MenuScreen():
     // LOAD_SCREEN("Chipmunk", Test19),
     LOAD_SCREEN("Skeleton", Test20),
     LOAD_SCREEN("Console", Test21),
-    // LOAD_SCREEN("GUI", Test22)
+     LOAD_SCREEN("GUI", Test22)
   };
 
   buttonCount = worldSize.y / buttonHeight;
@@ -146,6 +147,7 @@ void MenuScreen::render() {
 
   batch->setShader(defaultShader);
   batch->begin();
+
   for (unsigned int i = 0; i < screens.size(); ++i) {
 
     int column = i / buttonCount;
@@ -154,9 +156,9 @@ void MenuScreen::render() {
     int posX = (buttonWidth / 2) + column * buttonWidth;
     int posY = worldSize.y - index * buttonHeight - (buttonHeight / 2);
 
-    sprite->transform.position = glm::vec3(posX, posY, 0);
-    text->transform.position = glm::vec3(sprite->transform.position.x, sprite->transform.position.y, 0.5f);
+    sprite->setPosition(glm::vec3(posX, posY, 0));
 
+    text->setPosition(glm::vec3(sprite->getPosition().x, sprite->getPosition().y, 0.5f));
     text->setContent(screens[i].name);
 
     batch->draw(sprite);
@@ -169,9 +171,9 @@ void MenuScreen::render() {
 
   /** PIX */
   Shader::use(pixShader);
-  pixShader->setUniform1f("time", Core::App()->getElapsedTime());
+  pixShader->setUniform1f("time", Core::App()->getElapsedTime() / 4.f);
   pixShader->setUniform2f("resolution", glm::vec2(250, 250));
-  pixShader->setUniform2f("pixel_size", glm::vec2(5, 5));
+  pixShader->setUniform2f("pixel_size", glm::vec2(25, 25));
   Shader::disable();
 
   batch->setShader(pixShader);

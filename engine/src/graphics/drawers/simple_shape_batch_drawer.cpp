@@ -24,6 +24,7 @@
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/shader.hpp"
 #include "hx3d/graphics/shape.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 #include "hx3d/utils/assets.hpp"
 
 #include "hx3d/core/core.hpp"
@@ -38,6 +39,14 @@ void SimpleShapeBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
   // Should be shape
   Shape* shape = (Shape*)mesh;
 
+  if (!shape->getGeometry()->hasBeenInitiallyUploaded()) {
+    shape->getGeometry()->uploadAll();
+  }
+
+  if (shape->hasColorChanged()) {
+    shape->getGeometry()->getAttributeBuffer("Color").upload();
+  }
+
   auto& prev_shader = batch->getShader();
   auto new_shader = Core::Assets()->get<Shader>("base_border");
 
@@ -45,11 +54,12 @@ void SimpleShapeBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
   batch->setShader(new_shader);
   batch->begin();
 
-  auto model = mesh->transform.compute();
+  auto model = mesh->compute();
   new_shader->setUniformMatrix4f("u_model", model);
   new_shader->setUniform1f("u_borderWidth", shape->getBorderWidth());
-  new_shader->setUniform2f("u_quadSize", {shape->transform.size.x, shape->transform.size.y});
+  new_shader->setUniform2f("u_quadSize", shape->getSize());
   new_shader->setUniform4f("u_borderColor", shape->getBorderColor().toFloat());
+  mesh->getGeometry()->bind(new_shader);
   mesh->draw(new_shader);
 
   batch->end();

@@ -48,6 +48,8 @@ public:
   */
   Attribute(const std::string name, const GLenum type, const GLuint size);
 
+  ~Attribute();
+
   /**
   @brief Get the attribute name
 

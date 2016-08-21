@@ -24,7 +24,7 @@ namespace hx3d {
 namespace physics2d {
 
 World::World(const glm::vec2 globalGravity, const unsigned int iterations, const float physRatio):
-  _iterations(iterations), _physRatio(physRatio)
+  _iterations(iterations), _physRatio(physRatio), _wireframeMode(false)
   {
     _attractors.emplace_back(Make<GlobalAttractor>(globalGravity));
   }
@@ -134,6 +134,9 @@ void World::step(float dt) {
 
 void World::render(const Pointer<graphics::Batch>& batch) {
 
+  if (_wireframeMode)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
   for (unsigned int i = 0; i < _attractors.size(); ++i) {
     const Pointer<Attractor>& attractor = _attractors[i];
 
@@ -141,11 +144,12 @@ void World::render(const Pointer<graphics::Batch>& batch) {
       const Pointer<ZoneAttractor>& zone = std::dynamic_pointer_cast<ZoneAttractor>(attractor);
       Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
-      sprite->transform.position.x = zone->position.x * _physRatio;
-      sprite->transform.position.y = zone->position.y * _physRatio;
-      sprite->transform.position.z = -0.25f;
-      sprite->transform.size.x = zone->width * _physRatio;
-      sprite->transform.size.y = zone->height * _physRatio;
+      sprite->setPosition(
+        zone->position.x * _physRatio,
+        zone->position.y * _physRatio,
+        -0.25f);
+      sprite->setSize(zone->width * _physRatio,
+                      zone->height * _physRatio);
 
       sprite->setTint(Color(240, 20, 201));
       batch->draw(sprite);
@@ -155,11 +159,11 @@ void World::render(const Pointer<graphics::Batch>& batch) {
       const Pointer<PointAttractor>& point = std::dynamic_pointer_cast<PointAttractor>(attractor);
       Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
-      sprite->transform.position.x = point->position.x * _physRatio;
-      sprite->transform.position.y = point->position.y * _physRatio;
-      sprite->transform.position.z = -0.25f;
-      sprite->transform.size.x = point->radius * 2 * _physRatio;
-      sprite->transform.size.y = point->radius * 2 * _physRatio;
+      sprite->setPosition(point->position.x * _physRatio,
+                          point->position.y * _physRatio,
+                          -0.25f);
+      sprite->setSize(point->radius * 2 * _physRatio,
+                      point->radius * 2 * _physRatio);
 
       sprite->setTint(Color(20, 240, 201));
       batch->draw(sprite);
@@ -171,26 +175,27 @@ void World::render(const Pointer<graphics::Batch>& batch) {
 
     Pointer<Sprite> sprite = Make<Sprite>();
     sprite->setTexture(Texture::Blank);
-    sprite->transform.position.x = c->position.x * _physRatio;
-    sprite->transform.position.y = c->position.y * _physRatio;
+
+    sprite->setPosition(c->position.x * _physRatio,
+                        c->position.y * _physRatio);
 
     if (c->shape == Collider::Shape::Polygon) {
       const Pointer<Polygon>& b = std::dynamic_pointer_cast<Polygon>(c);
       if (b->box) {
         float w = b->vertices[1].x * 2;
         float h = b->vertices[2].y * 2;
-        sprite->transform.size.x = w * _physRatio;
-        sprite->transform.size.y = h * _physRatio;
+        sprite->setSize(w * _physRatio,
+                        h * _physRatio);
       }
     }
 
     else if (c->shape == Collider::Shape::Circle) {
       const Pointer<Circle>& b = std::dynamic_pointer_cast<Circle>(c);
-      sprite->transform.size.x = (b->radius / 2) * _physRatio;
-      sprite->transform.size.y = (b->radius / 2) * _physRatio;
+      sprite->setSize((b->radius / 2) * _physRatio,
+                      (b->radius / 2) * _physRatio);
     }
 
-    sprite->transform.rotation.z = c->orientation;
+    sprite->setRotation(c->orientation);
 
     if (c->type == Collider::Type::Static)
       sprite->setTint(Color::Blue);
@@ -209,15 +214,17 @@ void World::render(const Pointer<graphics::Batch>& batch) {
       Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->setTint(Color::Green);
-      sprite->transform.position.x = contact.x * _physRatio;
-      sprite->transform.position.y = contact.y * _physRatio;
-      sprite->transform.position.z = 0.5f;
-      sprite->transform.size.x = 5;
-      sprite->transform.size.y = 5;
+      sprite->setPosition(contact.x * _physRatio,
+                          contact.y * _physRatio,
+                          0.5f);
+      sprite->setSize(5, 5);
 
       batch->draw(sprite);
     }
   }
+
+  if (_wireframeMode)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   for (unsigned int i = 0; i < _contacts.size(); ++i) {
     const Manifold& m = _contacts[i];
@@ -228,12 +235,11 @@ void World::render(const Pointer<graphics::Batch>& batch) {
       Pointer<Sprite> sprite = Make<Sprite>();
       sprite->setTexture(Texture::Blank);
       sprite->setTint(Color(255, 0, 255));
-      sprite->transform.size.x = 3;
-      sprite->transform.size.y = 20;
-      sprite->transform.position.x = contact.x * _physRatio;
-      sprite->transform.position.y = contact.y * _physRatio;
-      sprite->transform.position.z = 0.75f;
-      sprite->transform.rotation.z = math::angleBetweenVecs(glm::vec2(0, 1), m.normal);
+      sprite->setSize(3, 20);
+      sprite->setPosition(contact.x * _physRatio,
+                          contact.y * _physRatio,
+                          0.75f);
+      sprite->setRotation(math::angleBetweenVecs(glm::vec2(0, 1), m.normal));
 
       batch->draw(sprite);
     }
@@ -331,6 +337,10 @@ void World::checkOldContacts() {
       listener->endCollision(manif);
     });
   });
+}
+
+void World::setWireframeMode(bool value) {
+  _wireframeMode = value;
 }
 
 } /* physics2d */

@@ -18,6 +18,8 @@
     USA
 */
 
+#include "hx3d/utils/log.hpp"
+
 namespace hx3d {
 namespace graphics {
 namespace buffers {
@@ -29,7 +31,9 @@ Buffer<T>::Buffer() {
 
 template <class T>
 Buffer<T>::~Buffer() {
-  glDeleteBuffers(1, &_buf);
+  if (glIsBuffer(_buf)) {
+    glDeleteBuffers(1, &_buf);
+  }
 }
 
 template <class T>
@@ -43,6 +47,16 @@ void Buffer<T>::set(const std::vector<T>& values) {
   _vector.resize(values.size());
 
   std::copy(values.begin(), values.end(), _vector.begin());
+}
+
+template <class T>
+void Buffer<T>::set(unsigned int pos, T value) {
+  _vector[pos] = value;
+}
+
+template <class T>
+void Buffer<T>::add(T value) {
+  _vector.push_back(value);
 }
 
 template <class T>

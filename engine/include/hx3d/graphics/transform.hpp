@@ -32,57 +32,120 @@ namespace graphics {
 @brief 2D/3D transform.
 */
 class Transform {
-
 public:
   Transform();
   Transform& operator=(const Transform& transform);
 
-  /**
-  @brief Build the model matrix using the position, scale, size and rotation.
-
-  @return Matrix (mat4)
-  */
   glm::mat4 compute();
-
-  /**
-  @brief Add a transform to another.
-
-  In use for parent/child transform calculation.
-
-  @param transform Other transform
-  @return Current transform
-  */
   Transform add(const Transform& transform);
+  bool contains(const glm::vec2& point);
 
-  /**
-  @brief Get the real size (size * scale).
+  ///////////
 
-  @return Real size
-  */
-  glm::vec3 realSize();
+  void setAnchor(float x, float y);
+  void setAnchor(float x, float y, float z);
+  void setAnchorX(float x);
+  void setAnchorY(float y);
+  void setAnchorZ(float z);
 
-  /**
-  @brief Check a point in the transform
+  void setAnchorCenter();
+  void setAnchorBottomLeft();
+  void setAnchorBottomCenter();
 
-  @param point 2D point
+  void setX(float x);
+  void setY(float y);
+  void setZ(float z);
 
-  @return True/False
-  */
-  bool contains(glm::vec2 point);
+  void setRotationX(float x);
+  void setRotationY(float y);
 
-  /**
-  @brief Show the transform information. (Debug)
-  */
-  void show();
+  void setScaleX(float x);
+  void setScaleY(float y);
+  void setScaleZ(float z);
 
-  /// @brief Position
-  glm::vec3 position;
-  /// @brief Scale
-  glm::vec3 scale;
-  /// @brief Size
-  glm::vec3 size;
-  /// @brief Rotation
-  glm::vec3 rotation;
+  void setWidth(float w);
+  void setHeight(float h);
+  void setDepth(float d);
+
+  void setPosition(float x, float y);
+  void setPosition(float x, float y, float z);
+  void setPosition(const glm::vec2& v);
+  void setPosition(const glm::vec3& v);
+
+  void setRotation(float r);
+  void setRotation(float x, float y, float z);
+  void setRotation(const glm::vec3& v);
+
+  void setScale(float s);
+  void setScale(float sx, float sy);
+  void setScale(float sx, float sy, float sz);
+  void setScale(const glm::vec3& v);
+
+  void setSize(float w, float h);
+  void setSize(float w, float h, float d);
+  void setSize(const glm::vec2& v);
+  void setSize(const glm::vec3& v);
+
+  /////////////
+
+  void resize(float w, float h);
+  void resize(float w, float h, float d);
+
+  void move(float x, float y);
+  void move(float x, float y, float z);
+
+  void scale(float sx, float sy);
+  void scale(float sx, float sy, float sz);
+
+  void rotate(float r);
+  void rotate(float x, float y, float z);
+
+  /////////
+
+  float getX() const;
+  float getY() const;
+  float getZ() const;
+
+  float getRotationX() const;
+  float getRotationY() const;
+
+  float getScaleX() const;
+  float getScaleY() const;
+  float getScaleZ() const;
+
+  float getWidth() const;
+  float getHeight() const;
+  float getDepth() const;
+
+  float getTotalWidth() const;
+  float getTotalHeight() const;
+  float getTotalDepth() const;
+
+  glm::vec2 getPosition() const;
+  glm::vec2 getSize() const;
+  glm::vec2 getScale() const;
+  glm::vec2 getTotalSize() const;
+  float getRotation() const;
+  float& getRotation();
+
+  glm::vec3 get3DPosition() const;
+  glm::vec3 get3DSize() const;
+  glm::vec3 get3DScale() const;
+  glm::vec3 getTotal3DSize() const;
+  glm::vec3 get3DRotation() const;
+
+  bool isDirty() const;
+
+private:
+  bool _dirty;
+
+  glm::mat4 _lastCompute;
+
+  glm::vec3 _position;
+  glm::vec3 _size;
+  glm::vec3 _scale;
+  glm::vec3 _r;
+  glm::vec3 _anchor;
 };
 
 } /* graphics */

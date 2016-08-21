@@ -26,8 +26,7 @@ Test21::Test21()
   auto textbox = Make<ConsoleTextBox>();
   auto buffer = Make<ConsoleBuffer>();
 
-  text->transform.position.x = Core::App()->getWidth() / 2;
-  text->transform.position.y = Core::App()->getHeight() / 2;
+  text->setPosition(Core::App()->getWidth() / 2, Core::App()->getHeight() / 2);
   text->setContent("Press ²");
 
   gui = Make<System>(Placement::Relative(console, {0.5, 0.5}, {1, 0.5}).apply());

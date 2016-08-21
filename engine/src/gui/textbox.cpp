@@ -74,11 +74,8 @@ void TextBox::update(float delta) {
     }
   }
 
-  _text->transform.position.x -= _transform.size.x / 2;
-}
-
-const std::string& TextBox::getText() {
-  return _content;
+  if (!_text->isCenterAligned())
+    _text->move(-getSize().x / 2, 0);
 }
 
 void TextBox::setText(const std::string& text) {
@@ -89,6 +86,9 @@ void TextBox::setText(const std::string& text) {
 
 void TextBox::keyPressed(window::KeyEvent::Key key) {
   if (key == window::KeyEvent::Key::Return) {
+    _shownCursor = false;
+    _updateText();
+
     send("validate");
   }
 

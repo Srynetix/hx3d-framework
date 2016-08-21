@@ -33,6 +33,8 @@ Attribute::Attribute(const std::string name, const GLenum type, const GLuint siz
   _size(size)
 {}
 
+Attribute::~Attribute() {}
+
 std::string Attribute::getName() const {
   return _name;
 }

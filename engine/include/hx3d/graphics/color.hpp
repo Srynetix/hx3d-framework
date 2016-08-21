@@ -71,6 +71,9 @@ public:
   */
   glm::vec4 toFloat();
 
+  bool operator==(const Color& color);
+  bool operator!=(const Color& color);
+
   /////////////////
 
   /**

@@ -42,7 +42,7 @@ class Buffer {
 
 public:
   Buffer();
-  virtual ~Buffer();
+  ~Buffer();
 
   /**
   @brief Set the buffer values.
@@ -50,6 +50,20 @@ public:
   @param values Values
   */
   void set(const std::vector<T>& values);
+
+  /**
+  @brief Set one value
+  @param pos    Position
+  @param value  Value
+  */
+  void set(unsigned int pos, T value);
+
+  /**
+  @brief Add one value
+
+  @param value Value
+  */
+  void add(T value);
 
   /**
   @brief Add buffer values.

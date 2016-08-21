@@ -23,6 +23,7 @@
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/mesh.hpp"
 #include "hx3d/graphics/shader.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
 namespace graphics {
@@ -30,10 +31,19 @@ namespace graphics {
 SimpleMeshBatchDrawer::SimpleMeshBatchDrawer(): BatchDrawer() {}
 
 void SimpleMeshBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
-  auto model = mesh->transform.compute();
+  if (!mesh->getGeometry()->hasBeenInitiallyUploaded()) {
+    mesh->getGeometry()->uploadAll();
+  }
+
+  if (mesh->hasColorChanged()) {
+    mesh->getGeometry()->getAttributeBuffer("Color").upload();
+  }
+
+  auto model = mesh->compute();
   auto& shader = batch->getShader();
   shader->setUniformMatrix4f("u_model", model);
 
+  mesh->getGeometry()->bind(shader);
   mesh->draw(shader);
 }
 

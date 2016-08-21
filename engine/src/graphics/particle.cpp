@@ -71,9 +71,9 @@ void Particle::update(const float delta) {
 }
 
 void Particle::draw(const Pointer<Batch>& batch) {
-  sprite->transform.position = position;
-  sprite->transform.size = size;
-  sprite->transform.rotation.z = rotation;
+  sprite->setPosition(position.x, position.y, position.z);
+  sprite->setSize(size.x, size.y, size.z);
+  sprite->setRotation(rotation);
 
   batch->draw(sprite);
 }

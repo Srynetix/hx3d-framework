@@ -37,7 +37,7 @@ namespace graphics {
 */
 namespace gui {
 
-class Widget: public std::enable_shared_from_this<Widget>, public window::InputHandler {
+class Widget: public std::enable_shared_from_this<Widget>, public window::InputHandler, public graphics::Transform {
   HX3D_PTR_REF(Widget)
 
 public:
@@ -69,7 +69,6 @@ protected:
   void registerAction(std::string action);
   void send(std::string action);
 
-  graphics::Transform _transform;
   Pointer<graphics::Shape> _shape;
   Pointer<Widget> _parent;
   bool _visible;
@@ -77,6 +76,7 @@ protected:
   std::map<std::string, std::function<void()>> _actions;
 
   bool checkBounds(glm::vec2 position);
+
   ///////////////////
   // Input handler
 

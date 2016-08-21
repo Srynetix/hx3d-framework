@@ -40,18 +40,16 @@
 #include "hx3d/graphics/transform.hpp"
 
 #include "hx3d/graphics/batches/simple_batch.hpp"
+#include "hx3d/graphics/batches/simple_batch_2d.hpp"
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/batches/fast_batch.hpp"
 #include "hx3d/graphics/batches/particle_batch.hpp"
 #include "hx3d/graphics/batches/ordered_batch.hpp"
 
-#include "hx3d/graphics/buffers/array_buffer.hpp"
-#include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
-#include "hx3d/graphics/buffers/attribute_stream_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute_buffer.hpp"
+#include "hx3d/graphics/buffers/index_buffer.hpp"
 #include "hx3d/graphics/buffers/attribute.hpp"
 #include "hx3d/graphics/buffers/buffer.hpp"
-#include "hx3d/graphics/buffers/index_array_buffer.hpp"
-#include "hx3d/graphics/buffers/multi_array_buffer.hpp"
 
 #include "hx3d/graphics/cameras/camera.hpp"
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"

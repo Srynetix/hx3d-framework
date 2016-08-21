@@ -36,8 +36,7 @@ public:
   virtual void onFocusEnter() override;
   virtual void onFocusExit() override;
 
-  const std::string& getText();
-  void setText(const std::string& text);
+  virtual void setText(const std::string& text) override;
 
   virtual void update(float delta) override;
 

@@ -23,6 +23,7 @@
 #include "hx3d/graphics/batches/batch.hpp"
 #include "hx3d/graphics/texture.hpp"
 #include "hx3d/graphics/shader.hpp"
+#include "hx3d/graphics/geometries/geometry.hpp"
 
 #include "hx3d/graphics/text.hpp"
 #include "hx3d/graphics/font.hpp"
@@ -36,6 +37,13 @@ void SimpleTextBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
 
   // Should be a text
   auto text = (Text*)mesh;
+  if (!text->getGeometry()->hasBeenInitiallyUploaded()) {
+    text->getGeometry()->uploadAll();
+  }
+
+  if (text->hasColorChanged()) {
+    text->getGeometry()->getAttributeBuffer("Color").upload();
+  }
 
   Texture::use(text->getFont(), text->getCharacterSize());
   Pointer<Shader> currentShader = batch->getShader();
@@ -44,20 +52,20 @@ void SimpleTextBatchDrawer::drawWithBatch(Batch* batch, Mesh* mesh) {
   batch->setShader(textShader);
   batch->begin();
 
-  float oldX = text->transform.position.x;
-  float oldY = text->transform.position.y;
+  float oldX = text->getPosition().x;
+  float oldY = text->getPosition().y;
 
-  text->transform.position.y -= text->getCharacterSize() / 4;
+  text->move(0, -text->getCharacterSize() / 4);
 
   if (text->isCenterAligned()) {
-    text->transform.position.x -= text->getLength() / 2;
+    text->move(-text->getLength() / 2, 0);
   }
 
-  auto model = text->transform.compute();
-  text->transform.position.x = oldX;
-  text->transform.position.y = oldY;
+  auto model = text->compute();
+  text->setPosition(oldX, oldY);
 
   textShader->setUniformMatrix4f("u_model", model);
+  text->getGeometry()->bind(textShader);
   text->draw(textShader);
 
   batch->setShader(currentShader);

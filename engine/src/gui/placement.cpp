@@ -37,10 +37,8 @@ Pointer<Widget> Placement::apply() {
     _func(*this);
   }
 
-  _widget->_transform.position.x = _position.x;
-  _widget->_transform.position.y = _position.y;
-  _widget->_transform.size.x = _size.x;
-  _widget->_transform.size.y = _size.y;
+  _widget->setPosition(_position.x, _position.y);
+  _widget->setSize(_size.x, _size.y);
 
   return _widget;
 }
@@ -48,8 +46,8 @@ Pointer<Widget> Placement::apply() {
 Placement Placement::None(const Pointer<Widget>& widget) {
   Placement pla(widget);
   pla._func = [widget](Placement& pl){
-    pl._size = {widget->_transform.size.x, widget->_transform.size.y};
-    pl._position = {widget->_transform.position.x, widget->_transform.position.y};
+    pl._size = widget->getSize();
+    pl._position = widget->getPosition();
   };
 
   return pla;
@@ -59,8 +57,8 @@ Placement Placement::Fill(const Pointer<Widget>& widget) {
   Placement pla(widget);
   pla._func = [widget](Placement& pl){
     if (widget->_parent) {
-      pl._size = {widget->_parent->_transform.size.x, widget->_parent->_transform.size.y};
-      pl._position = {widget->_parent->_transform.position.x, widget->_parent->_transform.position.y};
+      pl._size = widget->_parent->getSize();
+      pl._position = widget->_parent->getPosition();
     }
 
     else {
@@ -76,11 +74,21 @@ Placement Placement::Relative(const Pointer<Widget>& widget, glm::vec2 relativeP
   Placement pla(widget);
   pla._func = [widget,relativePos,relativeSize](Placement& pl) {
     if (widget->_parent) {
-      auto trans = widget->_parent->_transform;
-      glm::vec2 base_pos = {trans.position.x - trans.size.x / 2, trans.position.y - trans.size.y / 2};
+      auto trans = widget->_parent;
+      glm::vec2 base_pos = {
+        trans->getPosition().x - trans->getSize().x / 2,
+        trans->getPosition().y - trans->getSize().y / 2
+      };
 
-      pl._position = {base_pos.x + trans.size.x * relativePos.x, base_pos.y + trans.size.y * relativePos.y};
-      pl._size = {trans.size.x * relativeSize.x, trans.size.y * relativeSize.y};
+      pl._position = {
+        base_pos.x + trans->getSize().x * relativePos.x,
+        base_pos.y + trans->getSize().y * relativePos.y
+      };
+
+      pl._size = {
+        trans->getSize().x * relativeSize.x,
+        trans->getSize().y * relativeSize.y
+      };
     }
 
     else {

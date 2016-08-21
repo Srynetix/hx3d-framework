@@ -36,10 +36,8 @@ PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::C
 
   if (_texture) {
     _sprite->setTexture(_texture);
-    _sprite->transform.size.x = w;
-    _sprite->transform.size.y = h;
-    _sprite->transform.position.x = x;
-    _sprite->transform.position.y = y;
+    _sprite->setSize(w, h);
+    _sprite->setPosition(x, y);
   }
 
   auto& matrix = _world->getCollisionMatrix();
@@ -59,9 +57,9 @@ PhysicsNode::PhysicsNode(std::string name, physics2d::World* world, physics2d::C
 
 void PhysicsNode::update(float delta) {
   if (_texture) {
-    _sprite->transform.position.x = _collider->position.x * _world->getPhysRatio();
-    _sprite->transform.position.y = _collider->position.y * _world->getPhysRatio();
-    _sprite->transform.rotation.z = _collider->orientation;
+    _sprite->setPosition(_collider->position.x * _world->getPhysRatio(),
+                         _collider->position.y * _world->getPhysRatio());
+    _sprite->setRotation(_collider->orientation);
   }
 }
 

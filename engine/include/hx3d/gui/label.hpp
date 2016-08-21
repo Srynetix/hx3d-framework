@@ -40,7 +40,7 @@ public:
   virtual void update(float delta) override;
   virtual void draw(const Pointer<graphics::Batch>& batch) override;
 
-  void setText(const std::string& text);
+  virtual void setText(const std::string& text);
   const std::string& getText();
 
 protected:

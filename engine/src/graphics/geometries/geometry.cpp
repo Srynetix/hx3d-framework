@@ -18,6 +18,7 @@
     USA
 */
 
+#include <hx3d/graphics/color.hpp>
 #include "hx3d/graphics/geometries/geometry.hpp"
 
 namespace hx3d {
@@ -33,27 +34,27 @@ Geometry::Geometry(): _cullingType(Culling::Disabled) {
 Geometry::~Geometry() {}
 
 void Geometry::addAttribute(std::string name, Attribute attribute) {
-  _attributes[name].create(attribute);
+  _attributeBuffers[name].create(attribute);
 }
 
 void Geometry::setAttribute(std::string name, std::vector<float> values) {
-  _attributes[name].set(values);
+  _attributeBuffers[name].set(values);
 }
 
-AttributeArrayBuffer& Geometry::getAttribute(std::string name) {
-  return _attributes[name];
+AttributeBuffer<float>& Geometry::getAttributeBuffer(std::string name) {
+  return _attributeBuffers[name];
 }
 
-std::map<std::string, AttributeArrayBuffer>& Geometry::getAttributes() {
-  return _attributes;
+std::map<std::string, AttributeBuffer<float>>& Geometry::getAttributeBuffers() {
+  return _attributeBuffers;
 }
 
-void Geometry::setIndices(std::vector<GLushort> values) {
-  _indices.set(values);
+void Geometry::setIndices(std::vector<unsigned short> values) {
+  _indexBuffer.set(values);
 }
 
-IndexArrayBuffer& Geometry::getIndices() {
-  return _indices;
+IndexBuffer<unsigned short>& Geometry::getIndices() {
+  return _indexBuffer;
 }
 
 void Geometry::setFaceCulling(Culling culling) {
@@ -64,16 +65,26 @@ Culling& Geometry::getFaceCulling() {
   return _cullingType;
 }
 
-void Geometry::uploadAll() {
+void Geometry::bind(const Pointer<Shader>& shader) {
   VertexArray::use(_array);
 
-  for (auto& a: _attributes) {
+  for (auto& a: _attributeBuffers) {
+    a.second.bind(shader);
+  }
+
+  _indexBuffer.bind();
+
+  VertexArray::disable();
+}
+
+void Geometry::uploadAll() {
+  for (auto& a: _attributeBuffers) {
     a.second.upload();
   }
 
-  _indices.upload();
+  _indexBuffer.upload();
 
-  VertexArray::disable();
+  _initiallyUploaded = true;
 }
 
 } /* graphics */

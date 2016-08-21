@@ -38,13 +38,15 @@ class Color;
 /**
 @brief Displayable 2D/3D element.
 */
-class Mesh {
+class Mesh: public Transform {
   HX3D_PTR_REF(Mesh)
 
 public:
   Mesh();
   Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>& batchDrawer);
   virtual ~Mesh();
+
+  bool hasColorChanged();
 
   /**
   @brief Draw the mesh using a shader.
@@ -76,11 +78,6 @@ public:
   @return Tint
   */
   Color& getTint();
-
-  /**
-  @brief Update the mesh color from the tint.
-  */
-  void updateColor();
 
   /**
   @brief Set the mesh geometry.
@@ -124,10 +121,11 @@ public:
   */
   Pointer<BatchDrawer>& getBatchDrawer();
 
-  /// @brief Mesh transformation
-  Transform transform;
-
 protected:
+  void _applyColor(Color color);
+
+  bool _colorChanged;
+
   /// @brief Tint color
   Color _tint;
   /// @brief Current geometry

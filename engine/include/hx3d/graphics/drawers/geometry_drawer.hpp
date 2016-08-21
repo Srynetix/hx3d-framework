@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include "hx3d/graphics/gl.hpp"
 #include "hx3d/utils/ptr.hpp"
 
 namespace hx3d {
@@ -34,7 +35,7 @@ public:
   GeometryDrawer();
   virtual ~GeometryDrawer();
 
-  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader) = 0;
+  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader, const GLenum drawPrimitive = GL_TRIANGLES) = 0;
 };
 
 } /* graphics */

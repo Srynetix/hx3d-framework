@@ -49,5 +49,5 @@ void TestGame::create() {
 
   this->activateStats(true);
   this->setTransition(transition);
-  this->startScreen("2d");
+  this->startScreen("menu");
 }

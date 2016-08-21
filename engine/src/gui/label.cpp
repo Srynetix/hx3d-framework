@@ -35,13 +35,12 @@ Label::Label(const Widget::Ptr& parent): Widget(parent) {
 void Label::update(float delta) {
   Widget::update(delta);
 
-  glm::vec2 new_pos = {_transform.position.x, _transform.position.y};
+  glm::vec2 new_pos = getPosition();
   if (!_text->isCenterAligned()) {
     new_pos += _offset;
   }
 
-  _text->transform.position.x = new_pos.x;
-  _text->transform.position.y = new_pos.y;
+  _text->setPosition(new_pos.x, new_pos.y);
 }
 
 void Label::draw(const Pointer<graphics::Batch>& batch) {

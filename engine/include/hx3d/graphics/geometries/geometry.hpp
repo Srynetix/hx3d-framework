@@ -20,8 +20,8 @@
 
 #pragma once
 
-#include "hx3d/graphics/buffers/attribute_array_buffer.hpp"
-#include "hx3d/graphics/buffers/index_array_buffer.hpp"
+#include "hx3d/graphics/buffers/attribute_buffer.hpp"
+#include "hx3d/graphics/buffers/index_buffer.hpp"
 #include "hx3d/graphics/buffers/vertex_array.hpp"
 
 #include <map>
@@ -49,7 +49,7 @@ enum class Culling {
 class Geometry {
 public:
   Geometry();
-  virtual ~Geometry();
+  ~Geometry();
 
   /**
   @brief Add an attribute
@@ -74,28 +74,28 @@ public:
 
   @return Attribute array buffer
   */
-  AttributeArrayBuffer& getAttribute(std::string name);
+  AttributeBuffer<float>& getAttributeBuffer(std::string name);
 
   /**
   @brief Get all attributes
 
   @return Attribute array buffers
   */
-  std::map<std::string, AttributeArrayBuffer>& getAttributes();
+  std::map<std::string, AttributeBuffer<float>>& getAttributeBuffers();
 
   /**
   @brief Set the indices
 
   @param values Values
   */
-  void setIndices(std::vector<GLushort> values);
+  void setIndices(std::vector<unsigned short> values);
 
   /**
   @brief Get the index array buffer
 
   @return Index array buffer
   */
-  IndexArrayBuffer& getIndices();
+  IndexBuffer<unsigned short>& getIndices();
 
   /**
   @brief Set the culling type
@@ -116,19 +116,27 @@ public:
   */
   void uploadAll();
 
+  bool hasBeenInitiallyUploaded() {
+    return _initiallyUploaded;
+  }
+
+  virtual void bind(const Pointer<Shader>& shader);
+
   VertexArray& getVertexArray() {
     return _array;
   }
 
 protected:
   /// @brief Attributes map
-  std::map<std::string, AttributeArrayBuffer> _attributes;
+  std::map<std::string, AttributeBuffer<float>> _attributeBuffers;
   /// @brief Index array buffer
-  IndexArrayBuffer _indices;
+  IndexBuffer<unsigned short> _indexBuffer;
   /// @brief Current culling
   Culling _cullingType;
   /// @brief Vertex array
   VertexArray _array;
+  /// @brief Initial upload
+  bool _initiallyUploaded;
 };
 
 } /* graphics */

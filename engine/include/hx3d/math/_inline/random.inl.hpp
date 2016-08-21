@@ -28,7 +28,10 @@ T random(T min, T max) {
 
 template <>
 inline float random(float min, float max) {
-  return rand() % (int)(max - min + 1) + (int)min;
+  float random = ((float) rand()) / (float) RAND_MAX;
+  float diff = max - min;
+  float r = random * diff;
+  return min + r;
 }
 
 template <class T>

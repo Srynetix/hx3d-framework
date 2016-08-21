@@ -20,5 +20,8 @@ TODO
 ## Tests
 - Fix all tests
 
-## Android
+## Androidch
 - Compat Android
+
+## Tweens
+- Rethink tween functioning (callback functions for types (like Transform))

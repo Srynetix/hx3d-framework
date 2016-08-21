@@ -41,13 +41,11 @@ void AlphaFadeTransition::render(const Pointer<Batch>& batch, const Pointer<Fram
   _nextSprite->setTexture(nextFB);
 
   auto world_size = Core::CurrentGame()->getSize();
-  _currentSprite->transform.position.x = world_size.x / 2;
-  _currentSprite->transform.position.y = world_size.y / 2;
-  _currentSprite->transform.rotation.z = glm::radians(180.f);
+  _currentSprite->setPosition(world_size.x / 2, world_size.y / 2);
+  _currentSprite->setRotation(glm::radians(180.f));
 
-  _nextSprite->transform.position.x = world_size.x / 2;
-  _nextSprite->transform.position.y = world_size.y / 2;
-  _nextSprite->transform.rotation.z = glm::radians(180.f);
+  _nextSprite->setPosition(world_size.x / 2, world_size.y / 2);
+  _nextSprite->setRotation(glm::radians(180.f));
 
   // int alpha = (_currentTime / _duration) * 255;
   _nextSprite->setTint(Color(255, 255, 255, 255));

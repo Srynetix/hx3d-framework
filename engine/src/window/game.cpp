@@ -53,14 +53,14 @@ _running(true), _screen(nullptr), _showStats(false)
   _currentFB = Make<graphics::Framebuffer>();
   _nextFB = Make<graphics::Framebuffer>();
 
-  _deltaText->transform.position.x = Core::App()->getWidth() / 2;
-  _deltaText->transform.position.y = 100;
-  _deltaText->transform.position.z = 0.95f;
+  _deltaText->setPosition(Core::App()->getWidth() / 2,
+                          100,
+                          0.95f);
   _deltaText->setCharacterSize(20);
 
-  _fpsText->transform.position.x = Core::App()->getWidth() / 2;
-  _fpsText->transform.position.y = _deltaText->transform.position.y + _deltaText->getCharacterSize();
-  _fpsText->transform.position.z = 0.95f;
+  _fpsText->setPosition(Core::App()->getWidth() / 2,
+                        _deltaText->getPosition().y + _deltaText->getCharacterSize(),
+                        0.95f);
   _fpsText->setCharacterSize(20);
 
   _batch->setCamera(_camera);
@@ -112,14 +112,14 @@ glm::uvec2 Game::getSize() {
 }
 
 void Game::updateStats() {
-  _deltaText->transform.position.x = this->getSize().x / 2;
-  _deltaText->transform.position.y = 100;
-  _deltaText->transform.position.z = 0.95f;
+  _deltaText->setPosition(this->getSize().x / 2,
+                          100,
+                          0.95f);
   _deltaText->setCharacterSize(20);
 
-  _fpsText->transform.position.x = this->getSize().x / 2;
-  _fpsText->transform.position.y = _deltaText->transform.position.y + _deltaText->getCharacterSize();
-  _fpsText->transform.position.z = 0.95f;
+  _fpsText->setPosition(this->getSize().x / 2,
+                        _deltaText->getPosition().y + _deltaText->getCharacterSize(),
+                        0.95f);
   _fpsText->setCharacterSize(20);
 }
 

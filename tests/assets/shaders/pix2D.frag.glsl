@@ -20,7 +20,13 @@ vec4 pixelate(vec2 size) {
 
 void main() {
     float time_value = max(0.1, abs(sin(time)));
+    vec4 outcolor = v_color;
 
-    vec4 pixelated = pixelate(pixel_size * time_value);
-    gl_FragColor = pixelated * v_color;
+    if (time_value > 0.1) {
+       outcolor *= pixelate(pixel_size * time_value);
+    } else {
+       outcolor *= texture2D(u_texture, v_texture);
+    }
+
+    gl_FragColor = outcolor;
 }

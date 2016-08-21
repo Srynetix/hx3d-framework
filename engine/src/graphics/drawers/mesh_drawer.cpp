@@ -28,7 +28,7 @@ namespace graphics {
 
 MeshDrawer::MeshDrawer(): GeometryDrawer() {}
 
-void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader) {
+void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader, const GLenum drawPrimitive) {
 
   // Culling
   switch (geom->getFaceCulling()) {
@@ -46,22 +46,12 @@ void MeshDrawer::drawWithShader(const Pointer<Geometry>& geom, const Pointer<Sha
   }
 
   VertexArray::use(geom->getVertexArray());
-
-  for (auto& attr_pair: geom->getAttributes()) {
-    attr_pair.second.begin(shader);
-  }
-
   auto& indices = geom->getIndices();
 
   if (indices.size() == 0) {
-    glDrawArrays(GL_TRIANGLES, 0, geom->getAttribute("Position").size());
+    glDrawArrays(drawPrimitive, 0, geom->getAttributeBuffer("Position").size());
   } else {
-    indices.begin(shader);
-    indices.end(shader);
-  }
-
-  for (auto& attr_pair: geom->getAttributes()) {
-    attr_pair.second.end(shader);
+    indices.draw(drawPrimitive);
   }
 
   VertexArray::disable();

@@ -33,8 +33,8 @@ Joint::Joint(const Pointer<Bone>& a, const Pointer<Bone>& b, glm::vec2 anchorA, 
 void Joint::update() {
   auto posA = a->c_position + a->displacement;
   auto mvec = a->size * (anchorA - a->c_offset);
-  auto si = sin(glm::radians(a->c_rotation));
-  auto co = cos(glm::radians(a->c_rotation));
+  auto si = std::sin(glm::radians(a->c_rotation));
+  auto co = std::cos(glm::radians(a->c_rotation));
   auto nvec = glm::vec2(mvec.x * co - mvec.y * si, mvec.x * si + mvec.y * co);
 
   b->c_position = posA + nvec + b->displacement;

@@ -23,6 +23,7 @@
 #include <functional>
 #include <vector>
 #include <map>
+#include <cstdlib>
 
 namespace hx3d {
 namespace math {

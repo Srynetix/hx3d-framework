@@ -32,6 +32,9 @@ namespace graphics {
 Mesh::Mesh() {
   _geoDrawer = Make<MeshDrawer>();
   _batchDrawer = Make<SimpleMeshBatchDrawer>();
+  _colorChanged = true;
+
+  setTint(Color::White);
 }
 
 Mesh::Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>& batchDrawer) {
@@ -41,12 +44,21 @@ Mesh::Mesh(const Pointer<GeometryDrawer>& geoDrawer, const Pointer<BatchDrawer>&
 
 Mesh::~Mesh() {}
 
+bool Mesh::hasColorChanged() {
+  if (_colorChanged) {
+    _colorChanged = false;
+    return true;
+  }
+
+  return false;
+}
+
 void Mesh::draw(const Pointer<Shader>& shader) {
   if (!_geometry || !_geoDrawer) {
     return;
   }
 
-  if (_geometry->getAttribute("Texture").size() == 0) {
+  if (_geometry->getAttributeBuffer("Texture").size() == 0) {
     Texture::use(Texture::Blank);
     _geoDrawer->drawWithShader(_geometry, shader);
     Texture::disable();
@@ -66,9 +78,12 @@ void Mesh::drawWithBatch(Batch* batch) {
 }
 
 void Mesh::setTint(Color tint) {
-  _tint = tint;
 
-  updateColor();
+  if (_tint == tint) {
+    return;
+  }
+
+  _applyColor(tint);
 }
 
 void Mesh::setGeometry(const Pointer<Geometry>& geometry) {
@@ -95,26 +110,27 @@ Pointer<BatchDrawer>& Mesh::getBatchDrawer() {
   return _batchDrawer;
 }
 
-void Mesh::updateColor() {
+void Mesh::_applyColor(Color color) {
 
-  glm::vec4 floatColor = _tint.toFloat();
+  _tint = color;
+  glm::vec4 floatColor = color.toFloat();
 
-  AttributeArrayBuffer& colors = _geometry->getAttribute("Color");
+  auto& colors = _geometry->getAttributeBuffer("Color");
   float* colorsData = colors.data();
-    if (colorsData[0] == floatColor.r
-      && colorsData[1] == floatColor.g
-      && colorsData[2] == floatColor.b
-      && colorsData[3] == floatColor.a)
-      return;
+  if (colorsData[0] == floatColor.r
+    && colorsData[1] == floatColor.g
+    && colorsData[2] == floatColor.b
+    && colorsData[3] == floatColor.a)
+    return;
 
-    for (unsigned int i = 0; i < colors.size(); i += 4) {
-      colorsData[i] = floatColor.r;
-      colorsData[i+1] = floatColor.g;
-      colorsData[i+2] = floatColor.b;
-      colorsData[i+3] = floatColor.a;
-    }
+  for (unsigned int i = 0; i < colors.size(); i += 4) {
+    colorsData[i] = floatColor.r;
+    colorsData[i+1] = floatColor.g;
+    colorsData[i+2] = floatColor.b;
+    colorsData[i+3] = floatColor.a;
+  }
 
-  _geometry->uploadAll();
+  _colorChanged = true;
 }
 
 Color& Mesh::getTint() {

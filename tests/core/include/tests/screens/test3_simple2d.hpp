@@ -10,252 +10,173 @@
 using namespace hx3d;
 using namespace hx3d::graphics;
 
-class Transform2D {
+class SpriteBatch {
 public:
-  Transform2D():
-    _dirty(true),
-    _lastCompute(1.f),
-    _position(0.f),
-    _size(1.f),
-    _scale(1.f),
-    _r(0.f)
-    {}
-
-  glm::mat4 compute() {
-    if (_dirty) {
-      _lastCompute = glm::mat4(1.f);
-      _lastCompute = glm::translate(_lastCompute, glm::vec3(_position.x, _position.y, 0));
-      _lastCompute = glm::rotate(_lastCompute, _r, glm::vec3(0, 0, 1));
-      _lastCompute = glm::scale(_lastCompute, glm::vec3(_size.x, _size.y, 0));
-      _lastCompute = glm::scale(_lastCompute, glm::vec3(_scale.x, _scale.y, 0));
-
-      _dirty = false;
-    }
-
-    return _lastCompute;
-  }
-
-  void setPosition(float x, float y) {
-    if (x == _position.x && y == _position.y) return;
-
-    _position = {x, y};
-    _dirty = true;
-  }
-
-  void setRotation(float r) {
-    if (r == _r) return;
-
-    _r = r;
-    _dirty = true;
-  }
-
-  void setScale(float sx, float sy) {
-    if (sx == _scale.x && sy == _scale.y) return;
-
-    _scale = {sx, sy};
-    _dirty = true;
-  }
-
-  void setSize(float w, float h) {
-    if (w == _size.x && h == _size.y) return;
-
-    _size = {w, h};
-    _dirty = true;
-  }
-
-  void resize(float w, float h) {
-    if (w == 0 && h == 0) return;
-    setSize(_size.x + w, _size.y + h);
-  }
-
-  void move(float x, float y) {
-    if (x == 0 && y == 0) return;
-    setPosition(_position.x + x, _position.y + y);
-  }
-
-  void scale(float sx, float sy) {
-    if (sx == 0 && sy == 0) return;
-    setScale(_scale.x + sx, _scale.y + sy);
-  }
-
-  void rotate(float r) {
-    if (r == 0) return;
-    setRotation(r);
-  }
-
-  glm::vec2 getPosition() const {
-    return _position;
-  }
-
-  glm::vec2 getSize() const {
-    return _size;
-  }
-
-  glm::vec2 getScale() const {
-    return _scale;
-  }
-
-  float getRotation() const {
-    return _r;
-  }
-
-  bool isDirty() const {
-    return _dirty;
-  }
-
-private:
-  bool _dirty;
-
-  glm::mat4 _lastCompute;
-
-  glm::vec2 _position;
-  glm::vec2 _size;
-  glm::vec2 _scale;
-  float _r;
-};
-
-class FastSpriteGeometry: public SpriteGeometry {
-public:
-  FastSpriteGeometry(): SpriteGeometry()
-  {
-    this->addAttribute("Model", Attribute("a_model", GL_FLOAT, 16));
-    this->uploadAll();
-  }
-
-  void updateModel(const Pointer<Transform2D>& transf) {
-    if (transf->isDirty() || this->getAttribute("Model").size() == 0) {
-
-      VertexArray::use(this->getVertexArray());
-
-      // Update model
-      auto mat = transf->compute();
-
-      this->setAttribute("Model", std::vector<float> {
-        mat[0][0], mat[1][0], mat[2][0], mat[3][0],
-        mat[0][1], mat[1][1], mat[2][1], mat[3][1],
-        mat[0][2], mat[1][2], mat[2][2], mat[3][2],
-        mat[0][3], mat[1][3], mat[2][3], mat[3][3],
+  SpriteBatch(unsigned int max_sprites):
+    _positions(Attribute("a_position", GL_FLOAT, 3)),
+    _colors(Attribute("a_color", GL_FLOAT, 4)),
+    _textures(Attribute("a_texture", GL_FLOAT, 2)),
+    _matrices(Attribute("a_model", GL_FLOAT, 16)),
+    _lastId(0),
+    _maxSprites(max_sprites)
+    {
+      // Prepare base geometry
+      _positions.set(std::vector<float> {
+        -0.5f, 0.5f, 0.f,
+        0.5, 0.5f, 0.f,
+        0.5f, -0.5f, 0.f,
+        -0.5f, -0.5f, 0.f
       });
 
-      this->getAttribute("Model").upload();
+      _indices.set(std::vector<unsigned short> {
+        0, 2, 1,
+        0, 3, 2
+      });
 
-      VertexArray::disable();
+      _positions.upload(GL_STATIC_DRAW);
+      _indices.upload(GL_STATIC_DRAW);
+
+      glBindBuffer(GL_ARRAY_BUFFER, _colors.getId());
+      glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * max_sprites, _colors.data(), GL_STREAM_DRAW);
+
+      glBindBuffer(GL_ARRAY_BUFFER, _textures.getId());
+      glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4 * max_sprites, _textures.data(), GL_STREAM_DRAW);
+
+      glBindBuffer(GL_ARRAY_BUFFER, _matrices.getId());
+      glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 16 * max_sprites, _matrices.data(), GL_STREAM_DRAW);
+    }
+
+  void setShader(const Pointer<Shader>& shader) {
+    _shader = shader;
+  }
+
+  void setTexture(const Pointer<Texture>& texture) {
+    _texture = texture;
+  }
+
+  void render() {
+    Shader::use(_shader);
+    Texture::use(_texture);
+
+    // Bind
+    _bind();
+
+    // Draw
+    _draw();
+
+    Texture::disable();
+  }
+
+  void erase(const Pointer<Mesh>& mesh) {
+    auto search = _lut.find(mesh);
+    if (search != _lut.end()) {
+      unsigned int id = search->second;
+
+      auto m0 = glm::mat4(0);
+      glBindBuffer(GL_ARRAY_BUFFER, _matrices.getId());
+      glBufferSubData(GL_ARRAY_BUFFER, sizeof(float) * 16 * id, sizeof(float) * 16, &m0);
+
+      _lut.erase(mesh);
     }
   }
-};
 
-class FastSpriteDrawer: public MeshDrawer {
-public:
-  FastSpriteDrawer(): MeshDrawer() {}
+  void draw(const Pointer<Mesh>& mesh) {
+    auto search = _lut.find(mesh);
+    if (search != _lut.end()) {
+      auto& geo = mesh->getGeometry();
+      unsigned int id = search->second;
 
-  virtual void drawWithShader(const Pointer<Geometry>& geom, const Pointer<Shader>& shader) override {
-    switch (geom->getFaceCulling()) {
-      case Culling::Disabled:
-        glDisable(GL_CULL_FACE);
-        break;
-      case Culling::Front:
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
-        break;
-      case Culling::Back:
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-        break;
-    }
+      if (mesh->isDirty()) {
+        auto mat = mesh->compute();
 
-    VertexArray::use(geom->getVertexArray());
-
-    // Begin
-
-    for (auto& attr_pair: geom->getAttributes()) {
-      if (attr_pair.first != "Model") {
-        attr_pair.second.begin(shader);
+        glBindBuffer(GL_ARRAY_BUFFER, _matrices.getId());
+        glBufferSubData(GL_ARRAY_BUFFER, id * sizeof(float) * 16, sizeof(float) * 16, &mat);
       }
-    }
 
-    // Model
-    auto& model = geom->getAttribute("Model");
-    auto model_attr = model.getAttribute();
-    const GLint loc = shader->getAttribute(model_attr.getName());
+      if (mesh->hasColorChanged()) {
+        auto& mCols = geo->getAttributeBuffer("Color");
 
-    glEnableVertexAttribArray(loc);
-    glEnableVertexAttribArray(loc+1);
-    glEnableVertexAttribArray(loc+2);
-    glEnableVertexAttribArray(loc+3);
-
-    glBindBuffer(GL_ARRAY_BUFFER, model.getId());
-
-    glVertexAttribPointer(loc, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(0));
-    glVertexAttribPointer(loc+1, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 4));
-    glVertexAttribPointer(loc+2, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 8));
-    glVertexAttribPointer(loc+3, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 4 * 4, (void*)(sizeof(float) * 12));
-
-    auto& indices = geom->getIndices();
-    if (indices.size() > 0) {
-      indices.begin(shader);
-      indices.end(shader);
-    }
-
-//    glDrawElementsInstanced(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0, 1);
-
-    // End
-
-    for (auto& attr_pair: geom->getAttributes()) {
-      if (attr_pair.first != "Model") {
-        attr_pair.second.end(shader);
+        glBindBuffer(GL_ARRAY_BUFFER, _colors.getId());
+        glBufferSubData(GL_ARRAY_BUFFER, id * sizeof(float) * 4, sizeof(float) * 4, mCols.data());
       }
-    }
-
-    glDisableVertexAttribArray(loc);
-    glDisableVertexAttribArray(loc+1);
-    glDisableVertexAttribArray(loc+2);
-    glDisableVertexAttribArray(loc+3);
-
-    VertexArray::disable();
-  }
-};
-
-class Mesh2D: public Transform2D {
-public:
-  Mesh2D() {
-    _geoDrawer = Make<MeshDrawer>();
-  }
-
-  void draw(const Pointer<Shader>& shader) {
-    if (!_geometry || !_geoDrawer) {
-      return;
-    }
-
-    if (_geometry->getAttribute("Texture").size() == 0) {
-      Texture::use(Texture::Blank);
-      _geoDrawer->drawWithShader(_geometry, shader);
-      Texture::disable();
     }
 
     else {
-      _geoDrawer->drawWithShader(_geometry, shader);
+      unsigned int id = 0;
+      if (_freeIds.size() > 0) {
+        id = _freeIds.front();
+        _freeIds.pop();
+      } else {
+        id = _lastId++;
+      }
+
+      _lut[mesh] = id;
+
+      // Store values
+
+      // Colors
+      auto& mCols = mesh->getGeometry()->getAttributeBuffer("Color");
+      for (int i = 0; i < 4; ++i) {
+        _colors.add(mCols.getValue(i));
+      }
+
+      glBindBuffer(GL_ARRAY_BUFFER, _colors.getId());
+      glBufferSubData(GL_ARRAY_BUFFER, sizeof(float) * 4 * id, sizeof(float) * 4, mCols.data());
+
+      // Textures
+      auto& mTexs = mesh->getGeometry()->getAttributeBuffer("Texture");
+      _textures.add(mTexs.getVector());
+
+      glBindBuffer(GL_ARRAY_BUFFER, _textures.getId());
+      glBufferSubData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4 * id, sizeof(float) * 2 * 4, mTexs.data());
+
+      // Matrices
+      auto mat = mesh->compute();
+      _matrices.add(mat);
+
+      glBindBuffer(GL_ARRAY_BUFFER, _matrices.getId());
+      glBufferSubData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * id, sizeof(glm::mat4), &mat);
     }
   }
 
-  void setGeometryDrawer(const Pointer<GeometryDrawer>& drawer) {
-    _geoDrawer = drawer;
+  void _draw() {
+    VertexArray::use(_array);
+    glDrawElementsInstanced(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_SHORT, BUFFER_OFFSET(0), _lastId);
+    VertexArray::disable();
   }
 
-  void setGeometry(const Pointer<Geometry>& geometry) {
-    _geometry = geometry;
+  void _bind() {
+    VertexArray::use(_array);
+
+    _positions.bind(_shader);
+    _textures.bind(_shader);
+    _indices.bind();
+
+    _colors.bind(_shader);
+    _matrices.bind(_shader);
+
+    glVertexAttribDivisor(_shader->getAttribute("a_color"), 1);
+
+    VertexArray::disable();
   }
 
-  const Pointer<Geometry>& getGeometry() {
-    return _geometry;
-  }
+  Pointer<Shader> _shader;
 
-private:
-  Pointer<Geometry> _geometry;
-  Pointer<GeometryDrawer> _geoDrawer;
-};
+  std::map<Pointer<Mesh>, unsigned int> _lut;
+  std::queue<unsigned int> _freeIds;
+  std::vector<unsigned int> _dirtied;
+  Pointer<Texture> _texture;
 
-class SpriteBatch: public Batch {
+  VertexArray _array;
+  AttributeBuffer<float> _positions;
+  AttributeBuffer<float> _colors;
+  AttributeBuffer<float> _textures;
+  AttributeBuffer<glm::mat4> _matrices;
 
+  IndexBuffer<unsigned short> _indices;
+
+  unsigned int _lastId;
+  unsigned int _maxSprites;
 };
 
 class Test3: public BaseTestScreen {
@@ -267,7 +188,9 @@ public:
 private:
   Pointer<Shader> shader;
   OrthographicCamera::Ref camera;
-  std::vector<Pointer<Mesh2D>> meshes;
+  Pointer<SpriteBatch> spBatch;
+
+  std::vector<Pointer<Mesh>> meshes;
 
   float angle;
 };

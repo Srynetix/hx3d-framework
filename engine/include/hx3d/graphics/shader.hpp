@@ -118,7 +118,7 @@ public:
 
   @return Attribute ID
   */
-  GLint getAttribute(std::string name);
+  GLuint getAttribute(std::string name);
   /**
   @brief Get the wanted uniform id.
 

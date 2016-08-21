@@ -35,8 +35,7 @@ Bone::Bone(float w, float h, float rot, float depth):
 
   sprite = Make<Sprite>();
   sprite->setTexture(Core::Assets()->get<Texture>("box"));
-  sprite->transform.size.x = size.x;
-  sprite->transform.size.y = size.y;
+  sprite->setSize(size.x, size.y);
   parent = nullptr;
 
   displacement = glm::vec2(0, 0);
@@ -52,9 +51,8 @@ void Bone::draw(const Pointer<Batch>& batch) {
   auto di = glm::vec2(off.x * co - off.y * si, off.x * si + off.y * co);
 
   auto pos = c_position + displacement + di;
-  sprite->transform.position.x = pos.x;
-  sprite->transform.position.y = pos.y;
-  sprite->transform.rotation.z = glm::radians(c_rotation);
+  sprite->setPosition(pos.x, pos.y);
+  sprite->setRotation(glm::radians(c_rotation));
 
   batch->draw(sprite);
 }

@@ -28,6 +28,7 @@ COMMON_FILES
 "${CORE_SRC}/screens/test18_2d_3d.cpp"
 "${CORE_SRC}/screens/test20_skeleton.cpp"
 "${CORE_SRC}/screens/test21_console.cpp"
+"${CORE_SRC}/screens/test22_gui.cpp"
 
 "${CORE_SRC}/test_game.cpp"
 )

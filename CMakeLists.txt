@@ -8,6 +8,7 @@ add_subdirectory(engine)
 
 if (TESTS)
   add_subdirectory(tests)
-elseif (GAME)
+endif()
+if (GAME)
   add_subdirectory(game)
 endif()

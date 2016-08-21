@@ -113,11 +113,8 @@ private:
   Image image;
   Sprite::Ref sprImage;
   Sprite::Ref sprite;
-  tweens::TweenManager tweens;
 
   std::vector<int> tilesToClear;
-
-  TimerManager timers;
 
   SimpleBatch::Ref batch2d;
   SimpleBatch::Ref batch3d;

@@ -42,8 +42,7 @@ Mesh() {
 void Sprite::setTexture(const Pointer<Texture>& texture) {
   _texture = texture;
 
-  transform.size.x = _texture->getWidth();
-  transform.size.y = _texture->getHeight();
+  this->setSize(_texture->getWidth(), _texture->getHeight());
 
   /* Set the correct texture coordinates, in case of previous framebuffer. */
   Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
@@ -55,8 +54,7 @@ void Sprite::setTexture(const Pointer<Texture>& texture) {
 void Sprite::setTexture(const Pointer<Framebuffer>& buffer) {
   _texture = buffer->getColorBuffer();
 
-  transform.size.x = _texture->getWidth();
-  transform.size.y = _texture->getHeight();
+  this->setSize(_texture->getWidth(), _texture->getHeight());
 
   /* Reverse the framebuffer ! */
   Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
@@ -68,8 +66,8 @@ void Sprite::setTexture(const Pointer<Framebuffer>& buffer) {
 void Sprite::setTexture(const Pointer<TextureRegion>& region) {
   _texture = region->getTexture();
 
-  transform.size.x = region->getMaxX() - region->getMinX();
-  transform.size.y = region->getMaxY() - region->getMinY();
+  this->setSize(region->getMaxX() - region->getMinX(),
+                region->getMaxY() - region->getMinY());
 
   Pointer<SpriteGeometry> spriteGeo = std::dynamic_pointer_cast<SpriteGeometry>(_geometry);
   spriteGeo->setFromRegion(region);
@@ -82,10 +80,10 @@ Pointer<Texture> Sprite::getTexture() {
 }
 
 void Sprite::scaleTexture() {
-  float ratioW = transform.size.x / _texture->getWidth();
-  float ratioH = transform.size.y / _texture->getHeight();
+  float ratioW = this->getSize().x / _texture->getWidth();
+  float ratioH = this->getSize().y / _texture->getHeight();
 
-  auto& uv = _geometry->getAttribute("Texture").getVector();
+  auto& uv = _geometry->getAttributeBuffer("Texture").getVector();
   for (unsigned int i = 0; i < uv.size(); i+=2) {
     if (uv[i] != 0)
       uv[i] = ratioW;

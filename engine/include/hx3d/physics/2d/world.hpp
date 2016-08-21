@@ -125,6 +125,8 @@ public:
   */
   CollisionMatrix& getCollisionMatrix();
 
+  void setWireframeMode(bool value);
+
 private:
   /// @brief Iterations
   unsigned int _iterations;
@@ -146,6 +148,7 @@ private:
   std::set<Manifold> _inPrevContact;
 
   CollisionMatrix _collisionMatrix;
+  bool _wireframeMode;
 
   /**
   @brief Integrate forces on the colliders

@@ -109,11 +109,7 @@ set(
   "${ENGINE_SRC}/graphics/skeletons/joint_animation.cpp"
   "${ENGINE_SRC}/graphics/skeletons/skeleton.cpp"
 
-  "${ENGINE_SRC}/graphics/buffers/attribute_array_buffer.cpp"
-  "${ENGINE_SRC}/graphics/buffers/attribute_stream_buffer.cpp"
   "${ENGINE_SRC}/graphics/buffers/attribute.cpp"
-  "${ENGINE_SRC}/graphics/buffers/index_array_buffer.cpp"
-  "${ENGINE_SRC}/graphics/buffers/multi_array_buffer.cpp"
 
   "${ENGINE_SRC}/graphics/geometries/cube_geometry.cpp"
   "${ENGINE_SRC}/graphics/geometries/geometry.cpp"

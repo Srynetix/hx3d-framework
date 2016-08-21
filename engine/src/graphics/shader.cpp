@@ -174,13 +174,13 @@ bool Shader::createProgram() {
   return true;
 }
 
-GLint Shader::getAttribute(std::string name) {
+GLuint Shader::getAttribute(std::string name) {
   if (_activeAttributes.find(name) != _activeAttributes.end()) {
-    return _activeAttributes[name];
+    return (GLuint)_activeAttributes[name];
   } else {
     auto Log = Logger::getLogger("graphics");
     Log.Error("Attribute `%s` does not exists", name.c_str());
-    return -1;
+    return (GLuint)-1;
   }
 }
 
