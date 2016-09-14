@@ -148,6 +148,8 @@ public:
   glm::vec2 gravityForce;
   /// @brief Gravity scale
   glm::vec2 gravityScale;
+  /// @brief Air friction scale
+  float airFrictionScale;
 
   /// @brief Angular velocity
   float angularVelocity;

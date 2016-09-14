@@ -36,18 +36,6 @@ Transform::Transform():
   _anchor(0.5f)
   {}
 
-Transform& Transform::operator=(const Transform& transform) {
-  _position = transform._position;
-  _scale = transform._scale;
-  _size = transform._size;
-  _r = transform._r;
-  _lastCompute = transform._lastCompute;
-  _anchor = transform._anchor;
-  _dirty = transform._dirty;
-
-  return *this;
-}
-
 glm::mat4 Transform::compute() {
   if (_dirty) {
     _lastCompute = glm::mat4(1.f);
@@ -436,6 +424,16 @@ glm::vec3 Transform::get3DRotation() const {
 
 bool Transform::isDirty() const {
   return _dirty;
+}
+
+void Transform::setTransform(const Transform &transform) {
+  _position = transform._position;
+  _scale = transform._scale;
+  _size = transform._size;
+  _r = transform._r;
+  _lastCompute = transform._lastCompute;
+  _anchor = transform._anchor;
+  _dirty = transform._dirty;
 }
 
 } /* graphics */

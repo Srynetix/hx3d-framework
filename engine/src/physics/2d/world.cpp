@@ -27,6 +27,7 @@ World::World(const glm::vec2 globalGravity, const unsigned int iterations, const
   _iterations(iterations), _physRatio(physRatio), _wireframeMode(false)
   {
     _attractors.emplace_back(Make<GlobalAttractor>(globalGravity));
+    _airFriction = 10.f;
   }
 
 void World::addAttractor(const Pointer<Attractor>& attractor) {
@@ -266,6 +267,13 @@ void World::integrateForces(const Pointer<Collider>& c, float dt) {
 
   for (auto attractor: _attractors) {
     Attractor::applyForce(c, attractor, dt);
+  }
+
+  // Air friction
+  if (c->velocity.x > 0) {
+    c->velocity.x -= (_airFriction * c->airFrictionScale) * dt ;
+  } else if (c->velocity.x < 0) {
+    c->velocity.x += (_airFriction * c->airFrictionScale) * dt;
   }
 
   // c->velocity += c->gravityForce;

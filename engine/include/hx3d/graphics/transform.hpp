@@ -34,13 +34,14 @@ namespace graphics {
 class Transform {
 public:
   Transform();
-  Transform& operator=(const Transform& transform);
 
   glm::mat4 compute();
   Transform add(const Transform& transform);
   bool contains(const glm::vec2& point);
 
   ///////////
+
+  void setTransform(const Transform& transform);
 
   void setAnchor(float x, float y);
   void setAnchor(float x, float y, float z);

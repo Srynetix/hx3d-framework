@@ -17,7 +17,7 @@ Screens list.
 // #include "tests/screens/test10_stencil.hpp"
 // #include "tests/screens/test11_tweening.hpp"
 // #include "tests/screens/test12_particles.hpp"
-// #include "tests/screens/test13_gravity.hpp"
+ #include "tests/screens/test13_gravity.hpp"
 // #include "tests/screens/test14_buffertest.hpp"
 // #include "tests/screens/test15_timers.hpp"
 // #include "tests/screens/test16_basicshading.hpp"
@@ -27,6 +27,7 @@ Screens list.
 #include "tests/screens/test20_skeleton.hpp"
 #include "tests/screens/test21_console.hpp"
 #include "tests/screens/test22_gui.hpp"
+// #include "tests/screens/test23_overlay_physics.hpp"
 
 #define LOAD_SCREEN(name, klass) {name, [](){Core::CurrentGame()->setScreen(Make<klass>());}}
 
@@ -72,7 +73,7 @@ MenuScreen::MenuScreen():
     // LOAD_SCREEN("Stencil", Test10),
     // LOAD_SCREEN("Tweening", Test11),
     // LOAD_SCREEN("Particles", Test12),
-    // LOAD_SCREEN("Gravity", Test13),
+     LOAD_SCREEN("Gravity", Test13),
     // LOAD_SCREEN("Buffer test", Test14),
     // LOAD_SCREEN("Timers", Test15),
     // LOAD_SCREEN("Basic shading", Test16),
@@ -81,7 +82,8 @@ MenuScreen::MenuScreen():
     // LOAD_SCREEN("Chipmunk", Test19),
     LOAD_SCREEN("Skeleton", Test20),
     LOAD_SCREEN("Console", Test21),
-     LOAD_SCREEN("GUI", Test22)
+    LOAD_SCREEN("GUI", Test22),
+    // LOAD_SCREEN("Physics Overlay", Test23)
   };
 
   buttonCount = worldSize.y / buttonHeight;

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tests/screens/base_test_screen.hpp"
 
 #include "hx3d/graphics/cameras/orthographic_camera.hpp"

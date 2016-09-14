@@ -125,6 +125,14 @@ public:
   */
   CollisionMatrix& getCollisionMatrix();
 
+  void setAirFriction(float v) {
+    _airFriction = v;
+  }
+
+  float getAirFriction() const {
+    return _airFriction;
+  }
+
   void setWireframeMode(bool value);
 
 private:
@@ -132,6 +140,8 @@ private:
   unsigned int _iterations;
   /// @brief Physical ratio
   float _physRatio;
+  /// @brief Air friction
+  float _airFriction;
 
   /// @brief Attractors
   std::vector<Pointer<Attractor>> _attractors;

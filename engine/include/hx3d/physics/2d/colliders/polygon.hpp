@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <glm/mat2x2.hpp>
+#include <hx3d/utils/reference.hpp>
 
 namespace hx3d {
 namespace physics2d {
@@ -32,6 +33,8 @@ namespace physics2d {
 @brief Polygon or box shaped collider
 */
 class Polygon: public Collider {
+  HX3D_PTR_REF(Polygon)
+
 public:
   
   /**

@@ -42,7 +42,8 @@ Collider::Collider(const Shape shapeType, const Type colliderType):
   mask(0),
   category(0),
   type(colliderType),
-  shape(shapeType)
+  shape(shapeType),
+  airFrictionScale(0)
   {}
 
 Collider::~Collider() {}

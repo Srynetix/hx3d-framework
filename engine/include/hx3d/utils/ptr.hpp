@@ -43,6 +43,12 @@ template <class T>
 using UPointer = std::unique_ptr<T>;
 
 /**
+@brief Quick-typing weak ptr
+*/
+template <class T>
+using WeakPointer = std::weak_ptr<T>;
+
+/**
 @brief Quick-typing enable shared from this
 */
 template <class T>
